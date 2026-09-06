@@ -1,0 +1,14 @@
+{
+  "name": "wca-rankings-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Website ranking a group's official WCA stats, replacing a manually-updated spreadsheet.",
+  "scripts": {
+    "fetch": "node scripts/fetch.js",
+    "build": "node scripts/build-rankings.js",
+    "update": "npm run fetch && npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Rankings</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Group Rankings</h1>
+      <p id="updated-at" class="updated-at">Loading…</p>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="overall">Sum of Ranks &amp; Kinch</button>
+    <button class="tab-btn" data-tab="events">Event Rankings</button>
+  </nav>
+
+  <main class="container">
+
+    <section id="tab-overall" class="tab-panel active">
+      <div class="panel-controls">
+        <div class="toggle" id="overall-type-toggle">
+          <button class="toggle-btn active" data-type="single">Single</button>
+          <button class="toggle-btn" data-type="average">Average</button>
+        </div>
+      </div>
+
+      <div class="board-grid">
+        <div class="board">
+          <h2>Sum of Ranks</h2>
+          <p class="board-note">Lower total is better. A missing result counts as one place behind the last person who has a result.</p>
+          <div id="sum-of-ranks-table"></div>
+        </div>
+        <div class="board">
+          <h2>Kinch Rank</h2>
+          <p class="board-note">Score out of 100 per event, relative to the best result in the group. Higher is better.</p>
+          <div id="kinch-table"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-events" class="tab-panel">
+      <div class="panel-controls">
+        <select id="event-select"></select>
+        <div class="toggle" id="event-type-toggle">
+          <button class="toggle-btn active" data-type="single">Single</button>
+          <button class="toggle-btn" data-type="average">Average</button>
+        </div>
+      </div>
+      <div id="event-table"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Data from the World Cube Association. Updated automatically.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
