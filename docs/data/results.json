@@ -1,216 +1,218 @@
 {
-  "fetchedAt": null,
+  "fetchedAt": "2026-09-07T00:51:18.742Z",
   "people": [
     {
       "wcaId": "2022GART03",
-      "name": "2022GART03",
-      "countryIso2": null,
+      "name": "Nate Garthon",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 162,
+          "average": 323
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 846,
+          "average": 1073
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3723,
+          "average": 4375
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 7338,
+          "average": 7615
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 15818,
+          "average": 16332
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 24948,
+          "average": 26977
         },
         "333bf": {
-          "single": null,
-          "average": null
+          "single": 6679,
+          "average": 9860
         },
         "333fm": {
-          "single": null,
+          "single": 52,
           "average": null
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1664,
+          "average": 2029
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 325,
+          "average": 469
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 5560,
+          "average": 6169
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 402,
+          "average": 555
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 246,
+          "average": 464
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1536,
+          "average": 1746
         },
         "444bf": {
-          "single": null,
+          "single": 51660,
           "average": null
         },
         "555bf": {
-          "single": null,
+          "single": 149300,
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 960356703,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2022BURN09",
-      "name": "2022BURN09",
-      "countryIso2": null,
+      "name": "Joseph Burnett",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 166,
+          "average": 251
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 628,
+          "average": 758
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 2585,
+          "average": 2887
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 4919,
+          "average": 5270
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 7983,
+          "average": 9231
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 12729,
+          "average": 13317
         },
         "333bf": {
-          "single": null,
-          "average": null
+          "single": 2838,
+          "average": 3849
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 29,
+          "average": 3467
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 985,
+          "average": 1104
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 325,
+          "average": 386
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 3599,
+          "average": 4227
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 150,
+          "average": 236
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 209,
+          "average": 442
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 837,
+          "average": 1146
         },
         "444bf": {
-          "single": null,
+          "single": 30952,
           "average": null
         },
         "555bf": {
-          "single": null,
+          "single": 62800,
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 800293001,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2022JONE11",
-      "name": "2022JONE11",
-      "countryIso2": null,
+      "name": "Kyle Jones",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 70,
+          "average": 246
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 485,
+          "average": 735
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 2973,
+          "average": 3589
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 5750,
+          "average": 6626
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 13061,
+          "average": 13670
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 20688,
+          "average": 23510
         },
         "333bf": {
           "single": null,
           "average": null
         },
         "333fm": {
-          "single": null,
+          "single": 50,
           "average": null
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1444,
+          "average": 2102
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 161,
+          "average": 242
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 7285,
+          "average": 8116
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 198,
+          "average": 329
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 236,
+          "average": 550
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 869,
+          "average": 988
         },
         "444bf": {
           "single": null,
@@ -224,68 +226,69 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2022FETH01",
-      "name": "2022FETH01",
-      "countryIso2": null,
+      "name": "Miles Fetherston",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 107,
+          "average": 166
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 608,
+          "average": 748
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3111,
+          "average": 3626
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 6695,
+          "average": 7417
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 15685,
+          "average": 16069
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 24462,
+          "average": 25645
         },
         "333bf": {
-          "single": null,
+          "single": 12850,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 33,
+          "average": 4100
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1171,
+          "average": 1527
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 319,
+          "average": 451
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 5706,
+          "average": 6000
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 253,
+          "average": 350
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 245,
+          "average": 449
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1415,
+          "average": 1627
         },
         "444bf": {
           "single": null,
@@ -299,39 +302,40 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2022HRDL01",
-      "name": "2022HRDL01",
-      "countryIso2": null,
+      "name": "Mazar Hrdlicka",
+      "countryIso2": "CA",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 79,
+          "average": 168
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 611,
+          "average": 802
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3212,
+          "average": 3561
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 5700,
+          "average": 6347
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 12393,
+          "average": 13140
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 19224,
+          "average": 21307
         },
         "333bf": {
-          "single": null,
+          "single": 13958,
           "average": null
         },
         "333fm": {
@@ -339,28 +343,28 @@
           "average": null
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1253,
+          "average": 1555
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 331,
+          "average": 471
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 5991,
+          "average": 6752
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 153,
+          "average": 182
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 352,
+          "average": 452
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 613,
+          "average": 1156
         },
         "444bf": {
           "single": null,
@@ -374,68 +378,69 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2018CROU02",
-      "name": "2018CROU02",
-      "countryIso2": null,
+      "name": "Sylvia Crouch",
+      "countryIso2": "US",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 67,
+          "average": 243
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 646,
+          "average": 792
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 2843,
+          "average": 3360
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 5621,
+          "average": 6350
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 11322,
+          "average": 12629
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 20034,
+          "average": 22857
         },
         "333bf": {
-          "single": null,
+          "single": 8724,
           "average": null
         },
         "333fm": {
-          "single": null,
+          "single": 41,
           "average": null
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1390,
+          "average": 1560
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 288,
+          "average": 331
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 5849,
+          "average": 6371
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 272,
+          "average": 318
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 251,
+          "average": 409
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 809,
+          "average": 1275
         },
         "444bf": {
           "single": null,
@@ -446,74 +451,75 @@
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 980165301,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2023ARCI02",
-      "name": "2023ARCI02",
-      "countryIso2": null,
+      "name": "Gavriel Johann Arcilla",
+      "countryIso2": "PH",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 269,
+          "average": 388
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 671,
+          "average": 787
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3596,
+          "average": 3914
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 6455,
+          "average": 6636
         },
         "666": {
           "single": null,
           "average": null
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 24130,
+          "average": 25315
         },
         "333bf": {
-          "single": null,
+          "single": 1304,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 37,
+          "average": 5000
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1028,
+          "average": 1109
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 878,
+          "average": 1041
         },
         "minx": {
           "single": null,
           "average": null
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 1651,
+          "average": 2212
         },
         "skewb": {
           "single": null,
           "average": null
         },
         "sq1": {
-          "single": null,
+          "single": 5382,
           "average": null
         },
         "444bf": {
-          "single": null,
+          "single": 12390,
           "average": null
         },
         "555bf": {
@@ -521,146 +527,148 @@
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 850349509,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2021BLAK01",
-      "name": "2021BLAK01",
-      "countryIso2": null,
+      "name": "Jonah Blakeley",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 164,
+          "average": 267
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 737,
+          "average": 858
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3416,
+          "average": 3794
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 6330,
+          "average": 6667
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 12801,
+          "average": 13245
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 19688,
+          "average": 20774
         },
         "333bf": {
-          "single": null,
-          "average": null
+          "single": 6572,
+          "average": 7364
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 26,
+          "average": 3333
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1411,
+          "average": 1613
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 518,
+          "average": 819
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 4358,
+          "average": 5243
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 316,
+          "average": 496
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 199,
+          "average": 326
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1086,
+          "average": 1375
         },
         "444bf": {
-          "single": null,
+          "single": 45481,
           "average": null
         },
         "555bf": {
-          "single": null,
+          "single": 101600,
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 950117601,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2019THEO03",
-      "name": "2019THEO03",
-      "countryIso2": null,
+      "name": "Connor Theodore",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 123,
+          "average": 294
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 766,
+          "average": 1006
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3446,
+          "average": 4041
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 6837,
+          "average": 7544
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 16338,
+          "average": 17087
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 28766,
+          "average": 30105
         },
         "333bf": {
-          "single": null,
-          "average": null
+          "single": 11839,
+          "average": 20526
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 37,
+          "average": 4400
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1747,
+          "average": 2072
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 385,
+          "average": 532
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 5587,
+          "average": 6263
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 401,
+          "average": 583
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 199,
+          "average": 280
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1417,
+          "average": 2284
         },
         "444bf": {
           "single": null,
@@ -671,71 +679,72 @@
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 980096101,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2022SHAR23",
-      "name": "2022SHAR23",
-      "countryIso2": null,
+      "name": "Connor Sharpe",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 196,
+          "average": 329
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 951,
+          "average": 1073
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 3877,
+          "average": 4289
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 6588,
+          "average": 7264
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 14159,
+          "average": 15583
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 23446,
+          "average": 25547
         },
         "333bf": {
-          "single": null,
+          "single": 6177,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 42,
+          "average": 4933
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1806,
+          "average": 2277
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 430,
+          "average": 567
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 7515,
+          "average": 8620
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 256,
+          "average": 655
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 247,
+          "average": 471
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1004,
+          "average": 1337
         },
         "444bf": {
           "single": null,
@@ -746,67 +755,68 @@
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 960285101,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2021LUAA01",
-      "name": "2021LUAA01",
-      "countryIso2": null,
+      "name": "Aaron Lu",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 222,
+          "average": 474
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 957,
+          "average": 1140
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 4509,
+          "average": 5000
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 9517,
+          "average": 10576
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 19004,
+          "average": 19684
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 31612,
+          "average": 32526
         },
         "333bf": {
           "single": null,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 54,
+          "average": 5633
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 2037,
+          "average": 2482
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 697,
+          "average": 850
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 5449,
+          "average": 6151
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 458,
+          "average": 854
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 374,
+          "average": 637
         },
         "sq1": {
           "single": null,
@@ -824,68 +834,69 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2022TOLH01",
-      "name": "2022TOLH01",
-      "countryIso2": null,
+      "name": "Gemma Tolhurst",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 74,
+          "average": 213
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 978,
+          "average": 1229
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 4558,
+          "average": 5110
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 9900,
+          "average": 10976
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 21507,
+          "average": 22407
         },
         "777": {
-          "single": null,
-          "average": null
+          "single": 34583,
+          "average": 40073
         },
         "333bf": {
           "single": null,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 29,
+          "average": 3433
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1586,
+          "average": 2626
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 889,
+          "average": 1068
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 6908,
+          "average": 7512
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 323,
+          "average": 711
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 367,
+          "average": 748
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1095,
+          "average": 1308
         },
         "444bf": {
           "single": null,
@@ -899,68 +910,69 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2023BENT02",
-      "name": "2023BENT02",
-      "countryIso2": null,
+      "name": "Hamish Bentley",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 200,
+          "average": 365
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 990,
+          "average": 1314
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 4173,
+          "average": 4795
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 9186,
+          "average": 9652
         },
         "666": {
-          "single": null,
-          "average": null
+          "single": 14607,
+          "average": 16453
         },
         "777": {
-          "single": null,
+          "single": 27042,
           "average": null
         },
         "333bf": {
-          "single": null,
+          "single": 11852,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 36,
+          "average": 4033
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 2080,
+          "average": 2531
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 597,
+          "average": 738
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 7071,
+          "average": 8163
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 429,
+          "average": 593
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 286,
+          "average": 544
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1342,
+          "average": 1866
         },
         "444bf": {
           "single": null,
@@ -974,68 +986,69 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2019WILL30",
-      "name": "2019WILL30",
-      "countryIso2": null,
+      "name": "Madeline Willoughby-Khan",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 255,
+          "average": 369
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 1013,
+          "average": 1200
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 4092,
+          "average": 4515
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 8471,
+          "average": 9373
         },
         "666": {
-          "single": null,
+          "single": 22186,
           "average": null
         },
         "777": {
-          "single": null,
+          "single": 33919,
           "average": null
         },
         "333bf": {
-          "single": null,
+          "single": 23452,
           "average": null
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 33,
+          "average": 3633
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 2007,
+          "average": 2405
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 767,
+          "average": 831
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 8624,
+          "average": 8968
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 612,
+          "average": 1020
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 591,
+          "average": 669
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 2727,
+          "average": 3136
         },
         "444bf": {
           "single": null,
@@ -1046,74 +1059,75 @@
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 970100000,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2023SCOT04",
-      "name": "2023SCOT04",
-      "countryIso2": null,
+      "name": "Asaph Scott",
+      "countryIso2": "AU",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 237,
+          "average": 403
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 1077,
+          "average": 1338
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 5116,
+          "average": 5799
         },
         "555": {
-          "single": null,
-          "average": null
+          "single": 10730,
+          "average": 12667
         },
         "666": {
           "single": null,
           "average": null
         },
         "777": {
-          "single": null,
+          "single": 41815,
           "average": null
         },
         "333bf": {
-          "single": null,
-          "average": null
+          "single": 4554,
+          "average": 8386
         },
         "333fm": {
-          "single": null,
-          "average": null
+          "single": 41,
+          "average": 4767
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 1960,
+          "average": 2371
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 715,
+          "average": 827
         },
         "minx": {
-          "single": null,
-          "average": null
+          "single": 8850,
+          "average": 9959
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 524,
+          "average": 723
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 581,
+          "average": 1014
         },
         "sq1": {
-          "single": null,
-          "average": null
+          "single": 1945,
+          "average": 3435
         },
         "444bf": {
-          "single": null,
+          "single": 68800,
           "average": null
         },
         "555bf": {
@@ -1121,27 +1135,28 @@
           "average": null
         },
         "333mbf": {
-          "single": null,
+          "single": 970131601,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     },
     {
       "wcaId": "2025THUR01",
-      "name": "2025THUR01",
-      "countryIso2": null,
+      "name": "Emily Thurston",
+      "countryIso2": "US",
       "events": {
         "222": {
-          "single": null,
-          "average": null
+          "single": 436,
+          "average": 764
         },
         "333": {
-          "single": null,
-          "average": null
+          "single": 2094,
+          "average": 2564
         },
         "444": {
-          "single": null,
-          "average": null
+          "single": 8906,
+          "average": 10289
         },
         "555": {
           "single": null,
@@ -1164,27 +1179,27 @@
           "average": null
         },
         "333oh": {
-          "single": null,
-          "average": null
+          "single": 5029,
+          "average": 6281
         },
         "clock": {
-          "single": null,
-          "average": null
+          "single": 735,
+          "average": 904
         },
         "minx": {
           "single": null,
           "average": null
         },
         "pyram": {
-          "single": null,
-          "average": null
+          "single": 866,
+          "average": 1264
         },
         "skewb": {
-          "single": null,
-          "average": null
+          "single": 746,
+          "average": 988
         },
         "sq1": {
-          "single": null,
+          "single": 4180,
           "average": null
         },
         "444bf": {
@@ -1199,7 +1214,8 @@
           "single": null,
           "average": null
         }
-      }
+      },
+      "competitionIds": []
     }
   ]
 }
