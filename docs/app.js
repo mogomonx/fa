@@ -179,6 +179,7 @@ function renderDetailedTable(containerId, rows, totalKey, totalLabel, formatValu
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   thead.innerHTML = `<tr>
+    <th>#</th>
     <th class="name-header">Name</th>
     ${eventCols.map((e) => `<th>${e.name}</th>`).join('')}
     <th>${totalLabel}</th>
@@ -186,12 +187,14 @@ function renderDetailedTable(containerId, rows, totalKey, totalLabel, formatValu
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
-  rows.forEach((row) => {
+  rows.forEach((row, i) => {
     const tr = document.createElement('tr');
+    const cls = medalRowClass(i + 1);
+    if (cls) tr.className = cls;
     const cells = eventCols
       .map((e) => `<td>${formatValue(row.components[e.id])}</td>`)
       .join('');
-    tr.innerHTML = `<td class="name-cell">${row.name}</td>${cells}<td><strong>${formatValue(row[totalKey], true)}</strong></td>`;
+    tr.innerHTML = `<td class="rank-cell">${i + 1}</td><td class="name-cell">${row.name}</td>${cells}<td><strong>${formatValue(row[totalKey], true)}</strong></td>`;
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
@@ -235,7 +238,6 @@ function addPositionColumn(containerId) {
 function renderEventTable() {
   const event = rankingsData.events.find((e) => e.id === state.eventId);
   const container = document.getElementById('event-table');
-  const breakdownContainer = document.getElementById('event-breakdowns');
   if (!event) {
     container.innerHTML = '<p class="empty-note">Select an event.</p>';
     return;
@@ -248,38 +250,25 @@ function renderEventTable() {
   const effectiveType = event.hasAverage ? state.eventType : 'single';
   const rows = event[effectiveType];
 
-  renderTable(container, rows, [
+  const columns = [
     { key: 'rank', label: '#', value: (r) => r.rank },
     { key: 'name', label: 'Name', value: (r) => r.name },
-    { key: 'result', label: 'Result', value: (r) => r.display },
-  ]);
-
-  // Show the solve-by-solve breakdown behind each average shown above.
-  breakdownContainer.innerHTML = '';
-  if (effectiveType === 'average' && rows && rows.length > 0) {
-    const board = document.createElement('div');
-    board.className = 'board';
-    board.style.marginTop = '1.5rem';
-    const heading = document.createElement('h2');
-    heading.textContent = 'Solves behind each average';
-    board.appendChild(heading);
-
-    const list = document.createElement('div');
-    list.className = 'scroll-table';
-    const table = document.createElement('table');
-    table.innerHTML = '<thead><tr><th class="name-header">Name</th><th>Solves</th></tr></thead>';
-    const tbody = document.createElement('tbody');
-    rows.forEach((r) => {
-      const solves = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="name-cell">${r.name}</td><td>${solves ? solves.join(', ') : '—'}</td>`;
-      tbody.appendChild(tr);
+  ];
+  if (effectiveType === 'average') {
+    columns.push({
+      key: 'solves',
+      label: 'Solves',
+      value: (r) => {
+        const solves = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
+        if (!solves) return '<span class="empty-note">—</span>';
+        const text = solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
+        return `<span class="solves-cell">${text}</span>`;
+      },
     });
-    table.appendChild(tbody);
-    list.appendChild(table);
-    board.appendChild(list);
-    breakdownContainer.appendChild(board);
   }
+  columns.push({ key: 'result', label: 'Result', value: (r) => r.display });
+
+  renderTable(container, rows, columns);
 }
 
 // ---------- Individual Results ----------

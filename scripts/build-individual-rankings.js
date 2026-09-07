@@ -61,14 +61,35 @@ function buildTop100Tally(ranked) {
   };
 }
 
+// Given the raw attempts behind an average, works out which ones are
+// dropped (best+worst, for a normal average of 5 -- an average of 3 keeps
+// everything) so the display can show them in parentheses.
+function computeAttemptDisplays(attempts, event) {
+  if (!attempts || attempts.length === 0) return null;
+  const sortKey = (v) => (v === -1 || v === -2 ? Infinity : v);
+  const indices = attempts.map((_, i) => i);
+
+  const dropped = new Set();
+  if (attempts.length === 5) {
+    const sorted = indices.slice().sort((a, b) => sortKey(attempts[a]) - sortKey(attempts[b]));
+    dropped.add(sorted[0]);
+    dropped.add(sorted[sorted.length - 1]);
+  }
+
+  return attempts.map((v, i) => ({
+    display: formatResult(v, event, false),
+    dropped: dropped.has(i),
+  }));
+}
+
 // Finds the specific round that produced someone's current best average,
 // so we can show the solves behind it.
-function findAverageBreakdown(entries, wcaId, eventId, averageValue) {
+function findAverageBreakdown(entries, wcaId, eventId, averageValue, event) {
   if (!hasResult(averageValue)) return null;
   const match = entries.find(
     (e) => e.wcaId === wcaId && e.eventId === eventId && e.average === averageValue && e.attempts
   );
-  return match ? match.attempts : null;
+  return match ? computeAttemptDisplays(match.attempts, event) : null;
 }
 
 function main() {
@@ -99,11 +120,9 @@ function main() {
     averageBreakdowns[person.wcaId] = {};
     for (const event of EVENTS) {
       const avgValue = person.events[event.id]?.average;
-      const attempts = findAverageBreakdown(entries, person.wcaId, event.id, avgValue);
+      const attempts = findAverageBreakdown(entries, person.wcaId, event.id, avgValue, event);
       if (attempts) {
-        averageBreakdowns[person.wcaId][event.id] = attempts.map((v) =>
-          formatResult(v, event, false)
-        );
+        averageBreakdowns[person.wcaId][event.id] = attempts;
       }
     }
   }

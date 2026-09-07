@@ -38,24 +38,37 @@ The workflow needs permission to push its updates:
 2. Scroll to "Workflow permissions".
 3. Select **Read and write permissions**. Save.
 
-## 5. Run it for the first time
+## 5. Run both workflows for the first time
 
-Right now `docs/data/results.json` is just a placeholder with no real
-results in it — the site will look empty until the workflow runs.
+Right now the `docs/data/*.json` files are just empty placeholders — the
+site will look mostly blank until both workflows have run once.
 
 1. Go to the **Actions** tab of your repo.
-2. Click **Update WCA data** in the left sidebar.
-3. Click **Run workflow** (top right) → **Run workflow**.
-4. Wait for it to finish (a minute or two), then refresh your Pages URL —
-   it should be populated.
+2. Click **Update Personal Bests** in the left sidebar, then **Run
+   workflow** (top right) → **Run workflow**. This one's quick (under a
+   minute) and populates FA Records, Event Rankings, and Sum of
+   Ranks/Kinch.
+3. Click **Update Full Result History** in the left sidebar, then **Run
+   workflow** the same way. This one's slower (a few minutes — it
+   downloads the WCA's full results database) and populates the
+   Individual Results tab, the top-100 tally, and the average solve
+   breakdowns.
+4. Refresh your Pages URL once both finish — everything should be
+   populated.
 
-After this, it will also run automatically every day at 06:00 UTC (you can
-change the schedule in `.github/workflows/update-data.yml` — it's a
-[cron expression](https://crontab.guru/)).
+After this, they'll also run automatically on their own schedules:
+**Update Personal Bests** every day at 06:00 UTC, **Update Full Result
+History** every Sunday at 06:00 UTC. You can change either schedule in
+their respective files under `.github/workflows/` — each uses a
+[cron expression](https://crontab.guru/). You can also re-run **Update
+Full Result History** manually any time (e.g. right after your group
+attends a competition) instead of waiting for Sunday.
 
 ## Adding or removing people later
 
 Edit `config/members.json` (add/remove entries, each with a `wcaId` and
-optional `displayName`), commit the change — the workflow is set to also
-run automatically whenever that file changes, so the site updates within a
-couple of minutes.
+optional `displayName`), commit the change — **Update Personal Bests** is
+set to also run automatically whenever that file changes, so the main
+rankings update within a couple of minutes. If you want the new person's
+full result history (Individual Results tab) right away too, manually run
+**Update Full Result History** as well rather than waiting for Sunday.

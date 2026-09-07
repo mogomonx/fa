@@ -1,10 +1,10 @@
-# FA Records
+# Group Rankings
 
 A website that ranks FA's official WCA (World Cube Association) results —
 single and average for every event — plus Sum of Ranks, Kinch Rank,
 a ranking of every individual result ever recorded (not just personal
 bests), and a top-100-in-the-group tally per event. Replaces a
-manually-updated spreadsheet: a GitHub Actions workflow re-fetches
+manually-updated spreadsheet: two GitHub Actions workflows re-fetch
 everyone's results on a schedule, and GitHub Pages hosts the site for free.
 
 ## How it's put together
@@ -12,28 +12,58 @@ everyone's results on a schedule, and GitHub Pages hosts the site for free.
 - `config/members.json` — the group's WCA IDs. Each entry can optionally
   set a `displayName` to show instead of someone's official WCA name (handy
   if that name doesn't match who they actually are).
-- `scripts/fetch.js` — calls the official WCA API for each ID, saving
-  personal bests to `docs/data/results.json` **and** every competition
-  round they've ever competed in to `docs/data/full-results.json` (this
-  second part is what powers the individual-result ranking and top-100
-  tally, and takes longer to run since it's one API call per competition).
+- `scripts/fetch.js` — calls the light WCA API for each ID and saves
+  personal bests to `docs/data/results.json`. Fast, small.
 - `scripts/build-rankings.js` — computes per-event rankings, Sum of Ranks,
   and Kinch Rank from `results.json`, saving `docs/data/rankings.json`.
+- `scripts/get-export-url.js` + `scripts/parse-export.js` — download and
+  filter the WCA's official full results export (see below) down to
+  `docs/data/full-results.json`: every competition round anyone in the
+  group has ever competed in, not just their personal bests.
 - `scripts/build-individual-rankings.js` — computes the all-results
   ranking, the top-100 tally, and each person's average solve breakdown
   from `full-results.json`, saving `docs/data/individual-rankings.json`.
 - `docs/` — the actual website (plain HTML/CSS/JS, no build step). GitHub
   Pages serves this folder directly.
-- `.github/workflows/update-data.yml` — runs all of the above once a day
-  (and whenever you push a change to `members.json`) and commits the
-  updated JSON files.
+- Two workflows, since they have very different costs:
+  - `.github/workflows/update-personal-bests.yml` — runs daily (and on
+    push to `members.json`/scripts). Small and fast: a handful of API
+    calls. Updates FA Records, Event Rankings, and Sum of Ranks/Kinch.
+  - `.github/workflows/update-full-history.yml` — runs weekly. Downloads
+    the WCA's full results export (~350MB) to get everyone's complete
+    competition history. Updates the Individual Results tab, the top-100
+    tally, and the average solve breakdowns. Run it manually from the
+    Actions tab any time you want it sooner (e.g. right after your group
+    attends a competition) instead of waiting for the weekly schedule.
+
+## Why there's a separate, heavier "full history" workflow
+
+The WCA's live API has no way to list which competitions a person has
+attended — only their personal bests. The only public source for someone's
+*complete* result history is the WCA's official results export, a
+full dump of every result ever recorded by anyone, published at
+https://www.worldcubeassociation.org/export/results. It's large (roughly
+350MB), so pulling it every day (like the lightweight personal-bests
+update) would be wasteful — hence the separate, less frequent workflow.
 
 ## Running it yourself locally
 
-You'll need [Node.js](https://nodejs.org) 18 or newer installed.
+You'll need [Node.js](https://nodejs.org) 18 or newer, plus `curl` and
+`unzip` (already on macOS/Linux) if you want to test the full-history path.
 
 ```
-npm run update   # fetches fresh data and rebuilds everything
+npm run update          # personal bests: fetch + build (fast)
+```
+
+For the full history, mirror what the "Update Full Result History"
+workflow does:
+
+```
+TSV_URL=$(node scripts/get-export-url.js)
+curl -sL "$TSV_URL" -o /tmp/wca-export.zip
+mkdir -p /tmp/wca-export && unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
+node scripts/parse-export.js /tmp/wca-export
+node scripts/build-individual-rankings.js
 ```
 
 Then open `docs/index.html` in a browser to preview it (or use a local
@@ -67,13 +97,15 @@ shows the cutoff value for context.
 
 ## Known rough edges
 
-- 3x3x3 Multi-Blind results are stored by the WCA in an encoded format.
-  Ranking order for it is correct as-is, but if the *displayed* result
-  (e.g. "3/4 12:30") ever looks obviously wrong for someone in your group,
-  flag it — the decoding is the trickiest part of the WCA data format.
-- Fetching full competition history (for the individual-result ranking)
-  makes one API call per competition anyone in the group has attended, so
-  the scheduled run will take longer as the group's combined history grows.
+- Multi-Blind decoding now follows the WCA's official published encoding
+  exactly (both the old and new formats), so it should be reliable, but
+  it's still the trickiest part of the WCA data format -- flag it if a
+  displayed multi-blind result ever looks obviously wrong.
+- The full-history workflow depends on the exact file names inside the
+  WCA's export changing rarely, but not never (it's currently on format
+  version 2.0.2). If that workflow's "Parse export for our group" step
+  ever fails outright, the export's internal structure likely changed and
+  `scripts/parse-export.js` needs a small update.
 - If someone's WCA ID has never competed in an event, they just won't show
   up in that event's table (they still count for Sum of Ranks/Kinch tie
   rules).

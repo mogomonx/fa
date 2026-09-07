@@ -193,6 +193,11 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   background: var(--panel);
 }
 
+.solves-cell {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
 .empty-note {
   color: var(--text-dim);
   font-size: 0.9rem;
