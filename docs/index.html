@@ -9,21 +9,36 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <h1>FA Records</h1>
+      <h1 id="page-title">FA</h1>
       <p id="updated-at" class="updated-at">Loading…</p>
     </div>
   </header>
 
   <nav class="tabs" id="tabs">
-    <button class="tab-btn active" data-tab="records">FA Records</button>
+    <button class="tab-btn active" data-tab="home">Home</button>
+    <button class="tab-btn" data-tab="records">FA Records</button>
     <button class="tab-btn" data-tab="events">Event Rankings</button>
     <button class="tab-btn" data-tab="individual">Individual Results</button>
+    <button class="tab-btn" data-tab="top100">Top 100</button>
+    <button class="tab-btn" data-tab="history">Historical Records</button>
     <button class="tab-btn" data-tab="overall">Sum of Ranks &amp; Kinch</button>
   </nav>
 
   <main class="container">
 
-    <section id="tab-records" class="tab-panel active">
+    <section id="tab-home" class="tab-panel active">
+      <p class="board-note">A directory of what's here. (More will land on this page later.)</p>
+      <div class="home-links" id="home-links">
+        <a href="#" class="home-link" data-tab="records"><strong>FA Records</strong><span>The group's current best single/average per event, and who holds it.</span></a>
+        <a href="#" class="home-link" data-tab="events"><strong>Event Rankings</strong><span>Single and average rankings for every event.</span></a>
+        <a href="#" class="home-link" data-tab="individual"><strong>Individual Results</strong><span>Every result anyone's ever recorded, not just personal bests.</span></a>
+        <a href="#" class="home-link" data-tab="top100"><strong>Top 100</strong><span>Who holds the most spots in the group's own top 100 per event.</span></a>
+        <a href="#" class="home-link" data-tab="history"><strong>Historical Records</strong><span>Every FA Record ever set, in order, plus who's set the most.</span></a>
+        <a href="#" class="home-link" data-tab="overall"><strong>Sum of Ranks &amp; Kinch</strong><span>The two combined ranking systems.</span></a>
+      </div>
+    </section>
+
+    <section id="tab-records" class="tab-panel">
       <p class="board-note">The best single and average currently held within FA for each event.</p>
       <div id="fa-records-table"></div>
     </section>
@@ -40,7 +55,7 @@
     </section>
 
     <section id="tab-individual" class="tab-panel">
-      <p class="board-note">Every recorded result (not just personal bests) ranked within the group.</p>
+      <p class="board-note">Every recorded result (not just personal bests) ranked within the group. "PRn" shows which of that person's own results this is (PR1 = their current best).</p>
       <div class="panel-controls">
         <select id="individual-event-select"></select>
         <div class="toggle" id="individual-type-toggle">
@@ -48,25 +63,56 @@
           <button class="toggle-btn" data-type="average">Average</button>
         </div>
       </div>
+      <div id="individual-results-table"></div>
+    </section>
+
+    <section id="tab-top100" class="tab-panel">
+      <div class="panel-controls">
+        <div class="toggle" id="top100-type-toggle">
+          <button class="toggle-btn active" data-type="single">Single</button>
+          <button class="toggle-btn" data-type="average">Average</button>
+        </div>
+        <div class="toggle" id="top100-view-toggle">
+          <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
+          <button class="toggle-btn" data-view="detailed">Detailed table</button>
+        </div>
+      </div>
+      <p class="board-note">How many of the group's own top-100 results per event belong to each person (up to 100 results are counted per event).</p>
+      <div id="top100-leaderboard-view">
+        <div id="top100-table"></div>
+      </div>
+      <div id="top100-detailed-view" class="scroll-table" style="display:none;"></div>
+    </section>
+
+    <section id="tab-history" class="tab-panel">
       <div class="board-grid">
         <div class="board">
-          <h2>All results</h2>
-          <div id="individual-results-table"></div>
+          <h2>Record history</h2>
+          <p class="board-note">Every FA Record ever set, most recent first.</p>
+          <div id="historical-records-table"></div>
         </div>
         <div class="board">
-          <h2>Top 100 tally — all events</h2>
-          <p class="board-note">Total top-100 spots held per person, summed across every event (uses the Single/Average toggle above; not tied to the event selected on the left).</p>
-          <div id="top100-table"></div>
+          <div class="panel-controls">
+            <h2 style="margin:0;">FARs set per person</h2>
+            <div class="toggle" id="far-view-toggle">
+              <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
+              <button class="toggle-btn" data-view="detailed">Detailed table</button>
+            </div>
+          </div>
+          <div class="toggle" id="far-type-toggle" style="margin-bottom:0.75rem;">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+          <div id="far-leaderboard-view">
+            <div id="far-table"></div>
+          </div>
+          <div id="far-detailed-view" class="scroll-table" style="display:none;"></div>
         </div>
       </div>
     </section>
 
     <section id="tab-overall" class="tab-panel">
       <div class="panel-controls">
-        <div class="toggle" id="overall-type-toggle">
-          <button class="toggle-btn active" data-type="single">Single</button>
-          <button class="toggle-btn" data-type="average">Average</button>
-        </div>
         <div class="toggle" id="overall-view-toggle">
           <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
           <button class="toggle-btn" data-view="detailed">Detailed table</button>
@@ -75,29 +121,46 @@
 
       <div id="leaderboard-view" class="board-grid">
         <div class="board">
-          <h2>Sum of Ranks</h2>
-          <p class="board-note">Lower total is better. A missing result counts as one place behind the last person who has a result.</p>
+          <div class="panel-controls">
+            <h2 style="margin:0;">Sum of Ranks</h2>
+            <div class="toggle" id="sor-type-toggle">
+              <button class="toggle-btn active" data-type="single">Single</button>
+              <button class="toggle-btn" data-type="average">Average</button>
+            </div>
+          </div>
+          <p class="board-note">Lower total is better. All 17 events count; an event nobody has a result for ties everyone at 1.</p>
           <div id="sum-of-ranks-table"></div>
         </div>
         <div class="board">
           <h2>Kinch Rank</h2>
-          <p class="board-note">Score out of 100 per event, relative to the best result in the group. Higher is better.</p>
+          <p class="board-note">One combined score. Most events score off the average; Blindfolded events and Fewest Moves take whichever of single/average is better; Multi-Blind uses single only.</p>
           <div id="kinch-table"></div>
         </div>
       </div>
 
       <div id="detailed-view" class="detailed-view" style="display:none;">
         <div class="board">
-          <h2>Sum of Ranks — per event</h2>
+          <div class="panel-controls">
+            <h2 style="margin:0;">Sum of Ranks — per event</h2>
+            <div class="toggle" id="sor-detailed-type-toggle">
+              <button class="toggle-btn active" data-type="single">Single</button>
+              <button class="toggle-btn" data-type="average">Average</button>
+            </div>
+          </div>
           <p class="board-note">Each cell is that person's rank within the group for that event.</p>
           <div class="scroll-table" id="sum-of-ranks-detailed"></div>
         </div>
         <div class="board">
           <h2>Kinch Rank — per event</h2>
-          <p class="board-note">Each cell is that person's Kinch score (out of 100) for that event.</p>
+          <p class="board-note">Each cell is the score used for that event; a small letter shows whether it came from single (s) or average (a).</p>
           <div class="scroll-table" id="kinch-detailed"></div>
         </div>
       </div>
+    </section>
+
+    <section id="tab-profile" class="tab-panel">
+      <button class="back-link" id="profile-back">&larr; Back</button>
+      <div id="profile-content"></div>
     </section>
 
   </main>

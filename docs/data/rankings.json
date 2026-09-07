@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T06:58:53.164Z",
+  "generatedAt": "2026-09-07T11:29:58.698Z",
   "dataFetchedAt": null,
   "events": [
     {
@@ -105,21 +105,21 @@
       "name": "4x4x4 Blindfolded",
       "hasAverage": false,
       "single": [],
-      "average": null
+      "average": []
     },
     {
       "id": "555bf",
       "name": "5x5x5 Blindfolded",
       "hasAverage": false,
       "single": [],
-      "average": null
+      "average": []
     },
     {
       "id": "333mbf",
       "name": "3x3x3 Multi-Blind",
       "hasAverage": false,
       "single": [],
-      "average": null
+      "average": []
     }
   ],
   "sumOfRanks": {
@@ -513,7 +513,7 @@
       {
         "wcaId": "2022GART03",
         "name": "2022GART03",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -528,13 +528,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022BURN09",
         "name": "2022BURN09",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -549,13 +552,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022JONE11",
         "name": "2022JONE11",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -570,13 +576,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022FETH01",
         "name": "2022FETH01",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -591,13 +600,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022HRDL01",
         "name": "2022HRDL01",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -612,13 +624,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2018CROU02",
         "name": "2018CROU02",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -633,13 +648,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023ARCI02",
         "name": "2023ARCI02",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -654,13 +672,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2021BLAK01",
         "name": "2021BLAK01",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -675,13 +696,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2019THEO03",
         "name": "2019THEO03",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -696,13 +720,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022SHAR23",
         "name": "2022SHAR23",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -717,13 +744,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2021LUAA01",
         "name": "2021LUAA01",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -738,13 +768,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022TOLH01",
         "name": "2022TOLH01",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -759,13 +792,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023BENT02",
         "name": "2023BENT02",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -780,13 +816,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2019WILL30",
         "name": "2019WILL30",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -801,13 +840,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023SCOT04",
         "name": "2023SCOT04",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -822,13 +864,16 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2025THUR01",
         "name": "2025THUR01",
-        "total": 14,
+        "total": 17,
         "components": {
           "222": 1,
           "333": 1,
@@ -843,35 +888,89 @@
           "minx": 1,
           "pyram": 1,
           "skewb": 1,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       }
     ]
   },
   "kinch": {
-    "single": [
+    "overall": [
       {
         "wcaId": "2022GART03",
         "name": "2022GART03",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -879,23 +978,74 @@
         "name": "2022BURN09",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -903,23 +1053,74 @@
         "name": "2022JONE11",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -927,23 +1128,74 @@
         "name": "2022FETH01",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -951,23 +1203,74 @@
         "name": "2022HRDL01",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -975,23 +1278,74 @@
         "name": "2018CROU02",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -999,23 +1353,74 @@
         "name": "2023ARCI02",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1023,23 +1428,74 @@
         "name": "2021BLAK01",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1047,23 +1503,74 @@
         "name": "2019THEO03",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1071,23 +1578,74 @@
         "name": "2022SHAR23",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1095,23 +1653,74 @@
         "name": "2021LUAA01",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1119,23 +1728,74 @@
         "name": "2022TOLH01",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1143,23 +1803,74 @@
         "name": "2023BENT02",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1167,23 +1878,74 @@
         "name": "2019WILL30",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1191,23 +1953,74 @@
         "name": "2023SCOT04",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
@@ -1215,361 +2028,74 @@
         "name": "2025THUR01",
         "score": 0,
         "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      }
-    ],
-    "average": [
-      {
-        "wcaId": "2022GART03",
-        "name": "2022GART03",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2022BURN09",
-        "name": "2022BURN09",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2022JONE11",
-        "name": "2022JONE11",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2022FETH01",
-        "name": "2022FETH01",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2022HRDL01",
-        "name": "2022HRDL01",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2018CROU02",
-        "name": "2018CROU02",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2023ARCI02",
-        "name": "2023ARCI02",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2021BLAK01",
-        "name": "2021BLAK01",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2019THEO03",
-        "name": "2019THEO03",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2022SHAR23",
-        "name": "2022SHAR23",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2021LUAA01",
-        "name": "2021LUAA01",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "2022TOLH01",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2023BENT02",
-        "name": "2023BENT02",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2019WILL30",
-        "name": "2019WILL30",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2023SCOT04",
-        "name": "2023SCOT04",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
-        }
-      },
-      {
-        "wcaId": "2025THUR01",
-        "name": "2025THUR01",
-        "score": 0,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0
+          "222": {
+            "score": 0,
+            "source": null
+          },
+          "333": {
+            "score": 0,
+            "source": null
+          },
+          "444": {
+            "score": 0,
+            "source": null
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 0,
+            "source": null
+          },
+          "clock": {
+            "score": 0,
+            "source": null
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 0,
+            "source": null
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       }
     ]

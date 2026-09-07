@@ -1,9 +1,12 @@
 // Reads docs/data/full-results.json (every round a group member has
 // competed in) and builds:
-//  - a ranking of every individual single/average result within the group
-//  - a tally of how many of the group's top 100 results per event belong
-//    to each person, with the cutoff value shown
-//  - the 5 (or 3) solve breakdown behind each person's current best average
+//  - a ranking of every individual single/average result within the group,
+//    each tagged with which of that PERSON's own results it is (PR1 = their
+//    best, PR2 = their second best, etc.)
+//  - a Sum-of-Ranks-style top-100 table: how many of the group's top 100
+//    results per event belong to each person, leaderboard + detailed forms
+//  - the competition/round (and, for averages, the solve breakdown) behind
+//    each person's current best single and average
 //
 // Run with: node scripts/build-individual-rankings.js (after scripts/fetch.js)
 
@@ -18,15 +21,35 @@ const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'individual-ranki
 
 const TOP_N = 100;
 
-function rankAllResults(entries, event, type) {
-  const withResult = entries
-    .filter((e) => e.eventId === event.id && hasResult(e[type]))
-    .sort((a, b) => a[type] - b[type]);
+// A stable identity for one round result, for matching a person's own PR
+// order back up (can't just use the value, since two results can tie).
+function entryKey(e) {
+  return `${e.wcaId}|${e.competitionId}|${e.round}`;
+}
 
+function rankAllResults(entries, event, type) {
+  const withResult = entries.filter((e) => e.eventId === event.id && hasResult(e[type]));
+
+  // PR order: for each person, sort THEIR OWN results for this event+type
+  // ascending -- 1 is their best (current PB), 2 is their next-best, etc.
+  const byPerson = new Map();
+  for (const e of withResult) {
+    if (!byPerson.has(e.wcaId)) byPerson.set(e.wcaId, []);
+    byPerson.get(e.wcaId).push(e);
+  }
+  const prRankByKey = new Map();
+  for (const list of byPerson.values()) {
+    list
+      .slice()
+      .sort((a, b) => a[type] - b[type])
+      .forEach((e, i) => prRankByKey.set(entryKey(e), i + 1));
+  }
+
+  const sorted = withResult.slice().sort((a, b) => a[type] - b[type]);
   const ranked = [];
   let place = 0;
   let lastValue = null;
-  withResult.forEach((e, i) => {
+  sorted.forEach((e, i) => {
     if (e[type] !== lastValue) {
       place = i + 1;
       lastValue = e[type];
@@ -35,9 +58,11 @@ function rankAllResults(entries, event, type) {
       wcaId: e.wcaId,
       name: e.name,
       rank: place,
+      prRank: prRankByKey.get(entryKey(e)) || null,
       value: e[type],
       display: formatResult(e[type], event, type === 'average'),
       competitionName: e.competitionName,
+      round: roundLabel(e.round),
       date: e.date,
     });
   });
@@ -48,7 +73,7 @@ function buildTop100Tally(ranked) {
   const top = ranked.slice(0, Math.min(TOP_N, ranked.length));
   const counts = new Map();
   for (const r of top) {
-    counts.set(r.wcaId, (counts.get(r.wcaId) || { wcaId: r.wcaId, name: r.name, count: 0 }));
+    counts.set(r.wcaId, counts.get(r.wcaId) || { wcaId: r.wcaId, name: r.name, count: 0 });
     counts.get(r.wcaId).count += 1;
   }
   const tally = Array.from(counts.values()).sort((a, b) => b.count - a.count);
@@ -61,20 +86,22 @@ function buildTop100Tally(ranked) {
   };
 }
 
-// Combines every event's top-100 tally into one leaderboard: how many
-// top-100 spots (summed across all events) does each person hold.
-function buildOverallTop100(eventsOut, type) {
-  const counts = new Map();
-  for (const event of eventsOut) {
+// Same leaderboard+detailed-table shape as Sum of Ranks/Kinch ({wcaId, name,
+// total, components: {eventId: value}}) so the front end can reuse the same
+// toggle UI for it.
+function buildTop100Table(people, eventsData, type) {
+  const rows = people.map((p) => ({ wcaId: p.wcaId, name: p.name, total: 0, components: {} }));
+  for (const event of eventsData) {
     const data = event[type];
-    if (!data) continue;
-    for (const t of data.top100.tally) {
-      const cur = counts.get(t.wcaId) || { wcaId: t.wcaId, name: t.name, count: 0 };
-      cur.count += t.count;
-      counts.set(t.wcaId, cur);
+    const countByWcaId = new Map((data ? data.top100.tally : []).map((t) => [t.wcaId, t.count]));
+    for (const row of rows) {
+      const c = countByWcaId.get(row.wcaId) || 0;
+      row.components[event.id] = c;
+      row.total += c;
     }
   }
-  return Array.from(counts.values()).sort((a, b) => b.count - a.count);
+  rows.sort((a, b) => b.total - a.total);
+  return rows;
 }
 
 // Given the raw attempts behind an average, works out which ones are
@@ -98,20 +125,22 @@ function computeAttemptDisplays(attempts, event) {
   }));
 }
 
-// Finds the specific round that produced someone's current best average,
-// so we can show the solves (and where/when they happened) behind it.
-function findAverageBreakdown(entries, wcaId, eventId, averageValue, event) {
-  if (!hasResult(averageValue)) return null;
-  const match = entries.find(
-    (e) => e.wcaId === wcaId && e.eventId === eventId && e.average === averageValue && e.attempts
-  );
+// Finds the specific round that produced someone's current best single or
+// average, so we can show where/when it happened (and, for averages, the
+// solve breakdown).
+function findBreakdown(entries, wcaId, eventId, value, type, event) {
+  if (!hasResult(value)) return null;
+  const match = entries.find((e) => e.wcaId === wcaId && e.eventId === eventId && e[type] === value);
   if (!match) return null;
-  return {
-    solves: computeAttemptDisplays(match.attempts, event),
+  const result = {
     competitionName: match.competitionName,
     round: roundLabel(match.round),
     date: match.date,
   };
+  if (type === 'average' && match.attempts) {
+    result.solves = computeAttemptDisplays(match.attempts, event);
+  }
+  return result;
 }
 
 function main() {
@@ -136,15 +165,18 @@ function main() {
     });
   }
 
-  // Average solve breakdowns for each person's current PB average.
-  const averageBreakdowns = {};
+  // Achieved-at (+ solve breakdown for averages) for each person's current
+  // PB single and average.
+  const breakdowns = {};
   for (const person of people) {
-    averageBreakdowns[person.wcaId] = {};
+    breakdowns[person.wcaId] = {};
     for (const event of EVENTS) {
-      const avgValue = person.events[event.id]?.average;
-      const breakdown = findAverageBreakdown(entries, person.wcaId, event.id, avgValue, event);
-      if (breakdown) {
-        averageBreakdowns[person.wcaId][event.id] = breakdown;
+      const singleValue = person.events[event.id]?.single;
+      const averageValue = person.events[event.id]?.average;
+      const single = findBreakdown(entries, person.wcaId, event.id, singleValue, 'single', event);
+      const average = findBreakdown(entries, person.wcaId, event.id, averageValue, 'average', event);
+      if (single || average) {
+        breakdowns[person.wcaId][event.id] = { single, average };
       }
     }
   }
@@ -152,10 +184,10 @@ function main() {
   const output = {
     generatedAt: new Date().toISOString(),
     events,
-    averageBreakdowns,
-    top100Overall: {
-      single: buildOverallTop100(events, 'single'),
-      average: buildOverallTop100(events, 'average'),
+    breakdowns,
+    top100: {
+      single: buildTop100Table(people, events, 'single'),
+      average: buildTop100Table(people, events, 'average'),
     },
   };
 

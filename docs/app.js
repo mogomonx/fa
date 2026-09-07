@@ -1,22 +1,35 @@
 let rankingsData = null;
 let individualData = null;
+let historicalData = null;
+let peopleByWcaId = new Map();
 
 const state = {
-  overallType: 'single',
   overallView: 'leaderboard',
+  sorType: 'single',
   eventType: 'single',
   eventId: null,
   individualType: 'single',
   individualEventId: null,
+  top100Type: 'single',
+  top100View: 'leaderboard',
+  farType: 'single',
+  farView: 'leaderboard',
+  previousTab: 'home',
 };
 
 async function loadData() {
-  const [rankingsRes, individualRes] = await Promise.all([
+  const [rankingsRes, individualRes, historicalRes] = await Promise.all([
     fetch('data/rankings.json', { cache: 'no-store' }),
     fetch('data/individual-rankings.json', { cache: 'no-store' }),
+    fetch('data/historical-records.json', { cache: 'no-store' }),
   ]);
   rankingsData = await rankingsRes.json();
   individualData = await individualRes.json();
+  historicalData = await historicalRes.json();
+
+  for (const row of rankingsData.sumOfRanks.single) {
+    peopleByWcaId.set(row.wcaId, row.name);
+  }
 
   const updated = new Date(rankingsData.generatedAt);
   document.getElementById('updated-at').textContent =
@@ -30,6 +43,17 @@ async function loadData() {
   renderOverall();
   renderEventTable();
   renderIndividual();
+  renderTop100();
+  renderHistory();
+}
+
+function nameLink(wcaId, name) {
+  return `<a href="#" class="name-link" data-wcaid="${wcaId}">${name}</a>`;
+}
+
+function findPosition(list, wcaId) {
+  const i = list.findIndex((r) => r.wcaId === wcaId);
+  return i === -1 ? null : i + 1;
 }
 
 function populateEventSelect() {
@@ -96,7 +120,17 @@ function renderTable(container, rows, columns) {
   container.appendChild(table);
 }
 
-// ---------- FA Records (homepage) ----------
+function addPositionColumn(containerId) {
+  const rows = document.querySelectorAll(`#${containerId} tbody tr`);
+  rows.forEach((tr, i) => {
+    const firstCell = tr.querySelector('td');
+    if (firstCell) firstCell.textContent = i + 1;
+    const cls = medalRowClass(i + 1);
+    if (cls) tr.classList.add(cls);
+  });
+}
+
+// ---------- FA Records (homepage-ish) ----------
 
 function renderFaRecords() {
   const container = document.getElementById('fa-records-table');
@@ -118,9 +152,9 @@ function renderFaRecords() {
     tr.innerHTML = `
       <td>${event.name}</td>
       <td>${singleHolders[0] ? singleHolders[0].display : '—'}</td>
-      <td>${singleHolders.map((h) => h.name).join(', ') || '—'}</td>
+      <td>${singleHolders.map((h) => nameLink(h.wcaId, h.name)).join(', ') || '—'}</td>
       <td>${event.hasAverage ? (averageHolders[0] ? averageHolders[0].display : '—') : 'N/A'}</td>
-      <td>${event.hasAverage ? (averageHolders.map((h) => h.name).join(', ') || '—') : 'N/A'}</td>
+      <td>${event.hasAverage ? (averageHolders.map((h) => nameLink(h.wcaId, h.name)).join(', ') || '—') : 'N/A'}</td>
     `;
     tbody.appendChild(tr);
   }
@@ -138,25 +172,29 @@ function renderOverall() {
     state.overallView === 'detailed' ? '' : 'none';
 
   if (state.overallView === 'leaderboard') {
-    renderOverallLeaderboards();
+    renderSorLeaderboard();
+    renderKinchLeaderboard();
   } else {
-    renderOverallDetailed();
+    renderSorDetailed();
+    renderKinchDetailed();
   }
 }
 
-function renderOverallLeaderboards() {
-  const sorRows = rankingsData.sumOfRanks[state.overallType];
-  renderTable(document.getElementById('sum-of-ranks-table'), sorRows, [
+function renderSorLeaderboard() {
+  const rows = rankingsData.sumOfRanks[state.sorType];
+  renderTable(document.getElementById('sum-of-ranks-table'), rows, [
     { key: 'rank', label: '#', value: () => '' },
-    { key: 'name', label: 'Name', value: (r) => r.name },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'total', label: 'Total', value: (r) => r.total },
   ]);
   addPositionColumn('sum-of-ranks-table');
+}
 
-  const kinchRows = rankingsData.kinch[state.overallType];
-  renderTable(document.getElementById('kinch-table'), kinchRows, [
+function renderKinchLeaderboard() {
+  const rows = rankingsData.kinch.overall;
+  renderTable(document.getElementById('kinch-table'), rows, [
     { key: 'rank', label: '#', value: () => '' },
-    { key: 'name', label: 'Name', value: (r) => r.name },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'score', label: 'Kinch', value: (r) => r.score.toFixed(2) },
   ]);
   addPositionColumn('kinch-table');
@@ -168,8 +206,10 @@ function eventColumnsFor(rows) {
   return rankingsData.events.filter((e) => presentIds.includes(e.id));
 }
 
-function renderDetailedTable(containerId, rows, totalKey, totalLabel, formatValue) {
-  const container = document.getElementById(containerId);
+// Generic "detailed" (per-event breakdown) table renderer, used by
+// Sum of Ranks, Kinch, Top 100, and FAR counts -- anything shaped like
+// {wcaId, name, total (or score), components: {eventId: ...}}.
+function renderDetailedTable(container, rows, totalKey, totalLabel, formatCell, formatTotal) {
   if (!rows || rows.length === 0) {
     container.innerHTML = '<p class="empty-note">No results yet.</p>';
     return;
@@ -191,10 +231,8 @@ function renderDetailedTable(containerId, rows, totalKey, totalLabel, formatValu
     const tr = document.createElement('tr');
     const cls = medalRowClass(i + 1);
     if (cls) tr.className = cls;
-    const cells = eventCols
-      .map((e) => `<td>${formatValue(row.components[e.id])}</td>`)
-      .join('');
-    tr.innerHTML = `<td class="rank-cell">${i + 1}</td><td class="name-cell">${row.name}</td>${cells}<td><strong>${formatValue(row[totalKey], true)}</strong></td>`;
+    const cells = eventCols.map((e) => `<td>${formatCell(row.components[e.id])}</td>`).join('');
+    tr.innerHTML = `<td class="rank-cell">${i + 1}</td><td class="name-cell">${nameLink(row.wcaId, row.name)}</td>${cells}<td><strong>${formatTotal(row[totalKey])}</strong></td>`;
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
@@ -203,34 +241,28 @@ function renderDetailedTable(containerId, rows, totalKey, totalLabel, formatValu
   container.appendChild(table);
 }
 
-function renderOverallDetailed() {
-  const sorRows = rankingsData.sumOfRanks[state.overallType];
+function renderSorDetailed() {
+  const rows = rankingsData.sumOfRanks[state.sorType];
   renderDetailedTable(
-    'sum-of-ranks-detailed',
-    sorRows,
+    document.getElementById('sum-of-ranks-detailed'),
+    rows,
     'total',
     'Total',
+    (v) => (v === undefined || v === null ? '—' : v),
     (v) => (v === undefined || v === null ? '—' : v)
-  );
-
-  const kinchRows = rankingsData.kinch[state.overallType];
-  renderDetailedTable(
-    'kinch-detailed',
-    kinchRows,
-    'score',
-    'Overall',
-    (v) => (v === undefined || v === null ? '—' : Number(v).toFixed(2))
   );
 }
 
-function addPositionColumn(containerId) {
-  const rows = document.querySelectorAll(`#${containerId} tbody tr`);
-  rows.forEach((tr, i) => {
-    const firstCell = tr.querySelector('td');
-    if (firstCell) firstCell.textContent = i + 1;
-    const cls = medalRowClass(i + 1);
-    if (cls) tr.classList.add(cls);
-  });
+function renderKinchDetailed() {
+  const rows = rankingsData.kinch.overall;
+  renderDetailedTable(
+    document.getElementById('kinch-detailed'),
+    rows,
+    'score',
+    'Overall',
+    (v) => (v == null ? '—' : `${v.score.toFixed(2)}<span class="kinch-source">${v.source ? v.source[0] : ''}</span>`),
+    (v) => (v == null ? '—' : Number(v).toFixed(2))
+  );
 }
 
 // ---------- Event Rankings ----------
@@ -252,30 +284,30 @@ function renderEventTable() {
 
   const columns = [
     { key: 'rank', label: '#', value: (r) => r.rank },
-    { key: 'name', label: 'Name', value: (r) => r.name },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
   ];
   if (effectiveType === 'average') {
     columns.push({
       key: 'solves',
       label: 'Solves',
       value: (r) => {
-        const b = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
-        if (!b) return '<span class="empty-note">—</span>';
+        const b = individualData.breakdowns?.[r.wcaId]?.[event.id]?.average;
+        if (!b || !b.solves) return '<span class="empty-note">—</span>';
         const text = b.solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
         return `<span class="solves-cell">${text}</span>`;
       },
     });
-    columns.push({
-      key: 'achievedAt',
-      label: 'Achieved at',
-      value: (r) => {
-        const b = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
-        if (!b) return '<span class="empty-note">—</span>';
-        const parts = [b.competitionName, b.round].filter(Boolean).join(' \u2013 ');
-        return `<span class="solves-cell">${parts || '—'}</span>`;
-      },
-    });
   }
+  columns.push({
+    key: 'achievedAt',
+    label: 'Achieved at',
+    value: (r) => {
+      const b = individualData.breakdowns?.[r.wcaId]?.[event.id]?.[effectiveType];
+      if (!b) return '<span class="empty-note">—</span>';
+      const parts = [b.competitionName, b.round].filter(Boolean).join(' \u2013 ');
+      return `<span class="solves-cell">${parts || '—'}</span>`;
+    },
+  });
   columns.push({ key: 'result', label: 'Result', value: (r) => r.display });
 
   renderTable(container, rows, columns);
@@ -299,37 +331,195 @@ function renderIndividual() {
 
   renderTable(resultsContainer, data ? data.ranked : [], [
     { key: 'rank', label: '#', value: (r) => r.rank },
-    { key: 'name', label: 'Name', value: (r) => r.name },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'result', label: 'Result', value: (r) => r.display },
+    { key: 'pr', label: 'PR order', value: (r) => (r.prRank ? `PR${r.prRank}` : '—') },
+    { key: 'round', label: 'Round', value: (r) => r.round || '—' },
     { key: 'comp', label: 'Competition', value: (r) => r.competitionName || '—' },
   ]);
-
-  renderTop100Overall();
 }
 
-function renderTop100Overall() {
-  const container = document.getElementById('top100-table');
-  // Uses the same single/average toggle as the event list above, but isn't
-  // tied to whichever event is selected -- it's a sum across every event.
-  const rows = individualData.top100Overall?.[state.individualType] || [];
-  renderTable(container, rows, [
-    { key: 'rank', label: '#', value: () => '' },
-    { key: 'name', label: 'Name', value: (r) => r.name },
-    { key: 'count', label: 'Top-100 spots held', value: (r) => r.count },
+// ---------- Top 100 ----------
+
+function renderTop100() {
+  document.getElementById('top100-leaderboard-view').style.display =
+    state.top100View === 'leaderboard' ? '' : 'none';
+  document.getElementById('top100-detailed-view').style.display =
+    state.top100View === 'detailed' ? '' : 'none';
+
+  const rows = individualData.top100[state.top100Type];
+  if (state.top100View === 'leaderboard') {
+    renderTable(document.getElementById('top100-table'), rows, [
+      { key: 'rank', label: '#', value: () => '' },
+      { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+      { key: 'total', label: 'Top-100 spots held', value: (r) => r.total },
+    ]);
+    addPositionColumn('top100-table');
+  } else {
+    renderDetailedTable(
+      document.getElementById('top100-detailed-view'),
+      rows,
+      'total',
+      'Total',
+      (v) => (v == null ? 0 : v),
+      (v) => (v == null ? 0 : v)
+    );
+  }
+}
+
+// ---------- Historical Records ----------
+
+function renderHistory() {
+  renderTable(document.getElementById('historical-records-table'), historicalData.records, [
+    { key: 'date', label: 'Date', value: (r) => r.date || '—' },
+    { key: 'event', label: 'Event', value: (r) => r.eventName },
+    { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
+    { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'result', label: 'Result', value: (r) => r.display },
+    { key: 'comp', label: 'Competition', value: (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ') },
   ]);
-  addPositionColumn('top100-table');
+
+  document.getElementById('far-leaderboard-view').style.display =
+    state.farView === 'leaderboard' ? '' : 'none';
+  document.getElementById('far-detailed-view').style.display =
+    state.farView === 'detailed' ? '' : 'none';
+
+  const rows = historicalData.farCounts[state.farType];
+  if (state.farView === 'leaderboard') {
+    renderTable(document.getElementById('far-table'), rows, [
+      { key: 'rank', label: '#', value: () => '' },
+      { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+      { key: 'total', label: 'FARs set', value: (r) => r.total },
+    ]);
+    addPositionColumn('far-table');
+  } else {
+    renderDetailedTable(
+      document.getElementById('far-detailed-view'),
+      rows,
+      'total',
+      'Total',
+      (v) => (v == null ? 0 : v),
+      (v) => (v == null ? 0 : v)
+    );
+  }
+}
+
+// ---------- Profile ----------
+
+function showProfile(wcaId) {
+  const activeTab = document.querySelector('.tab-btn.active');
+  if (activeTab && activeTab.dataset.tab !== 'profile') {
+    state.previousTab = activeTab.dataset.tab;
+  }
+  renderProfile(wcaId);
+  showPanel('profile');
+}
+
+function statBox(label, value) {
+  return `<div class="profile-stat"><div class="stat-value">${value}</div><div class="stat-label">${label}</div></div>`;
+}
+
+function renderProfile(wcaId) {
+  const name = peopleByWcaId.get(wcaId) || wcaId;
+  const container = document.getElementById('profile-content');
+
+  const sorSingleRow = rankingsData.sumOfRanks.single.find((r) => r.wcaId === wcaId);
+  const sorAverageRow = rankingsData.sumOfRanks.average.find((r) => r.wcaId === wcaId);
+  const kinchRow = rankingsData.kinch.overall.find((r) => r.wcaId === wcaId);
+  const top100SingleRow = individualData.top100.single.find((r) => r.wcaId === wcaId);
+  const top100AverageRow = individualData.top100.average.find((r) => r.wcaId === wcaId);
+  const farSingleRow = historicalData.farCounts.single.find((r) => r.wcaId === wcaId);
+  const farAverageRow = historicalData.farCounts.average.find((r) => r.wcaId === wcaId);
+
+  const stats = [
+    statBox('Kinch score', kinchRow ? `${kinchRow.score.toFixed(2)} (#${findPosition(rankingsData.kinch.overall, wcaId)})` : '—'),
+    statBox('Sum of Ranks (Single)', sorSingleRow ? `${sorSingleRow.total} (#${findPosition(rankingsData.sumOfRanks.single, wcaId)})` : '—'),
+    statBox('Sum of Ranks (Average)', sorAverageRow ? `${sorAverageRow.total} (#${findPosition(rankingsData.sumOfRanks.average, wcaId)})` : '—'),
+    statBox('Top-100 spots (Single)', top100SingleRow ? `${top100SingleRow.total} (#${findPosition(individualData.top100.single, wcaId)})` : '0'),
+    statBox('Top-100 spots (Average)', top100AverageRow ? `${top100AverageRow.total} (#${findPosition(individualData.top100.average, wcaId)})` : '0'),
+    statBox('FA Records set', `${(farSingleRow?.total || 0) + (farAverageRow?.total || 0)}`),
+  ];
+
+  const currentRecords = [];
+  for (const event of rankingsData.events) {
+    if ((event.single || []).some((r) => r.wcaId === wcaId && r.rank === 1)) {
+      currentRecords.push(`${event.name} (Single)`);
+    }
+    if (event.hasAverage && (event.average || []).some((r) => r.wcaId === wcaId && r.rank === 1)) {
+      currentRecords.push(`${event.name} (Average)`);
+    }
+  }
+
+  const rows = rankingsData.events
+    .map((event) => {
+      const s = (event.single || []).find((r) => r.wcaId === wcaId);
+      const a = event.hasAverage ? (event.average || []).find((r) => r.wcaId === wcaId) : null;
+      const kinchComponent = kinchRow?.components?.[event.id];
+      return { event, s, a, kinchComponent };
+    })
+    .filter(({ s, a }) => s || a);
+
+  const eventRowsHtml = rows
+    .map(({ event, s, a, kinchComponent }) => `
+      <tr>
+        <td>${event.name}</td>
+        <td>${s ? `${s.display} (#${s.rank})` : '—'}</td>
+        <td>${event.hasAverage ? (a ? `${a.display} (#${a.rank})` : '—') : 'N/A'}</td>
+        <td>${kinchComponent ? `${kinchComponent.score.toFixed(2)}<span class="kinch-source">${kinchComponent.source ? kinchComponent.source[0] : ''}</span>` : '—'}</td>
+      </tr>
+    `)
+    .join('');
+
+  container.innerHTML = `
+    <h2 style="margin-bottom:0.25rem;">${name}</h2>
+    <p class="board-note"><a href="https://www.worldcubeassociation.org/persons/${wcaId}" target="_blank" rel="noopener">${wcaId} on the WCA site</a></p>
+    <div class="profile-stats">${stats.join('')}</div>
+    ${currentRecords.length ? `<p class="board-note">Currently holds the FA Record in: ${currentRecords.join(', ')}.</p>` : ''}
+    <div class="scroll-table">
+      <table>
+        <thead><tr><th class="name-header">Event</th><th>Single</th><th>Average</th><th>Kinch</th></tr></thead>
+        <tbody>${eventRowsHtml || '<tr><td colspan="4" class="empty-note">No results yet.</td></tr>'}</tbody>
+      </table>
+    </div>
+  `;
 }
 
 // ---------- Tabs & toggles ----------
 
+function showPanel(tabName) {
+  document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
+  const btn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+  if (btn) btn.classList.add('active');
+  const panel = document.getElementById(`tab-${tabName}`);
+  if (panel) panel.classList.add('active');
+}
+
 function setupTabs() {
   document.querySelectorAll('.tab-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+    btn.addEventListener('click', () => showPanel(btn.dataset.tab));
+  });
+}
+
+function setupHomeLinks() {
+  document.querySelectorAll('.home-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      showPanel(link.dataset.tab);
     });
+  });
+}
+
+function setupNameLinkDelegation() {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.name-link');
+    if (link) {
+      e.preventDefault();
+      showProfile(link.dataset.wcaid);
+    }
+  });
+  document.getElementById('profile-back').addEventListener('click', () => {
+    showPanel(state.previousTab || 'home');
   });
 }
 
@@ -346,13 +536,20 @@ function setupToggle(id, attr, onChange) {
 }
 
 setupTabs();
-setupToggle('overall-type-toggle', 'type', (type) => {
-  state.overallType = type;
-  renderOverall();
-});
+setupHomeLinks();
+setupNameLinkDelegation();
+
 setupToggle('overall-view-toggle', 'view', (view) => {
   state.overallView = view;
   renderOverall();
+});
+setupToggle('sor-type-toggle', 'type', (type) => {
+  state.sorType = type;
+  renderSorLeaderboard();
+});
+setupToggle('sor-detailed-type-toggle', 'type', (type) => {
+  state.sorType = type;
+  renderSorDetailed();
 });
 setupToggle('event-type-toggle', 'type', (type) => {
   state.eventType = type;
@@ -361,6 +558,22 @@ setupToggle('event-type-toggle', 'type', (type) => {
 setupToggle('individual-type-toggle', 'type', (type) => {
   state.individualType = type;
   renderIndividual();
+});
+setupToggle('top100-type-toggle', 'type', (type) => {
+  state.top100Type = type;
+  renderTop100();
+});
+setupToggle('top100-view-toggle', 'view', (view) => {
+  state.top100View = view;
+  renderTop100();
+});
+setupToggle('far-type-toggle', 'type', (type) => {
+  state.farType = type;
+  renderHistory();
+});
+setupToggle('far-view-toggle', 'view', (view) => {
+  state.farView = view;
+  renderHistory();
 });
 
 loadData().catch((err) => {
