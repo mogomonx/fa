@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-07T10:55:52.065Z",
-  "dataFetchedAt": "2026-09-07T10:55:52.014Z",
+  "generatedAt": "2026-09-07T11:35:35.544Z",
+  "dataFetchedAt": "2026-09-07T11:35:35.509Z",
   "events": [
     {
       "id": "333",
@@ -2983,7 +2983,7 @@
           "display": "11:28.00"
         }
       ],
-      "average": null
+      "average": []
     },
     {
       "id": "555bf",
@@ -3012,7 +3012,7 @@
           "display": "24:53.00"
         }
       ],
-      "average": null
+      "average": []
     },
     {
       "id": "333mbf",
@@ -3083,7 +3083,7 @@
           "display": "2/3 27:33"
         }
       ],
-      "average": null
+      "average": []
     }
   ],
   "sumOfRanks": {
@@ -3477,7 +3477,7 @@
       {
         "wcaId": "2022BURN09",
         "name": "Joseph Burnett",
-        "total": 30,
+        "total": 33,
         "components": {
           "222": 6,
           "333": 3,
@@ -3492,13 +3492,16 @@
           "minx": 1,
           "pyram": 2,
           "skewb": 4,
-          "sq1": 2
+          "sq1": 2,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2018CROU02",
         "name": "Sylvia Crouch",
-        "total": 62,
+        "total": 65,
         "components": {
           "222": 4,
           "333": 5,
@@ -3513,13 +3516,16 @@
           "minx": 7,
           "pyram": 3,
           "skewb": 3,
-          "sq1": 4
+          "sq1": 4,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022HRDL01",
         "name": "Mazar Hrdlicka",
-        "total": 65,
+        "total": 68,
         "components": {
           "222": 2,
           "333": 6,
@@ -3534,13 +3540,16 @@
           "minx": 8,
           "pyram": 1,
           "skewb": 6,
-          "sq1": 3
+          "sq1": 3,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2021BLAK01",
         "name": "Jonah Blakeley",
-        "total": 68,
+        "total": 71,
         "components": {
           "222": 7,
           "333": 7,
@@ -3555,13 +3564,16 @@
           "minx": 2,
           "pyram": 6,
           "skewb": 2,
-          "sq1": 7
+          "sq1": 7,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022FETH01",
         "name": "Miles Skye Fetherston",
-        "total": 71,
+        "total": 74,
         "components": {
           "222": 1,
           "333": 2,
@@ -3576,13 +3588,16 @@
           "minx": 3,
           "pyram": 5,
           "skewb": 5,
-          "sq1": 8
+          "sq1": 8,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022JONE11",
         "name": "Kyle Jones",
-        "total": 77,
+        "total": 80,
         "components": {
           "222": 5,
           "333": 1,
@@ -3597,13 +3612,16 @@
           "minx": 10,
           "pyram": 4,
           "skewb": 10,
-          "sq1": 1
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2019THEO03",
         "name": "Connor Theodore",
-        "total": 106,
+        "total": 109,
         "components": {
           "222": 8,
           "333": 8,
@@ -3618,13 +3636,16 @@
           "minx": 6,
           "pyram": 8,
           "skewb": 1,
-          "sq1": 11
+          "sq1": 11,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022GART03",
         "name": "Nova Garthon",
-        "total": 111,
+        "total": 114,
         "components": {
           "222": 9,
           "333": 9,
@@ -3639,13 +3660,16 @@
           "minx": 5,
           "pyram": 7,
           "skewb": 7,
-          "sq1": 9
+          "sq1": 9,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022SHAR23",
         "name": "Connor Sharpe",
-        "total": 117,
+        "total": 120,
         "components": {
           "222": 10,
           "333": 9,
@@ -3660,13 +3684,16 @@
           "minx": 12,
           "pyram": 10,
           "skewb": 8,
-          "sq1": 6
+          "sq1": 6,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023ARCI02",
         "name": "Nicole Arcilla",
-        "total": 142,
+        "total": 145,
         "components": {
           "222": 13,
           "333": 4,
@@ -3681,13 +3708,16 @@
           "minx": 15,
           "pyram": 16,
           "skewb": 16,
-          "sq1": 14
+          "sq1": 14,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023BENT02",
         "name": "Hamish Bentley",
-        "total": 144,
+        "total": 147,
         "components": {
           "222": 11,
           "333": 14,
@@ -3702,13 +3732,16 @@
           "minx": 11,
           "pyram": 9,
           "skewb": 9,
-          "sq1": 10
+          "sq1": 10,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022TOLH01",
         "name": "Gemma Tolhurst",
-        "total": 145,
+        "total": 148,
         "components": {
           "222": 3,
           "333": 13,
@@ -3723,13 +3756,16 @@
           "minx": 9,
           "pyram": 11,
           "skewb": 13,
-          "sq1": 5
+          "sq1": 5,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2019WILL30",
         "name": "Madeline Willoughby-Khan",
-        "total": 157,
+        "total": 160,
         "components": {
           "222": 12,
           "333": 12,
@@ -3744,13 +3780,16 @@
           "minx": 13,
           "pyram": 14,
           "skewb": 12,
-          "sq1": 12
+          "sq1": 12,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2021LUAA01",
         "name": "Aaron Lu",
-        "total": 159,
+        "total": 162,
         "components": {
           "222": 15,
           "333": 11,
@@ -3765,13 +3804,16 @@
           "minx": 4,
           "pyram": 13,
           "skewb": 11,
-          "sq1": 14
+          "sq1": 14,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023SCOT04",
         "name": "Ash Scott",
-        "total": 172,
+        "total": 175,
         "components": {
           "222": 14,
           "333": 15,
@@ -3786,13 +3828,16 @@
           "minx": 14,
           "pyram": 12,
           "skewb": 15,
-          "sq1": 13
+          "sq1": 13,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2025THUR01",
         "name": "Emily Thurston",
-        "total": 196,
+        "total": 199,
         "components": {
           "222": 16,
           "333": 16,
@@ -3807,733 +3852,1214 @@
           "minx": 15,
           "pyram": 15,
           "skewb": 14,
-          "sq1": 14
+          "sq1": 14,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       }
     ]
   },
   "kinch": {
-    "single": [
+    "overall": [
       {
         "wcaId": "2022BURN09",
         "name": "Joseph Burnett",
-        "score": 83.01,
+        "score": 87.57,
         "components": {
-          "222": 40.36,
-          "333": 77.23,
-          "444": 100,
-          "555": 100,
-          "666": 100,
-          "777": 100,
-          "333bf": 45.95,
-          "333fm": 89.66,
-          "333oh": 100,
-          "clock": 49.54,
-          "minx": 100,
-          "pyram": 100,
-          "skewb": 95.22,
-          "sq1": 73.24,
-          "444bf": 40.03,
-          "555bf": 100,
-          "333mbf": 100
+          "222": {
+            "score": 66.14,
+            "source": "average"
+          },
+          "333": {
+            "score": 96.97,
+            "source": "average"
+          },
+          "444": {
+            "score": 100,
+            "source": "average"
+          },
+          "555": {
+            "score": 100,
+            "source": "average"
+          },
+          "666": {
+            "score": 100,
+            "source": "average"
+          },
+          "777": {
+            "score": 100,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 100,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 96.13,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 100,
+            "source": "average"
+          },
+          "clock": {
+            "score": 62.69,
+            "source": "average"
+          },
+          "minx": {
+            "score": 100,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 77.12,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 63.35,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 86.21,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 40.03,
+            "source": "single"
+          },
+          "555bf": {
+            "score": 100,
+            "source": "single"
+          },
+          "333mbf": {
+            "score": 100,
+            "source": "single"
+          }
         }
       },
       {
         "wcaId": "2021BLAK01",
         "name": "Jonah Blakeley",
-        "score": 62.8,
+        "score": 66.79,
         "components": {
-          "222": 40.85,
-          "333": 65.81,
-          "444": 75.67,
-          "555": 77.71,
-          "666": 62.36,
-          "777": 64.65,
-          "333bf": 19.84,
-          "333fm": 100,
-          "333oh": 69.81,
-          "clock": 31.08,
-          "minx": 82.58,
-          "pyram": 47.47,
-          "skewb": 100,
-          "sq1": 56.45,
-          "444bf": 27.24,
-          "555bf": 61.81,
-          "333mbf": 84.23
+          "222": {
+            "score": 62.17,
+            "source": "average"
+          },
+          "333": {
+            "score": 85.66,
+            "source": "average"
+          },
+          "444": {
+            "score": 76.09,
+            "source": "average"
+          },
+          "555": {
+            "score": 79.05,
+            "source": "average"
+          },
+          "666": {
+            "score": 69.69,
+            "source": "average"
+          },
+          "777": {
+            "score": 64.1,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 52.27,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 100,
+            "source": "single"
+          },
+          "333oh": {
+            "score": 68.44,
+            "source": "average"
+          },
+          "clock": {
+            "score": 29.55,
+            "source": "average"
+          },
+          "minx": {
+            "score": 80.62,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 36.69,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 85.89,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 71.85,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 27.24,
+            "source": "single"
+          },
+          "555bf": {
+            "score": 61.81,
+            "source": "single"
+          },
+          "333mbf": {
+            "score": 84.23,
+            "source": "single"
+          }
         }
       },
       {
         "wcaId": "2018CROU02",
         "name": "Sylvia Crouch",
-        "score": 61.53,
+        "score": 60.87,
         "components": {
-          "222": 100,
-          "333": 75.08,
-          "444": 90.93,
-          "555": 87.51,
-          "666": 70.51,
-          "777": 63.54,
-          "333bf": 14.95,
-          "333fm": 63.41,
-          "333oh": 70.86,
-          "clock": 55.9,
-          "minx": 61.53,
-          "pyram": 55.15,
-          "skewb": 79.28,
-          "sq1": 75.77,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 81.65
-        }
-      },
-      {
-        "wcaId": "2022JONE11",
-        "name": "Kyle Jones",
-        "score": 58.3,
-        "components": {
-          "222": 95.71,
-          "333": 100,
-          "444": 86.95,
-          "555": 85.55,
-          "666": 61.12,
-          "777": 61.53,
-          "333bf": 0,
-          "333fm": 52,
-          "333oh": 68.21,
-          "clock": 100,
-          "minx": 49.4,
-          "pyram": 75.76,
-          "skewb": 84.32,
-          "sq1": 70.54,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2022HRDL01",
-        "name": "Mazar Hrdlicka",
-        "score": 53.7,
-        "components": {
-          "222": 84.81,
-          "333": 79.38,
-          "444": 80.48,
-          "555": 86.3,
-          "666": 64.42,
-          "777": 66.21,
-          "333bf": 9.34,
-          "333fm": 0,
-          "333oh": 78.61,
-          "clock": 48.64,
-          "minx": 60.07,
-          "pyram": 98.04,
-          "skewb": 56.53,
-          "sq1": 100,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2022GART03",
-        "name": "Nova Garthon",
-        "score": 52.18,
-        "components": {
-          "222": 41.36,
-          "333": 57.33,
-          "444": 69.43,
-          "555": 67.03,
-          "666": 50.47,
-          "777": 51.02,
-          "333bf": 19.52,
-          "333fm": 50,
-          "333oh": 59.19,
-          "clock": 49.54,
-          "minx": 64.73,
-          "pyram": 37.31,
-          "skewb": 80.89,
-          "sq1": 39.91,
-          "444bf": 23.98,
-          "555bf": 42.06,
-          "333mbf": 83.33
-        }
-      },
-      {
-        "wcaId": "2022FETH01",
-        "name": "Miles Skye Fetherston",
-        "score": 51.31,
-        "components": {
-          "222": 62.62,
-          "333": 79.77,
-          "444": 83.09,
-          "555": 73.47,
-          "666": 50.9,
-          "777": 52.04,
-          "333bf": 10.15,
-          "333fm": 78.79,
-          "333oh": 84.12,
-          "clock": 50.47,
-          "minx": 63.07,
-          "pyram": 59.29,
-          "skewb": 81.22,
-          "sq1": 43.32,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "score": 50.83,
-        "components": {
-          "222": 54.47,
-          "333": 63.32,
-          "444": 75.01,
-          "555": 71.95,
-          "666": 48.86,
-          "777": 44.25,
-          "333bf": 11.01,
-          "333fm": 70.27,
-          "333oh": 56.38,
-          "clock": 41.82,
-          "minx": 64.42,
-          "pyram": 37.41,
-          "skewb": 100,
-          "sq1": 43.26,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 81.65
-        }
-      },
-      {
-        "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "score": 49.63,
-        "components": {
-          "222": 34.18,
-          "333": 51,
-          "444": 66.68,
-          "555": 74.67,
-          "666": 56.38,
-          "777": 54.29,
-          "333bf": 21.11,
-          "333fm": 61.9,
-          "333oh": 54.54,
-          "clock": 37.44,
-          "minx": 47.89,
-          "pyram": 58.59,
-          "skewb": 80.57,
-          "sq1": 61.06,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 83.34
-        }
-      },
-      {
-        "wcaId": "2023ARCI02",
-        "name": "Nicole Arcilla",
-        "score": 46.88,
-        "components": {
-          "222": 24.91,
-          "333": 72.28,
-          "444": 71.89,
-          "555": 76.2,
-          "666": 0,
-          "777": 52.75,
-          "333bf": 100,
-          "333fm": 70.27,
-          "333oh": 95.82,
-          "clock": 18.34,
-          "minx": 0,
-          "pyram": 9.09,
-          "skewb": 0,
-          "sq1": 11.39,
-          "444bf": 100,
-          "555bf": 0,
-          "333mbf": 94.11
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "score": 41.12,
-        "components": {
-          "222": 90.54,
-          "333": 49.59,
-          "444": 56.71,
-          "555": 49.69,
-          "666": 37.12,
-          "777": 36.81,
-          "333bf": 0,
-          "333fm": 89.66,
-          "333oh": 62.11,
-          "clock": 18.11,
-          "minx": 52.1,
-          "pyram": 46.44,
-          "skewb": 54.22,
-          "sq1": 55.98,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2023BENT02",
-        "name": "Hamish Bentley",
-        "score": 38.73,
-        "components": {
-          "222": 33.5,
-          "333": 48.99,
-          "444": 61.95,
-          "555": 53.55,
-          "666": 54.65,
-          "777": 47.07,
-          "333bf": 11,
-          "333fm": 72.22,
-          "333oh": 47.36,
-          "clock": 26.97,
-          "minx": 50.9,
-          "pyram": 34.97,
-          "skewb": 69.58,
-          "sq1": 45.68,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "score": 36.95,
-        "components": {
-          "222": 26.27,
-          "333": 47.88,
-          "444": 63.17,
-          "555": 58.07,
-          "666": 35.98,
-          "777": 37.53,
-          "333bf": 5.56,
-          "333fm": 78.79,
-          "333oh": 49.08,
-          "clock": 20.99,
-          "minx": 41.73,
-          "pyram": 24.51,
-          "skewb": 33.67,
-          "sq1": 22.48,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 82.5
-        }
-      },
-      {
-        "wcaId": "2023SCOT04",
-        "name": "Ash Scott",
-        "score": 35.32,
-        "components": {
-          "222": 28.27,
-          "333": 45.03,
-          "444": 50.53,
-          "555": 45.84,
-          "666": 0,
-          "777": 30.44,
-          "333bf": 28.63,
-          "333fm": 63.41,
-          "333oh": 50.26,
-          "clock": 22.52,
-          "minx": 40.67,
-          "pyram": 28.63,
-          "skewb": 34.25,
-          "sq1": 31.52,
-          "444bf": 18.01,
-          "555bf": 0,
-          "333mbf": 82.49
-        }
-      },
-      {
-        "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "score": 31.99,
-        "components": {
-          "222": 30.18,
-          "333": 50.68,
-          "444": 57.33,
-          "555": 51.69,
-          "666": 42.01,
-          "777": 40.27,
-          "333bf": 0,
-          "333fm": 48.15,
-          "333oh": 48.36,
-          "clock": 23.1,
-          "minx": 66.05,
-          "pyram": 32.75,
-          "skewb": 53.21,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2025THUR01",
-        "name": "Emily Thurston",
-        "score": 9.87,
-        "components": {
-          "222": 15.37,
-          "333": 23.16,
-          "444": 29.03,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 19.59,
-          "clock": 21.9,
-          "minx": 0,
-          "pyram": 17.32,
-          "skewb": 26.68,
-          "sq1": 14.67,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      }
-    ],
-    "average": [
-      {
-        "wcaId": "2022BURN09",
-        "name": "Joseph Burnett",
-        "score": 89.19,
-        "components": {
-          "222": 66.14,
-          "333": 96.97,
-          "444": 100,
-          "555": 100,
-          "666": 100,
-          "777": 100,
-          "333bf": 100,
-          "333fm": 96.13,
-          "333oh": 100,
-          "clock": 62.69,
-          "minx": 100,
-          "pyram": 77.12,
-          "skewb": 63.35,
-          "sq1": 86.21
-        }
-      },
-      {
-        "wcaId": "2021BLAK01",
-        "name": "Jonah Blakeley",
-        "score": 68.72,
-        "components": {
-          "222": 62.17,
-          "333": 85.66,
-          "444": 76.09,
-          "555": 79.05,
-          "666": 69.69,
-          "777": 64.1,
-          "333bf": 52.27,
-          "333fm": 100,
-          "333oh": 68.44,
-          "clock": 29.55,
-          "minx": 80.62,
-          "pyram": 36.69,
-          "skewb": 85.89,
-          "sq1": 71.85
+          "222": {
+            "score": 68.31,
+            "source": "average"
+          },
+          "333": {
+            "score": 92.8,
+            "source": "average"
+          },
+          "444": {
+            "score": 85.92,
+            "source": "average"
+          },
+          "555": {
+            "score": 82.99,
+            "source": "average"
+          },
+          "666": {
+            "score": 73.09,
+            "source": "average"
+          },
+          "777": {
+            "score": 58.26,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 14.95,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 63.41,
+            "source": "single"
+          },
+          "333oh": {
+            "score": 70.77,
+            "source": "average"
+          },
+          "clock": {
+            "score": 73.11,
+            "source": "average"
+          },
+          "minx": {
+            "score": 66.35,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 57.23,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 68.46,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 77.49,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 81.65,
+            "source": "single"
+          }
         }
       },
       {
         "wcaId": "2022HRDL01",
         "name": "Mazar Hrdlicka",
-        "score": 65.69,
+        "score": 54.65,
         "components": {
-          "222": 98.81,
-          "333": 91.65,
-          "444": 81.07,
-          "555": 83.03,
-          "666": 70.25,
-          "777": 62.5,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 71,
-          "clock": 51.38,
-          "minx": 62.6,
-          "pyram": 100,
-          "skewb": 61.95,
-          "sq1": 85.47
-        }
-      },
-      {
-        "wcaId": "2022FETH01",
-        "name": "Miles Skye Fetherston",
-        "score": 65.08,
-        "components": {
-          "222": 100,
-          "333": 98.26,
-          "444": 79.62,
-          "555": 71.05,
-          "666": 57.45,
-          "777": 51.93,
-          "333bf": 0,
-          "333fm": 81.29,
-          "333oh": 72.3,
-          "clock": 53.66,
-          "minx": 70.45,
-          "pyram": 52,
-          "skewb": 62.36,
-          "sq1": 60.73
-        }
-      },
-      {
-        "wcaId": "2018CROU02",
-        "name": "Sylvia Crouch",
-        "score": 62.49,
-        "components": {
-          "222": 68.31,
-          "333": 92.8,
-          "444": 85.92,
-          "555": 82.99,
-          "666": 73.09,
-          "777": 58.26,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 70.77,
-          "clock": 73.11,
-          "minx": 66.35,
-          "pyram": 57.23,
-          "skewb": 68.46,
-          "sq1": 77.49
-        }
-      },
-      {
-        "wcaId": "2022JONE11",
-        "name": "Kyle Jones",
-        "score": 61.6,
-        "components": {
-          "222": 67.48,
-          "333": 100,
-          "444": 80.44,
-          "555": 79.54,
-          "666": 67.53,
-          "777": 56.64,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 52.52,
-          "clock": 100,
-          "minx": 52.08,
-          "pyram": 55.32,
-          "skewb": 50.91,
-          "sq1": 100
-        }
-      },
-      {
-        "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "score": 57.45,
-        "components": {
-          "222": 56.46,
-          "333": 73.06,
-          "444": 71.44,
-          "555": 69.86,
-          "666": 54.02,
-          "777": 44.24,
-          "333bf": 18.75,
-          "333fm": 75.75,
-          "333oh": 53.28,
-          "clock": 45.49,
-          "minx": 67.49,
-          "pyram": 31.22,
-          "skewb": 100,
-          "sq1": 43.26
-        }
-      },
-      {
-        "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "score": 52.79,
-        "components": {
-          "222": 50.46,
-          "333": 68.5,
-          "444": 67.31,
-          "555": 72.55,
-          "666": 59.24,
-          "777": 52.13,
-          "333bf": 0,
-          "333fm": 67.57,
-          "333oh": 48.48,
-          "clock": 42.68,
-          "minx": 49.04,
-          "pyram": 27.79,
-          "skewb": 59.45,
-          "sq1": 73.9
+          "222": {
+            "score": 98.81,
+            "source": "average"
+          },
+          "333": {
+            "score": 91.65,
+            "source": "average"
+          },
+          "444": {
+            "score": 81.07,
+            "source": "average"
+          },
+          "555": {
+            "score": 83.03,
+            "source": "average"
+          },
+          "666": {
+            "score": 70.25,
+            "source": "average"
+          },
+          "777": {
+            "score": 62.5,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 9.34,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 71,
+            "source": "average"
+          },
+          "clock": {
+            "score": 51.38,
+            "source": "average"
+          },
+          "minx": {
+            "score": 62.6,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 100,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 61.95,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 85.47,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
         "wcaId": "2022GART03",
         "name": "Nova Garthon",
-        "score": 51.73,
+        "score": 54.33,
         "components": {
-          "222": 51.39,
-          "333": 68.5,
-          "444": 65.99,
-          "555": 69.21,
-          "666": 56.52,
-          "777": 49.36,
-          "333bf": 39.04,
-          "333fm": 0,
-          "333oh": 54.41,
-          "clock": 51.6,
-          "minx": 68.52,
-          "pyram": 32.79,
-          "skewb": 60.34,
-          "sq1": 56.59
+          "222": {
+            "score": 51.39,
+            "source": "average"
+          },
+          "333": {
+            "score": 68.5,
+            "source": "average"
+          },
+          "444": {
+            "score": 65.99,
+            "source": "average"
+          },
+          "555": {
+            "score": 69.21,
+            "source": "average"
+          },
+          "666": {
+            "score": 56.52,
+            "source": "average"
+          },
+          "777": {
+            "score": 49.36,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 39.04,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 50,
+            "source": "single"
+          },
+          "333oh": {
+            "score": 54.41,
+            "source": "average"
+          },
+          "clock": {
+            "score": 51.6,
+            "source": "average"
+          },
+          "minx": {
+            "score": 68.52,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 32.79,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 60.34,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 56.59,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 23.98,
+            "source": "single"
+          },
+          "555bf": {
+            "score": 42.06,
+            "source": "single"
+          },
+          "333mbf": {
+            "score": 83.33,
+            "source": "single"
+          }
         }
       },
       {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "score": 48.09,
+        "wcaId": "2022FETH01",
+        "name": "Miles Skye Fetherston",
+        "score": 54.19,
         "components": {
-          "222": 77.93,
-          "333": 59.8,
-          "444": 56.5,
-          "555": 48.01,
-          "666": 41.2,
-          "777": 33.23,
-          "333bf": 0,
-          "333fm": 97.09,
-          "333oh": 42.04,
-          "clock": 22.66,
-          "minx": 56.27,
-          "pyram": 25.6,
-          "skewb": 37.43,
-          "sq1": 75.54
+          "222": {
+            "score": 100,
+            "source": "average"
+          },
+          "333": {
+            "score": 98.26,
+            "source": "average"
+          },
+          "444": {
+            "score": 79.62,
+            "source": "average"
+          },
+          "555": {
+            "score": 71.05,
+            "source": "average"
+          },
+          "666": {
+            "score": 57.45,
+            "source": "average"
+          },
+          "777": {
+            "score": 51.93,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 10.15,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 81.29,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 72.3,
+            "source": "average"
+          },
+          "clock": {
+            "score": 53.66,
+            "source": "average"
+          },
+          "minx": {
+            "score": 70.45,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 52,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 62.36,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 60.73,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
-        "wcaId": "2023BENT02",
-        "name": "Hamish Bentley",
-        "score": 44.16,
+        "wcaId": "2022JONE11",
+        "name": "Kyle Jones",
+        "score": 53.79,
         "components": {
-          "222": 45.48,
-          "333": 55.94,
-          "444": 60.21,
-          "555": 54.6,
-          "666": 56.11,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 82.64,
-          "333oh": 43.62,
-          "clock": 32.79,
-          "minx": 51.78,
-          "pyram": 30.69,
-          "skewb": 51.47,
-          "sq1": 52.95
+          "222": {
+            "score": 67.48,
+            "source": "average"
+          },
+          "333": {
+            "score": 100,
+            "source": "average"
+          },
+          "444": {
+            "score": 80.44,
+            "source": "average"
+          },
+          "555": {
+            "score": 79.54,
+            "source": "average"
+          },
+          "666": {
+            "score": 67.53,
+            "source": "average"
+          },
+          "777": {
+            "score": 56.64,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 52,
+            "source": "single"
+          },
+          "333oh": {
+            "score": 52.52,
+            "source": "average"
+          },
+          "clock": {
+            "score": 100,
+            "source": "average"
+          },
+          "minx": {
+            "score": 52.08,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 55.32,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 50.91,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 100,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
-        "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "score": 40.07,
+        "wcaId": "2019THEO03",
+        "name": "Connor Theodore",
+        "score": 52.12,
         "components": {
-          "222": 35.02,
-          "333": 64.47,
-          "444": 57.74,
-          "555": 49.83,
-          "666": 46.9,
-          "777": 40.94,
-          "333bf": 0,
-          "333fm": 59.17,
-          "333oh": 44.48,
-          "clock": 28.47,
-          "minx": 68.72,
-          "pyram": 21.31,
-          "skewb": 43.96,
-          "sq1": 0
+          "222": {
+            "score": 56.46,
+            "source": "average"
+          },
+          "333": {
+            "score": 73.06,
+            "source": "average"
+          },
+          "444": {
+            "score": 71.44,
+            "source": "average"
+          },
+          "555": {
+            "score": 69.86,
+            "source": "average"
+          },
+          "666": {
+            "score": 54.02,
+            "source": "average"
+          },
+          "777": {
+            "score": 44.24,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 18.75,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 75.75,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 53.28,
+            "source": "average"
+          },
+          "clock": {
+            "score": 45.49,
+            "source": "average"
+          },
+          "minx": {
+            "score": 67.49,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 31.22,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 100,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 43.26,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 81.65,
+            "source": "single"
+          }
+        }
+      },
+      {
+        "wcaId": "2022SHAR23",
+        "name": "Connor Sharpe",
+        "score": 49.62,
+        "components": {
+          "222": {
+            "score": 50.46,
+            "source": "average"
+          },
+          "333": {
+            "score": 68.5,
+            "source": "average"
+          },
+          "444": {
+            "score": 67.31,
+            "source": "average"
+          },
+          "555": {
+            "score": 72.55,
+            "source": "average"
+          },
+          "666": {
+            "score": 59.24,
+            "source": "average"
+          },
+          "777": {
+            "score": 52.13,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 21.11,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 67.57,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 48.48,
+            "source": "average"
+          },
+          "clock": {
+            "score": 42.68,
+            "source": "average"
+          },
+          "minx": {
+            "score": 49.04,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 27.79,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 59.45,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 73.9,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 83.34,
+            "source": "single"
+          }
         }
       },
       {
         "wcaId": "2023ARCI02",
         "name": "Nicole Arcilla",
-        "score": 38.55,
+        "score": 49.26,
         "components": {
-          "222": 42.78,
-          "333": 93.39,
-          "444": 73.76,
-          "555": 79.42,
-          "666": 0,
-          "777": 52.61,
-          "333bf": 0,
-          "333fm": 66.66,
-          "333oh": 99.55,
-          "clock": 23.25,
-          "minx": 0,
-          "pyram": 8.23,
-          "skewb": 0,
-          "sq1": 0
+          "222": {
+            "score": 42.78,
+            "source": "average"
+          },
+          "333": {
+            "score": 93.39,
+            "source": "average"
+          },
+          "444": {
+            "score": 73.76,
+            "source": "average"
+          },
+          "555": {
+            "score": 79.42,
+            "source": "average"
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 52.61,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 100,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 70.27,
+            "source": "single"
+          },
+          "333oh": {
+            "score": 99.55,
+            "source": "average"
+          },
+          "clock": {
+            "score": 23.25,
+            "source": "average"
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 8.23,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 0,
+            "source": null
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 100,
+            "source": "single"
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 94.11,
+            "source": "single"
+          }
+        }
+      },
+      {
+        "wcaId": "2022TOLH01",
+        "name": "Gemma Tolhurst",
+        "score": 39.61,
+        "components": {
+          "222": {
+            "score": 77.93,
+            "source": "average"
+          },
+          "333": {
+            "score": 59.8,
+            "source": "average"
+          },
+          "444": {
+            "score": 56.5,
+            "source": "average"
+          },
+          "555": {
+            "score": 48.01,
+            "source": "average"
+          },
+          "666": {
+            "score": 41.2,
+            "source": "average"
+          },
+          "777": {
+            "score": 33.23,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 97.09,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 42.04,
+            "source": "average"
+          },
+          "clock": {
+            "score": 22.66,
+            "source": "average"
+          },
+          "minx": {
+            "score": 56.27,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 25.6,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 37.43,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 75.54,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
+        }
+      },
+      {
+        "wcaId": "2023BENT02",
+        "name": "Hamish Bentley",
+        "score": 37.02,
+        "components": {
+          "222": {
+            "score": 45.48,
+            "source": "average"
+          },
+          "333": {
+            "score": 55.94,
+            "source": "average"
+          },
+          "444": {
+            "score": 60.21,
+            "source": "average"
+          },
+          "555": {
+            "score": 54.6,
+            "source": "average"
+          },
+          "666": {
+            "score": 56.11,
+            "source": "average"
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 11,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 82.64,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 43.62,
+            "source": "average"
+          },
+          "clock": {
+            "score": 32.79,
+            "source": "average"
+          },
+          "minx": {
+            "score": 51.78,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 30.69,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 51.47,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 52.95,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
         "wcaId": "2019WILL30",
         "name": "Madeline Willoughby-Khan",
-        "score": 37.96,
+        "score": 36.44,
         "components": {
-          "222": 44.99,
-          "333": 61.25,
-          "444": 63.94,
-          "555": 56.23,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 91.74,
-          "333oh": 45.9,
-          "clock": 29.12,
-          "minx": 47.13,
-          "pyram": 17.84,
-          "skewb": 41.85,
-          "sq1": 31.51
+          "222": {
+            "score": 44.99,
+            "source": "average"
+          },
+          "333": {
+            "score": 61.25,
+            "source": "average"
+          },
+          "444": {
+            "score": 63.94,
+            "source": "average"
+          },
+          "555": {
+            "score": 56.23,
+            "source": "average"
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 5.56,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 91.74,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 45.9,
+            "source": "average"
+          },
+          "clock": {
+            "score": 29.12,
+            "source": "average"
+          },
+          "minx": {
+            "score": 47.13,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 17.84,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 41.85,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 31.51,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 82.5,
+            "source": "single"
+          }
         }
       },
       {
         "wcaId": "2023SCOT04",
         "name": "Ash Scott",
-        "score": 35.94,
+        "score": 35.51,
         "components": {
-          "222": 41.19,
-          "333": 54.93,
-          "444": 49.78,
-          "555": 41.6,
-          "666": 0,
-          "777": 0,
-          "333bf": 45.9,
-          "333fm": 69.92,
-          "333oh": 46.56,
-          "clock": 29.26,
-          "minx": 42.44,
-          "pyram": 25.17,
-          "skewb": 27.61,
-          "sq1": 28.76
+          "222": {
+            "score": 41.19,
+            "source": "average"
+          },
+          "333": {
+            "score": 54.93,
+            "source": "average"
+          },
+          "444": {
+            "score": 49.78,
+            "source": "average"
+          },
+          "555": {
+            "score": 41.6,
+            "source": "average"
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 45.9,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 69.92,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 46.56,
+            "source": "average"
+          },
+          "clock": {
+            "score": 29.26,
+            "source": "average"
+          },
+          "minx": {
+            "score": 42.44,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 25.17,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 27.61,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 28.76,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 18.01,
+            "source": "single"
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 82.49,
+            "source": "single"
+          }
+        }
+      },
+      {
+        "wcaId": "2021LUAA01",
+        "name": "Aaron Lu",
+        "score": 33,
+        "components": {
+          "222": {
+            "score": 35.02,
+            "source": "average"
+          },
+          "333": {
+            "score": 64.47,
+            "source": "average"
+          },
+          "444": {
+            "score": 57.74,
+            "source": "average"
+          },
+          "555": {
+            "score": 49.83,
+            "source": "average"
+          },
+          "666": {
+            "score": 46.9,
+            "source": "average"
+          },
+          "777": {
+            "score": 40.94,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 59.17,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 44.48,
+            "source": "average"
+          },
+          "clock": {
+            "score": 28.47,
+            "source": "average"
+          },
+          "minx": {
+            "score": 68.72,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 21.31,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 43.96,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       },
       {
         "wcaId": "2025THUR01",
         "name": "Emily Thurston",
-        "score": 11.82,
+        "score": 9.74,
         "components": {
-          "222": 21.73,
-          "333": 28.67,
-          "444": 28.06,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 17.58,
-          "clock": 26.77,
-          "minx": 0,
-          "pyram": 14.4,
-          "skewb": 28.34,
-          "sq1": 0
+          "222": {
+            "score": 21.73,
+            "source": "average"
+          },
+          "333": {
+            "score": 28.67,
+            "source": "average"
+          },
+          "444": {
+            "score": 28.06,
+            "source": "average"
+          },
+          "555": {
+            "score": 0,
+            "source": null
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 0,
+            "source": null
+          },
+          "333fm": {
+            "score": 0,
+            "source": null
+          },
+          "333oh": {
+            "score": 17.58,
+            "source": "average"
+          },
+          "clock": {
+            "score": 26.77,
+            "source": "average"
+          },
+          "minx": {
+            "score": 0,
+            "source": null
+          },
+          "pyram": {
+            "score": 14.4,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 28.34,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 0,
+            "source": null
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 0,
+            "source": null
+          }
         }
       }
     ]
