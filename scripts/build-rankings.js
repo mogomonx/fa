@@ -49,26 +49,29 @@ function rankEvent(people, event, type) {
   });
 
   const tieRank = withResult.length + 1;
+  const hasResultSet = new Set(withResult.map(({ p }) => p.wcaId));
   people.forEach((p) => {
     if (!(p.wcaId in rankByWcaId)) {
       rankByWcaId[p.wcaId] = tieRank;
     }
   });
 
-  return { ranked, rankByWcaId, bestValue: withResult[0]?.value ?? null };
+  return { ranked, rankByWcaId, hasResultSet, bestValue: withResult[0]?.value ?? null };
 }
 
 // Sum of Ranks: every one of the 17 events counts, single and average are
 // two separate leaderboards. If literally nobody in the group has a result
 // for an event (e.g. nobody's done 4BF), rankEvent above already ties
-// everyone at rank 1 for it, which is exactly right here.
+// everyone at rank 1 for it, which is exactly right here. Each component
+// also carries hasResult, so the UI can flag placeholder ties in red.
 function buildSumOfRanks(people, eventRankData, type) {
   const totals = people.map((p) => {
     const components = {};
     let total = 0;
     for (const event of EVENTS) {
-      const r = eventRankData[event.id][type].rankByWcaId[p.wcaId];
-      components[event.id] = r;
+      const data = eventRankData[event.id][type];
+      const r = data.rankByWcaId[p.wcaId];
+      components[event.id] = { rank: r, hasResult: data.hasResultSet.has(p.wcaId) };
       total += r;
     }
     return { wcaId: p.wcaId, name: p.name, total, components };

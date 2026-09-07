@@ -19,9 +19,9 @@
     <button class="tab-btn" data-tab="records">FA Records</button>
     <button class="tab-btn" data-tab="events">Event Rankings</button>
     <button class="tab-btn" data-tab="individual">Individual Results</button>
-    <button class="tab-btn" data-tab="top100">Top 100</button>
     <button class="tab-btn" data-tab="history">Historical Records</button>
     <button class="tab-btn" data-tab="overall">Sum of Ranks &amp; Kinch</button>
+    <button class="tab-btn" data-tab="misc">Misc</button>
   </nav>
 
   <main class="container">
@@ -32,9 +32,9 @@
         <a href="#" class="home-link" data-tab="records"><strong>FA Records</strong><span>The group's current best single/average per event, and who holds it.</span></a>
         <a href="#" class="home-link" data-tab="events"><strong>Event Rankings</strong><span>Single and average rankings for every event.</span></a>
         <a href="#" class="home-link" data-tab="individual"><strong>Individual Results</strong><span>Every result anyone's ever recorded, not just personal bests.</span></a>
-        <a href="#" class="home-link" data-tab="top100"><strong>Top 100</strong><span>Who holds the most spots in the group's own top 100 per event.</span></a>
-        <a href="#" class="home-link" data-tab="history"><strong>Historical Records</strong><span>Every FA Record ever set, in order, plus who's set the most.</span></a>
+        <a href="#" class="home-link" data-tab="history"><strong>Historical Records</strong><span>Every FA Record ever set, in order, by event.</span></a>
         <a href="#" class="home-link" data-tab="overall"><strong>Sum of Ranks &amp; Kinch</strong><span>The two combined ranking systems.</span></a>
+        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, FARs set per person, and other odds and ends.</span></a>
       </div>
     </section>
 
@@ -66,49 +66,12 @@
       <div id="individual-results-table"></div>
     </section>
 
-    <section id="tab-top100" class="tab-panel">
-      <div class="panel-controls">
-        <div class="toggle" id="top100-type-toggle">
-          <button class="toggle-btn active" data-type="single">Single</button>
-          <button class="toggle-btn" data-type="average">Average</button>
-        </div>
-        <div class="toggle" id="top100-view-toggle">
-          <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
-          <button class="toggle-btn" data-view="detailed">Detailed table</button>
-        </div>
-      </div>
-      <p class="board-note">How many of the group's own top-100 results per event belong to each person (up to 100 results are counted per event).</p>
-      <div id="top100-leaderboard-view">
-        <div id="top100-table"></div>
-      </div>
-      <div id="top100-detailed-view" class="scroll-table" style="display:none;"></div>
-    </section>
-
     <section id="tab-history" class="tab-panel">
-      <div class="board-grid">
-        <div class="board">
-          <h2>Record history</h2>
-          <p class="board-note">Every FA Record ever set, most recent first.</p>
-          <div id="historical-records-table"></div>
-        </div>
-        <div class="board">
-          <div class="panel-controls">
-            <h2 style="margin:0;">FARs set per person</h2>
-            <div class="toggle" id="far-view-toggle">
-              <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
-              <button class="toggle-btn" data-view="detailed">Detailed table</button>
-            </div>
-          </div>
-          <div class="toggle" id="far-type-toggle" style="margin-bottom:0.75rem;">
-            <button class="toggle-btn active" data-type="single">Single</button>
-            <button class="toggle-btn" data-type="average">Average</button>
-          </div>
-          <div id="far-leaderboard-view">
-            <div id="far-table"></div>
-          </div>
-          <div id="far-detailed-view" class="scroll-table" style="display:none;"></div>
-        </div>
+      <div class="panel-controls">
+        <select id="history-event-select"></select>
       </div>
+      <p class="board-note">Every FA Record ever set for this event, most recent first.</p>
+      <div id="historical-records-table"></div>
     </section>
 
     <section id="tab-overall" class="tab-panel">
@@ -128,7 +91,7 @@
               <button class="toggle-btn" data-type="average">Average</button>
             </div>
           </div>
-          <p class="board-note">Lower total is better. All 17 events count; an event nobody has a result for ties everyone at 1.</p>
+          <p class="board-note">Lower total is better. All 17 events count; an event nobody has a result for ties everyone at 1 (shown in red).</p>
           <div id="sum-of-ranks-table"></div>
         </div>
         <div class="board">
@@ -147,13 +110,63 @@
               <button class="toggle-btn" data-type="average">Average</button>
             </div>
           </div>
-          <p class="board-note">Each cell is that person's rank within the group for that event.</p>
+          <p class="board-note">Gold/silver/bronze text = 1st/2nd/3rd. Red = no result for that event (a tied placeholder rank, not a real one).</p>
           <div class="scroll-table" id="sum-of-ranks-detailed"></div>
         </div>
         <div class="board">
           <h2>Kinch Rank — per event</h2>
           <p class="board-note">Each cell is the score used for that event; a small letter shows whether it came from single (s) or average (a).</p>
           <div class="scroll-table" id="kinch-detailed"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-misc" class="tab-panel">
+      <div class="board-grid">
+        <div class="board">
+          <div class="panel-controls">
+            <h2 style="margin:0;">Top 100</h2>
+            <div class="toggle" id="top100-view-toggle">
+              <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
+              <button class="toggle-btn" data-view="detailed">Detailed table</button>
+            </div>
+          </div>
+          <div class="toggle" id="top100-type-toggle" style="margin-bottom:0.75rem;">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+          <p class="board-note">How many of the group's own top-100 results per event belong to each person.</p>
+          <div id="top100-leaderboard-view">
+            <div id="top100-table"></div>
+          </div>
+          <div id="top100-detailed-view" class="scroll-table" style="display:none;"></div>
+        </div>
+        <div class="board">
+          <div class="panel-controls">
+            <h2 style="margin:0;">FARs set per person</h2>
+            <div class="toggle" id="far-view-toggle">
+              <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
+              <button class="toggle-btn" data-view="detailed">Detailed table</button>
+            </div>
+          </div>
+          <div class="toggle" id="far-type-toggle" style="margin-bottom:0.75rem;">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+          <div id="far-leaderboard-view">
+            <div id="far-table"></div>
+          </div>
+          <div id="far-detailed-view" class="scroll-table" style="display:none;"></div>
+        </div>
+        <div class="board" id="oldest-records-board">
+          <h2>Oldest standing FA Records</h2>
+          <p class="board-note">Current records, oldest first — how long each has stood.</p>
+          <div id="oldest-records-table"></div>
+        </div>
+        <div class="board" id="upcoming-board">
+          <h2>Upcoming competitions</h2>
+          <p class="board-note" id="upcoming-note"></p>
+          <div id="upcoming-table"></div>
         </div>
       </div>
     </section>

@@ -14,18 +14,21 @@ const state = {
   top100View: 'leaderboard',
   farType: 'single',
   farView: 'leaderboard',
+  historyEventId: null,
   previousTab: 'home',
 };
 
 async function loadData() {
-  const [rankingsRes, individualRes, historicalRes] = await Promise.all([
+  const [rankingsRes, individualRes, historicalRes, upcomingRes] = await Promise.all([
     fetch('data/rankings.json', { cache: 'no-store' }),
     fetch('data/individual-rankings.json', { cache: 'no-store' }),
     fetch('data/historical-records.json', { cache: 'no-store' }),
+    fetch('data/upcoming.json', { cache: 'no-store' }).catch(() => null),
   ]);
   rankingsData = await rankingsRes.json();
   individualData = await individualRes.json();
   historicalData = await historicalRes.json();
+  const upcomingData = upcomingRes && upcomingRes.ok ? await upcomingRes.json() : null;
 
   for (const row of rankingsData.sumOfRanks.single) {
     peopleByWcaId.set(row.wcaId, row.name);
@@ -39,12 +42,16 @@ async function loadData() {
 
   populateEventSelect();
   populateIndividualEventSelect();
+  populateHistoryEventSelect();
   renderFaRecords();
   renderOverall();
   renderEventTable();
   renderIndividual();
   renderTop100();
   renderHistory();
+  renderFarCounts();
+  renderOldestRecords();
+  renderUpcoming(upcomingData);
 }
 
 function nameLink(wcaId, name) {
@@ -248,7 +255,14 @@ function renderSorDetailed() {
     rows,
     'total',
     'Total',
-    (v) => (v === undefined || v === null ? '—' : v),
+    (v) => {
+      if (v == null) return '—';
+      if (!v.hasResult) return `<span class="rank-none">${v.rank}</span>`;
+      if (v.rank === 1) return `<span class="rank-gold">${v.rank}</span>`;
+      if (v.rank === 2) return `<span class="rank-silver">${v.rank}</span>`;
+      if (v.rank === 3) return `<span class="rank-bronze">${v.rank}</span>`;
+      return v.rank;
+    },
     (v) => (v === undefined || v === null ? '—' : v)
   );
 }
@@ -329,14 +343,30 @@ function renderIndividual() {
   const effectiveType = hasAverage ? state.individualType : 'single';
   const data = event[effectiveType];
 
-  renderTable(resultsContainer, data ? data.ranked : [], [
+  const columns = [
     { key: 'rank', label: '#', value: (r) => r.rank },
     { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-    { key: 'result', label: 'Result', value: (r) => r.display },
     { key: 'pr', label: 'PR order', value: (r) => (r.prRank ? `PR${r.prRank}` : '—') },
-    { key: 'round', label: 'Round', value: (r) => r.round || '—' },
-    { key: 'comp', label: 'Competition', value: (r) => r.competitionName || '—' },
-  ]);
+  ];
+  if (effectiveType === 'average') {
+    columns.push({
+      key: 'solves',
+      label: 'Solves',
+      value: (r) => {
+        if (!r.solves) return '<span class="empty-note">—</span>';
+        const text = r.solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
+        return `<span class="solves-cell">${text}</span>`;
+      },
+    });
+  }
+  columns.push({
+    key: 'achievedAt',
+    label: 'Achieved at',
+    value: (r) => `<span class="solves-cell">${[r.competitionName, r.round].filter(Boolean).join(' \u2013 ') || '—'}</span>`,
+  });
+  columns.push({ key: 'result', label: 'Result', value: (r) => r.display });
+
+  renderTable(resultsContainer, data ? data.ranked : [], columns);
 }
 
 // ---------- Top 100 ----------
@@ -369,16 +399,34 @@ function renderTop100() {
 
 // ---------- Historical Records ----------
 
+function populateHistoryEventSelect() {
+  const select = document.getElementById('history-event-select');
+  select.innerHTML = '';
+  for (const event of rankingsData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
+  }
+  state.historyEventId = select.value;
+  select.addEventListener('change', () => {
+    state.historyEventId = select.value;
+    renderHistory();
+  });
+}
+
 function renderHistory() {
-  renderTable(document.getElementById('historical-records-table'), historicalData.records, [
+  const rows = historicalData.records.filter((r) => r.eventId === state.historyEventId);
+  renderTable(document.getElementById('historical-records-table'), rows, [
     { key: 'date', label: 'Date', value: (r) => r.date || '—' },
-    { key: 'event', label: 'Event', value: (r) => r.eventName },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'result', label: 'Result', value: (r) => r.display },
     { key: 'comp', label: 'Competition', value: (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ') },
   ]);
+}
 
+function renderFarCounts() {
   document.getElementById('far-leaderboard-view').style.display =
     state.farView === 'leaderboard' ? '' : 'none';
   document.getElementById('far-detailed-view').style.display =
@@ -402,6 +450,50 @@ function renderHistory() {
       (v) => (v == null ? 0 : v)
     );
   }
+}
+
+function daysAgo(dateStr) {
+  if (!dateStr) return null;
+  const then = new Date(dateStr);
+  const now = new Date();
+  return Math.floor((now - then) / (1000 * 60 * 60 * 24));
+}
+
+function renderOldestRecords() {
+  const rows = historicalData.currentRecordsByAge || [];
+  renderTable(document.getElementById('oldest-records-table'), rows, [
+    { key: 'event', label: 'Event', value: (r) => r.eventName },
+    { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
+    { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'result', label: 'Result', value: (r) => r.display },
+    { key: 'age', label: 'Standing since', value: (r) => (r.date ? `${r.date} (${daysAgo(r.date)}d)` : '—') },
+  ]);
+}
+
+function renderUpcoming(upcomingData) {
+  const note = document.getElementById('upcoming-note');
+  const container = document.getElementById('upcoming-table');
+  const competitions = (upcomingData?.competitions || []).slice(0, 5);
+
+  if (competitions.length === 0) {
+    note.textContent = 'Add competition IDs to config/upcoming-competitions.json to populate this.';
+    container.innerHTML = '';
+    return;
+  }
+  note.textContent = 'Next 5 upcoming competitions your group is attending.';
+
+  const table = document.createElement('table');
+  table.innerHTML = '<thead><tr><th>Date</th><th>Competition</th><th>Attending</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  competitions.forEach((c) => {
+    const tr = document.createElement('tr');
+    const attendeeNames = (c.attendees || []).map((a) => nameLink(a.wcaId, a.name)).join(', ') || '—';
+    tr.innerHTML = `<td>${c.date || '—'}</td><td><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a></td><td>${attendeeNames}</td>`;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  container.innerHTML = '';
+  container.appendChild(table);
 }
 
 // ---------- Profile ----------
@@ -569,11 +661,11 @@ setupToggle('top100-view-toggle', 'view', (view) => {
 });
 setupToggle('far-type-toggle', 'type', (type) => {
   state.farType = type;
-  renderHistory();
+  renderFarCounts();
 });
 setupToggle('far-view-toggle', 'view', (view) => {
   state.farView = view;
-  renderHistory();
+  renderFarCounts();
 });
 
 loadData().catch((err) => {

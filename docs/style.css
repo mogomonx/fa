@@ -223,7 +223,6 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 .name-link {
   color: var(--text);
   text-decoration: none;
-  border-bottom: 1px dotted var(--text-dim);
   cursor: pointer;
 }
 
@@ -276,6 +275,11 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   color: var(--text-dim);
   margin-left: 2px;
 }
+
+.rank-gold { color: var(--gold); font-weight: 700; }
+.rank-silver { color: var(--silver); font-weight: 700; }
+.rank-bronze { color: var(--bronze); font-weight: 700; }
+.rank-none { color: #e05a5a; }
 
 .solves-cell {
   font-size: 0.78rem;

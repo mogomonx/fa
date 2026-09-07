@@ -74,17 +74,26 @@ function main() {
   const { people } = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
 
   const allRecords = [];
+  const currentRecords = [];
   for (const event of EVENTS) {
-    allRecords.push(...computeHistory(entries, event, 'single'));
-    allRecords.push(...computeHistory(entries, event, 'average'));
+    for (const type of ['single', 'average']) {
+      const history = computeHistory(entries, event, type);
+      allRecords.push(...history);
+      if (history.length > 0) {
+        currentRecords.push(history[history.length - 1]);
+      }
+    }
   }
 
   // Newest first for the "historical records" feed.
   allRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  // Oldest first for "how long has this record stood".
+  currentRecords.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
 
   const output = {
     generatedAt: new Date().toISOString(),
     records: allRecords,
+    currentRecordsByAge: currentRecords,
     farCounts: {
       single: buildFarCounts(people, allRecords, 'single'),
       average: buildFarCounts(people, allRecords, 'average'),

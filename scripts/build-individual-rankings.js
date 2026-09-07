@@ -61,6 +61,7 @@ function rankAllResults(entries, event, type) {
       prRank: prRankByKey.get(entryKey(e)) || null,
       value: e[type],
       display: formatResult(e[type], event, type === 'average'),
+      solves: type === 'average' ? computeAttemptDisplays(e.attempts, event) : null,
       competitionName: e.competitionName,
       round: roundLabel(e.round),
       date: e.date,
