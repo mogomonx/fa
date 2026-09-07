@@ -5,7 +5,7 @@
   "description": "Website ranking a group's official WCA stats, replacing a manually-updated spreadsheet.",
   "scripts": {
     "fetch": "node scripts/fetch.js",
-    "build": "node scripts/build-rankings.js",
+    "build": "node scripts/build-rankings.js && node scripts/build-individual-rankings.js",
     "update": "npm run fetch && npm run build"
   },
   "engines": {

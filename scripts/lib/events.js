@@ -22,9 +22,9 @@ const EVENTS = [
   { id: '333mbf', name: '3x3x3 Multi-Blind', format: 'mbld' },
 ];
 
-// Events that have no "average" (only single results are official)
-const SINGLE_ONLY_EVENTS = new Set(['333bf', '333fm', '444bf', '555bf', '333mbf']);
-// 333fm DOES have an official average (mean of 3), unlike the blind events + mbld.
-SINGLE_ONLY_EVENTS.delete('333fm');
+// Events that have no official "average" (only single results count).
+// Note: 3x3x3 Blindfolded DOES have an official average (Bo3, introduced
+// 2021) -- only the multi-attempt/cumulative ones below don't.
+const SINGLE_ONLY_EVENTS = new Set(['444bf', '555bf', '333mbf']);
 
 module.exports = { EVENTS, SINGLE_ONLY_EVENTS };

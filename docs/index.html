@@ -3,44 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FA Rankings</title>
+<title>FA Records</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <h1>FA Rankings</h1>
+      <h1>FA Records</h1>
       <p id="updated-at" class="updated-at">Loading…</p>
     </div>
   </header>
 
   <nav class="tabs" id="tabs">
-    <button class="tab-btn active" data-tab="overall">Sum of Ranks &amp; Kinch</button>
+    <button class="tab-btn active" data-tab="records">FA Records</button>
     <button class="tab-btn" data-tab="events">Event Rankings</button>
+    <button class="tab-btn" data-tab="individual">Individual Results</button>
+    <button class="tab-btn" data-tab="overall">Sum of Ranks &amp; Kinch</button>
   </nav>
 
   <main class="container">
 
-    <section id="tab-overall" class="tab-panel active">
-      <div class="panel-controls">
-        <div class="toggle" id="overall-type-toggle">
-          <button class="toggle-btn active" data-type="single">Single</button>
-          <button class="toggle-btn" data-type="average">Average</button>
-        </div>
-      </div>
-
-      <div class="board-grid">
-        <div class="board">
-          <h2>Sum of Ranks</h2>
-          <p class="board-note">figure out how it works bro it aint that hard</p>
-          <div id="sum-of-ranks-table"></div>
-        </div>
-        <div class="board">
-          <h2>Kinch Rank</h2>
-          <p class="board-note">your result/best result * 100</p>
-          <div id="kinch-table"></div>
-        </div>
-      </div>
+    <section id="tab-records" class="tab-panel active">
+      <p class="board-note">The best single and average currently held within FA for each event.</p>
+      <div id="fa-records-table"></div>
     </section>
 
     <section id="tab-events" class="tab-panel">
@@ -52,6 +37,68 @@
         </div>
       </div>
       <div id="event-table"></div>
+      <div id="event-breakdowns"></div>
+    </section>
+
+    <section id="tab-individual" class="tab-panel">
+      <p class="board-note">Every recorded result (not just personal bests) ranked within the group.</p>
+      <div class="panel-controls">
+        <select id="individual-event-select"></select>
+        <div class="toggle" id="individual-type-toggle">
+          <button class="toggle-btn active" data-type="single">Single</button>
+          <button class="toggle-btn" data-type="average">Average</button>
+        </div>
+      </div>
+      <div class="board-grid">
+        <div class="board">
+          <h2>All results</h2>
+          <div id="individual-results-table"></div>
+        </div>
+        <div class="board">
+          <h2 id="top100-heading">Top 100 tally</h2>
+          <p class="board-note" id="top100-note"></p>
+          <div id="top100-table"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-overall" class="tab-panel">
+      <div class="panel-controls">
+        <div class="toggle" id="overall-type-toggle">
+          <button class="toggle-btn active" data-type="single">Single</button>
+          <button class="toggle-btn" data-type="average">Average</button>
+        </div>
+        <div class="toggle" id="overall-view-toggle">
+          <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
+          <button class="toggle-btn" data-view="detailed">Detailed table</button>
+        </div>
+      </div>
+
+      <div id="leaderboard-view" class="board-grid">
+        <div class="board">
+          <h2>Sum of Ranks</h2>
+          <p class="board-note">Lower total is better. A missing result counts as one place behind the last person who has a result.</p>
+          <div id="sum-of-ranks-table"></div>
+        </div>
+        <div class="board">
+          <h2>Kinch Rank</h2>
+          <p class="board-note">Score out of 100 per event, relative to the best result in the group. Higher is better.</p>
+          <div id="kinch-table"></div>
+        </div>
+      </div>
+
+      <div id="detailed-view" class="detailed-view" style="display:none;">
+        <div class="board">
+          <h2>Sum of Ranks — per event</h2>
+          <p class="board-note">Each cell is that person's rank within the group for that event.</p>
+          <div class="scroll-table" id="sum-of-ranks-detailed"></div>
+        </div>
+        <div class="board">
+          <h2>Kinch Rank — per event</h2>
+          <p class="board-note">Each cell is that person's Kinch score (out of 100) for that event.</p>
+          <div class="scroll-table" id="kinch-detailed"></div>
+        </div>
+      </div>
     </section>
 
   </main>

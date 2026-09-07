@@ -1,20 +1,20 @@
 {
-  "wcaIds": [
-    "2022GART03",
-    "2022BURN09",
-    "2022JONE11",
-    "2022FETH01",
-    "2022HRDL01",
-    "2018CROU02",
-    "2023ARCI02",
-    "2021BLAK01",
-    "2019THEO03",
-    "2022SHAR23",
-    "2021LUAA01",
-    "2022TOLH01",
-    "2023BENT02",
-    "2019WILL30",
-    "2023SCOT04",
-    "2025THUR01"
+  "people": [
+    { "wcaId": "2022GART03", "displayName": null },
+    { "wcaId": "2022BURN09", "displayName": null },
+    { "wcaId": "2022JONE11", "displayName": null },
+    { "wcaId": "2022FETH01", "displayName": null },
+    { "wcaId": "2022HRDL01", "displayName": null },
+    { "wcaId": "2018CROU02", "displayName": null },
+    { "wcaId": "2023ARCI02", "displayName": null },
+    { "wcaId": "2021BLAK01", "displayName": null },
+    { "wcaId": "2019THEO03", "displayName": null },
+    { "wcaId": "2022SHAR23", "displayName": null },
+    { "wcaId": "2021LUAA01", "displayName": null },
+    { "wcaId": "2022TOLH01", "displayName": null },
+    { "wcaId": "2023BENT02", "displayName": null },
+    { "wcaId": "2019WILL30", "displayName": null },
+    { "wcaId": "2023SCOT04", "displayName": null },
+    { "wcaId": "2025THUR01", "displayName": null }
   ]
 }

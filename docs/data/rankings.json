@@ -1,3761 +1,849 @@
 {
-  "generatedAt": "2026-09-06T14:52:04.774Z",
-  "dataFetchedAt": "2026-09-06T14:52:04.733Z",
+  "generatedAt": "2026-09-06T22:31:40.172Z",
+  "dataFetchedAt": null,
   "events": [
     {
       "id": "333",
       "name": "3x3x3 Cube",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 1,
-          "value": 485,
-          "display": "4.85"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 2,
-          "value": 608,
-          "display": "6.08"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 611,
-          "display": "6.11"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 4,
-          "value": 628,
-          "display": "6.28"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 5,
-          "value": 646,
-          "display": "6.46"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 6,
-          "value": 671,
-          "display": "6.71"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 7,
-          "value": 737,
-          "display": "7.37"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 766,
-          "display": "7.66"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 846,
-          "display": "8.46"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 10,
-          "value": 951,
-          "display": "9.51"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 957,
-          "display": "9.57"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 12,
-          "value": 978,
-          "display": "9.78"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 13,
-          "value": 990,
-          "display": "9.90"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 14,
-          "value": 1013,
-          "display": "10.13"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 1077,
-          "display": "10.77"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 2094,
-          "display": "20.94"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 1,
-          "value": 735,
-          "display": "7.35"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 2,
-          "value": 748,
-          "display": "7.48"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 3,
-          "value": 758,
-          "display": "7.58"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 4,
-          "value": 787,
-          "display": "7.87"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 5,
-          "value": 792,
-          "display": "7.92"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 6,
-          "value": 802,
-          "display": "8.02"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 7,
-          "value": 858,
-          "display": "8.58"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 1006,
-          "display": "10.06"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 1073,
-          "display": "10.73"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 9,
-          "value": 1073,
-          "display": "10.73"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 1140,
-          "display": "11.40"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 1200,
-          "display": "12.00"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 13,
-          "value": 1229,
-          "display": "12.29"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 14,
-          "value": 1314,
-          "display": "13.14"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 1338,
-          "display": "13.38"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 2564,
-          "display": "25.64"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "222",
       "name": "2x2x2 Cube",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 1,
-          "value": 67,
-          "display": "0.67"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 2,
-          "value": 70,
-          "display": "0.70"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 3,
-          "value": 74,
-          "display": "0.74"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 4,
-          "value": 79,
-          "display": "0.79"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 5,
-          "value": 107,
-          "display": "1.07"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 6,
-          "value": 123,
-          "display": "1.23"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 7,
-          "value": 162,
-          "display": "1.62"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 8,
-          "value": 164,
-          "display": "1.64"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 9,
-          "value": 166,
-          "display": "1.66"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 10,
-          "value": 196,
-          "display": "1.96"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 11,
-          "value": 200,
-          "display": "2.00"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 12,
-          "value": 222,
-          "display": "2.22"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 13,
-          "value": 237,
-          "display": "2.37"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 14,
-          "value": 255,
-          "display": "2.55"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 15,
-          "value": 269,
-          "display": "2.69"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 436,
-          "display": "4.36"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 1,
-          "value": 166,
-          "display": "1.66"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 2,
-          "value": 168,
-          "display": "1.68"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 3,
-          "value": 213,
-          "display": "2.13"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 4,
-          "value": 243,
-          "display": "2.43"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 5,
-          "value": 246,
-          "display": "2.46"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 6,
-          "value": 251,
-          "display": "2.51"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 7,
-          "value": 267,
-          "display": "2.67"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 294,
-          "display": "2.94"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 323,
-          "display": "3.23"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 10,
-          "value": 329,
-          "display": "3.29"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 11,
-          "value": 365,
-          "display": "3.65"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 369,
-          "display": "3.69"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 13,
-          "value": 388,
-          "display": "3.88"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 14,
-          "value": 403,
-          "display": "4.03"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 15,
-          "value": 474,
-          "display": "4.74"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 764,
-          "display": "7.64"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "444",
       "name": "4x4x4 Cube",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 2585,
-          "display": "25.85"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 2843,
-          "display": "28.43"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 3,
-          "value": 2973,
-          "display": "29.73"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 4,
-          "value": 3111,
-          "display": "31.11"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 5,
-          "value": 3212,
-          "display": "32.12"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 3416,
-          "display": "34.16"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 7,
-          "value": 3446,
-          "display": "34.46"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 8,
-          "value": 3596,
-          "display": "35.96"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 3723,
-          "display": "37.23"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 10,
-          "value": 3877,
-          "display": "38.77"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 11,
-          "value": 4092,
-          "display": "40.92"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 12,
-          "value": 4173,
-          "display": "41.73"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 4509,
-          "display": "45.09"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 14,
-          "value": 4558,
-          "display": "45.58"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 5116,
-          "display": "51.16"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 8906,
-          "display": "1:29.06"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 2887,
-          "display": "28.87"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 3360,
-          "display": "33.60"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 3561,
-          "display": "35.61"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 4,
-          "value": 3589,
-          "display": "35.89"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 5,
-          "value": 3626,
-          "display": "36.26"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 3794,
-          "display": "37.94"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 7,
-          "value": 3914,
-          "display": "39.14"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 4041,
-          "display": "40.41"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 9,
-          "value": 4289,
-          "display": "42.89"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 10,
-          "value": 4375,
-          "display": "43.75"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 11,
-          "value": 4515,
-          "display": "45.15"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 12,
-          "value": 4795,
-          "display": "47.95"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 5000,
-          "display": "50.00"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 14,
-          "value": 5110,
-          "display": "51.10"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 5799,
-          "display": "57.99"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 10289,
-          "display": "1:42.89"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "555",
       "name": "5x5x5 Cube",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 4919,
-          "display": "49.19"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 5621,
-          "display": "56.21"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 5700,
-          "display": "57.00"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 4,
-          "value": 5750,
-          "display": "57.50"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 5,
-          "value": 6330,
-          "display": "1:03.30"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 6,
-          "value": 6455,
-          "display": "1:04.55"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 7,
-          "value": 6588,
-          "display": "1:05.88"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 8,
-          "value": 6695,
-          "display": "1:06.95"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 9,
-          "value": 6837,
-          "display": "1:08.37"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 10,
-          "value": 7338,
-          "display": "1:13.38"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 11,
-          "value": 8471,
-          "display": "1:24.71"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 12,
-          "value": 9186,
-          "display": "1:31.86"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 9517,
-          "display": "1:35.17"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 14,
-          "value": 9900,
-          "display": "1:39.00"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 10730,
-          "display": "1:47.30"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 5270,
-          "display": "52.70"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 2,
-          "value": 6347,
-          "display": "1:03.47"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 3,
-          "value": 6350,
-          "display": "1:03.50"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 4,
-          "value": 6626,
-          "display": "1:06.26"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 5,
-          "value": 6636,
-          "display": "1:06.36"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 6667,
-          "display": "1:06.67"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 7,
-          "value": 7264,
-          "display": "1:12.64"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 8,
-          "value": 7417,
-          "display": "1:14.17"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 9,
-          "value": 7544,
-          "display": "1:15.44"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 10,
-          "value": 7615,
-          "display": "1:16.15"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 11,
-          "value": 9373,
-          "display": "1:33.73"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 12,
-          "value": 9652,
-          "display": "1:36.52"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 10576,
-          "display": "1:45.76"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 14,
-          "value": 10976,
-          "display": "1:49.76"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 12667,
-          "display": "2:06.67"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "666",
       "name": "6x6x6 Cube",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 7983,
-          "display": "1:19.83"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 11322,
-          "display": "1:53.22"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 12393,
-          "display": "2:03.93"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 4,
-          "value": 12801,
-          "display": "2:08.01"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 5,
-          "value": 13061,
-          "display": "2:10.61"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 6,
-          "value": 14159,
-          "display": "2:21.59"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 7,
-          "value": 14607,
-          "display": "2:26.07"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 8,
-          "value": 15685,
-          "display": "2:36.85"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 15818,
-          "display": "2:38.18"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 10,
-          "value": 16338,
-          "display": "2:43.38"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 19004,
-          "display": "3:10.04"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 12,
-          "value": 21507,
-          "display": "3:35.07"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 22186,
-          "display": "3:41.86"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 9231,
-          "display": "1:32.31"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 12629,
-          "display": "2:06.29"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 13140,
-          "display": "2:11.40"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 4,
-          "value": 13245,
-          "display": "2:12.45"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 5,
-          "value": 13670,
-          "display": "2:16.70"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 6,
-          "value": 15583,
-          "display": "2:35.83"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 7,
-          "value": 16069,
-          "display": "2:40.69"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 8,
-          "value": 16332,
-          "display": "2:43.32"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 9,
-          "value": 16453,
-          "display": "2:44.53"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 10,
-          "value": 17087,
-          "display": "2:50.87"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 19684,
-          "display": "3:16.84"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 12,
-          "value": 22407,
-          "display": "3:44.07"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "777",
       "name": "7x7x7 Cube",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 12729,
-          "display": "2:07.29"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 2,
-          "value": 19224,
-          "display": "3:12.24"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 3,
-          "value": 19688,
-          "display": "3:16.88"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 4,
-          "value": 20034,
-          "display": "3:20.34"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 5,
-          "value": 20688,
-          "display": "3:26.88"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 6,
-          "value": 23446,
-          "display": "3:54.46"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 7,
-          "value": 24130,
-          "display": "4:01.30"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 8,
-          "value": 24462,
-          "display": "4:04.62"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 24948,
-          "display": "4:09.48"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 10,
-          "value": 27042,
-          "display": "4:30.42"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 11,
-          "value": 28766,
-          "display": "4:47.66"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 12,
-          "value": 31612,
-          "display": "5:16.12"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 33919,
-          "display": "5:39.19"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 14,
-          "value": 34583,
-          "display": "5:45.83"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 41815,
-          "display": "6:58.15"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 13317,
-          "display": "2:13.17"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 2,
-          "value": 20774,
-          "display": "3:27.74"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 21307,
-          "display": "3:33.07"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 4,
-          "value": 22857,
-          "display": "3:48.57"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 5,
-          "value": 23510,
-          "display": "3:55.10"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 6,
-          "value": 25315,
-          "display": "4:13.15"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 7,
-          "value": 25547,
-          "display": "4:15.47"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 8,
-          "value": 25645,
-          "display": "4:16.45"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 26977,
-          "display": "4:29.77"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 10,
-          "value": 30105,
-          "display": "5:01.05"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 32526,
-          "display": "5:25.26"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 12,
-          "value": 40073,
-          "display": "6:40.73"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "333bf",
       "name": "3x3x3 Blindfolded",
-      "hasAverage": false,
-      "single": [
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 1,
-          "value": 1304,
-          "display": "13.04"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 2,
-          "value": 2838,
-          "display": "28.38"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 3,
-          "value": 4554,
-          "display": "45.54"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 4,
-          "value": 6177,
-          "display": "1:01.77"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 5,
-          "value": 6572,
-          "display": "1:05.72"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 6,
-          "value": 6679,
-          "display": "1:06.79"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 7,
-          "value": 8724,
-          "display": "1:27.24"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 11839,
-          "display": "1:58.39"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 9,
-          "value": 11852,
-          "display": "1:58.52"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 10,
-          "value": 12850,
-          "display": "2:08.50"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 11,
-          "value": 13958,
-          "display": "2:19.58"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 23452,
-          "display": "3:54.52"
-        }
-      ],
-      "average": null
+      "hasAverage": true,
+      "single": [],
+      "average": []
     },
     {
       "id": "333fm",
       "name": "3x3x3 Fewest Moves",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 1,
-          "value": 26,
-          "display": "26"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 2,
-          "value": 29,
-          "display": "29"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 2,
-          "value": 29,
-          "display": "29"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 4,
-          "value": 33,
-          "display": "33"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 4,
-          "value": 33,
-          "display": "33"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 6,
-          "value": 36,
-          "display": "36"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 7,
-          "value": 37,
-          "display": "37"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 7,
-          "value": 37,
-          "display": "37"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 9,
-          "value": 41,
-          "display": "41"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 9,
-          "value": 41,
-          "display": "41"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 11,
-          "value": 42,
-          "display": "42"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 12,
-          "value": 50,
-          "display": "50"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 13,
-          "value": 52,
-          "display": "52"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 14,
-          "value": 54,
-          "display": "54"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 1,
-          "value": 3333,
-          "display": "33.33"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 2,
-          "value": 3433,
-          "display": "34.33"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 3,
-          "value": 3467,
-          "display": "34.67"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 4,
-          "value": 3633,
-          "display": "36.33"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 5,
-          "value": 4033,
-          "display": "40.33"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 6,
-          "value": 4100,
-          "display": "41.00"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 7,
-          "value": 4400,
-          "display": "44.00"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 8,
-          "value": 4767,
-          "display": "47.67"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 9,
-          "value": 4933,
-          "display": "49.33"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 10,
-          "value": 5000,
-          "display": "50.00"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 5633,
-          "display": "56.33"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "333oh",
       "name": "3x3x3 One-Handed",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 985,
-          "display": "9.85"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 2,
-          "value": 1028,
-          "display": "10.28"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 3,
-          "value": 1171,
-          "display": "11.71"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 4,
-          "value": 1253,
-          "display": "12.53"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 5,
-          "value": 1390,
-          "display": "13.90"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 1411,
-          "display": "14.11"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 7,
-          "value": 1444,
-          "display": "14.44"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 8,
-          "value": 1586,
-          "display": "15.86"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 1664,
-          "display": "16.64"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 10,
-          "value": 1747,
-          "display": "17.47"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 11,
-          "value": 1806,
-          "display": "18.06"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 12,
-          "value": 1960,
-          "display": "19.60"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 2007,
-          "display": "20.07"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 14,
-          "value": 2037,
-          "display": "20.37"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 15,
-          "value": 2080,
-          "display": "20.80"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 5029,
-          "display": "50.29"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 1104,
-          "display": "11.04"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 2,
-          "value": 1109,
-          "display": "11.09"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 3,
-          "value": 1527,
-          "display": "15.27"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 4,
-          "value": 1555,
-          "display": "15.55"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 5,
-          "value": 1560,
-          "display": "15.60"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 1613,
-          "display": "16.13"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 7,
-          "value": 2029,
-          "display": "20.29"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 2072,
-          "display": "20.72"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 9,
-          "value": 2102,
-          "display": "21.02"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 10,
-          "value": 2277,
-          "display": "22.77"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 11,
-          "value": 2371,
-          "display": "23.71"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 2405,
-          "display": "24.05"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 2482,
-          "display": "24.82"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 14,
-          "value": 2531,
-          "display": "25.31"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 15,
-          "value": 2626,
-          "display": "26.26"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 16,
-          "value": 6281,
-          "display": "1:02.81"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "clock",
       "name": "Clock",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 1,
-          "value": 161,
-          "display": "1.61"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 288,
-          "display": "2.88"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 3,
-          "value": 319,
-          "display": "3.19"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 4,
-          "value": 325,
-          "display": "3.25"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 4,
-          "value": 325,
-          "display": "3.25"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 6,
-          "value": 331,
-          "display": "3.31"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 7,
-          "value": 385,
-          "display": "3.85"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 8,
-          "value": 430,
-          "display": "4.30"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 9,
-          "value": 518,
-          "display": "5.18"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 10,
-          "value": 597,
-          "display": "5.97"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 697,
-          "display": "6.97"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 12,
-          "value": 715,
-          "display": "7.15"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 13,
-          "value": 735,
-          "display": "7.35"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 14,
-          "value": 767,
-          "display": "7.67"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 15,
-          "value": 878,
-          "display": "8.78"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 16,
-          "value": 889,
-          "display": "8.89"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 1,
-          "value": 242,
-          "display": "2.42"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 331,
-          "display": "3.31"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 3,
-          "value": 386,
-          "display": "3.86"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 4,
-          "value": 451,
-          "display": "4.51"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 5,
-          "value": 469,
-          "display": "4.69"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 6,
-          "value": 471,
-          "display": "4.71"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 7,
-          "value": 532,
-          "display": "5.32"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 8,
-          "value": 567,
-          "display": "5.67"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 9,
-          "value": 738,
-          "display": "7.38"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 10,
-          "value": 819,
-          "display": "8.19"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 11,
-          "value": 827,
-          "display": "8.27"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 831,
-          "display": "8.31"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 850,
-          "display": "8.50"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 14,
-          "value": 904,
-          "display": "9.04"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 15,
-          "value": 1041,
-          "display": "10.41"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 16,
-          "value": 1068,
-          "display": "10.68"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "minx",
       "name": "Megaminx",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 3599,
-          "display": "35.99"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 2,
-          "value": 4358,
-          "display": "43.58"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 3,
-          "value": 5449,
-          "display": "54.49"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 4,
-          "value": 5560,
-          "display": "55.60"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 5,
-          "value": 5587,
-          "display": "55.87"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 6,
-          "value": 5706,
-          "display": "57.06"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 7,
-          "value": 5849,
-          "display": "58.49"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 8,
-          "value": 5991,
-          "display": "59.91"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 9,
-          "value": 6908,
-          "display": "1:09.08"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 10,
-          "value": 7071,
-          "display": "1:10.71"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 11,
-          "value": 7285,
-          "display": "1:12.85"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 12,
-          "value": 7515,
-          "display": "1:15.15"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 8624,
-          "display": "1:26.24"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 14,
-          "value": 8850,
-          "display": "1:28.50"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 4227,
-          "display": "42.27"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 2,
-          "value": 5243,
-          "display": "52.43"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 3,
-          "value": 6000,
-          "display": "1:00.00"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 4,
-          "value": 6151,
-          "display": "1:01.51"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 5,
-          "value": 6169,
-          "display": "1:01.69"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 6,
-          "value": 6263,
-          "display": "1:02.63"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 7,
-          "value": 6371,
-          "display": "1:03.71"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 8,
-          "value": 6752,
-          "display": "1:07.52"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 9,
-          "value": 7512,
-          "display": "1:15.12"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 10,
-          "value": 8116,
-          "display": "1:21.16"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 11,
-          "value": 8163,
-          "display": "1:21.63"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 12,
-          "value": 8620,
-          "display": "1:26.20"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 8968,
-          "display": "1:29.68"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 14,
-          "value": 9959,
-          "display": "1:39.59"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "pyram",
       "name": "Pyraminx",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 150,
-          "display": "1.50"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 2,
-          "value": 153,
-          "display": "1.53"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 3,
-          "value": 198,
-          "display": "1.98"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 4,
-          "value": 253,
-          "display": "2.53"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 5,
-          "value": 256,
-          "display": "2.56"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 6,
-          "value": 272,
-          "display": "2.72"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 7,
-          "value": 316,
-          "display": "3.16"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 8,
-          "value": 323,
-          "display": "3.23"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 9,
-          "value": 401,
-          "display": "4.01"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 10,
-          "value": 402,
-          "display": "4.02"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 11,
-          "value": 429,
-          "display": "4.29"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 12,
-          "value": 458,
-          "display": "4.58"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 13,
-          "value": 524,
-          "display": "5.24"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 14,
-          "value": 612,
-          "display": "6.12"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 15,
-          "value": 866,
-          "display": "8.66"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 16,
-          "value": 1651,
-          "display": "16.51"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 1,
-          "value": 182,
-          "display": "1.82"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 2,
-          "value": 236,
-          "display": "2.36"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 3,
-          "value": 318,
-          "display": "3.18"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 4,
-          "value": 329,
-          "display": "3.29"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 5,
-          "value": 350,
-          "display": "3.50"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 496,
-          "display": "4.96"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 7,
-          "value": 555,
-          "display": "5.55"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 583,
-          "display": "5.83"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 9,
-          "value": 593,
-          "display": "5.93"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 10,
-          "value": 655,
-          "display": "6.55"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 11,
-          "value": 711,
-          "display": "7.11"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 12,
-          "value": 723,
-          "display": "7.23"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 854,
-          "display": "8.54"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 14,
-          "value": 1020,
-          "display": "10.20"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 15,
-          "value": 1264,
-          "display": "12.64"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 16,
-          "value": 2212,
-          "display": "22.12"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "skewb",
       "name": "Skewb",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 1,
-          "value": 199,
-          "display": "1.99"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 1,
-          "value": 199,
-          "display": "1.99"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 3,
-          "value": 209,
-          "display": "2.09"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 4,
-          "value": 236,
-          "display": "2.36"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 5,
-          "value": 245,
-          "display": "2.45"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 6,
-          "value": 246,
-          "display": "2.46"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 7,
-          "value": 247,
-          "display": "2.47"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 8,
-          "value": 251,
-          "display": "2.51"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 9,
-          "value": 286,
-          "display": "2.86"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 10,
-          "value": 352,
-          "display": "3.52"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 11,
-          "value": 367,
-          "display": "3.67"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 12,
-          "value": 374,
-          "display": "3.74"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 13,
-          "value": 581,
-          "display": "5.81"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 14,
-          "value": 591,
-          "display": "5.91"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 15,
-          "value": 746,
-          "display": "7.46"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 1,
-          "value": 280,
-          "display": "2.80"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 2,
-          "value": 326,
-          "display": "3.26"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 3,
-          "value": 409,
-          "display": "4.09"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 4,
-          "value": 442,
-          "display": "4.42"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 5,
-          "value": 449,
-          "display": "4.49"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 6,
-          "value": 452,
-          "display": "4.52"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 7,
-          "value": 464,
-          "display": "4.64"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 8,
-          "value": 471,
-          "display": "4.71"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 9,
-          "value": 544,
-          "display": "5.44"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 10,
-          "value": 550,
-          "display": "5.50"
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 11,
-          "value": 637,
-          "display": "6.37"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 669,
-          "display": "6.69"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 13,
-          "value": 748,
-          "display": "7.48"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 14,
-          "value": 988,
-          "display": "9.88"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 15,
-          "value": 1014,
-          "display": "10.14"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "sq1",
       "name": "Square-1",
       "hasAverage": true,
-      "single": [
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 1,
-          "value": 613,
-          "display": "6.13"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 2,
-          "value": 809,
-          "display": "8.09"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 3,
-          "value": 837,
-          "display": "8.37"
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 4,
-          "value": 869,
-          "display": "8.69"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 5,
-          "value": 1004,
-          "display": "10.04"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 6,
-          "value": 1086,
-          "display": "10.86"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 7,
-          "value": 1095,
-          "display": "10.95"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 8,
-          "value": 1342,
-          "display": "13.42"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 9,
-          "value": 1415,
-          "display": "14.15"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 10,
-          "value": 1417,
-          "display": "14.17"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 11,
-          "value": 1536,
-          "display": "15.36"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 12,
-          "value": 1945,
-          "display": "19.45"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 2727,
-          "display": "27.27"
-        },
-        {
-          "wcaId": "2025THUR01",
-          "name": "Emily Thurston",
-          "rank": 14,
-          "value": 4180,
-          "display": "41.80"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 15,
-          "value": 5382,
-          "display": "53.82"
-        }
-      ],
-      "average": [
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "rank": 1,
-          "value": 988,
-          "display": "9.88"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 2,
-          "value": 1146,
-          "display": "11.46"
-        },
-        {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
-          "rank": 3,
-          "value": 1156,
-          "display": "11.56"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 4,
-          "value": 1275,
-          "display": "12.75"
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "rank": 5,
-          "value": 1308,
-          "display": "13.08"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 6,
-          "value": 1337,
-          "display": "13.37"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 7,
-          "value": 1375,
-          "display": "13.75"
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "rank": 8,
-          "value": 1627,
-          "display": "16.27"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 9,
-          "value": 1746,
-          "display": "17.46"
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 10,
-          "value": 1866,
-          "display": "18.66"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 11,
-          "value": 2284,
-          "display": "22.84"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 12,
-          "value": 3136,
-          "display": "31.36"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 13,
-          "value": 3435,
-          "display": "34.35"
-        }
-      ]
+      "single": [],
+      "average": []
     },
     {
       "id": "444bf",
       "name": "4x4x4 Blindfolded",
       "hasAverage": false,
-      "single": [
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 1,
-          "value": 12390,
-          "display": "2:03.90"
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 2,
-          "value": 30952,
-          "display": "5:09.52"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 3,
-          "value": 45481,
-          "display": "7:34.81"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 4,
-          "value": 51660,
-          "display": "8:36.60"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 5,
-          "value": 68800,
-          "display": "11:28.00"
-        }
-      ],
+      "single": [],
       "average": null
     },
     {
       "id": "555bf",
       "name": "5x5x5 Blindfolded",
       "hasAverage": false,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 62800,
-          "display": "10:28.00"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 2,
-          "value": 101600,
-          "display": "16:56.00"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 3,
-          "value": 149300,
-          "display": "24:53.00"
-        }
-      ],
+      "single": [],
       "average": null
     },
     {
       "id": "333mbf",
       "name": "3x3x3 Multi-Blind",
       "hasAverage": false,
-      "single": [
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 1,
-          "value": 800293001,
-          "display": "20/21 48:50"
-        },
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "rank": 2,
-          "value": 850349509,
-          "display": "23/32 58:15"
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 3,
-          "value": 950117601,
-          "display": "5/6 19:36"
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 4,
-          "value": 960285101,
-          "display": "4/5 47:31"
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 5,
-          "value": 960356703,
-          "display": "6/9 59:27"
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 6,
-          "value": 970100000,
-          "display": "2/2 16:40"
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 7,
-          "value": 970131601,
-          "display": "3/4 21:56"
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "rank": 8,
-          "value": 980096101,
-          "display": "2/3 16:01"
-        },
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "rank": 9,
-          "value": 980165301,
-          "display": "2/3 27:33"
-        }
-      ],
+      "single": [],
       "average": null
     }
   ],
   "sumOfRanks": {
     "single": [
       {
-        "wcaId": "2022BURN09",
-        "name": "Joseph Burnett",
-        "total": 38,
+        "wcaId": "2022GART03",
+        "name": "2022GART03",
+        "total": 17,
         "components": {
-          "222": 9,
-          "333": 4,
+          "222": 1,
+          "333": 1,
           "444": 1,
           "555": 1,
           "666": 1,
           "777": 1,
-          "333bf": 2,
-          "333fm": 2,
+          "333bf": 1,
+          "333fm": 1,
           "333oh": 1,
-          "clock": 4,
+          "clock": 1,
           "minx": 1,
           "pyram": 1,
-          "skewb": 3,
-          "sq1": 3,
-          "444bf": 2,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2022BURN09",
+        "name": "2022BURN09",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2022JONE11",
+        "name": "2022JONE11",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2022FETH01",
+        "name": "2022FETH01",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2022HRDL01",
+        "name": "2022HRDL01",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2018CROU02",
+        "name": "2018CROU02",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2023ARCI02",
+        "name": "2023ARCI02",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
           "555bf": 1,
           "333mbf": 1
         }
       },
       {
         "wcaId": "2021BLAK01",
-        "name": "Jonah Blakeley",
-        "total": 78,
-        "components": {
-          "222": 8,
-          "333": 7,
-          "444": 6,
-          "555": 5,
-          "666": 4,
-          "777": 3,
-          "333bf": 5,
-          "333fm": 1,
-          "333oh": 6,
-          "clock": 9,
-          "minx": 2,
-          "pyram": 7,
-          "skewb": 1,
-          "sq1": 6,
-          "444bf": 3,
-          "555bf": 2,
-          "333mbf": 3
-        }
-      },
-      {
-        "wcaId": "2018CROU02",
-        "name": "Sylvia Crouch",
-        "total": 81,
+        "name": "2021BLAK01",
+        "total": 17,
         "components": {
           "222": 1,
-          "333": 5,
-          "444": 2,
-          "555": 2,
-          "666": 2,
-          "777": 4,
-          "333bf": 7,
-          "333fm": 9,
-          "333oh": 5,
-          "clock": 2,
-          "minx": 7,
-          "pyram": 6,
-          "skewb": 8,
-          "sq1": 2,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 9
-        }
-      },
-      {
-        "wcaId": "2022JONE11",
-        "name": "Kyle Jones",
-        "total": 95,
-        "components": {
-          "222": 2,
           "333": 1,
-          "444": 3,
-          "555": 4,
-          "666": 5,
-          "777": 5,
-          "333bf": 13,
-          "333fm": 12,
-          "333oh": 7,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
           "clock": 1,
-          "minx": 11,
-          "pyram": 3,
-          "skewb": 4,
-          "sq1": 4,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
-        }
-      },
-      {
-        "wcaId": "2022HRDL01",
-        "name": "Mazar Hrdlicka",
-        "total": 97,
-        "components": {
-          "222": 4,
-          "333": 3,
-          "444": 5,
-          "555": 3,
-          "666": 3,
-          "777": 2,
-          "333bf": 11,
-          "333fm": 15,
-          "333oh": 4,
-          "clock": 6,
-          "minx": 8,
-          "pyram": 2,
-          "skewb": 10,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
           "sq1": 1,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
-        }
-      },
-      {
-        "wcaId": "2022FETH01",
-        "name": "Miles Fetherston",
-        "total": 99,
-        "components": {
-          "222": 5,
-          "333": 2,
-          "444": 4,
-          "555": 8,
-          "666": 8,
-          "777": 8,
-          "333bf": 10,
-          "333fm": 4,
-          "333oh": 3,
-          "clock": 3,
-          "minx": 6,
-          "pyram": 4,
-          "skewb": 5,
-          "sq1": 9,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "total": 126,
+        "name": "2019THEO03",
+        "total": 17,
         "components": {
-          "222": 6,
-          "333": 8,
-          "444": 7,
-          "555": 9,
-          "666": 10,
-          "777": 11,
-          "333bf": 8,
-          "333fm": 7,
-          "333oh": 10,
-          "clock": 7,
-          "minx": 5,
-          "pyram": 9,
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
           "skewb": 1,
-          "sq1": 10,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 8
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "total": 126,
+        "name": "2022SHAR23",
+        "total": 17,
         "components": {
-          "222": 10,
-          "333": 10,
-          "444": 10,
-          "555": 7,
-          "666": 6,
-          "777": 6,
-          "333bf": 4,
-          "333fm": 11,
-          "333oh": 11,
-          "clock": 8,
-          "minx": 12,
-          "pyram": 5,
-          "skewb": 7,
-          "sq1": 5,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 4
-        }
-      },
-      {
-        "wcaId": "2022GART03",
-        "name": "Nate Garthon",
-        "total": 128,
-        "components": {
-          "222": 7,
-          "333": 9,
-          "444": 9,
-          "555": 10,
-          "666": 9,
-          "777": 9,
-          "333bf": 6,
-          "333fm": 13,
-          "333oh": 9,
-          "clock": 4,
-          "minx": 4,
-          "pyram": 10,
-          "skewb": 6,
-          "sq1": 11,
-          "444bf": 4,
-          "555bf": 3,
-          "333mbf": 5
-        }
-      },
-      {
-        "wcaId": "2023ARCI02",
-        "name": "Gavriel Johann Arcilla",
-        "total": 150,
-        "components": {
-          "222": 15,
-          "333": 6,
-          "444": 8,
-          "555": 6,
-          "666": 14,
-          "777": 7,
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
           "333bf": 1,
-          "333fm": 7,
-          "333oh": 2,
-          "clock": 15,
-          "minx": 15,
-          "pyram": 16,
-          "skewb": 16,
-          "sq1": 15,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
           "444bf": 1,
-          "555bf": 4,
-          "333mbf": 2
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "total": 163,
-        "components": {
-          "222": 3,
-          "333": 12,
-          "444": 14,
-          "555": 14,
-          "666": 12,
-          "777": 14,
-          "333bf": 13,
-          "333fm": 2,
-          "333oh": 8,
-          "clock": 16,
-          "minx": 9,
-          "pyram": 8,
-          "skewb": 11,
-          "sq1": 7,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
-        }
-      },
-      {
-        "wcaId": "2023BENT02",
-        "name": "Hamish Bentley",
-        "total": 163,
-        "components": {
-          "222": 11,
-          "333": 13,
-          "444": 12,
-          "555": 12,
-          "666": 7,
-          "777": 10,
-          "333bf": 9,
-          "333fm": 6,
-          "333oh": 15,
-          "clock": 10,
-          "minx": 10,
-          "pyram": 11,
-          "skewb": 9,
-          "sq1": 8,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "total": 187,
+        "name": "2021LUAA01",
+        "total": 17,
         "components": {
-          "222": 12,
-          "333": 11,
-          "444": 13,
-          "555": 13,
-          "666": 11,
-          "777": 12,
-          "333bf": 13,
-          "333fm": 14,
-          "333oh": 14,
-          "clock": 11,
-          "minx": 3,
-          "pyram": 12,
-          "skewb": 12,
-          "sq1": 16,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2022TOLH01",
+        "name": "2022TOLH01",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
+        }
+      },
+      {
+        "wcaId": "2023BENT02",
+        "name": "2023BENT02",
+        "total": 17,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "total": 189,
+        "name": "2019WILL30",
+        "total": 17,
         "components": {
-          "222": 14,
-          "333": 14,
-          "444": 11,
-          "555": 11,
-          "666": 13,
-          "777": 13,
-          "333bf": 12,
-          "333fm": 4,
-          "333oh": 13,
-          "clock": 14,
-          "minx": 13,
-          "pyram": 14,
-          "skewb": 14,
-          "sq1": 13,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 6
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2023SCOT04",
-        "name": "Asaph Scott",
-        "total": 191,
+        "name": "2023SCOT04",
+        "total": 17,
         "components": {
-          "222": 13,
-          "333": 15,
-          "444": 15,
-          "555": 15,
-          "666": 14,
-          "777": 15,
-          "333bf": 3,
-          "333fm": 9,
-          "333oh": 12,
-          "clock": 12,
-          "minx": 14,
-          "pyram": 13,
-          "skewb": 13,
-          "sq1": 12,
-          "444bf": 5,
-          "555bf": 4,
-          "333mbf": 7
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       },
       {
         "wcaId": "2025THUR01",
-        "name": "Emily Thurston",
-        "total": 230,
+        "name": "2025THUR01",
+        "total": 17,
         "components": {
-          "222": 16,
-          "333": 16,
-          "444": 16,
-          "555": 16,
-          "666": 14,
-          "777": 16,
-          "333bf": 13,
-          "333fm": 15,
-          "333oh": 16,
-          "clock": 13,
-          "minx": 15,
-          "pyram": 15,
-          "skewb": 15,
-          "sq1": 14,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1,
+          "444bf": 1,
+          "555bf": 1,
+          "333mbf": 1
         }
       }
     ],
     "average": [
       {
-        "wcaId": "2022BURN09",
-        "name": "Joseph Burnett",
-        "total": 29,
+        "wcaId": "2022GART03",
+        "name": "2022GART03",
+        "total": 14,
         "components": {
-          "222": 6,
-          "333": 3,
+          "222": 1,
+          "333": 1,
           "444": 1,
           "555": 1,
           "666": 1,
           "777": 1,
-          "333fm": 3,
+          "333bf": 1,
+          "333fm": 1,
           "333oh": 1,
-          "clock": 3,
+          "clock": 1,
           "minx": 1,
-          "pyram": 2,
-          "skewb": 4,
-          "sq1": 2
-        }
-      },
-      {
-        "wcaId": "2018CROU02",
-        "name": "Sylvia Crouch",
-        "total": 56,
-        "components": {
-          "222": 4,
-          "333": 5,
-          "444": 2,
-          "555": 3,
-          "666": 2,
-          "777": 4,
-          "333fm": 12,
-          "333oh": 5,
-          "clock": 2,
-          "minx": 7,
-          "pyram": 3,
-          "skewb": 3,
-          "sq1": 4
-        }
-      },
-      {
-        "wcaId": "2022HRDL01",
-        "name": "Mazar Hrdlicka",
-        "total": 59,
-        "components": {
-          "222": 2,
-          "333": 6,
-          "444": 3,
-          "555": 2,
-          "666": 3,
-          "777": 3,
-          "333fm": 12,
-          "333oh": 4,
-          "clock": 6,
-          "minx": 8,
           "pyram": 1,
-          "skewb": 6,
-          "sq1": 3
+          "skewb": 1,
+          "sq1": 1
         }
       },
       {
-        "wcaId": "2022FETH01",
-        "name": "Miles Fetherston",
-        "total": 65,
+        "wcaId": "2022BURN09",
+        "name": "2022BURN09",
+        "total": 14,
         "components": {
           "222": 1,
-          "333": 2,
-          "444": 5,
-          "555": 8,
-          "666": 7,
-          "777": 8,
-          "333fm": 6,
-          "333oh": 3,
-          "clock": 4,
-          "minx": 3,
-          "pyram": 5,
-          "skewb": 5,
-          "sq1": 8
-        }
-      },
-      {
-        "wcaId": "2021BLAK01",
-        "name": "Jonah Blakeley",
-        "total": 66,
-        "components": {
-          "222": 7,
-          "333": 7,
-          "444": 6,
-          "555": 6,
-          "666": 4,
-          "777": 2,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
           "333fm": 1,
-          "333oh": 6,
-          "clock": 10,
-          "minx": 2,
-          "pyram": 6,
-          "skewb": 2,
-          "sq1": 7
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
         }
       },
       {
         "wcaId": "2022JONE11",
-        "name": "Kyle Jones",
-        "total": 71,
+        "name": "2022JONE11",
+        "total": 14,
         "components": {
-          "222": 5,
+          "222": 1,
           "333": 1,
-          "444": 4,
-          "555": 4,
-          "666": 5,
-          "777": 5,
-          "333fm": 12,
-          "333oh": 9,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
           "clock": 1,
-          "minx": 10,
-          "pyram": 4,
-          "skewb": 10,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2022FETH01",
+        "name": "2022FETH01",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2022HRDL01",
+        "name": "2022HRDL01",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2018CROU02",
+        "name": "2018CROU02",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2023ARCI02",
+        "name": "2023ARCI02",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2021BLAK01",
+        "name": "2021BLAK01",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
           "sq1": 1
         }
       },
       {
         "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "total": 101,
+        "name": "2019THEO03",
+        "total": 14,
         "components": {
-          "222": 8,
-          "333": 8,
-          "444": 8,
-          "555": 9,
-          "666": 10,
-          "777": 10,
-          "333fm": 7,
-          "333oh": 8,
-          "clock": 7,
-          "minx": 6,
-          "pyram": 8,
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
           "skewb": 1,
-          "sq1": 11
-        }
-      },
-      {
-        "wcaId": "2022GART03",
-        "name": "Nate Garthon",
-        "total": 107,
-        "components": {
-          "222": 9,
-          "333": 9,
-          "444": 10,
-          "555": 10,
-          "666": 8,
-          "777": 9,
-          "333fm": 12,
-          "333oh": 7,
-          "clock": 5,
-          "minx": 5,
-          "pyram": 7,
-          "skewb": 7,
-          "sq1": 9
+          "sq1": 1
         }
       },
       {
         "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "total": 111,
+        "name": "2022SHAR23",
+        "total": 14,
         "components": {
-          "222": 10,
-          "333": 9,
-          "444": 9,
-          "555": 7,
-          "666": 6,
-          "777": 7,
-          "333fm": 9,
-          "333oh": 10,
-          "clock": 8,
-          "minx": 12,
-          "pyram": 10,
-          "skewb": 8,
-          "sq1": 6
-        }
-      },
-      {
-        "wcaId": "2023ARCI02",
-        "name": "Gavriel Johann Arcilla",
-        "total": 136,
-        "components": {
-          "222": 13,
-          "333": 4,
-          "444": 7,
-          "555": 5,
-          "666": 13,
-          "777": 6,
-          "333fm": 10,
-          "333oh": 2,
-          "clock": 15,
-          "minx": 15,
-          "pyram": 16,
-          "skewb": 16,
-          "sq1": 14
-        }
-      },
-      {
-        "wcaId": "2023BENT02",
-        "name": "Hamish Bentley",
-        "total": 138,
-        "components": {
-          "222": 11,
-          "333": 14,
-          "444": 12,
-          "555": 12,
-          "666": 9,
-          "777": 13,
-          "333fm": 5,
-          "333oh": 14,
-          "clock": 9,
-          "minx": 11,
-          "pyram": 9,
-          "skewb": 9,
-          "sq1": 10
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "total": 139,
-        "components": {
-          "222": 3,
-          "333": 13,
-          "444": 14,
-          "555": 14,
-          "666": 12,
-          "777": 12,
-          "333fm": 2,
-          "333oh": 15,
-          "clock": 16,
-          "minx": 9,
-          "pyram": 11,
-          "skewb": 13,
-          "sq1": 5
-        }
-      },
-      {
-        "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "total": 151,
-        "components": {
-          "222": 12,
-          "333": 12,
-          "444": 11,
-          "555": 11,
-          "666": 13,
-          "777": 13,
-          "333fm": 4,
-          "333oh": 12,
-          "clock": 12,
-          "minx": 13,
-          "pyram": 14,
-          "skewb": 12,
-          "sq1": 12
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
         }
       },
       {
         "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "total": 153,
+        "name": "2021LUAA01",
+        "total": 14,
         "components": {
-          "222": 15,
-          "333": 11,
-          "444": 13,
-          "555": 13,
-          "666": 11,
-          "777": 11,
-          "333fm": 11,
-          "333oh": 13,
-          "clock": 13,
-          "minx": 4,
-          "pyram": 13,
-          "skewb": 11,
-          "sq1": 14
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2022TOLH01",
+        "name": "2022TOLH01",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2023BENT02",
+        "name": "2023BENT02",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
+        }
+      },
+      {
+        "wcaId": "2019WILL30",
+        "name": "2019WILL30",
+        "total": 14,
+        "components": {
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
         }
       },
       {
         "wcaId": "2023SCOT04",
-        "name": "Asaph Scott",
-        "total": 169,
+        "name": "2023SCOT04",
+        "total": 14,
         "components": {
-          "222": 14,
-          "333": 15,
-          "444": 15,
-          "555": 15,
-          "666": 13,
-          "777": 13,
-          "333fm": 8,
-          "333oh": 11,
-          "clock": 11,
-          "minx": 14,
-          "pyram": 12,
-          "skewb": 15,
-          "sq1": 13
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
         }
       },
       {
         "wcaId": "2025THUR01",
-        "name": "Emily Thurston",
-        "total": 190,
+        "name": "2025THUR01",
+        "total": 14,
         "components": {
-          "222": 16,
-          "333": 16,
-          "444": 16,
-          "555": 16,
-          "666": 13,
-          "777": 13,
-          "333fm": 12,
-          "333oh": 16,
-          "clock": 14,
-          "minx": 15,
-          "pyram": 15,
-          "skewb": 14,
-          "sq1": 14
+          "222": 1,
+          "333": 1,
+          "444": 1,
+          "555": 1,
+          "666": 1,
+          "777": 1,
+          "333bf": 1,
+          "333fm": 1,
+          "333oh": 1,
+          "clock": 1,
+          "minx": 1,
+          "pyram": 1,
+          "skewb": 1,
+          "sq1": 1
         }
       }
     ]
@@ -3763,96 +851,96 @@
   "kinch": {
     "single": [
       {
-        "wcaId": "2022BURN09",
-        "name": "Joseph Burnett",
-        "score": 83.01,
+        "wcaId": "2022GART03",
+        "name": "2022GART03",
+        "score": 0,
         "components": {
-          "222": 40.36,
-          "333": 77.23,
-          "444": 100,
-          "555": 100,
-          "666": 100,
-          "777": 100,
-          "333bf": 45.95,
-          "333fm": 89.66,
-          "333oh": 100,
-          "clock": 49.54,
-          "minx": 100,
-          "pyram": 100,
-          "skewb": 95.22,
-          "sq1": 73.24,
-          "444bf": 40.03,
-          "555bf": 100,
-          "333mbf": 100
-        }
-      },
-      {
-        "wcaId": "2021BLAK01",
-        "name": "Jonah Blakeley",
-        "score": 62.8,
-        "components": {
-          "222": 40.85,
-          "333": 65.81,
-          "444": 75.67,
-          "555": 77.71,
-          "666": 62.36,
-          "777": 64.65,
-          "333bf": 19.84,
-          "333fm": 100,
-          "333oh": 69.81,
-          "clock": 31.08,
-          "minx": 82.58,
-          "pyram": 47.47,
-          "skewb": 100,
-          "sq1": 56.45,
-          "444bf": 27.24,
-          "555bf": 61.81,
-          "333mbf": 84.23
-        }
-      },
-      {
-        "wcaId": "2018CROU02",
-        "name": "Sylvia Crouch",
-        "score": 61.53,
-        "components": {
-          "222": 100,
-          "333": 75.08,
-          "444": 90.93,
-          "555": 87.51,
-          "666": 70.51,
-          "777": 63.54,
-          "333bf": 14.95,
-          "333fm": 63.41,
-          "333oh": 70.86,
-          "clock": 55.9,
-          "minx": 61.53,
-          "pyram": 55.15,
-          "skewb": 79.28,
-          "sq1": 75.77,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
-          "333mbf": 81.65
+          "333mbf": 0
+        }
+      },
+      {
+        "wcaId": "2022BURN09",
+        "name": "2022BURN09",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
         }
       },
       {
         "wcaId": "2022JONE11",
-        "name": "Kyle Jones",
-        "score": 58.3,
+        "name": "2022JONE11",
+        "score": 0,
         "components": {
-          "222": 95.71,
-          "333": 100,
-          "444": 86.95,
-          "555": 85.55,
-          "666": 61.12,
-          "777": 61.53,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
           "333bf": 0,
-          "333fm": 52,
-          "333oh": 68.21,
-          "clock": 100,
-          "minx": 49.4,
-          "pyram": 75.76,
-          "skewb": 84.32,
-          "sq1": 70.54,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
+        "wcaId": "2022FETH01",
+        "name": "2022FETH01",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -3860,71 +948,95 @@
       },
       {
         "wcaId": "2022HRDL01",
-        "name": "Mazar Hrdlicka",
-        "score": 53.7,
+        "name": "2022HRDL01",
+        "score": 0,
         "components": {
-          "222": 84.81,
-          "333": 79.38,
-          "444": 80.48,
-          "555": 86.3,
-          "666": 64.42,
-          "777": 66.21,
-          "333bf": 9.34,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
           "333fm": 0,
-          "333oh": 78.61,
-          "clock": 48.64,
-          "minx": 60.07,
-          "pyram": 98.04,
-          "skewb": 56.53,
-          "sq1": 100,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
         }
       },
       {
-        "wcaId": "2022GART03",
-        "name": "Nate Garthon",
-        "score": 52.18,
+        "wcaId": "2018CROU02",
+        "name": "2018CROU02",
+        "score": 0,
         "components": {
-          "222": 41.36,
-          "333": 57.33,
-          "444": 69.43,
-          "555": 67.03,
-          "666": 50.47,
-          "777": 51.02,
-          "333bf": 19.52,
-          "333fm": 50,
-          "333oh": 59.19,
-          "clock": 49.54,
-          "minx": 64.73,
-          "pyram": 37.31,
-          "skewb": 80.89,
-          "sq1": 39.91,
-          "444bf": 23.98,
-          "555bf": 42.06,
-          "333mbf": 83.33
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
         }
       },
       {
-        "wcaId": "2022FETH01",
-        "name": "Miles Fetherston",
-        "score": 51.31,
+        "wcaId": "2023ARCI02",
+        "name": "2023ARCI02",
+        "score": 0,
         "components": {
-          "222": 62.62,
-          "333": 79.77,
-          "444": 83.09,
-          "555": 73.47,
-          "666": 50.9,
-          "777": 52.04,
-          "333bf": 10.15,
-          "333fm": 78.79,
-          "333oh": 84.12,
-          "clock": 50.47,
-          "minx": 63.07,
-          "pyram": 59.29,
-          "skewb": 81.22,
-          "sq1": 43.32,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
+        "wcaId": "2021BLAK01",
+        "name": "2021BLAK01",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -3932,95 +1044,95 @@
       },
       {
         "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "score": 50.83,
+        "name": "2019THEO03",
+        "score": 0,
         "components": {
-          "222": 54.47,
-          "333": 63.32,
-          "444": 75.01,
-          "555": 71.95,
-          "666": 48.86,
-          "777": 44.25,
-          "333bf": 11.01,
-          "333fm": 70.27,
-          "333oh": 56.38,
-          "clock": 41.82,
-          "minx": 64.42,
-          "pyram": 37.41,
-          "skewb": 100,
-          "sq1": 43.26,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
-          "333mbf": 81.65
+          "333mbf": 0
         }
       },
       {
         "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "score": 49.63,
+        "name": "2022SHAR23",
+        "score": 0,
         "components": {
-          "222": 34.18,
-          "333": 51,
-          "444": 66.68,
-          "555": 74.67,
-          "666": 56.38,
-          "777": 54.29,
-          "333bf": 21.11,
-          "333fm": 61.9,
-          "333oh": 54.54,
-          "clock": 37.44,
-          "minx": 47.89,
-          "pyram": 58.59,
-          "skewb": 80.57,
-          "sq1": 61.06,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
-          "333mbf": 83.34
+          "333mbf": 0
         }
       },
       {
-        "wcaId": "2023ARCI02",
-        "name": "Gavriel Johann Arcilla",
-        "score": 46.88,
+        "wcaId": "2021LUAA01",
+        "name": "2021LUAA01",
+        "score": 0,
         "components": {
-          "222": 24.91,
-          "333": 72.28,
-          "444": 71.89,
-          "555": 76.2,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
           "666": 0,
-          "777": 52.75,
-          "333bf": 100,
-          "333fm": 70.27,
-          "333oh": 95.82,
-          "clock": 18.34,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
           "minx": 0,
-          "pyram": 9.09,
+          "pyram": 0,
           "skewb": 0,
-          "sq1": 11.39,
-          "444bf": 100,
+          "sq1": 0,
+          "444bf": 0,
           "555bf": 0,
-          "333mbf": 94.11
+          "333mbf": 0
         }
       },
       {
         "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "score": 41.12,
+        "name": "2022TOLH01",
+        "score": 0,
         "components": {
-          "222": 90.54,
-          "333": 49.59,
-          "444": 56.71,
-          "555": 49.69,
-          "666": 37.12,
-          "777": 36.81,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
           "333bf": 0,
-          "333fm": 89.66,
-          "333oh": 62.11,
-          "clock": 18.11,
-          "minx": 52.1,
-          "pyram": 46.44,
-          "skewb": 54.22,
-          "sq1": 55.98,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -4028,23 +1140,23 @@
       },
       {
         "wcaId": "2023BENT02",
-        "name": "Hamish Bentley",
-        "score": 38.73,
+        "name": "2023BENT02",
+        "score": 0,
         "components": {
-          "222": 33.5,
-          "333": 48.99,
-          "444": 61.95,
-          "555": 53.55,
-          "666": 54.65,
-          "777": 47.07,
-          "333bf": 11,
-          "333fm": 72.22,
-          "333oh": 47.36,
-          "clock": 26.97,
-          "minx": 50.9,
-          "pyram": 34.97,
-          "skewb": 69.58,
-          "sq1": 45.68,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -4052,70 +1164,46 @@
       },
       {
         "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "score": 36.95,
+        "name": "2019WILL30",
+        "score": 0,
         "components": {
-          "222": 26.27,
-          "333": 47.88,
-          "444": 63.17,
-          "555": 58.07,
-          "666": 35.98,
-          "777": 37.53,
-          "333bf": 5.56,
-          "333fm": 78.79,
-          "333oh": 49.08,
-          "clock": 20.99,
-          "minx": 41.73,
-          "pyram": 24.51,
-          "skewb": 33.67,
-          "sq1": 22.48,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
-          "333mbf": 82.5
+          "333mbf": 0
         }
       },
       {
         "wcaId": "2023SCOT04",
-        "name": "Asaph Scott",
-        "score": 35.32,
+        "name": "2023SCOT04",
+        "score": 0,
         "components": {
-          "222": 28.27,
-          "333": 45.03,
-          "444": 50.53,
-          "555": 45.84,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
           "666": 0,
-          "777": 30.44,
-          "333bf": 28.63,
-          "333fm": 63.41,
-          "333oh": 50.26,
-          "clock": 22.52,
-          "minx": 40.67,
-          "pyram": 28.63,
-          "skewb": 34.25,
-          "sq1": 31.52,
-          "444bf": 18.01,
-          "555bf": 0,
-          "333mbf": 82.49
-        }
-      },
-      {
-        "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "score": 31.99,
-        "components": {
-          "222": 30.18,
-          "333": 50.68,
-          "444": 57.33,
-          "555": 51.69,
-          "666": 42.01,
-          "777": 40.27,
+          "777": 0,
           "333bf": 0,
-          "333fm": 48.15,
-          "333oh": 48.36,
-          "clock": 23.1,
-          "minx": 66.05,
-          "pyram": 32.75,
-          "skewb": 53.21,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
           "sq1": 0,
           "444bf": 0,
           "555bf": 0,
@@ -4124,23 +1212,23 @@
       },
       {
         "wcaId": "2025THUR01",
-        "name": "Emily Thurston",
-        "score": 9.87,
+        "name": "2025THUR01",
+        "score": 0,
         "components": {
-          "222": 15.37,
-          "333": 23.16,
-          "444": 29.03,
+          "222": 0,
+          "333": 0,
+          "444": 0,
           "555": 0,
           "666": 0,
           "777": 0,
           "333bf": 0,
           "333fm": 0,
-          "333oh": 19.59,
-          "clock": 21.9,
+          "333oh": 0,
+          "clock": 0,
           "minx": 0,
-          "pyram": 17.32,
-          "skewb": 26.68,
-          "sq1": 14.67,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -4149,322 +1237,338 @@
     ],
     "average": [
       {
+        "wcaId": "2022GART03",
+        "name": "2022GART03",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
         "wcaId": "2022BURN09",
-        "name": "Joseph Burnett",
-        "score": 88.35,
+        "name": "2022BURN09",
+        "score": 0,
         "components": {
-          "222": 66.14,
-          "333": 96.97,
-          "444": 100,
-          "555": 100,
-          "666": 100,
-          "777": 100,
-          "333fm": 96.13,
-          "333oh": 100,
-          "clock": 62.69,
-          "minx": 100,
-          "pyram": 77.12,
-          "skewb": 63.35,
-          "sq1": 86.21
-        }
-      },
-      {
-        "wcaId": "2022HRDL01",
-        "name": "Mazar Hrdlicka",
-        "score": 70.75,
-        "components": {
-          "222": 98.81,
-          "333": 91.65,
-          "444": 81.07,
-          "555": 83.03,
-          "666": 70.25,
-          "777": 62.5,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
           "333fm": 0,
-          "333oh": 71,
-          "clock": 51.38,
-          "minx": 62.6,
-          "pyram": 100,
-          "skewb": 61.95,
-          "sq1": 85.47
-        }
-      },
-      {
-        "wcaId": "2022FETH01",
-        "name": "Miles Fetherston",
-        "score": 70.08,
-        "components": {
-          "222": 100,
-          "333": 98.26,
-          "444": 79.62,
-          "555": 71.05,
-          "666": 57.45,
-          "777": 51.93,
-          "333fm": 81.29,
-          "333oh": 72.3,
-          "clock": 53.66,
-          "minx": 70.45,
-          "pyram": 52,
-          "skewb": 62.36,
-          "sq1": 60.73
-        }
-      },
-      {
-        "wcaId": "2021BLAK01",
-        "name": "Jonah Blakeley",
-        "score": 69.99,
-        "components": {
-          "222": 62.17,
-          "333": 85.66,
-          "444": 76.09,
-          "555": 79.05,
-          "666": 69.69,
-          "777": 64.1,
-          "333fm": 100,
-          "333oh": 68.44,
-          "clock": 29.55,
-          "minx": 80.62,
-          "pyram": 36.69,
-          "skewb": 85.89,
-          "sq1": 71.85
-        }
-      },
-      {
-        "wcaId": "2018CROU02",
-        "name": "Sylvia Crouch",
-        "score": 67.29,
-        "components": {
-          "222": 68.31,
-          "333": 92.8,
-          "444": 85.92,
-          "555": 82.99,
-          "666": 73.09,
-          "777": 58.26,
-          "333fm": 0,
-          "333oh": 70.77,
-          "clock": 73.11,
-          "minx": 66.35,
-          "pyram": 57.23,
-          "skewb": 68.46,
-          "sq1": 77.49
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
         }
       },
       {
         "wcaId": "2022JONE11",
-        "name": "Kyle Jones",
-        "score": 66.34,
+        "name": "2022JONE11",
+        "score": 0,
         "components": {
-          "222": 67.48,
-          "333": 100,
-          "444": 80.44,
-          "555": 79.54,
-          "666": 67.53,
-          "777": 56.64,
-          "333fm": 0,
-          "333oh": 52.52,
-          "clock": 100,
-          "minx": 52.08,
-          "pyram": 55.32,
-          "skewb": 50.91,
-          "sq1": 100
-        }
-      },
-      {
-        "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "score": 60.43,
-        "components": {
-          "222": 56.46,
-          "333": 73.06,
-          "444": 71.44,
-          "555": 69.86,
-          "666": 54.02,
-          "777": 44.24,
-          "333fm": 75.75,
-          "333oh": 53.28,
-          "clock": 45.49,
-          "minx": 67.49,
-          "pyram": 31.22,
-          "skewb": 100,
-          "sq1": 43.26
-        }
-      },
-      {
-        "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "score": 56.85,
-        "components": {
-          "222": 50.46,
-          "333": 68.5,
-          "444": 67.31,
-          "555": 72.55,
-          "666": 59.24,
-          "777": 52.13,
-          "333fm": 67.57,
-          "333oh": 48.48,
-          "clock": 42.68,
-          "minx": 49.04,
-          "pyram": 27.79,
-          "skewb": 59.45,
-          "sq1": 73.9
-        }
-      },
-      {
-        "wcaId": "2022GART03",
-        "name": "Nate Garthon",
-        "score": 52.71,
-        "components": {
-          "222": 51.39,
-          "333": 68.5,
-          "444": 65.99,
-          "555": 69.21,
-          "666": 56.52,
-          "777": 49.36,
-          "333fm": 0,
-          "333oh": 54.41,
-          "clock": 51.6,
-          "minx": 68.52,
-          "pyram": 32.79,
-          "skewb": 60.34,
-          "sq1": 56.59
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "score": 51.79,
-        "components": {
-          "222": 77.93,
-          "333": 59.8,
-          "444": 56.5,
-          "555": 48.01,
-          "666": 41.2,
-          "777": 33.23,
-          "333fm": 97.09,
-          "333oh": 42.04,
-          "clock": 22.66,
-          "minx": 56.27,
-          "pyram": 25.6,
-          "skewb": 37.43,
-          "sq1": 75.54
-        }
-      },
-      {
-        "wcaId": "2023BENT02",
-        "name": "Hamish Bentley",
-        "score": 47.56,
-        "components": {
-          "222": 45.48,
-          "333": 55.94,
-          "444": 60.21,
-          "555": 54.6,
-          "666": 56.11,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
           "777": 0,
-          "333fm": 82.64,
-          "333oh": 43.62,
-          "clock": 32.79,
-          "minx": 51.78,
-          "pyram": 30.69,
-          "skewb": 51.47,
-          "sq1": 52.95
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
         }
       },
       {
-        "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "score": 43.15,
+        "wcaId": "2022FETH01",
+        "name": "2022FETH01",
+        "score": 0,
         "components": {
-          "222": 35.02,
-          "333": 64.47,
-          "444": 57.74,
-          "555": 49.83,
-          "666": 46.9,
-          "777": 40.94,
-          "333fm": 59.17,
-          "333oh": 44.48,
-          "clock": 28.47,
-          "minx": 68.72,
-          "pyram": 21.31,
-          "skewb": 43.96,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2022HRDL01",
+        "name": "2022HRDL01",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2018CROU02",
+        "name": "2018CROU02",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
           "sq1": 0
         }
       },
       {
         "wcaId": "2023ARCI02",
-        "name": "Gavriel Johann Arcilla",
-        "score": 41.51,
+        "name": "2023ARCI02",
+        "score": 0,
         "components": {
-          "222": 42.78,
-          "333": 93.39,
-          "444": 73.76,
-          "555": 79.42,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
           "666": 0,
-          "777": 52.61,
-          "333fm": 66.66,
-          "333oh": 99.55,
-          "clock": 23.25,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
           "minx": 0,
-          "pyram": 8.23,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2021BLAK01",
+        "name": "2021BLAK01",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2019THEO03",
+        "name": "2019THEO03",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2022SHAR23",
+        "name": "2022SHAR23",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2021LUAA01",
+        "name": "2021LUAA01",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2022TOLH01",
+        "name": "2022TOLH01",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
+        }
+      },
+      {
+        "wcaId": "2023BENT02",
+        "name": "2023BENT02",
+        "score": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
           "skewb": 0,
           "sq1": 0
         }
       },
       {
         "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "score": 40.89,
+        "name": "2019WILL30",
+        "score": 0,
         "components": {
-          "222": 44.99,
-          "333": 61.25,
-          "444": 63.94,
-          "555": 56.23,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
           "666": 0,
           "777": 0,
-          "333fm": 91.74,
-          "333oh": 45.9,
-          "clock": 29.12,
-          "minx": 47.13,
-          "pyram": 17.84,
-          "skewb": 41.85,
-          "sq1": 31.51
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
         }
       },
       {
         "wcaId": "2023SCOT04",
-        "name": "Asaph Scott",
-        "score": 35.17,
+        "name": "2023SCOT04",
+        "score": 0,
         "components": {
-          "222": 41.19,
-          "333": 54.93,
-          "444": 49.78,
-          "555": 41.6,
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
           "666": 0,
           "777": 0,
-          "333fm": 69.92,
-          "333oh": 46.56,
-          "clock": 29.26,
-          "minx": 42.44,
-          "pyram": 25.17,
-          "skewb": 27.61,
-          "sq1": 28.76
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0
         }
       },
       {
         "wcaId": "2025THUR01",
-        "name": "Emily Thurston",
-        "score": 12.73,
+        "name": "2025THUR01",
+        "score": 0,
         "components": {
-          "222": 21.73,
-          "333": 28.67,
-          "444": 28.06,
+          "222": 0,
+          "333": 0,
+          "444": 0,
           "555": 0,
           "666": 0,
           "777": 0,
+          "333bf": 0,
           "333fm": 0,
-          "333oh": 17.58,
-          "clock": 26.77,
+          "333oh": 0,
+          "clock": 0,
           "minx": 0,
-          "pyram": 14.4,
-          "skewb": 28.34,
+          "pyram": 0,
+          "skewb": 0,
           "sq1": 0
         }
       }

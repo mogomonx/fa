@@ -1,22 +1,35 @@
 let rankingsData = null;
+let individualData = null;
 
 const state = {
   overallType: 'single',
+  overallView: 'leaderboard',
   eventType: 'single',
   eventId: null,
+  individualType: 'single',
+  individualEventId: null,
 };
 
 async function loadData() {
-  const res = await fetch('data/rankings.json', { cache: 'no-store' });
-  rankingsData = await res.json();
+  const [rankingsRes, individualRes] = await Promise.all([
+    fetch('data/rankings.json', { cache: 'no-store' }),
+    fetch('data/individual-rankings.json', { cache: 'no-store' }),
+  ]);
+  rankingsData = await rankingsRes.json();
+  individualData = await individualRes.json();
 
   const updated = new Date(rankingsData.generatedAt);
   document.getElementById('updated-at').textContent =
-    `Last updated ${updated.toLocaleString()}`;
+    rankingsData.dataFetchedAt
+      ? `Last updated ${updated.toLocaleString()}`
+      : 'No data yet — waiting on the first automatic update.';
 
   populateEventSelect();
+  populateIndividualEventSelect();
+  renderFaRecords();
   renderOverall();
   renderEventTable();
+  renderIndividual();
 }
 
 function populateEventSelect() {
@@ -32,6 +45,22 @@ function populateEventSelect() {
   select.addEventListener('change', () => {
     state.eventId = select.value;
     renderEventTable();
+  });
+}
+
+function populateIndividualEventSelect() {
+  const select = document.getElementById('individual-event-select');
+  select.innerHTML = '';
+  for (const event of individualData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
+  }
+  state.individualEventId = select.value;
+  select.addEventListener('change', () => {
+    state.individualEventId = select.value;
+    renderIndividual();
   });
 }
 
@@ -67,27 +96,130 @@ function renderTable(container, rows, columns) {
   container.appendChild(table);
 }
 
+// ---------- FA Records (homepage) ----------
+
+function renderFaRecords() {
+  const container = document.getElementById('fa-records-table');
+  const table = document.createElement('table');
+  table.innerHTML = `<thead><tr>
+    <th>Event</th>
+    <th>Single record</th>
+    <th>Held by</th>
+    <th>Average record</th>
+    <th>Held by</th>
+  </tr></thead>`;
+  const tbody = document.createElement('tbody');
+
+  for (const event of rankingsData.events) {
+    const singleHolders = (event.single || []).filter((r) => r.rank === 1);
+    const averageHolders = event.hasAverage ? (event.average || []).filter((r) => r.rank === 1) : [];
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${event.name}</td>
+      <td>${singleHolders[0] ? singleHolders[0].display : '—'}</td>
+      <td>${singleHolders.map((h) => h.name).join(', ') || '—'}</td>
+      <td>${event.hasAverage ? (averageHolders[0] ? averageHolders[0].display : '—') : 'N/A'}</td>
+      <td>${event.hasAverage ? (averageHolders.map((h) => h.name).join(', ') || '—') : 'N/A'}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  container.innerHTML = '';
+  container.appendChild(table);
+}
+
+// ---------- Sum of Ranks & Kinch ----------
+
 function renderOverall() {
+  document.getElementById('leaderboard-view').style.display =
+    state.overallView === 'leaderboard' ? '' : 'none';
+  document.getElementById('detailed-view').style.display =
+    state.overallView === 'detailed' ? '' : 'none';
+
+  if (state.overallView === 'leaderboard') {
+    renderOverallLeaderboards();
+  } else {
+    renderOverallDetailed();
+  }
+}
+
+function renderOverallLeaderboards() {
   const sorRows = rankingsData.sumOfRanks[state.overallType];
   renderTable(document.getElementById('sum-of-ranks-table'), sorRows, [
-    { key: 'rank', label: '#', value: (_, i) => '' },
+    { key: 'rank', label: '#', value: () => '' },
     { key: 'name', label: 'Name', value: (r) => r.name },
     { key: 'total', label: 'Total', value: (r) => r.total },
   ]);
-  // Add a simple position column based on array order for Sum of Ranks.
   addPositionColumn('sum-of-ranks-table');
 
   const kinchRows = rankingsData.kinch[state.overallType];
   renderTable(document.getElementById('kinch-table'), kinchRows, [
-    { key: 'rank', label: '#', value: (_, i) => '' },
+    { key: 'rank', label: '#', value: () => '' },
     { key: 'name', label: 'Name', value: (r) => r.name },
     { key: 'score', label: 'Kinch', value: (r) => r.score.toFixed(2) },
   ]);
   addPositionColumn('kinch-table');
 }
 
-// Fills in the "#" column with 1-based position, and applies medal styling,
-// since Sum of Ranks / Kinch rows don't carry a "rank" field themselves.
+function eventColumnsFor(rows) {
+  if (!rows || rows.length === 0) return [];
+  const presentIds = Object.keys(rows[0].components);
+  return rankingsData.events.filter((e) => presentIds.includes(e.id));
+}
+
+function renderDetailedTable(containerId, rows, totalKey, totalLabel, formatValue) {
+  const container = document.getElementById(containerId);
+  if (!rows || rows.length === 0) {
+    container.innerHTML = '<p class="empty-note">No results yet.</p>';
+    return;
+  }
+  const eventCols = eventColumnsFor(rows);
+
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  thead.innerHTML = `<tr>
+    <th class="name-header">Name</th>
+    ${eventCols.map((e) => `<th>${e.name}</th>`).join('')}
+    <th>${totalLabel}</th>
+  </tr>`;
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  rows.forEach((row) => {
+    const tr = document.createElement('tr');
+    const cells = eventCols
+      .map((e) => `<td>${formatValue(row.components[e.id])}</td>`)
+      .join('');
+    tr.innerHTML = `<td class="name-cell">${row.name}</td>${cells}<td><strong>${formatValue(row[totalKey], true)}</strong></td>`;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+
+  container.innerHTML = '';
+  container.appendChild(table);
+}
+
+function renderOverallDetailed() {
+  const sorRows = rankingsData.sumOfRanks[state.overallType];
+  renderDetailedTable(
+    'sum-of-ranks-detailed',
+    sorRows,
+    'total',
+    'Total',
+    (v) => (v === undefined || v === null ? '—' : v)
+  );
+
+  const kinchRows = rankingsData.kinch[state.overallType];
+  renderDetailedTable(
+    'kinch-detailed',
+    kinchRows,
+    'score',
+    'Overall',
+    (v) => (v === undefined || v === null ? '—' : Number(v).toFixed(2))
+  );
+}
+
 function addPositionColumn(containerId) {
   const rows = document.querySelectorAll(`#${containerId} tbody tr`);
   rows.forEach((tr, i) => {
@@ -98,9 +230,12 @@ function addPositionColumn(containerId) {
   });
 }
 
+// ---------- Event Rankings ----------
+
 function renderEventTable() {
   const event = rankingsData.events.find((e) => e.id === state.eventId);
   const container = document.getElementById('event-table');
+  const breakdownContainer = document.getElementById('event-breakdowns');
   if (!event) {
     container.innerHTML = '<p class="empty-note">Select an event.</p>';
     return;
@@ -118,7 +253,79 @@ function renderEventTable() {
     { key: 'name', label: 'Name', value: (r) => r.name },
     { key: 'result', label: 'Result', value: (r) => r.display },
   ]);
+
+  // Show the solve-by-solve breakdown behind each average shown above.
+  breakdownContainer.innerHTML = '';
+  if (effectiveType === 'average' && rows && rows.length > 0) {
+    const board = document.createElement('div');
+    board.className = 'board';
+    board.style.marginTop = '1.5rem';
+    const heading = document.createElement('h2');
+    heading.textContent = 'Solves behind each average';
+    board.appendChild(heading);
+
+    const list = document.createElement('div');
+    list.className = 'scroll-table';
+    const table = document.createElement('table');
+    table.innerHTML = '<thead><tr><th class="name-header">Name</th><th>Solves</th></tr></thead>';
+    const tbody = document.createElement('tbody');
+    rows.forEach((r) => {
+      const solves = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="name-cell">${r.name}</td><td>${solves ? solves.join(', ') : '—'}</td>`;
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    list.appendChild(table);
+    board.appendChild(list);
+    breakdownContainer.appendChild(board);
+  }
 }
+
+// ---------- Individual Results ----------
+
+function renderIndividual() {
+  const event = individualData.events.find((e) => e.id === state.individualEventId);
+  const resultsContainer = document.getElementById('individual-results-table');
+  const top100Container = document.getElementById('top100-table');
+  const top100Note = document.getElementById('top100-note');
+  const top100Heading = document.getElementById('top100-heading');
+  if (!event) return;
+
+  const toggle = document.getElementById('individual-type-toggle');
+  const averageBtn = toggle.querySelector('[data-type="average"]');
+  const hasAverage = !!event.average;
+  averageBtn.disabled = !hasAverage;
+  averageBtn.style.opacity = hasAverage ? '1' : '0.4';
+
+  const effectiveType = hasAverage ? state.individualType : 'single';
+  const data = event[effectiveType];
+
+  renderTable(resultsContainer, data ? data.ranked : [], [
+    { key: 'rank', label: '#', value: (r) => r.rank },
+    { key: 'name', label: 'Name', value: (r) => r.name },
+    { key: 'result', label: 'Result', value: (r) => r.display },
+    { key: 'comp', label: 'Competition', value: (r) => r.competitionName || '—' },
+  ]);
+
+  if (data) {
+    const n = data.top100.consideredCount;
+    top100Heading.textContent = `Top ${n} tally`;
+    top100Note.textContent = data.top100.cutoffDisplay
+      ? `Cutoff for the top ${n}: ${data.top100.cutoffDisplay}`
+      : '';
+    renderTable(top100Container, data.top100.tally, [
+      { key: 'rank', label: '#', value: () => '' },
+      { key: 'name', label: 'Name', value: (r) => r.name },
+      { key: 'count', label: `In top ${n}`, value: (r) => r.count },
+    ]);
+    addPositionColumn('top100-table');
+  } else {
+    top100Container.innerHTML = '<p class="empty-note">No results yet.</p>';
+  }
+}
+
+// ---------- Tabs & toggles ----------
 
 function setupTabs() {
   document.querySelectorAll('.tab-btn').forEach((btn) => {
@@ -131,26 +338,34 @@ function setupTabs() {
   });
 }
 
-function setupToggle(id, onChange) {
+function setupToggle(id, attr, onChange) {
   const el = document.getElementById(id);
   el.querySelectorAll('.toggle-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       if (btn.disabled) return;
       el.querySelectorAll('.toggle-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      onChange(btn.dataset.type);
+      onChange(btn.dataset[attr]);
     });
   });
 }
 
 setupTabs();
-setupToggle('overall-type-toggle', (type) => {
+setupToggle('overall-type-toggle', 'type', (type) => {
   state.overallType = type;
   renderOverall();
 });
-setupToggle('event-type-toggle', (type) => {
+setupToggle('overall-view-toggle', 'view', (view) => {
+  state.overallView = view;
+  renderOverall();
+});
+setupToggle('event-type-toggle', 'type', (type) => {
   state.eventType = type;
   renderEventTable();
+});
+setupToggle('individual-type-toggle', 'type', (type) => {
+  state.individualType = type;
+  renderIndividual();
 });
 
 loadData().catch((err) => {

@@ -55,6 +55,7 @@ change the schedule in `.github/workflows/update-data.yml` — it's a
 
 ## Adding or removing people later
 
-Edit `config/members.json` (add/remove WCA IDs), commit the change — the
-workflow is set to also run automatically whenever that file changes, so
-the site updates within a couple of minutes.
+Edit `config/members.json` (add/remove entries, each with a `wcaId` and
+optional `displayName`), commit the change — the workflow is set to also
+run automatically whenever that file changes, so the site updates within a
+couple of minutes.

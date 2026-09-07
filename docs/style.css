@@ -169,6 +169,30 @@ tr.rank-1 td.rank-cell { color: var(--gold); font-weight: 700; }
 tr.rank-2 td.rank-cell { color: var(--silver); font-weight: 700; }
 tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 
+.detailed-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.scroll-table {
+  overflow-x: auto;
+}
+
+.scroll-table table {
+  border-radius: 10px;
+}
+
+.scroll-table th, .scroll-table td {
+  white-space: nowrap;
+}
+
+.scroll-table td.name-cell, .scroll-table th.name-header {
+  position: sticky;
+  left: 0;
+  background: var(--panel);
+}
+
 .empty-note {
   color: var(--text-dim);
   font-size: 0.9rem;
