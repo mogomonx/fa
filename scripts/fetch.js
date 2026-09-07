@@ -32,7 +32,25 @@ async function fetchPerson(wcaId, displayNameOverride) {
   // event id, each with a "single" and (where applicable) "average" object
   // that has a "best" field (the raw, sortable result value).
   const records = data?.personal_records || {};
-  const competitionIds = data?.competition_ids || [];
+
+  // The exact field name for "which competitions has this person attended"
+  // isn't nailed down in public docs, so try a few likely shapes and log
+  // what we actually got the first time, to make this debuggable.
+  let competitionIds = [];
+  if (Array.isArray(data?.competition_ids)) {
+    competitionIds = data.competition_ids;
+  } else if (Array.isArray(data?.competitions)) {
+    competitionIds = data.competitions.map((c) => (typeof c === 'string' ? c : c.id)).filter(Boolean);
+  } else if (Array.isArray(data?.person?.competition_ids)) {
+    competitionIds = data.person.competition_ids;
+  }
+
+  if (!fetchPerson.loggedShape) {
+    fetchPerson.loggedShape = true;
+    console.log('  [debug] top-level keys from the API for this person:', Object.keys(data || {}));
+    if (data?.person) console.log('  [debug] keys under "person":', Object.keys(data.person));
+    console.log('  [debug] competitionIds resolved to:', competitionIds.length, 'entries');
+  }
 
   const events = {};
   for (const eventId of EVENT_IDS) {
