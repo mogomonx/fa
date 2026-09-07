@@ -1,216 +1,216 @@
 {
-  "fetchedAt": "2026-09-07T10:55:52.014Z",
+  "fetchedAt": null,
   "people": [
     {
       "wcaId": "2022GART03",
-      "name": "Nova Garthon",
-      "countryIso2": "AU",
+      "name": "2022GART03",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 162,
-          "average": 323
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 846,
-          "average": 1073
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3723,
-          "average": 4375
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 7338,
-          "average": 7615
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 15818,
-          "average": 16332
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 24948,
-          "average": 26977
-        },
-        "333bf": {
-          "single": 6679,
-          "average": 9860
-        },
-        "333fm": {
-          "single": 52,
+          "single": null,
           "average": null
-        },
-        "333oh": {
-          "single": 1664,
-          "average": 2029
-        },
-        "clock": {
-          "single": 325,
-          "average": 469
-        },
-        "minx": {
-          "single": 5560,
-          "average": 6169
-        },
-        "pyram": {
-          "single": 402,
-          "average": 555
-        },
-        "skewb": {
-          "single": 246,
-          "average": 464
-        },
-        "sq1": {
-          "single": 1536,
-          "average": 1746
-        },
-        "444bf": {
-          "single": 51660,
-          "average": null
-        },
-        "555bf": {
-          "single": 149300,
-          "average": null
-        },
-        "333mbf": {
-          "single": 960356703,
-          "average": null
-        }
-      }
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "countryIso2": "AU",
-      "events": {
-        "222": {
-          "single": 166,
-          "average": 251
-        },
-        "333": {
-          "single": 628,
-          "average": 758
-        },
-        "444": {
-          "single": 2585,
-          "average": 2887
-        },
-        "555": {
-          "single": 4919,
-          "average": 5270
-        },
-        "666": {
-          "single": 7983,
-          "average": 9231
-        },
-        "777": {
-          "single": 12729,
-          "average": 13317
-        },
-        "333bf": {
-          "single": 2838,
-          "average": 3849
-        },
-        "333fm": {
-          "single": 29,
-          "average": 3467
-        },
-        "333oh": {
-          "single": 985,
-          "average": 1104
-        },
-        "clock": {
-          "single": 325,
-          "average": 386
-        },
-        "minx": {
-          "single": 3599,
-          "average": 4227
-        },
-        "pyram": {
-          "single": 150,
-          "average": 236
-        },
-        "skewb": {
-          "single": 209,
-          "average": 442
-        },
-        "sq1": {
-          "single": 837,
-          "average": 1146
-        },
-        "444bf": {
-          "single": 30952,
-          "average": null
-        },
-        "555bf": {
-          "single": 62800,
-          "average": null
-        },
-        "333mbf": {
-          "single": 800293001,
-          "average": null
-        }
-      }
-    },
-    {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "countryIso2": "AU",
-      "events": {
-        "222": {
-          "single": 70,
-          "average": 246
-        },
-        "333": {
-          "single": 485,
-          "average": 735
-        },
-        "444": {
-          "single": 2973,
-          "average": 3589
-        },
-        "555": {
-          "single": 5750,
-          "average": 6626
-        },
-        "666": {
-          "single": 13061,
-          "average": 13670
-        },
-        "777": {
-          "single": 20688,
-          "average": 23510
         },
         "333bf": {
           "single": null,
           "average": null
         },
         "333fm": {
-          "single": 50,
+          "single": null,
           "average": null
         },
         "333oh": {
-          "single": 1444,
-          "average": 2102
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 161,
-          "average": 242
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 7285,
-          "average": 8116
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 198,
-          "average": 329
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 236,
-          "average": 550
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 869,
-          "average": 988
+          "single": null,
+          "average": null
+        },
+        "444bf": {
+          "single": null,
+          "average": null
+        },
+        "555bf": {
+          "single": null,
+          "average": null
+        },
+        "333mbf": {
+          "single": null,
+          "average": null
+        }
+      }
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "2022BURN09",
+      "countryIso2": null,
+      "events": {
+        "222": {
+          "single": null,
+          "average": null
+        },
+        "333": {
+          "single": null,
+          "average": null
+        },
+        "444": {
+          "single": null,
+          "average": null
+        },
+        "555": {
+          "single": null,
+          "average": null
+        },
+        "666": {
+          "single": null,
+          "average": null
+        },
+        "777": {
+          "single": null,
+          "average": null
+        },
+        "333bf": {
+          "single": null,
+          "average": null
+        },
+        "333fm": {
+          "single": null,
+          "average": null
+        },
+        "333oh": {
+          "single": null,
+          "average": null
+        },
+        "clock": {
+          "single": null,
+          "average": null
+        },
+        "minx": {
+          "single": null,
+          "average": null
+        },
+        "pyram": {
+          "single": null,
+          "average": null
+        },
+        "skewb": {
+          "single": null,
+          "average": null
+        },
+        "sq1": {
+          "single": null,
+          "average": null
+        },
+        "444bf": {
+          "single": null,
+          "average": null
+        },
+        "555bf": {
+          "single": null,
+          "average": null
+        },
+        "333mbf": {
+          "single": null,
+          "average": null
+        }
+      }
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "2022JONE11",
+      "countryIso2": null,
+      "events": {
+        "222": {
+          "single": null,
+          "average": null
+        },
+        "333": {
+          "single": null,
+          "average": null
+        },
+        "444": {
+          "single": null,
+          "average": null
+        },
+        "555": {
+          "single": null,
+          "average": null
+        },
+        "666": {
+          "single": null,
+          "average": null
+        },
+        "777": {
+          "single": null,
+          "average": null
+        },
+        "333bf": {
+          "single": null,
+          "average": null
+        },
+        "333fm": {
+          "single": null,
+          "average": null
+        },
+        "333oh": {
+          "single": null,
+          "average": null
+        },
+        "clock": {
+          "single": null,
+          "average": null
+        },
+        "minx": {
+          "single": null,
+          "average": null
+        },
+        "pyram": {
+          "single": null,
+          "average": null
+        },
+        "skewb": {
+          "single": null,
+          "average": null
+        },
+        "sq1": {
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -228,64 +228,64 @@
     },
     {
       "wcaId": "2022FETH01",
-      "name": "Miles Skye Fetherston",
-      "countryIso2": "AU",
+      "name": "2022FETH01",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 107,
-          "average": 166
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 608,
-          "average": 748
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3111,
-          "average": 3626
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 6695,
-          "average": 7417
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 15685,
-          "average": 16069
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 24462,
-          "average": 25645
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 12850,
+          "single": null,
           "average": null
         },
         "333fm": {
-          "single": 33,
-          "average": 4100
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1171,
-          "average": 1527
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 319,
-          "average": 451
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 5706,
-          "average": 6000
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 253,
-          "average": 350
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 245,
-          "average": 449
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1415,
-          "average": 1627
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -303,35 +303,35 @@
     },
     {
       "wcaId": "2022HRDL01",
-      "name": "Mazar Hrdlicka",
-      "countryIso2": "CA",
+      "name": "2022HRDL01",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 79,
-          "average": 168
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 611,
-          "average": 802
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3212,
-          "average": 3561
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 5700,
-          "average": 6347
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 12393,
-          "average": 13140
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 19224,
-          "average": 21307
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 13958,
+          "single": null,
           "average": null
         },
         "333fm": {
@@ -339,28 +339,28 @@
           "average": null
         },
         "333oh": {
-          "single": 1253,
-          "average": 1555
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 331,
-          "average": 471
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 5991,
-          "average": 6752
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 153,
-          "average": 182
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 352,
-          "average": 452
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 613,
-          "average": 1156
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -378,64 +378,64 @@
     },
     {
       "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "countryIso2": "US",
+      "name": "2018CROU02",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 67,
-          "average": 243
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 646,
-          "average": 792
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 2843,
-          "average": 3360
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 5621,
-          "average": 6350
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 11322,
-          "average": 12629
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 20034,
-          "average": 22857
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 8724,
+          "single": null,
           "average": null
         },
         "333fm": {
-          "single": 41,
+          "single": null,
           "average": null
         },
         "333oh": {
-          "single": 1390,
-          "average": 1560
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 288,
-          "average": 331
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 5849,
-          "average": 6371
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 272,
-          "average": 318
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 251,
-          "average": 409
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 809,
-          "average": 1275
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -446,74 +446,74 @@
           "average": null
         },
         "333mbf": {
-          "single": 980165301,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2023ARCI02",
-      "name": "Nicole Arcilla",
-      "countryIso2": "PH",
+      "name": "2023ARCI02",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 269,
-          "average": 388
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 671,
-          "average": 787
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3596,
-          "average": 3914
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 6455,
-          "average": 6636
+          "single": null,
+          "average": null
         },
         "666": {
           "single": null,
           "average": null
         },
         "777": {
-          "single": 24130,
-          "average": 25315
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 1304,
+          "single": null,
           "average": null
         },
         "333fm": {
-          "single": 37,
-          "average": 5000
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1028,
-          "average": 1109
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 878,
-          "average": 1041
+          "single": null,
+          "average": null
         },
         "minx": {
           "single": null,
           "average": null
         },
         "pyram": {
-          "single": 1651,
-          "average": 2212
+          "single": null,
+          "average": null
         },
         "skewb": {
           "single": null,
           "average": null
         },
         "sq1": {
-          "single": 5382,
+          "single": null,
           "average": null
         },
         "444bf": {
-          "single": 12390,
+          "single": null,
           "average": null
         },
         "555bf": {
@@ -521,146 +521,146 @@
           "average": null
         },
         "333mbf": {
-          "single": 850349509,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "countryIso2": "AU",
+      "name": "2021BLAK01",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 164,
-          "average": 267
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 737,
-          "average": 858
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3416,
-          "average": 3794
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 6330,
-          "average": 6667
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 12801,
-          "average": 13245
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 19688,
-          "average": 20774
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 6572,
-          "average": 7364
+          "single": null,
+          "average": null
         },
         "333fm": {
-          "single": 26,
-          "average": 3333
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1411,
-          "average": 1613
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 518,
-          "average": 819
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 4358,
-          "average": 5243
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 316,
-          "average": 496
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 199,
-          "average": 326
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1086,
-          "average": 1375
+          "single": null,
+          "average": null
         },
         "444bf": {
-          "single": 45481,
+          "single": null,
           "average": null
         },
         "555bf": {
-          "single": 101600,
+          "single": null,
           "average": null
         },
         "333mbf": {
-          "single": 950117601,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "countryIso2": "AU",
+      "name": "2019THEO03",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 123,
-          "average": 294
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 766,
-          "average": 1006
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3446,
-          "average": 4041
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 6837,
-          "average": 7544
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 16338,
-          "average": 17087
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 28766,
-          "average": 30105
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 11839,
-          "average": 20526
+          "single": null,
+          "average": null
         },
         "333fm": {
-          "single": 37,
-          "average": 4400
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1747,
-          "average": 2072
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 385,
-          "average": 532
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 5587,
-          "average": 6263
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 401,
-          "average": 583
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 199,
-          "average": 280
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1417,
-          "average": 2284
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -671,71 +671,71 @@
           "average": null
         },
         "333mbf": {
-          "single": 980096101,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2022SHAR23",
-      "name": "Connor Sharpe",
-      "countryIso2": "AU",
+      "name": "2022SHAR23",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 196,
-          "average": 329
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 951,
-          "average": 1073
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 3877,
-          "average": 4289
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 6588,
-          "average": 7264
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 14159,
-          "average": 15583
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 23446,
-          "average": 25547
+          "single": null,
+          "average": null
         },
         "333bf": {
-          "single": 6177,
+          "single": null,
           "average": null
         },
         "333fm": {
-          "single": 42,
-          "average": 4933
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1806,
-          "average": 2277
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 430,
-          "average": 567
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 7515,
-          "average": 8620
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 256,
-          "average": 655
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 247,
-          "average": 471
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1004,
-          "average": 1337
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -746,67 +746,67 @@
           "average": null
         },
         "333mbf": {
-          "single": 960285101,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "countryIso2": "AU",
+      "name": "2021LUAA01",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 222,
-          "average": 474
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 957,
-          "average": 1140
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 4509,
-          "average": 5000
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 9517,
-          "average": 10576
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 19004,
-          "average": 19684
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 31612,
-          "average": 32526
+          "single": null,
+          "average": null
         },
         "333bf": {
           "single": null,
           "average": null
         },
         "333fm": {
-          "single": 54,
-          "average": 5633
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 2037,
-          "average": 2482
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 697,
-          "average": 850
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 5449,
-          "average": 6151
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 458,
-          "average": 854
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 374,
-          "average": 637
+          "single": null,
+          "average": null
         },
         "sq1": {
           "single": null,
@@ -828,64 +828,64 @@
     },
     {
       "wcaId": "2022TOLH01",
-      "name": "Gemma Tolhurst",
-      "countryIso2": "AU",
+      "name": "2022TOLH01",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 74,
-          "average": 213
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 978,
-          "average": 1229
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 4558,
-          "average": 5110
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 9900,
-          "average": 10976
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 21507,
-          "average": 22407
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 34583,
-          "average": 40073
+          "single": null,
+          "average": null
         },
         "333bf": {
           "single": null,
           "average": null
         },
         "333fm": {
-          "single": 29,
-          "average": 3433
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1586,
-          "average": 2626
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 889,
-          "average": 1068
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 6908,
-          "average": 7512
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 323,
-          "average": 711
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 367,
-          "average": 748
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1095,
-          "average": 1308
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -903,64 +903,64 @@
     },
     {
       "wcaId": "2023BENT02",
-      "name": "Hamish Bentley",
-      "countryIso2": "AU",
+      "name": "2023BENT02",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 200,
-          "average": 365
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 990,
-          "average": 1314
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 4173,
-          "average": 4795
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 9186,
-          "average": 9652
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 14607,
-          "average": 16453
+          "single": null,
+          "average": null
         },
         "777": {
-          "single": 27042,
+          "single": null,
           "average": null
         },
         "333bf": {
-          "single": 11852,
+          "single": null,
           "average": null
         },
         "333fm": {
-          "single": 36,
-          "average": 4033
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 2080,
-          "average": 2531
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 597,
-          "average": 738
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 7071,
-          "average": 8163
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 429,
-          "average": 593
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 286,
-          "average": 544
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1342,
-          "average": 1866
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -978,64 +978,64 @@
     },
     {
       "wcaId": "2019WILL30",
-      "name": "Madeline Willoughby-Khan",
-      "countryIso2": "AU",
+      "name": "2019WILL30",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 255,
-          "average": 369
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 1013,
-          "average": 1200
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 4092,
-          "average": 4515
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 8471,
-          "average": 9373
+          "single": null,
+          "average": null
         },
         "666": {
-          "single": 22186,
+          "single": null,
           "average": null
         },
         "777": {
-          "single": 33919,
+          "single": null,
           "average": null
         },
         "333bf": {
-          "single": 23452,
+          "single": null,
           "average": null
         },
         "333fm": {
-          "single": 33,
-          "average": 3633
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 2007,
-          "average": 2405
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 767,
-          "average": 831
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 8624,
-          "average": 8968
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 612,
-          "average": 1020
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 591,
-          "average": 669
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 2727,
-          "average": 3136
+          "single": null,
+          "average": null
         },
         "444bf": {
           "single": null,
@@ -1046,74 +1046,74 @@
           "average": null
         },
         "333mbf": {
-          "single": 970100000,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2023SCOT04",
-      "name": "Ash Scott",
-      "countryIso2": "AU",
+      "name": "2023SCOT04",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 237,
-          "average": 403
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 1077,
-          "average": 1338
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 5116,
-          "average": 5799
+          "single": null,
+          "average": null
         },
         "555": {
-          "single": 10730,
-          "average": 12667
+          "single": null,
+          "average": null
         },
         "666": {
           "single": null,
           "average": null
         },
         "777": {
-          "single": 41815,
+          "single": null,
           "average": null
         },
         "333bf": {
-          "single": 4554,
-          "average": 8386
+          "single": null,
+          "average": null
         },
         "333fm": {
-          "single": 41,
-          "average": 4767
+          "single": null,
+          "average": null
         },
         "333oh": {
-          "single": 1960,
-          "average": 2371
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 715,
-          "average": 827
+          "single": null,
+          "average": null
         },
         "minx": {
-          "single": 8850,
-          "average": 9959
+          "single": null,
+          "average": null
         },
         "pyram": {
-          "single": 524,
-          "average": 723
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 581,
-          "average": 1014
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 1945,
-          "average": 3435
+          "single": null,
+          "average": null
         },
         "444bf": {
-          "single": 68800,
+          "single": null,
           "average": null
         },
         "555bf": {
@@ -1121,27 +1121,27 @@
           "average": null
         },
         "333mbf": {
-          "single": 970131601,
+          "single": null,
           "average": null
         }
       }
     },
     {
       "wcaId": "2025THUR01",
-      "name": "Emily Thurston",
-      "countryIso2": "US",
+      "name": "2025THUR01",
+      "countryIso2": null,
       "events": {
         "222": {
-          "single": 436,
-          "average": 764
+          "single": null,
+          "average": null
         },
         "333": {
-          "single": 2094,
-          "average": 2564
+          "single": null,
+          "average": null
         },
         "444": {
-          "single": 8906,
-          "average": 10289
+          "single": null,
+          "average": null
         },
         "555": {
           "single": null,
@@ -1164,27 +1164,27 @@
           "average": null
         },
         "333oh": {
-          "single": 5029,
-          "average": 6281
+          "single": null,
+          "average": null
         },
         "clock": {
-          "single": 735,
-          "average": 904
+          "single": null,
+          "average": null
         },
         "minx": {
           "single": null,
           "average": null
         },
         "pyram": {
-          "single": 866,
-          "average": 1264
+          "single": null,
+          "average": null
         },
         "skewb": {
-          "single": 746,
-          "average": 988
+          "single": null,
+          "average": null
         },
         "sq1": {
-          "single": 4180,
+          "single": null,
           "average": null
         },
         "444bf": {
