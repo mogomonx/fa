@@ -27,4 +27,24 @@ const EVENTS = [
 // 2021) -- only the multi-attempt/cumulative ones below don't.
 const SINGLE_ONLY_EVENTS = new Set(['444bf', '555bf', '333mbf']);
 
-module.exports = { EVENTS, SINGLE_ONLY_EVENTS };
+// WCA round_type_id -> human label, for showing "which round" a result
+// came from. Falls back to the raw code for anything not listed here.
+const ROUND_TYPE_LABELS = {
+  1: 'Round 1',
+  2: 'Round 2',
+  3: 'Round 3',
+  4: 'Round 4',
+  c: 'Combined Round',
+  d: 'Combined Final',
+  e: 'Semi Final',
+  f: 'Final',
+  b: 'B Final',
+  g: 'First Round',
+};
+
+function roundLabel(roundTypeId) {
+  if (!roundTypeId) return null;
+  return ROUND_TYPE_LABELS[roundTypeId] || roundTypeId;
+}
+
+module.exports = { EVENTS, SINGLE_ONLY_EVENTS, roundLabel };

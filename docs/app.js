@@ -259,10 +259,20 @@ function renderEventTable() {
       key: 'solves',
       label: 'Solves',
       value: (r) => {
-        const solves = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
-        if (!solves) return '<span class="empty-note">—</span>';
-        const text = solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
+        const b = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
+        if (!b) return '<span class="empty-note">—</span>';
+        const text = b.solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
         return `<span class="solves-cell">${text}</span>`;
+      },
+    });
+    columns.push({
+      key: 'achievedAt',
+      label: 'Achieved at',
+      value: (r) => {
+        const b = individualData.averageBreakdowns?.[r.wcaId]?.[event.id];
+        if (!b) return '<span class="empty-note">—</span>';
+        const parts = [b.competitionName, b.round].filter(Boolean).join(' \u2013 ');
+        return `<span class="solves-cell">${parts || '—'}</span>`;
       },
     });
   }
@@ -276,9 +286,6 @@ function renderEventTable() {
 function renderIndividual() {
   const event = individualData.events.find((e) => e.id === state.individualEventId);
   const resultsContainer = document.getElementById('individual-results-table');
-  const top100Container = document.getElementById('top100-table');
-  const top100Note = document.getElementById('top100-note');
-  const top100Heading = document.getElementById('top100-heading');
   if (!event) return;
 
   const toggle = document.getElementById('individual-type-toggle');
@@ -297,21 +304,20 @@ function renderIndividual() {
     { key: 'comp', label: 'Competition', value: (r) => r.competitionName || '—' },
   ]);
 
-  if (data) {
-    const n = data.top100.consideredCount;
-    top100Heading.textContent = `Top ${n} tally`;
-    top100Note.textContent = data.top100.cutoffDisplay
-      ? `Cutoff for the top ${n}: ${data.top100.cutoffDisplay}`
-      : '';
-    renderTable(top100Container, data.top100.tally, [
-      { key: 'rank', label: '#', value: () => '' },
-      { key: 'name', label: 'Name', value: (r) => r.name },
-      { key: 'count', label: `In top ${n}`, value: (r) => r.count },
-    ]);
-    addPositionColumn('top100-table');
-  } else {
-    top100Container.innerHTML = '<p class="empty-note">No results yet.</p>';
-  }
+  renderTop100Overall();
+}
+
+function renderTop100Overall() {
+  const container = document.getElementById('top100-table');
+  // Uses the same single/average toggle as the event list above, but isn't
+  // tied to whichever event is selected -- it's a sum across every event.
+  const rows = individualData.top100Overall?.[state.individualType] || [];
+  renderTable(container, rows, [
+    { key: 'rank', label: '#', value: () => '' },
+    { key: 'name', label: 'Name', value: (r) => r.name },
+    { key: 'count', label: 'Top-100 spots held', value: (r) => r.count },
+  ]);
+  addPositionColumn('top100-table');
 }
 
 // ---------- Tabs & toggles ----------

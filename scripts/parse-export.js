@@ -115,6 +115,7 @@ async function main() {
     const entry = {
       resultId: row.id,
       wcaId: personId,
+      wcaName: row.person_name || row.personName || null,
       eventId,
       competitionId: row.competition_id || row.competitionId,
       round: row.round_type_id || row.roundTypeId,
@@ -149,7 +150,9 @@ async function main() {
 
   const entries = resultsList.map((r) => ({
     wcaId: r.wcaId,
-    name: nameOverrides.get(r.wcaId) || r.wcaId,
+    // Prefer an explicit displayName override, then the name from the WCA
+    // export itself, and only fall back to the raw ID if neither exists.
+    name: nameOverrides.get(r.wcaId) || r.wcaName || r.wcaId,
     eventId: r.eventId,
     competitionId: r.competitionId,
     competitionName: competitionNames.get(r.competitionId)?.name || r.competitionId,

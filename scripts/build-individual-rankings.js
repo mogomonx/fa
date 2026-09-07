@@ -9,7 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { EVENTS } = require('./lib/events');
+const { EVENTS, roundLabel } = require('./lib/events');
 const { hasResult, formatResult } = require('./lib/format');
 
 const FULL_RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'full-results.json');
@@ -61,6 +61,22 @@ function buildTop100Tally(ranked) {
   };
 }
 
+// Combines every event's top-100 tally into one leaderboard: how many
+// top-100 spots (summed across all events) does each person hold.
+function buildOverallTop100(eventsOut, type) {
+  const counts = new Map();
+  for (const event of eventsOut) {
+    const data = event[type];
+    if (!data) continue;
+    for (const t of data.top100.tally) {
+      const cur = counts.get(t.wcaId) || { wcaId: t.wcaId, name: t.name, count: 0 };
+      cur.count += t.count;
+      counts.set(t.wcaId, cur);
+    }
+  }
+  return Array.from(counts.values()).sort((a, b) => b.count - a.count);
+}
+
 // Given the raw attempts behind an average, works out which ones are
 // dropped (best+worst, for a normal average of 5 -- an average of 3 keeps
 // everything) so the display can show them in parentheses.
@@ -83,13 +99,19 @@ function computeAttemptDisplays(attempts, event) {
 }
 
 // Finds the specific round that produced someone's current best average,
-// so we can show the solves behind it.
+// so we can show the solves (and where/when they happened) behind it.
 function findAverageBreakdown(entries, wcaId, eventId, averageValue, event) {
   if (!hasResult(averageValue)) return null;
   const match = entries.find(
     (e) => e.wcaId === wcaId && e.eventId === eventId && e.average === averageValue && e.attempts
   );
-  return match ? computeAttemptDisplays(match.attempts, event) : null;
+  if (!match) return null;
+  return {
+    solves: computeAttemptDisplays(match.attempts, event),
+    competitionName: match.competitionName,
+    round: roundLabel(match.round),
+    date: match.date,
+  };
 }
 
 function main() {
@@ -120,9 +142,9 @@ function main() {
     averageBreakdowns[person.wcaId] = {};
     for (const event of EVENTS) {
       const avgValue = person.events[event.id]?.average;
-      const attempts = findAverageBreakdown(entries, person.wcaId, event.id, avgValue, event);
-      if (attempts) {
-        averageBreakdowns[person.wcaId][event.id] = attempts;
+      const breakdown = findAverageBreakdown(entries, person.wcaId, event.id, avgValue, event);
+      if (breakdown) {
+        averageBreakdowns[person.wcaId][event.id] = breakdown;
       }
     }
   }
@@ -131,6 +153,10 @@ function main() {
     generatedAt: new Date().toISOString(),
     events,
     averageBreakdowns,
+    top100Overall: {
+      single: buildOverallTop100(events, 'single'),
+      average: buildOverallTop100(events, 'average'),
+    },
   };
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
