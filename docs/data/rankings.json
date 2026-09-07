@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-07T12:17:53.524Z",
-  "dataFetchedAt": "2026-09-07T12:17:53.475Z",
+  "generatedAt": "2026-09-07T23:50:07.918Z",
+  "dataFetchedAt": "2026-09-07T23:50:07.871Z",
   "events": [
     {
       "id": "333",
@@ -3093,23 +3093,74 @@
         "name": "Joseph Burnett",
         "total": 38,
         "components": {
-          "222": 9,
-          "333": 4,
-          "444": 1,
-          "555": 1,
-          "666": 1,
-          "777": 1,
-          "333bf": 2,
-          "333fm": 2,
-          "333oh": 1,
-          "clock": 4,
-          "minx": 1,
-          "pyram": 1,
-          "skewb": 3,
-          "sq1": 3,
-          "444bf": 2,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3117,23 +3168,74 @@
         "name": "Jonah Blakeley",
         "total": 78,
         "components": {
-          "222": 8,
-          "333": 7,
-          "444": 6,
-          "555": 5,
-          "666": 4,
-          "777": 3,
-          "333bf": 5,
-          "333fm": 1,
-          "333oh": 6,
-          "clock": 9,
-          "minx": 2,
-          "pyram": 7,
-          "skewb": 1,
-          "sq1": 6,
-          "444bf": 3,
-          "555bf": 2,
-          "333mbf": 3
+          "222": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "555bf": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333mbf": {
+            "rank": 3,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3141,23 +3243,74 @@
         "name": "Sylvia Crouch",
         "total": 81,
         "components": {
-          "222": 1,
-          "333": 5,
-          "444": 2,
-          "555": 2,
-          "666": 2,
-          "777": 4,
-          "333bf": 7,
-          "333fm": 9,
-          "333oh": 5,
-          "clock": 2,
-          "minx": 7,
-          "pyram": 6,
-          "skewb": 8,
-          "sq1": 2,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 9
+          "222": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 9,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3165,23 +3318,74 @@
         "name": "Kyle Jones",
         "total": 95,
         "components": {
-          "222": 2,
-          "333": 1,
-          "444": 3,
-          "555": 4,
-          "666": 5,
-          "777": 5,
-          "333bf": 13,
-          "333fm": 12,
-          "333oh": 7,
-          "clock": 1,
-          "minx": 11,
-          "pyram": 3,
-          "skewb": 4,
-          "sq1": 4,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3189,23 +3393,74 @@
         "name": "Mazar Hrdlicka",
         "total": 97,
         "components": {
-          "222": 4,
-          "333": 3,
-          "444": 5,
-          "555": 3,
-          "666": 3,
-          "777": 2,
-          "333bf": 11,
-          "333fm": 15,
-          "333oh": 4,
-          "clock": 6,
-          "minx": 8,
-          "pyram": 2,
-          "skewb": 10,
-          "sq1": 1,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 15,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3213,23 +3468,74 @@
         "name": "Miles Skye Fetherston",
         "total": 99,
         "components": {
-          "222": 5,
-          "333": 2,
-          "444": 4,
-          "555": 8,
-          "666": 8,
-          "777": 8,
-          "333bf": 10,
-          "333fm": 4,
-          "333oh": 3,
-          "clock": 3,
-          "minx": 6,
-          "pyram": 4,
-          "skewb": 5,
-          "sq1": 9,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3237,23 +3543,74 @@
         "name": "Connor Theodore",
         "total": 126,
         "components": {
-          "222": 6,
-          "333": 8,
-          "444": 7,
-          "555": 9,
-          "666": 10,
-          "777": 11,
-          "333bf": 8,
-          "333fm": 7,
-          "333oh": 10,
-          "clock": 7,
-          "minx": 5,
-          "pyram": 9,
-          "skewb": 1,
-          "sq1": 10,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 8
+          "222": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 8,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3261,23 +3618,74 @@
         "name": "Connor Sharpe",
         "total": 126,
         "components": {
-          "222": 10,
-          "333": 10,
-          "444": 10,
-          "555": 7,
-          "666": 6,
-          "777": 6,
-          "333bf": 4,
-          "333fm": 11,
-          "333oh": 11,
-          "clock": 8,
-          "minx": 12,
-          "pyram": 5,
-          "skewb": 7,
-          "sq1": 5,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 4
+          "222": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 4,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3285,23 +3693,74 @@
         "name": "Nova Garthon",
         "total": 128,
         "components": {
-          "222": 7,
-          "333": 9,
-          "444": 9,
-          "555": 10,
-          "666": 9,
-          "777": 9,
-          "333bf": 6,
-          "333fm": 13,
-          "333oh": 9,
-          "clock": 4,
-          "minx": 4,
-          "pyram": 10,
-          "skewb": 6,
-          "sq1": 11,
-          "444bf": 4,
-          "555bf": 3,
-          "333mbf": 5
+          "222": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "555bf": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333mbf": {
+            "rank": 5,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3309,23 +3768,74 @@
         "name": "Nicole Arcilla",
         "total": 150,
         "components": {
-          "222": 15,
-          "333": 6,
-          "444": 8,
-          "555": 6,
-          "666": 14,
-          "777": 7,
-          "333bf": 1,
-          "333fm": 7,
-          "333oh": 2,
-          "clock": 15,
-          "minx": 15,
-          "pyram": 16,
-          "skewb": 16,
-          "sq1": 15,
-          "444bf": 1,
-          "555bf": 4,
-          "333mbf": 2
+          "222": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 14,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 15,
+            "hasResult": false
+          },
+          "pyram": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "sq1": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 2,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3333,23 +3843,74 @@
         "name": "Gemma Tolhurst",
         "total": 163,
         "components": {
-          "222": 3,
-          "333": 12,
-          "444": 14,
-          "555": 14,
-          "666": 12,
-          "777": 14,
-          "333bf": 13,
-          "333fm": 2,
-          "333oh": 8,
-          "clock": 16,
-          "minx": 9,
-          "pyram": 8,
-          "skewb": 11,
-          "sq1": 7,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3357,23 +3918,74 @@
         "name": "Hamish Bentley",
         "total": 163,
         "components": {
-          "222": 11,
-          "333": 13,
-          "444": 12,
-          "555": 12,
-          "666": 7,
-          "777": 10,
-          "333bf": 9,
-          "333fm": 6,
-          "333oh": 15,
-          "clock": 10,
-          "minx": 10,
-          "pyram": 11,
-          "skewb": 9,
-          "sq1": 8,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3381,23 +3993,74 @@
         "name": "Aaron Lu",
         "total": 187,
         "components": {
-          "222": 12,
-          "333": 11,
-          "444": 13,
-          "555": 13,
-          "666": 11,
-          "777": 12,
-          "333bf": 13,
-          "333fm": 14,
-          "333oh": 14,
-          "clock": 11,
-          "minx": 3,
-          "pyram": 12,
-          "skewb": 12,
-          "sq1": 16,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3405,23 +4068,74 @@
         "name": "Madeline Willoughby-Khan",
         "total": 189,
         "components": {
-          "222": 14,
-          "333": 14,
-          "444": 11,
-          "555": 11,
-          "666": 13,
-          "777": 13,
-          "333bf": 12,
-          "333fm": 4,
-          "333oh": 13,
-          "clock": 14,
-          "minx": 13,
-          "pyram": 14,
-          "skewb": 14,
-          "sq1": 13,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 6
+          "222": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 6,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3429,23 +4143,74 @@
         "name": "Ash Scott",
         "total": 191,
         "components": {
-          "222": 13,
-          "333": 15,
-          "444": 15,
-          "555": 15,
-          "666": 14,
-          "777": 15,
-          "333bf": 3,
-          "333fm": 9,
-          "333oh": 12,
-          "clock": 12,
-          "minx": 14,
-          "pyram": 13,
-          "skewb": 13,
-          "sq1": 12,
-          "444bf": 5,
-          "555bf": 4,
-          "333mbf": 7
+          "222": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 14,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 7,
+            "hasResult": true
+          }
         }
       },
       {
@@ -3453,23 +4218,74 @@
         "name": "Emily Thurston",
         "total": 230,
         "components": {
-          "222": 16,
-          "333": 16,
-          "444": 16,
-          "555": 16,
-          "666": 14,
-          "777": 16,
-          "333bf": 13,
-          "333fm": 15,
-          "333oh": 16,
-          "clock": 13,
-          "minx": 15,
-          "pyram": 15,
-          "skewb": 15,
-          "sq1": 14,
-          "444bf": 6,
-          "555bf": 4,
-          "333mbf": 10
+          "222": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "666": {
+            "rank": 14,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "333bf": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 15,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 15,
+            "hasResult": false
+          },
+          "pyram": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 4,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 10,
+            "hasResult": false
+          }
         }
       }
     ],
@@ -3479,23 +4295,74 @@
         "name": "Joseph Burnett",
         "total": 33,
         "components": {
-          "222": 6,
-          "333": 3,
-          "444": 1,
-          "555": 1,
-          "666": 1,
-          "777": 1,
-          "333bf": 1,
-          "333fm": 3,
-          "333oh": 1,
-          "clock": 3,
-          "minx": 1,
-          "pyram": 2,
-          "skewb": 4,
-          "sq1": 2,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3503,23 +4370,74 @@
         "name": "Sylvia Crouch",
         "total": 65,
         "components": {
-          "222": 4,
-          "333": 5,
-          "444": 2,
-          "555": 3,
-          "666": 2,
-          "777": 4,
-          "333bf": 6,
-          "333fm": 12,
-          "333oh": 5,
-          "clock": 2,
-          "minx": 7,
-          "pyram": 3,
-          "skewb": 3,
-          "sq1": 4,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3527,23 +4445,74 @@
         "name": "Mazar Hrdlicka",
         "total": 68,
         "components": {
-          "222": 2,
-          "333": 6,
-          "444": 3,
-          "555": 2,
-          "666": 3,
-          "777": 3,
-          "333bf": 6,
-          "333fm": 12,
-          "333oh": 4,
-          "clock": 6,
-          "minx": 8,
-          "pyram": 1,
-          "skewb": 6,
-          "sq1": 3,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3551,23 +4520,74 @@
         "name": "Jonah Blakeley",
         "total": 71,
         "components": {
-          "222": 7,
-          "333": 7,
-          "444": 6,
-          "555": 6,
-          "666": 4,
-          "777": 2,
-          "333bf": 2,
-          "333fm": 1,
-          "333oh": 6,
-          "clock": 10,
-          "minx": 2,
-          "pyram": 6,
-          "skewb": 2,
-          "sq1": 7,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3575,23 +4595,74 @@
         "name": "Miles Skye Fetherston",
         "total": 74,
         "components": {
-          "222": 1,
-          "333": 2,
-          "444": 5,
-          "555": 8,
-          "666": 7,
-          "777": 8,
-          "333bf": 6,
-          "333fm": 6,
-          "333oh": 3,
-          "clock": 4,
-          "minx": 3,
-          "pyram": 5,
-          "skewb": 5,
-          "sq1": 8,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3599,23 +4670,74 @@
         "name": "Kyle Jones",
         "total": 80,
         "components": {
-          "222": 5,
-          "333": 1,
-          "444": 4,
-          "555": 4,
-          "666": 5,
-          "777": 5,
-          "333bf": 6,
-          "333fm": 12,
-          "333oh": 9,
-          "clock": 1,
-          "minx": 10,
-          "pyram": 4,
-          "skewb": 10,
-          "sq1": 1,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3623,23 +4745,74 @@
         "name": "Connor Theodore",
         "total": 109,
         "components": {
-          "222": 8,
-          "333": 8,
-          "444": 8,
-          "555": 9,
-          "666": 10,
-          "777": 10,
-          "333bf": 5,
-          "333fm": 7,
-          "333oh": 8,
-          "clock": 7,
-          "minx": 6,
-          "pyram": 8,
-          "skewb": 1,
-          "sq1": 11,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3647,23 +4820,74 @@
         "name": "Nova Garthon",
         "total": 114,
         "components": {
-          "222": 9,
-          "333": 9,
-          "444": 10,
-          "555": 10,
-          "666": 8,
-          "777": 9,
-          "333bf": 4,
-          "333fm": 12,
-          "333oh": 7,
-          "clock": 5,
-          "minx": 5,
-          "pyram": 7,
-          "skewb": 7,
-          "sq1": 9,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3671,23 +4895,74 @@
         "name": "Connor Sharpe",
         "total": 120,
         "components": {
-          "222": 10,
-          "333": 9,
-          "444": 9,
-          "555": 7,
-          "666": 6,
-          "777": 7,
-          "333bf": 6,
-          "333fm": 9,
-          "333oh": 10,
-          "clock": 8,
-          "minx": 12,
-          "pyram": 10,
-          "skewb": 8,
-          "sq1": 6,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3695,23 +4970,74 @@
         "name": "Nicole Arcilla",
         "total": 145,
         "components": {
-          "222": 13,
-          "333": 4,
-          "444": 7,
-          "555": 5,
-          "666": 13,
-          "777": 6,
-          "333bf": 6,
-          "333fm": 10,
-          "333oh": 2,
-          "clock": 15,
-          "minx": 15,
-          "pyram": 16,
-          "skewb": 16,
-          "sq1": 14,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 15,
+            "hasResult": false
+          },
+          "pyram": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "sq1": {
+            "rank": 14,
+            "hasResult": false
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3719,23 +5045,74 @@
         "name": "Hamish Bentley",
         "total": 147,
         "components": {
-          "222": 11,
-          "333": 14,
-          "444": 12,
-          "555": 12,
-          "666": 9,
-          "777": 13,
-          "333bf": 6,
-          "333fm": 5,
-          "333oh": 14,
-          "clock": 9,
-          "minx": 11,
-          "pyram": 9,
-          "skewb": 9,
-          "sq1": 10,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 10,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3743,23 +5120,74 @@
         "name": "Gemma Tolhurst",
         "total": 148,
         "components": {
-          "222": 3,
-          "333": 13,
-          "444": 14,
-          "555": 14,
-          "666": 12,
-          "777": 12,
-          "333bf": 6,
-          "333fm": 2,
-          "333oh": 15,
-          "clock": 16,
-          "minx": 9,
-          "pyram": 11,
-          "skewb": 13,
-          "sq1": 5,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3767,23 +5195,74 @@
         "name": "Madeline Willoughby-Khan",
         "total": 160,
         "components": {
-          "222": 12,
-          "333": 12,
-          "444": 11,
-          "555": 11,
-          "666": 13,
-          "777": 13,
-          "333bf": 6,
-          "333fm": 4,
-          "333oh": 12,
-          "clock": 12,
-          "minx": 13,
-          "pyram": 14,
-          "skewb": 12,
-          "sq1": 12,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3791,23 +5270,74 @@
         "name": "Aaron Lu",
         "total": 162,
         "components": {
-          "222": 15,
-          "333": 11,
-          "444": 13,
-          "555": 13,
-          "666": 11,
-          "777": 11,
-          "333bf": 6,
-          "333fm": 11,
-          "333oh": 13,
-          "clock": 13,
-          "minx": 4,
-          "pyram": 13,
-          "skewb": 11,
-          "sq1": 14,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 14,
+            "hasResult": false
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3815,23 +5345,74 @@
         "name": "Ash Scott",
         "total": 175,
         "components": {
-          "222": 14,
-          "333": 15,
-          "444": 15,
-          "555": 15,
-          "666": 13,
-          "777": 13,
-          "333bf": 3,
-          "333fm": 8,
-          "333oh": 11,
-          "clock": 11,
-          "minx": 14,
-          "pyram": 12,
-          "skewb": 15,
-          "sq1": 13,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333bf": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       },
       {
@@ -3839,23 +5420,74 @@
         "name": "Emily Thurston",
         "total": 199,
         "components": {
-          "222": 16,
-          "333": 16,
-          "444": 16,
-          "555": 16,
-          "666": 13,
-          "777": 13,
-          "333bf": 6,
-          "333fm": 12,
-          "333oh": 16,
-          "clock": 14,
-          "minx": 15,
-          "pyram": 15,
-          "skewb": 14,
-          "sq1": 14,
-          "444bf": 1,
-          "555bf": 1,
-          "333mbf": 1
+          "222": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "666": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "777": {
+            "rank": 13,
+            "hasResult": false
+          },
+          "333bf": {
+            "rank": 6,
+            "hasResult": false
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 16,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 15,
+            "hasResult": false
+          },
+          "pyram": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 14,
+            "hasResult": false
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
         }
       }
     ]
