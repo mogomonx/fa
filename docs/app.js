@@ -657,29 +657,22 @@ function renderProfile(wcaId) {
     `)
     .join('');
 
-  // Full results overview, newest first -- one row per round they've competed in.
-  const ownResults = (fullResultsData.entries || [])
+  // Results overview: selectable per event, grouped by competition (like
+  // a WCA profile groups all your results at one comp together).
+  const eventIdsWithResults = [...new Set((fullResultsData.entries || [])
     .filter((e) => e.wcaId === wcaId)
-    .slice()
-    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  const eventNameById = new Map(rankingsData.events.map((e) => [e.id, e.name]));
-  const ownResultsHtml = ownResults
-    .map((e) => {
-      const eventDef = rankingsData.events.find((ev) => ev.id === e.eventId);
-      const singleDisplay = eventDef ? formatResultLike(e.single, eventDef, false) : e.single;
-      const averageDisplay = eventDef ? formatResultLike(e.average, eventDef, true) : e.average;
-      return `
-        <tr>
-          <td>${e.date || '—'}</td>
-          <td>${eventNameById.get(e.eventId) || e.eventId}</td>
-          <td>${e.competitionName || e.competitionId}</td>
-          <td>${roundLabelFallback(e.round)}</td>
-          <td>${singleDisplay}</td>
-          <td>${averageDisplay}</td>
-        </tr>
-      `;
-    })
-    .join('');
+    .map((e) => e.eventId))];
+  const resultsEventOptions = rankingsData.events.filter((e) => eventIdsWithResults.includes(e.id));
+  const resultsSectionHtml = resultsEventOptions.length
+    ? `
+      <div class="panel-controls">
+        <select id="profile-results-event-select">
+          ${resultsEventOptions.map((e) => `<option value="${e.id}">${e.name}</option>`).join('')}
+        </select>
+      </div>
+      <div id="profile-results-content"></div>
+    `
+    : '<p class="empty-note">No results yet (needs the Update Full Result History workflow to have run).</p>';
 
   container.innerHTML = `
     <h2 style="margin-bottom:0.25rem;">${flag ? flag + ' ' : ''}${name}</h2>
@@ -703,14 +696,91 @@ function renderProfile(wcaId) {
     </div>
 
     <h2 style="margin:1.5rem 0 0.5rem;">Results overview</h2>
-    <p class="board-note">Every competition round on record for them, most recent first.</p>
-    <div class="scroll-table">
-      <table>
-        <thead><tr><th>Date</th><th>Event</th><th>Competition</th><th>Round</th><th>Single</th><th>Average</th></tr></thead>
-        <tbody>${ownResultsHtml || '<tr><td colspan="6" class="empty-note">No results yet (needs the Update Full Result History workflow to have run).</td></tr>'}</tbody>
-      </table>
-    </div>
+    ${resultsSectionHtml}
   `;
+
+  if (resultsEventOptions.length) {
+    const select = document.getElementById('profile-results-event-select');
+    select.addEventListener('change', () => renderProfileResultsForEvent(wcaId, select.value));
+    renderProfileResultsForEvent(wcaId, select.value);
+  }
+}
+
+// Renders one event's results for the profile, grouped by competition
+// (each competition gets its own heading, with its round(s) listed under
+// it) -- mirrors how a WCA profile groups results by competition.
+function renderProfileResultsForEvent(wcaId, eventId) {
+  const container = document.getElementById('profile-results-content');
+  if (!container) return;
+  const eventDef = rankingsData.events.find((e) => e.id === eventId);
+
+  const entries = (fullResultsData.entries || [])
+    .filter((e) => e.wcaId === wcaId && e.eventId === eventId)
+    .slice()
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const groups = [];
+  const groupByComp = new Map();
+  for (const e of entries) {
+    if (!groupByComp.has(e.competitionId)) {
+      const g = { competitionName: e.competitionName || e.competitionId, date: e.date, rows: [] };
+      groupByComp.set(e.competitionId, g);
+      groups.push(g);
+    }
+    groupByComp.get(e.competitionId).rows.push(e);
+  }
+
+  const html = groups
+    .map(
+      (g) => `
+      <div class="board" style="margin-bottom:1rem;">
+        <h3 style="margin:0 0 0.5rem;">${g.competitionName}<span class="board-note" style="display:inline; margin-left:0.5rem;">${g.date || ''}</span></h3>
+        <div class="scroll-table">
+          <table>
+            <thead><tr><th>Round</th><th>Single</th><th>Average</th><th>Solves</th></tr></thead>
+            <tbody>
+              ${g.rows
+                .map(
+                  (r) => `
+                <tr>
+                  <td>${roundLabelFallback(r.round)}</td>
+                  <td>${formatResultLike(r.single, eventDef, false)}</td>
+                  <td>${formatResultLike(r.average, eventDef, true)}</td>
+                  <td>${solvesCellClient(r.attempts, eventDef)}</td>
+                </tr>
+              `
+                )
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `
+    )
+    .join('');
+
+  container.innerHTML = html || '<p class="empty-note">No results for this event.</p>';
+}
+
+// Client-side version of the server's dropped-best/worst solve display,
+// for the profile's per-competition results tables.
+function solvesCellClient(attempts, event) {
+  if (!attempts || attempts.length === 0) return '<span class="empty-note">—</span>';
+  const sortKey = (v) => (v === -1 || v === -2 ? Infinity : v);
+  const indices = attempts.map((_, i) => i);
+  const dropped = new Set();
+  if (attempts.length === 5) {
+    const sorted = indices.slice().sort((a, b) => sortKey(attempts[a]) - sortKey(attempts[b]));
+    dropped.add(sorted[0]);
+    dropped.add(sorted[sorted.length - 1]);
+  }
+  const text = attempts
+    .map((v, i) => {
+      const d = formatResultLike(v, event, false);
+      return dropped.has(i) ? `(${d})` : d;
+    })
+    .join(', ');
+  return `<span class="solves-cell">${text}</span>`;
 }
 
 // Lightweight client-side re-implementation of formatResult, for the
