@@ -1,12 +1,15 @@
 // Reads docs/data/full-results.json (every round a group member has
 // competed in) and builds:
-//  - a ranking of every individual single/average result within the group,
-//    each tagged with which of that PERSON's own results it is (PR1 = their
-//    best, PR2 = their second best, etc.)
+//  - a ranking of every individual result within the group. For averages
+//    this is one entry per round; for singles it's one entry per INDIVIDUAL
+//    SOLVE (all 5 attempts of an ao5 each count, not just the round's best)
+//    -- each tagged with its PR order (PR1 = that person's best ever, etc.)
 //  - a Sum-of-Ranks-style top-100 table: how many of the group's top 100
 //    results per event belong to each person, leaderboard + detailed forms
 //  - the competition/round (and, for averages, the solve breakdown) behind
-//    each person's current best single and average
+//    each person's current OFFICIAL best single and average
+//  - a flat "PR ages" list (every person's current PB per event+type, with
+//    its date) for the Misc tab's age-of-records views
 //
 // Run with: node scripts/build-individual-rankings.js (after scripts/fetch.js)
 
@@ -21,19 +24,76 @@ const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'individual-ranki
 
 const TOP_N = 100;
 
-// A stable identity for one round result, for matching a person's own PR
-// order back up (can't just use the value, since two results can tie).
+// A stable identity for one ranked item, for matching a person's own PR
+// order back up (can't just use the value, since two can tie). attemptIndex
+// distinguishes individual solves within the same round for the single pool.
 function entryKey(e) {
-  return `${e.wcaId}|${e.competitionId}|${e.round}`;
+  return `${e.wcaId}|${e.competitionId}|${e.round}|${e.attemptIndex ?? 'r'}`;
 }
 
-function rankAllResults(entries, event, type) {
-  const withResult = entries.filter((e) => e.eventId === event.id && hasResult(e[type]));
+// Every individual SOLVE for this event, across every round anyone's ever
+// done -- an ao5 contributes up to 5 separate entries, not just its best.
+// Falls back to the round's recorded single if per-attempt data is missing
+// (e.g. an older result the export didn't have attempts for), so that
+// result isn't lost entirely.
+function buildSinglePool(entries, eventId) {
+  const pool = [];
+  for (const e of entries) {
+    if (e.eventId !== eventId) continue;
+    if (e.attempts && e.attempts.length > 0) {
+      e.attempts.forEach((v, i) => {
+        if (!hasResult(v)) return;
+        pool.push({
+          wcaId: e.wcaId,
+          name: e.name,
+          competitionId: e.competitionId,
+          competitionName: e.competitionName,
+          round: e.round,
+          date: e.date,
+          value: v,
+          attemptIndex: i + 1,
+        });
+      });
+    } else if (hasResult(e.single)) {
+      pool.push({
+        wcaId: e.wcaId,
+        name: e.name,
+        competitionId: e.competitionId,
+        competitionName: e.competitionName,
+        round: e.round,
+        date: e.date,
+        value: e.single,
+        attemptIndex: null,
+      });
+    }
+  }
+  return pool;
+}
 
-  // PR order: for each person, sort THEIR OWN results for this event+type
-  // ascending -- 1 is their best (current PB), 2 is their next-best, etc.
+// One entry per round's recorded average (unchanged from before -- an
+// average is inherently a round-level stat, not something to decompose
+// into solves the way a single ranking can be).
+function buildAveragePool(entries, eventId) {
+  return entries
+    .filter((e) => e.eventId === eventId && hasResult(e.average))
+    .map((e) => ({
+      wcaId: e.wcaId,
+      name: e.name,
+      competitionId: e.competitionId,
+      competitionName: e.competitionName,
+      round: e.round,
+      date: e.date,
+      value: e.average,
+      attemptIndex: null,
+      attempts: e.attempts,
+    }));
+}
+
+function rankPool(pool, event, type) {
+  // PR order: for each person, sort THEIR OWN results ascending -- 1 is
+  // their best (current PB), 2 is their next-best, etc.
   const byPerson = new Map();
-  for (const e of withResult) {
+  for (const e of pool) {
     if (!byPerson.has(e.wcaId)) byPerson.set(e.wcaId, []);
     byPerson.get(e.wcaId).push(e);
   }
@@ -41,26 +101,26 @@ function rankAllResults(entries, event, type) {
   for (const list of byPerson.values()) {
     list
       .slice()
-      .sort((a, b) => a[type] - b[type])
+      .sort((a, b) => a.value - b.value)
       .forEach((e, i) => prRankByKey.set(entryKey(e), i + 1));
   }
 
-  const sorted = withResult.slice().sort((a, b) => a[type] - b[type]);
+  const sorted = pool.slice().sort((a, b) => a.value - b.value);
   const ranked = [];
   let place = 0;
   let lastValue = null;
   sorted.forEach((e, i) => {
-    if (e[type] !== lastValue) {
+    if (e.value !== lastValue) {
       place = i + 1;
-      lastValue = e[type];
+      lastValue = e.value;
     }
     ranked.push({
       wcaId: e.wcaId,
       name: e.name,
       rank: place,
       prRank: prRankByKey.get(entryKey(e)) || null,
-      value: e[type],
-      display: formatResult(e[type], event, type === 'average'),
+      value: e.value,
+      display: formatResult(e.value, event, type === 'average'),
       solves: type === 'average' ? computeAttemptDisplays(e.attempts, event) : null,
       competitionName: e.competitionName,
       round: roundLabel(e.round),
@@ -126,9 +186,9 @@ function computeAttemptDisplays(attempts, event) {
   }));
 }
 
-// Finds the specific round that produced someone's current best single or
-// average, so we can show where/when it happened (and, for averages, the
-// solve breakdown).
+// Finds the specific round that produced someone's current OFFICIAL best
+// single or average (a round-level concept, unaffected by the attempt-level
+// single pool above), so we can show where/when it happened.
 function findBreakdown(entries, wcaId, eventId, value, type, event) {
   if (!hasResult(value)) return null;
   const match = entries.find((e) => e.wcaId === wcaId && e.eventId === eventId && e[type] === value);
@@ -150,8 +210,10 @@ function main() {
 
   const events = [];
   for (const event of EVENTS) {
-    const singleRanked = rankAllResults(entries, event, 'single');
-    const averageRanked = rankAllResults(entries, event, 'average');
+    const singlePool = buildSinglePool(entries, event.id);
+    const averagePool = buildAveragePool(entries, event.id);
+    const singleRanked = rankPool(singlePool, event, 'single');
+    const averageRanked = rankPool(averagePool, event, 'average');
 
     events.push({
       id: event.id,
@@ -167,8 +229,10 @@ function main() {
   }
 
   // Achieved-at (+ solve breakdown for averages) for each person's current
-  // PB single and average.
+  // OFFICIAL PB single and average, plus a flat "PR ages" list for the
+  // Misc tab's age-of-records views.
   const breakdowns = {};
+  const prAges = [];
   for (const person of people) {
     breakdowns[person.wcaId] = {};
     for (const event of EVENTS) {
@@ -179,13 +243,39 @@ function main() {
       if (single || average) {
         breakdowns[person.wcaId][event.id] = { single, average };
       }
+      if (single) {
+        prAges.push({
+          wcaId: person.wcaId,
+          name: person.name,
+          eventId: event.id,
+          eventName: event.name,
+          type: 'single',
+          value: singleValue,
+          display: formatResult(singleValue, event, false),
+          date: single.date,
+        });
+      }
+      if (average) {
+        prAges.push({
+          wcaId: person.wcaId,
+          name: person.name,
+          eventId: event.id,
+          eventName: event.name,
+          type: 'average',
+          value: averageValue,
+          display: formatResult(averageValue, event, true),
+          date: average.date,
+        });
+      }
     }
   }
+  prAges.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
 
   const output = {
     generatedAt: new Date().toISOString(),
     events,
     breakdowns,
+    prAges,
     top100: {
       single: buildTop100Table(people, events, 'single'),
       average: buildTop100Table(people, events, 'average'),

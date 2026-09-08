@@ -1,11 +1,11 @@
 :root {
   --bg: #17181c;
   --panel: #1f2126;
-  --panel-border: #c9f6ff;
+  --panel-border: #2c2f36;
   --text: #e9eaec;
-  --text-dim: #CCCCCC;
-  --accent: #c9f6ff;
-  --accent-dim: #00497a;
+  --text-dim: #9a9ea7;
+  --accent: #f2a83c;
+  --accent-dim: #8a6a35;
   --gold: #e0b84a;
   --silver: #b9c0c9;
   --bronze: #c98a52;
@@ -192,6 +192,32 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   left: 0;
   background: var(--panel);
 }
+
+.subtabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.subtab-btn {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: var(--text-dim);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.subtab-btn.active {
+  color: var(--text);
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+}
+
+.subtab-panel { display: none; }
+.subtab-panel.active { display: block; }
 
 .home-links {
   display: grid;

@@ -1,11 +1,13 @@
 let rankingsData = null;
 let individualData = null;
 let historicalData = null;
+let fullResultsData = null;
 let peopleByWcaId = new Map();
 
 const state = {
-  overallView: 'leaderboard',
   sorType: 'single',
+  sorView: 'leaderboard',
+  kinchView: 'leaderboard',
   eventType: 'single',
   eventId: null,
   individualType: 'single',
@@ -15,23 +17,27 @@ const state = {
   farType: 'single',
   farView: 'leaderboard',
   historyEventId: null,
+  ageMode: 'far',
+  ageEventId: '',
   previousTab: 'home',
 };
 
 async function loadData() {
-  const [rankingsRes, individualRes, historicalRes, upcomingRes] = await Promise.all([
+  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes] = await Promise.all([
     fetch('data/rankings.json', { cache: 'no-store' }),
     fetch('data/individual-rankings.json', { cache: 'no-store' }),
     fetch('data/historical-records.json', { cache: 'no-store' }),
     fetch('data/upcoming.json', { cache: 'no-store' }).catch(() => null),
+    fetch('data/full-results.json', { cache: 'no-store' }).catch(() => null),
   ]);
   rankingsData = await rankingsRes.json();
   individualData = await individualRes.json();
   historicalData = await historicalRes.json();
   const upcomingData = upcomingRes && upcomingRes.ok ? await upcomingRes.json() : null;
+  fullResultsData = fullResultsRes && fullResultsRes.ok ? await fullResultsRes.json() : { entries: [] };
 
-  for (const row of rankingsData.sumOfRanks.single) {
-    peopleByWcaId.set(row.wcaId, row.name);
+  for (const row of rankingsData.people || []) {
+    peopleByWcaId.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
   }
 
   const updated = new Date(rankingsData.generatedAt);
@@ -43,14 +49,16 @@ async function loadData() {
   populateEventSelect();
   populateIndividualEventSelect();
   populateHistoryEventSelect();
+  populateAgeEventSelect();
   renderFaRecords();
-  renderOverall();
+  renderSor();
+  renderKinch();
   renderEventTable();
   renderIndividual();
   renderTop100();
   renderHistory();
   renderFarCounts();
-  renderOldestRecords();
+  renderAge();
   renderUpcoming(upcomingData);
 }
 
@@ -58,9 +66,33 @@ function nameLink(wcaId, name) {
   return `<a href="#" class="name-link" data-wcaid="${wcaId}">${name}</a>`;
 }
 
+function flagEmoji(iso2) {
+  if (!iso2 || iso2.length !== 2) return '';
+  const codePoints = [...iso2.toUpperCase()].map((c) => 127397 + c.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+}
+
+function nameWithFlag(wcaId) {
+  const p = peopleByWcaId.get(wcaId);
+  const flag = p ? flagEmoji(p.countryIso2) : '';
+  const name = p ? p.name : wcaId;
+  return `${flag ? flag + ' ' : ''}${name}`;
+}
+
 function findPosition(list, wcaId) {
   const i = list.findIndex((r) => r.wcaId === wcaId);
   return i === -1 ? null : i + 1;
+}
+
+// Interpolates red (0) -> near-white (50) -> green (100) for the Kinch scale.
+function kinchColor(score) {
+  const s = Math.max(0, Math.min(100, score));
+  const red = [224, 90, 90];
+  const mid = [233, 234, 236];
+  const green = [90, 200, 120];
+  const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+  const rgb = s <= 50 ? lerp(red, mid, s / 50) : lerp(mid, green, (s - 50) / 50);
+  return `rgb(${rgb.join(',')})`;
 }
 
 function populateEventSelect() {
@@ -92,6 +124,36 @@ function populateIndividualEventSelect() {
   select.addEventListener('change', () => {
     state.individualEventId = select.value;
     renderIndividual();
+  });
+}
+
+function populateHistoryEventSelect() {
+  const select = document.getElementById('history-event-select');
+  select.innerHTML = '';
+  for (const event of rankingsData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
+  }
+  state.historyEventId = select.value;
+  select.addEventListener('change', () => {
+    state.historyEventId = select.value;
+    renderHistory();
+  });
+}
+
+function populateAgeEventSelect() {
+  const select = document.getElementById('age-event-select');
+  for (const event of rankingsData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
+  }
+  select.addEventListener('change', () => {
+    state.ageEventId = select.value;
+    renderAge();
   });
 }
 
@@ -170,20 +232,17 @@ function renderFaRecords() {
   container.appendChild(table);
 }
 
-// ---------- Sum of Ranks & Kinch ----------
+// ---------- Sum of Ranks ----------
 
-function renderOverall() {
-  document.getElementById('leaderboard-view').style.display =
-    state.overallView === 'leaderboard' ? '' : 'none';
-  document.getElementById('detailed-view').style.display =
-    state.overallView === 'detailed' ? '' : 'none';
-
-  if (state.overallView === 'leaderboard') {
+function renderSor() {
+  document.getElementById('sor-leaderboard-view').style.display =
+    state.sorView === 'leaderboard' ? '' : 'none';
+  document.getElementById('sor-detailed-view').style.display =
+    state.sorView === 'detailed' ? '' : 'none';
+  if (state.sorView === 'leaderboard') {
     renderSorLeaderboard();
-    renderKinchLeaderboard();
   } else {
     renderSorDetailed();
-    renderKinchDetailed();
   }
 }
 
@@ -195,16 +254,6 @@ function renderSorLeaderboard() {
     { key: 'total', label: 'Total', value: (r) => r.total },
   ]);
   addPositionColumn('sum-of-ranks-table');
-}
-
-function renderKinchLeaderboard() {
-  const rows = rankingsData.kinch.overall;
-  renderTable(document.getElementById('kinch-table'), rows, [
-    { key: 'rank', label: '#', value: () => '' },
-    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-    { key: 'score', label: 'Kinch', value: (r) => r.score.toFixed(2) },
-  ]);
-  addPositionColumn('kinch-table');
 }
 
 function eventColumnsFor(rows) {
@@ -251,7 +300,7 @@ function renderDetailedTable(container, rows, totalKey, totalLabel, formatCell, 
 function renderSorDetailed() {
   const rows = rankingsData.sumOfRanks[state.sorType];
   renderDetailedTable(
-    document.getElementById('sum-of-ranks-detailed'),
+    document.getElementById('sor-detailed-view'),
     rows,
     'total',
     'Total',
@@ -267,15 +316,42 @@ function renderSorDetailed() {
   );
 }
 
+// ---------- Kinch ----------
+
+function renderKinch() {
+  document.getElementById('kinch-leaderboard-view').style.display =
+    state.kinchView === 'leaderboard' ? '' : 'none';
+  document.getElementById('kinch-detailed-view').style.display =
+    state.kinchView === 'detailed' ? '' : 'none';
+  if (state.kinchView === 'leaderboard') {
+    renderKinchLeaderboard();
+  } else {
+    renderKinchDetailed();
+  }
+}
+
+function renderKinchLeaderboard() {
+  const rows = rankingsData.kinch.overall;
+  renderTable(document.getElementById('kinch-table'), rows, [
+    { key: 'rank', label: '#', value: () => '' },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'score', label: 'Kinch', value: (r) => `<span style="color:${kinchColor(r.score)}">${r.score.toFixed(2)}</span>` },
+  ]);
+  addPositionColumn('kinch-table');
+}
+
 function renderKinchDetailed() {
   const rows = rankingsData.kinch.overall;
   renderDetailedTable(
-    document.getElementById('kinch-detailed'),
+    document.getElementById('kinch-detailed-view'),
     rows,
     'score',
     'Overall',
-    (v) => (v == null ? '—' : `${v.score.toFixed(2)}<span class="kinch-source">${v.source ? v.source[0] : ''}</span>`),
-    (v) => (v == null ? '—' : Number(v).toFixed(2))
+    (v) =>
+      v == null
+        ? '—'
+        : `<span style="color:${kinchColor(v.score)}">${v.score.toFixed(2)}</span><span class="kinch-source">${v.source ? v.source[0] : ''}</span>`,
+    (v) => (v == null ? '—' : `<span style="color:${kinchColor(Number(v))}">${Number(v).toFixed(2)}</span>`)
   );
 }
 
@@ -399,22 +475,6 @@ function renderTop100() {
 
 // ---------- Historical Records ----------
 
-function populateHistoryEventSelect() {
-  const select = document.getElementById('history-event-select');
-  select.innerHTML = '';
-  for (const event of rankingsData.events) {
-    const opt = document.createElement('option');
-    opt.value = event.id;
-    opt.textContent = event.name;
-    select.appendChild(opt);
-  }
-  state.historyEventId = select.value;
-  select.addEventListener('change', () => {
-    state.historyEventId = select.value;
-    renderHistory();
-  });
-}
-
 function renderHistory() {
   const rows = historicalData.records.filter((r) => r.eventId === state.historyEventId);
   renderTable(document.getElementById('historical-records-table'), rows, [
@@ -425,6 +485,8 @@ function renderHistory() {
     { key: 'comp', label: 'Competition', value: (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ') },
   ]);
 }
+
+// ---------- Misc: FARs set ----------
 
 function renderFarCounts() {
   document.getElementById('far-leaderboard-view').style.display =
@@ -452,6 +514,8 @@ function renderFarCounts() {
   }
 }
 
+// ---------- Misc: Record age ----------
+
 function daysAgo(dateStr) {
   if (!dateStr) return null;
   const then = new Date(dateStr);
@@ -459,9 +523,23 @@ function daysAgo(dateStr) {
   return Math.floor((now - then) / (1000 * 60 * 60 * 24));
 }
 
-function renderOldestRecords() {
-  const rows = historicalData.currentRecordsByAge || [];
-  renderTable(document.getElementById('oldest-records-table'), rows, [
+function renderAge() {
+  const note = document.getElementById('age-note');
+  const container = document.getElementById('age-table');
+
+  let rows;
+  if (state.ageMode === 'far') {
+    rows = historicalData.currentRecordsByAge || [];
+    note.textContent = 'Current FA Records, oldest first.';
+  } else {
+    rows = individualData.prAges || [];
+    note.textContent = "Everyone's current personal bests, oldest first.";
+  }
+  if (state.ageEventId) {
+    rows = rows.filter((r) => r.eventId === state.ageEventId);
+  }
+
+  renderTable(container, rows, [
     { key: 'event', label: 'Event', value: (r) => r.eventName },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
@@ -469,6 +547,8 @@ function renderOldestRecords() {
     { key: 'age', label: 'Standing since', value: (r) => (r.date ? `${r.date} (${daysAgo(r.date)}d)` : '—') },
   ]);
 }
+
+// ---------- Misc: Upcoming competitions ----------
 
 function renderUpcoming(upcomingData) {
   const note = document.getElementById('upcoming-note');
@@ -512,7 +592,9 @@ function statBox(label, value) {
 }
 
 function renderProfile(wcaId) {
-  const name = peopleByWcaId.get(wcaId) || wcaId;
+  const person = peopleByWcaId.get(wcaId);
+  const name = person ? person.name : wcaId;
+  const flag = person ? flagEmoji(person.countryIso2) : '';
   const container = document.getElementById('profile-content');
 
   const sorSingleRow = rankingsData.sumOfRanks.single.find((r) => r.wcaId === wcaId);
@@ -524,7 +606,7 @@ function renderProfile(wcaId) {
   const farAverageRow = historicalData.farCounts.average.find((r) => r.wcaId === wcaId);
 
   const stats = [
-    statBox('Kinch score', kinchRow ? `${kinchRow.score.toFixed(2)} (#${findPosition(rankingsData.kinch.overall, wcaId)})` : '—'),
+    statBox('Kinch score', kinchRow ? `<span style="color:${kinchColor(kinchRow.score)}">${kinchRow.score.toFixed(2)}</span> (#${findPosition(rankingsData.kinch.overall, wcaId)})` : '—'),
     statBox('Sum of Ranks (Single)', sorSingleRow ? `${sorSingleRow.total} (#${findPosition(rankingsData.sumOfRanks.single, wcaId)})` : '—'),
     statBox('Sum of Ranks (Average)', sorAverageRow ? `${sorAverageRow.total} (#${findPosition(rankingsData.sumOfRanks.average, wcaId)})` : '—'),
     statBox('Top-100 spots (Single)', top100SingleRow ? `${top100SingleRow.total} (#${findPosition(individualData.top100.single, wcaId)})` : '0'),
@@ -542,7 +624,7 @@ function renderProfile(wcaId) {
     }
   }
 
-  const rows = rankingsData.events
+  const eventRows = rankingsData.events
     .map((event) => {
       const s = (event.single || []).find((r) => r.wcaId === wcaId);
       const a = event.hasAverage ? (event.average || []).find((r) => r.wcaId === wcaId) : null;
@@ -551,19 +633,56 @@ function renderProfile(wcaId) {
     })
     .filter(({ s, a }) => s || a);
 
-  const eventRowsHtml = rows
+  const eventRowsHtml = eventRows
     .map(({ event, s, a, kinchComponent }) => `
       <tr>
         <td>${event.name}</td>
         <td>${s ? `${s.display} (#${s.rank})` : '—'}</td>
         <td>${event.hasAverage ? (a ? `${a.display} (#${a.rank})` : '—') : 'N/A'}</td>
-        <td>${kinchComponent ? `${kinchComponent.score.toFixed(2)}<span class="kinch-source">${kinchComponent.source ? kinchComponent.source[0] : ''}</span>` : '—'}</td>
+        <td>${kinchComponent ? `<span style="color:${kinchColor(kinchComponent.score)}">${kinchComponent.score.toFixed(2)}</span><span class="kinch-source">${kinchComponent.source ? kinchComponent.source[0] : ''}</span>` : '—'}</td>
       </tr>
     `)
     .join('');
 
+  // Own PRs, oldest first.
+  const ownAges = (individualData.prAges || []).filter((r) => r.wcaId === wcaId);
+  const ownAgesHtml = ownAges
+    .map((r) => `
+      <tr>
+        <td>${r.eventName}</td>
+        <td>${r.type === 'single' ? 'Single' : 'Average'}</td>
+        <td>${r.display}</td>
+        <td>${r.date ? `${r.date} (${daysAgo(r.date)}d)` : '—'}</td>
+      </tr>
+    `)
+    .join('');
+
+  // Full results overview, newest first -- one row per round they've competed in.
+  const ownResults = (fullResultsData.entries || [])
+    .filter((e) => e.wcaId === wcaId)
+    .slice()
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const eventNameById = new Map(rankingsData.events.map((e) => [e.id, e.name]));
+  const ownResultsHtml = ownResults
+    .map((e) => {
+      const eventDef = rankingsData.events.find((ev) => ev.id === e.eventId);
+      const singleDisplay = eventDef ? formatResultLike(e.single, eventDef, false) : e.single;
+      const averageDisplay = eventDef ? formatResultLike(e.average, eventDef, true) : e.average;
+      return `
+        <tr>
+          <td>${e.date || '—'}</td>
+          <td>${eventNameById.get(e.eventId) || e.eventId}</td>
+          <td>${e.competitionName || e.competitionId}</td>
+          <td>${roundLabelFallback(e.round)}</td>
+          <td>${singleDisplay}</td>
+          <td>${averageDisplay}</td>
+        </tr>
+      `;
+    })
+    .join('');
+
   container.innerHTML = `
-    <h2 style="margin-bottom:0.25rem;">${name}</h2>
+    <h2 style="margin-bottom:0.25rem;">${flag ? flag + ' ' : ''}${name}</h2>
     <p class="board-note"><a href="https://www.worldcubeassociation.org/persons/${wcaId}" target="_blank" rel="noopener">${wcaId} on the WCA site</a></p>
     <div class="profile-stats">${stats.join('')}</div>
     ${currentRecords.length ? `<p class="board-note">Currently holds the FA Record in: ${currentRecords.join(', ')}.</p>` : ''}
@@ -573,10 +692,71 @@ function renderProfile(wcaId) {
         <tbody>${eventRowsHtml || '<tr><td colspan="4" class="empty-note">No results yet.</td></tr>'}</tbody>
       </table>
     </div>
+
+    <h2 style="margin:1.5rem 0 0.5rem;">Age of their PRs</h2>
+    <p class="board-note">Their own current personal bests, oldest first.</p>
+    <div class="scroll-table">
+      <table>
+        <thead><tr><th>Event</th><th>Type</th><th>Result</th><th>Standing since</th></tr></thead>
+        <tbody>${ownAgesHtml || '<tr><td colspan="4" class="empty-note">No results yet.</td></tr>'}</tbody>
+      </table>
+    </div>
+
+    <h2 style="margin:1.5rem 0 0.5rem;">Results overview</h2>
+    <p class="board-note">Every competition round on record for them, most recent first.</p>
+    <div class="scroll-table">
+      <table>
+        <thead><tr><th>Date</th><th>Event</th><th>Competition</th><th>Round</th><th>Single</th><th>Average</th></tr></thead>
+        <tbody>${ownResultsHtml || '<tr><td colspan="6" class="empty-note">No results yet (needs the Update Full Result History workflow to have run).</td></tr>'}</tbody>
+      </table>
+    </div>
   `;
 }
 
-// ---------- Tabs & toggles ----------
+// Lightweight client-side re-implementation of formatResult, for the
+// profile's raw results-overview table.
+function formatResultLike(value, event, isAverage) {
+  if (value === -1) return 'DNF';
+  if (value === -2) return 'DNS';
+  if (typeof value !== 'number' || value <= 0) return '—';
+
+  if (event.id === '333fm') {
+    return isAverage ? (value / 100).toFixed(2) : String(value);
+  }
+  if (event.id === '333mbf') {
+    const s = String(value).padStart(10, '0');
+    let solved, attempted, seconds;
+    if (s[0] === '1') {
+      solved = 99 - parseInt(s.slice(1, 3), 10);
+      attempted = parseInt(s.slice(3, 5), 10);
+      seconds = parseInt(s.slice(5, 10), 10);
+    } else {
+      const diff = 99 - parseInt(s.slice(1, 3), 10);
+      const mm = parseInt(s.slice(8, 10), 10);
+      solved = diff + mm;
+      attempted = solved + mm;
+      seconds = parseInt(s.slice(3, 8), 10);
+    }
+    if (seconds === 99999) return `${solved}/${attempted} ?`;
+    const m = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${solved}/${attempted} ${m}:${String(sec).padStart(2, '0')}`;
+  }
+
+  const minutes = Math.floor(value / 6000);
+  const seconds = Math.floor((value % 6000) / 100);
+  const hundredths = value % 100;
+  const secStr = minutes > 0 ? String(seconds).padStart(2, '0') : String(seconds);
+  const hStr = String(hundredths).padStart(2, '0');
+  return minutes > 0 ? `${minutes}:${secStr}.${hStr}` : `${secStr}.${hStr}`;
+}
+
+function roundLabelFallback(round) {
+  const map = { 1: 'Round 1', 2: 'Round 2', 3: 'Round 3', 4: 'Round 4', c: 'Combined Round', d: 'Combined Final', e: 'Semi Final', f: 'Final', b: 'B Final', g: 'First Round' };
+  return map[round] || round || '—';
+}
+
+// ---------- Tabs & subtabs ----------
 
 function showPanel(tabName) {
   document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
@@ -590,6 +770,20 @@ function showPanel(tabName) {
 function setupTabs() {
   document.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => showPanel(btn.dataset.tab));
+  });
+}
+
+function setupSubtabs(containerId) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll('.subtab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.subtab-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const parentSection = container.closest('.tab-panel');
+      parentSection.querySelectorAll(':scope > .subtab-panel').forEach((p) => p.classList.remove('active'));
+      const panel = document.getElementById(`subtab-${btn.dataset.subtab}`);
+      if (panel) panel.classList.add('active');
+    });
   });
 }
 
@@ -630,18 +824,20 @@ function setupToggle(id, attr, onChange) {
 setupTabs();
 setupHomeLinks();
 setupNameLinkDelegation();
+setupSubtabs('overall-subtabs');
+setupSubtabs('misc-subtabs');
 
-setupToggle('overall-view-toggle', 'view', (view) => {
-  state.overallView = view;
-  renderOverall();
-});
 setupToggle('sor-type-toggle', 'type', (type) => {
   state.sorType = type;
-  renderSorLeaderboard();
+  renderSor();
 });
-setupToggle('sor-detailed-type-toggle', 'type', (type) => {
-  state.sorType = type;
-  renderSorDetailed();
+setupToggle('sor-view-toggle', 'view', (view) => {
+  state.sorView = view;
+  renderSor();
+});
+setupToggle('kinch-view-toggle', 'view', (view) => {
+  state.kinchView = view;
+  renderKinch();
 });
 setupToggle('event-type-toggle', 'type', (type) => {
   state.eventType = type;
@@ -666,6 +862,10 @@ setupToggle('far-type-toggle', 'type', (type) => {
 setupToggle('far-view-toggle', 'view', (view) => {
   state.farView = view;
   renderFarCounts();
+});
+setupToggle('age-mode-toggle', 'mode', (mode) => {
+  state.ageMode = mode;
+  renderAge();
 });
 
 loadData().catch((err) => {

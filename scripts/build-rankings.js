@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const { EVENTS, SINGLE_ONLY_EVENTS } = require('./lib/events');
-const { hasResult, formatResult } = require('./lib/format');
+const { hasResult, formatResult, mbldKinchRawScore } = require('./lib/format');
 
 const RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'results.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'rankings.json');
@@ -86,9 +86,31 @@ function eventTypeScore(eventRankData, eventId, type, personValue) {
   return (bestValue / personValue) * 100;
 }
 
+// Multi-Blind doesn't fit the usual "lower raw value = better, so best/yours"
+// ratio -- its raw value is an opaque encoding, not a linear measure of
+// performance. Its own Kinch convention instead scores
+// (solved - missed) + % of the hour remaining (higher is better), then
+// ratios that against the group's best such score.
+function computeMbldBestRawScore(people) {
+  let best = null;
+  for (const p of people) {
+    const raw = mbldKinchRawScore(p.events['333mbf']?.single);
+    if (raw !== null && (best === null || raw > best)) best = raw;
+  }
+  return best;
+}
+
+function mbldScore(bestRawScore, personValue) {
+  const raw = mbldKinchRawScore(personValue);
+  if (raw === null || !bestRawScore) return null;
+  return (raw / bestRawScore) * 100;
+}
+
 // One combined Kinch leaderboard (not separate single/average lists) --
 // see the KINCH_* sets above for which format each event scores off.
 function buildKinch(people, eventRankData) {
+  const mbldBestRawScore = computeMbldBestRawScore(people);
+
   const totals = people.map((p) => {
     const components = {};
     let sum = 0;
@@ -97,7 +119,9 @@ function buildKinch(people, eventRankData) {
       let source = null;
 
       if (KINCH_SINGLE_ONLY_EVENTS.has(event.id)) {
-        const s = eventTypeScore(eventRankData, event.id, 'single', p.events[event.id]?.single);
+        const s = event.id === '333mbf'
+          ? mbldScore(mbldBestRawScore, p.events[event.id]?.single)
+          : eventTypeScore(eventRankData, event.id, 'single', p.events[event.id]?.single);
         if (s !== null) {
           score = s;
           source = 'single';
@@ -157,6 +181,7 @@ function main() {
   const output = {
     generatedAt: new Date().toISOString(),
     dataFetchedAt: fetchedAt,
+    people: people.map((p) => ({ wcaId: p.wcaId, name: p.name, countryIso2: p.countryIso2 || null })),
     events: eventsOut,
     sumOfRanks: {
       single: buildSumOfRanks(people, eventRankData, 'single'),

@@ -31,7 +31,7 @@ function formatFmc(value, isAverage) {
 //   old (leading "1"): 1 SS AA TTTTT  -> solved = 99-SS, attempted = AA
 //   new (leading "0"): 0 DD TTTTT MM  -> solved = (99-DD)+MM, attempted = solved+MM
 // In both, TTTTT = time in seconds (99999 means unknown).
-function formatMbld(value) {
+function decodeMbld(value) {
   if (!hasResult(value)) return null;
   const s = String(value).padStart(10, '0');
   let solved, attempted, seconds;
@@ -51,6 +51,13 @@ function formatMbld(value) {
     attempted = solved + MM;
     seconds = TTTTT === 99999 ? null : TTTTT;
   }
+  return { solved, attempted, seconds };
+}
+
+function formatMbld(value) {
+  const decoded = decodeMbld(value);
+  if (!decoded) return null;
+  const { solved, attempted, seconds } = decoded;
   const h = seconds == null ? null : Math.floor(seconds / 3600);
   const m = seconds == null ? null : Math.floor((seconds % 3600) / 60);
   const sec = seconds == null ? null : seconds % 60;
@@ -60,6 +67,20 @@ function formatMbld(value) {
       ? `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`
       : `${m}:${String(sec).padStart(2, '0')}`;
   return `${solved}/${attempted} ${timeStr}`;
+}
+
+// MBLD Kinch score: points (solved - missed) plus the fraction (0-1) of the
+// hour (3600s) remaining when time is known. Higher is better -- this is
+// NOT comparable to the raw ranking value, which sorts by a different
+// (ascending, lower-is-better) encoding. Assumes a 60-minute time limit,
+// since the actual per-round limit isn't available in our data.
+function mbldKinchRawScore(value) {
+  const decoded = decodeMbld(value);
+  if (!decoded) return null;
+  const missed = decoded.attempted - decoded.solved;
+  const points = decoded.solved - missed;
+  const fractionLeft = decoded.seconds == null ? 0 : Math.max(0, (3600 - decoded.seconds) / 3600);
+  return points + fractionLeft;
 }
 
 function formatResult(value, event, isAverage) {
@@ -72,4 +93,4 @@ function formatResult(value, event, isAverage) {
   return String(value);
 }
 
-module.exports = { hasResult, formatResult };
+module.exports = { hasResult, formatResult, decodeMbld, mbldKinchRawScore };
