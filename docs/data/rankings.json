@@ -1,6 +1,88 @@
 {
-  "generatedAt": "2026-09-08T06:12:16.423Z",
-  "dataFetchedAt": "2026-09-08T06:12:16.386Z",
+  "generatedAt": "2026-09-08T10:33:44.795Z",
+  "dataFetchedAt": "2026-09-08T10:33:44.646Z",
+  "people": [
+    {
+      "wcaId": "2022GART03",
+      "name": "Nate Garthon",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "countryIso2": "CA"
+    },
+    {
+      "wcaId": "2018CROU02",
+      "name": "Sylvia Crouch",
+      "countryIso2": "US"
+    },
+    {
+      "wcaId": "2023ARCI02",
+      "name": "Gavriel Johann Arcilla",
+      "countryIso2": "PH"
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2023BENT02",
+      "name": "Hamish Bentley",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2023SCOT04",
+      "name": "Asaph Scott",
+      "countryIso2": "AU"
+    },
+    {
+      "wcaId": "2025THUR01",
+      "name": "Emily Thurston",
+      "countryIso2": "US"
+    }
+  ],
   "events": [
     {
       "id": "333",
@@ -16,7 +98,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 2,
           "value": 608,
           "display": "6.08"
@@ -44,7 +126,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 6,
           "value": 671,
           "display": "6.71"
@@ -65,7 +147,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 846,
           "display": "8.46"
@@ -107,7 +189,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 1077,
           "display": "10.77"
@@ -130,7 +212,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 2,
           "value": 748,
           "display": "7.48"
@@ -144,7 +226,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 4,
           "value": 787,
           "display": "7.87"
@@ -179,7 +261,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 1073,
           "display": "10.73"
@@ -221,7 +303,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 1338,
           "display": "13.38"
@@ -270,7 +352,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 5,
           "value": 107,
           "display": "1.07"
@@ -284,7 +366,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 7,
           "value": 162,
           "display": "1.62"
@@ -326,7 +408,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 13,
           "value": 237,
           "display": "2.37"
@@ -340,7 +422,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 15,
           "value": 269,
           "display": "2.69"
@@ -356,7 +438,7 @@
       "average": [
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 1,
           "value": 166,
           "display": "1.66"
@@ -412,7 +494,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 323,
           "display": "3.23"
@@ -440,14 +522,14 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 13,
           "value": 388,
           "display": "3.88"
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 14,
           "value": 403,
           "display": "4.03"
@@ -496,7 +578,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 4,
           "value": 3111,
           "display": "31.11"
@@ -524,14 +606,14 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 8,
           "value": 3596,
           "display": "35.96"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 3723,
           "display": "37.23"
@@ -573,7 +655,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 5116,
           "display": "51.16"
@@ -617,7 +699,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 5,
           "value": 3626,
           "display": "36.26"
@@ -631,7 +713,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 7,
           "value": 3914,
           "display": "39.14"
@@ -652,7 +734,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 10,
           "value": 4375,
           "display": "43.75"
@@ -687,7 +769,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 5799,
           "display": "57.99"
@@ -743,7 +825,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 6,
           "value": 6455,
           "display": "1:04.55"
@@ -757,7 +839,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 8,
           "value": 6695,
           "display": "1:06.95"
@@ -771,7 +853,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 10,
           "value": 7338,
           "display": "1:13.38"
@@ -806,7 +888,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 10730,
           "display": "1:47.30"
@@ -843,7 +925,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 5,
           "value": 6636,
           "display": "1:06.36"
@@ -864,7 +946,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 8,
           "value": 7417,
           "display": "1:14.17"
@@ -878,7 +960,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 10,
           "value": 7615,
           "display": "1:16.15"
@@ -913,7 +995,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 12667,
           "display": "2:06.67"
@@ -976,14 +1058,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 8,
           "value": 15685,
           "display": "2:36.85"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 15818,
           "display": "2:38.18"
@@ -1062,14 +1144,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 7,
           "value": 16069,
           "display": "2:40.69"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 8,
           "value": 16332,
           "display": "2:43.32"
@@ -1153,21 +1235,21 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 7,
           "value": 24130,
           "display": "4:01.30"
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 8,
           "value": 24462,
           "display": "4:04.62"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 24948,
           "display": "4:09.48"
@@ -1209,7 +1291,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 41815,
           "display": "6:58.15"
@@ -1253,7 +1335,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 6,
           "value": 25315,
           "display": "4:13.15"
@@ -1267,14 +1349,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 8,
           "value": 25645,
           "display": "4:16.45"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 26977,
           "display": "4:29.77"
@@ -1309,7 +1391,7 @@
       "single": [
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 1,
           "value": 1304,
           "display": "13.04"
@@ -1323,7 +1405,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 3,
           "value": 4554,
           "display": "45.54"
@@ -1344,7 +1426,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 6,
           "value": 6679,
           "display": "1:06.79"
@@ -1372,7 +1454,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 10,
           "value": 12850,
           "display": "2:08.50"
@@ -1409,14 +1491,14 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 3,
           "value": 8386,
           "display": "1:23.86"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 4,
           "value": 9860,
           "display": "1:38.60"
@@ -1458,7 +1540,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 4,
           "value": 33,
           "display": "33"
@@ -1479,7 +1561,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 7,
           "value": 37,
           "display": "37"
@@ -1500,7 +1582,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 9,
           "value": 41,
           "display": "41"
@@ -1521,7 +1603,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 13,
           "value": 52,
           "display": "52"
@@ -1572,7 +1654,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 6,
           "value": 4100,
           "display": "41.00"
@@ -1586,7 +1668,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 8,
           "value": 4767,
           "display": "47.67"
@@ -1600,7 +1682,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 10,
           "value": 5000,
           "display": "50.00"
@@ -1628,14 +1710,14 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 2,
           "value": 1028,
           "display": "10.28"
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 3,
           "value": 1171,
           "display": "11.71"
@@ -1677,7 +1759,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 1664,
           "display": "16.64"
@@ -1698,7 +1780,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 12,
           "value": 1960,
           "display": "19.60"
@@ -1742,14 +1824,14 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 2,
           "value": 1109,
           "display": "11.09"
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 3,
           "value": 1527,
           "display": "15.27"
@@ -1777,7 +1859,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 7,
           "value": 2029,
           "display": "20.29"
@@ -1805,7 +1887,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 11,
           "value": 2371,
           "display": "23.71"
@@ -1868,14 +1950,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 3,
           "value": 319,
           "display": "3.19"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 4,
           "value": 325,
           "display": "3.25"
@@ -1931,7 +2013,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 12,
           "value": 715,
           "display": "7.15"
@@ -1952,7 +2034,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 15,
           "value": 878,
           "display": "8.78"
@@ -1989,14 +2071,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 4,
           "value": 451,
           "display": "4.51"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 5,
           "value": 469,
           "display": "4.69"
@@ -2038,7 +2120,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 11,
           "value": 827,
           "display": "8.27"
@@ -2066,7 +2148,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 15,
           "value": 1041,
           "display": "10.41"
@@ -2108,7 +2190,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 4,
           "value": 5560,
           "display": "55.60"
@@ -2122,7 +2204,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 6,
           "value": 5706,
           "display": "57.06"
@@ -2178,7 +2260,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 14,
           "value": 8850,
           "display": "1:28.50"
@@ -2201,7 +2283,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 3,
           "value": 6000,
           "display": "1:00.00"
@@ -2215,7 +2297,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 5,
           "value": 6169,
           "display": "1:01.69"
@@ -2278,7 +2360,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 14,
           "value": 9959,
           "display": "1:39.59"
@@ -2313,7 +2395,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 4,
           "value": 253,
           "display": "2.53"
@@ -2355,7 +2437,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 10,
           "value": 402,
           "display": "4.02"
@@ -2376,7 +2458,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 13,
           "value": 524,
           "display": "5.24"
@@ -2397,7 +2479,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 16,
           "value": 1651,
           "display": "16.51"
@@ -2434,7 +2516,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 5,
           "value": 350,
           "display": "3.50"
@@ -2448,7 +2530,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 7,
           "value": 555,
           "display": "5.55"
@@ -2483,7 +2565,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 12,
           "value": 723,
           "display": "7.23"
@@ -2511,7 +2593,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 16,
           "value": 2212,
           "display": "22.12"
@@ -2553,14 +2635,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 5,
           "value": 245,
           "display": "2.45"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 6,
           "value": 246,
           "display": "2.46"
@@ -2609,7 +2691,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 13,
           "value": 581,
           "display": "5.81"
@@ -2660,7 +2742,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 5,
           "value": 449,
           "display": "4.49"
@@ -2674,7 +2756,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 7,
           "value": 464,
           "display": "4.64"
@@ -2730,7 +2812,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 15,
           "value": 1014,
           "display": "10.14"
@@ -2800,7 +2882,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 9,
           "value": 1415,
           "display": "14.15"
@@ -2814,14 +2896,14 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 11,
           "value": 1536,
           "display": "15.36"
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 12,
           "value": 1945,
           "display": "19.45"
@@ -2842,7 +2924,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 15,
           "value": 5382,
           "display": "53.82"
@@ -2900,14 +2982,14 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Skye Fetherston",
+          "name": "Miles Fetherston",
           "rank": 8,
           "value": 1627,
           "display": "16.27"
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 9,
           "value": 1746,
           "display": "17.46"
@@ -2935,7 +3017,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 13,
           "value": 3435,
           "display": "34.35"
@@ -2949,7 +3031,7 @@
       "single": [
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 1,
           "value": 12390,
           "display": "2:03.90"
@@ -2970,14 +3052,14 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 4,
           "value": 51660,
           "display": "8:36.60"
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 5,
           "value": 68800,
           "display": "11:28.00"
@@ -3006,7 +3088,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 3,
           "value": 149300,
           "display": "24:53.00"
@@ -3028,7 +3110,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Nicole Arcilla",
+          "name": "Gavriel Johann Arcilla",
           "rank": 2,
           "value": 850349509,
           "display": "23/32 58:15"
@@ -3049,7 +3131,7 @@
         },
         {
           "wcaId": "2022GART03",
-          "name": "Nova Garthon",
+          "name": "Nate Garthon",
           "rank": 5,
           "value": 960356703,
           "display": "6/9 59:27"
@@ -3063,7 +3145,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Ash Scott",
+          "name": "Asaph Scott",
           "rank": 7,
           "value": 970131601,
           "display": "3/4 21:56"
@@ -3465,7 +3547,7 @@
       },
       {
         "wcaId": "2022FETH01",
-        "name": "Miles Skye Fetherston",
+        "name": "Miles Fetherston",
         "total": 99,
         "components": {
           "222": {
@@ -3690,7 +3772,7 @@
       },
       {
         "wcaId": "2022GART03",
-        "name": "Nova Garthon",
+        "name": "Nate Garthon",
         "total": 128,
         "components": {
           "222": {
@@ -3765,7 +3847,7 @@
       },
       {
         "wcaId": "2023ARCI02",
-        "name": "Nicole Arcilla",
+        "name": "Gavriel Johann Arcilla",
         "total": 150,
         "components": {
           "222": {
@@ -4140,7 +4222,7 @@
       },
       {
         "wcaId": "2023SCOT04",
-        "name": "Ash Scott",
+        "name": "Asaph Scott",
         "total": 191,
         "components": {
           "222": {
@@ -4592,7 +4674,7 @@
       },
       {
         "wcaId": "2022FETH01",
-        "name": "Miles Skye Fetherston",
+        "name": "Miles Fetherston",
         "total": 74,
         "components": {
           "222": {
@@ -4817,7 +4899,7 @@
       },
       {
         "wcaId": "2022GART03",
-        "name": "Nova Garthon",
+        "name": "Nate Garthon",
         "total": 114,
         "components": {
           "222": {
@@ -4967,7 +5049,7 @@
       },
       {
         "wcaId": "2023ARCI02",
-        "name": "Nicole Arcilla",
+        "name": "Gavriel Johann Arcilla",
         "total": 145,
         "components": {
           "222": {
@@ -5342,7 +5424,7 @@
       },
       {
         "wcaId": "2023SCOT04",
-        "name": "Ash Scott",
+        "name": "Asaph Scott",
         "total": 175,
         "components": {
           "222": {
@@ -5572,7 +5654,7 @@
       {
         "wcaId": "2021BLAK01",
         "name": "Jonah Blakeley",
-        "score": 66.79,
+        "score": 63.27,
         "components": {
           "222": {
             "score": 62.17,
@@ -5639,7 +5721,7 @@
             "source": "single"
           },
           "333mbf": {
-            "score": 84.23,
+            "score": 24.36,
             "source": "single"
           }
         }
@@ -5647,7 +5729,7 @@
       {
         "wcaId": "2018CROU02",
         "name": "Sylvia Crouch",
-        "score": 60.87,
+        "score": 56.54,
         "components": {
           "222": {
             "score": 68.31,
@@ -5714,7 +5796,7 @@
             "source": null
           },
           "333mbf": {
-            "score": 81.65,
+            "score": 8.03,
             "source": "single"
           }
         }
@@ -5795,83 +5877,8 @@
         }
       },
       {
-        "wcaId": "2022GART03",
-        "name": "Nova Garthon",
-        "score": 54.33,
-        "components": {
-          "222": {
-            "score": 51.39,
-            "source": "average"
-          },
-          "333": {
-            "score": 68.5,
-            "source": "average"
-          },
-          "444": {
-            "score": 65.99,
-            "source": "average"
-          },
-          "555": {
-            "score": 69.21,
-            "source": "average"
-          },
-          "666": {
-            "score": 56.52,
-            "source": "average"
-          },
-          "777": {
-            "score": 49.36,
-            "source": "average"
-          },
-          "333bf": {
-            "score": 39.04,
-            "source": "average"
-          },
-          "333fm": {
-            "score": 50,
-            "source": "single"
-          },
-          "333oh": {
-            "score": 54.41,
-            "source": "average"
-          },
-          "clock": {
-            "score": 51.6,
-            "source": "average"
-          },
-          "minx": {
-            "score": 68.52,
-            "source": "average"
-          },
-          "pyram": {
-            "score": 32.79,
-            "source": "average"
-          },
-          "skewb": {
-            "score": 60.34,
-            "source": "average"
-          },
-          "sq1": {
-            "score": 56.59,
-            "source": "average"
-          },
-          "444bf": {
-            "score": 23.98,
-            "source": "single"
-          },
-          "555bf": {
-            "score": 42.06,
-            "source": "single"
-          },
-          "333mbf": {
-            "score": 83.33,
-            "source": "single"
-          }
-        }
-      },
-      {
         "wcaId": "2022FETH01",
-        "name": "Miles Skye Fetherston",
+        "name": "Miles Fetherston",
         "score": 54.19,
         "components": {
           "222": {
@@ -6020,87 +6027,12 @@
         }
       },
       {
-        "wcaId": "2019THEO03",
-        "name": "Connor Theodore",
-        "score": 52.12,
+        "wcaId": "2022GART03",
+        "name": "Nate Garthon",
+        "score": 50.35,
         "components": {
           "222": {
-            "score": 56.46,
-            "source": "average"
-          },
-          "333": {
-            "score": 73.06,
-            "source": "average"
-          },
-          "444": {
-            "score": 71.44,
-            "source": "average"
-          },
-          "555": {
-            "score": 69.86,
-            "source": "average"
-          },
-          "666": {
-            "score": 54.02,
-            "source": "average"
-          },
-          "777": {
-            "score": 44.24,
-            "source": "average"
-          },
-          "333bf": {
-            "score": 18.75,
-            "source": "average"
-          },
-          "333fm": {
-            "score": 75.75,
-            "source": "average"
-          },
-          "333oh": {
-            "score": 53.28,
-            "source": "average"
-          },
-          "clock": {
-            "score": 45.49,
-            "source": "average"
-          },
-          "minx": {
-            "score": 67.49,
-            "source": "average"
-          },
-          "pyram": {
-            "score": 31.22,
-            "source": "average"
-          },
-          "skewb": {
-            "score": 100,
-            "source": "average"
-          },
-          "sq1": {
-            "score": 43.26,
-            "source": "average"
-          },
-          "444bf": {
-            "score": 0,
-            "source": null
-          },
-          "555bf": {
-            "score": 0,
-            "source": null
-          },
-          "333mbf": {
-            "score": 81.65,
-            "source": "single"
-          }
-        }
-      },
-      {
-        "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "score": 49.62,
-        "components": {
-          "222": {
-            "score": 50.46,
+            "score": 51.39,
             "source": "average"
           },
           "333": {
@@ -6108,71 +6040,71 @@
             "source": "average"
           },
           "444": {
-            "score": 67.31,
+            "score": 65.99,
             "source": "average"
           },
           "555": {
-            "score": 72.55,
+            "score": 69.21,
             "source": "average"
           },
           "666": {
-            "score": 59.24,
+            "score": 56.52,
             "source": "average"
           },
           "777": {
-            "score": 52.13,
+            "score": 49.36,
             "source": "average"
           },
           "333bf": {
-            "score": 21.11,
-            "source": "single"
-          },
-          "333fm": {
-            "score": 67.57,
+            "score": 39.04,
             "source": "average"
           },
+          "333fm": {
+            "score": 50,
+            "source": "single"
+          },
           "333oh": {
-            "score": 48.48,
+            "score": 54.41,
             "source": "average"
           },
           "clock": {
-            "score": 42.68,
+            "score": 51.6,
             "source": "average"
           },
           "minx": {
-            "score": 49.04,
+            "score": 68.52,
             "source": "average"
           },
           "pyram": {
-            "score": 27.79,
+            "score": 32.79,
             "source": "average"
           },
           "skewb": {
-            "score": 59.45,
+            "score": 60.34,
             "source": "average"
           },
           "sq1": {
-            "score": 73.9,
+            "score": 56.59,
             "source": "average"
           },
           "444bf": {
-            "score": 0,
-            "source": null
+            "score": 23.98,
+            "source": "single"
           },
           "555bf": {
-            "score": 0,
-            "source": null
+            "score": 42.06,
+            "source": "single"
           },
           "333mbf": {
-            "score": 83.34,
+            "score": 15.68,
             "source": "single"
           }
         }
       },
       {
         "wcaId": "2023ARCI02",
-        "name": "Nicole Arcilla",
-        "score": 49.26,
+        "name": "Gavriel Johann Arcilla",
+        "score": 48.02,
         "components": {
           "222": {
             "score": 42.78,
@@ -6239,7 +6171,157 @@
             "source": null
           },
           "333mbf": {
-            "score": 94.11,
+            "score": 73.12,
+            "source": "single"
+          }
+        }
+      },
+      {
+        "wcaId": "2019THEO03",
+        "name": "Connor Theodore",
+        "score": 47.84,
+        "components": {
+          "222": {
+            "score": 56.46,
+            "source": "average"
+          },
+          "333": {
+            "score": 73.06,
+            "source": "average"
+          },
+          "444": {
+            "score": 71.44,
+            "source": "average"
+          },
+          "555": {
+            "score": 69.86,
+            "source": "average"
+          },
+          "666": {
+            "score": 54.02,
+            "source": "average"
+          },
+          "777": {
+            "score": 44.24,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 18.75,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 75.75,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 53.28,
+            "source": "average"
+          },
+          "clock": {
+            "score": 45.49,
+            "source": "average"
+          },
+          "minx": {
+            "score": 67.49,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 31.22,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 100,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 43.26,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 9.03,
+            "source": "single"
+          }
+        }
+      },
+      {
+        "wcaId": "2022SHAR23",
+        "name": "Connor Sharpe",
+        "score": 45.7,
+        "components": {
+          "222": {
+            "score": 50.46,
+            "source": "average"
+          },
+          "333": {
+            "score": 68.5,
+            "source": "average"
+          },
+          "444": {
+            "score": 67.31,
+            "source": "average"
+          },
+          "555": {
+            "score": 72.55,
+            "source": "average"
+          },
+          "666": {
+            "score": 59.24,
+            "source": "average"
+          },
+          "777": {
+            "score": 52.13,
+            "source": "average"
+          },
+          "333bf": {
+            "score": 21.11,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 67.57,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 48.48,
+            "source": "average"
+          },
+          "clock": {
+            "score": 42.68,
+            "source": "average"
+          },
+          "minx": {
+            "score": 49.04,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 27.79,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 59.45,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 73.9,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 16.72,
             "source": "single"
           }
         }
@@ -6395,156 +6477,6 @@
         }
       },
       {
-        "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "score": 36.44,
-        "components": {
-          "222": {
-            "score": 44.99,
-            "source": "average"
-          },
-          "333": {
-            "score": 61.25,
-            "source": "average"
-          },
-          "444": {
-            "score": 63.94,
-            "source": "average"
-          },
-          "555": {
-            "score": 56.23,
-            "source": "average"
-          },
-          "666": {
-            "score": 0,
-            "source": null
-          },
-          "777": {
-            "score": 0,
-            "source": null
-          },
-          "333bf": {
-            "score": 5.56,
-            "source": "single"
-          },
-          "333fm": {
-            "score": 91.74,
-            "source": "average"
-          },
-          "333oh": {
-            "score": 45.9,
-            "source": "average"
-          },
-          "clock": {
-            "score": 29.12,
-            "source": "average"
-          },
-          "minx": {
-            "score": 47.13,
-            "source": "average"
-          },
-          "pyram": {
-            "score": 17.84,
-            "source": "average"
-          },
-          "skewb": {
-            "score": 41.85,
-            "source": "average"
-          },
-          "sq1": {
-            "score": 31.51,
-            "source": "average"
-          },
-          "444bf": {
-            "score": 0,
-            "source": null
-          },
-          "555bf": {
-            "score": 0,
-            "source": null
-          },
-          "333mbf": {
-            "score": 82.5,
-            "source": "single"
-          }
-        }
-      },
-      {
-        "wcaId": "2023SCOT04",
-        "name": "Ash Scott",
-        "score": 35.51,
-        "components": {
-          "222": {
-            "score": 41.19,
-            "source": "average"
-          },
-          "333": {
-            "score": 54.93,
-            "source": "average"
-          },
-          "444": {
-            "score": 49.78,
-            "source": "average"
-          },
-          "555": {
-            "score": 41.6,
-            "source": "average"
-          },
-          "666": {
-            "score": 0,
-            "source": null
-          },
-          "777": {
-            "score": 0,
-            "source": null
-          },
-          "333bf": {
-            "score": 45.9,
-            "source": "average"
-          },
-          "333fm": {
-            "score": 69.92,
-            "source": "average"
-          },
-          "333oh": {
-            "score": 46.56,
-            "source": "average"
-          },
-          "clock": {
-            "score": 29.26,
-            "source": "average"
-          },
-          "minx": {
-            "score": 42.44,
-            "source": "average"
-          },
-          "pyram": {
-            "score": 25.17,
-            "source": "average"
-          },
-          "skewb": {
-            "score": 27.61,
-            "source": "average"
-          },
-          "sq1": {
-            "score": 28.76,
-            "source": "average"
-          },
-          "444bf": {
-            "score": 18.01,
-            "source": "single"
-          },
-          "555bf": {
-            "score": 0,
-            "source": null
-          },
-          "333mbf": {
-            "score": 82.49,
-            "source": "single"
-          }
-        }
-      },
-      {
         "wcaId": "2021LUAA01",
         "name": "Aaron Lu",
         "score": 33,
@@ -6616,6 +6548,156 @@
           "333mbf": {
             "score": 0,
             "source": null
+          }
+        }
+      },
+      {
+        "wcaId": "2019WILL30",
+        "name": "Madeline Willoughby-Khan",
+        "score": 32.43,
+        "components": {
+          "222": {
+            "score": 44.99,
+            "source": "average"
+          },
+          "333": {
+            "score": 61.25,
+            "source": "average"
+          },
+          "444": {
+            "score": 63.94,
+            "source": "average"
+          },
+          "555": {
+            "score": 56.23,
+            "source": "average"
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 5.56,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 91.74,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 45.9,
+            "source": "average"
+          },
+          "clock": {
+            "score": 29.12,
+            "source": "average"
+          },
+          "minx": {
+            "score": 47.13,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 17.84,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 41.85,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 31.51,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 14.19,
+            "source": "single"
+          }
+        }
+      },
+      {
+        "wcaId": "2023SCOT04",
+        "name": "Asaph Scott",
+        "score": 31.46,
+        "components": {
+          "222": {
+            "score": 41.19,
+            "source": "average"
+          },
+          "333": {
+            "score": 54.93,
+            "source": "average"
+          },
+          "444": {
+            "score": 49.78,
+            "source": "average"
+          },
+          "555": {
+            "score": 41.6,
+            "source": "average"
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 45.9,
+            "source": "average"
+          },
+          "333fm": {
+            "score": 69.92,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 46.56,
+            "source": "average"
+          },
+          "clock": {
+            "score": 29.26,
+            "source": "average"
+          },
+          "minx": {
+            "score": 42.44,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 25.17,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 27.61,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 28.76,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 18.01,
+            "source": "single"
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 13.73,
+            "source": "single"
           }
         }
       },

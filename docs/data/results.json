@@ -1,9 +1,9 @@
 {
-  "fetchedAt": "2026-09-08T06:12:16.386Z",
+  "fetchedAt": "2026-09-08T10:33:44.646Z",
   "people": [
     {
       "wcaId": "2022GART03",
-      "name": "Nova Garthon",
+      "name": "Nate Garthon",
       "countryIso2": "AU",
       "events": {
         "222": {
@@ -228,7 +228,7 @@
     },
     {
       "wcaId": "2022FETH01",
-      "name": "Miles Skye Fetherston",
+      "name": "Miles Fetherston",
       "countryIso2": "AU",
       "events": {
         "222": {
@@ -453,7 +453,7 @@
     },
     {
       "wcaId": "2023ARCI02",
-      "name": "Nicole Arcilla",
+      "name": "Gavriel Johann Arcilla",
       "countryIso2": "PH",
       "events": {
         "222": {
@@ -1053,7 +1053,7 @@
     },
     {
       "wcaId": "2023SCOT04",
-      "name": "Ash Scott",
+      "name": "Asaph Scott",
       "countryIso2": "AU",
       "events": {
         "222": {
