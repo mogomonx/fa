@@ -3,6 +3,7 @@ let individualData = null;
 let historicalData = null;
 let fullResultsData = null;
 let streaksData = null;
+let recentActivityData = null;
 let peopleByWcaId = new Map();
 
 const state = {
@@ -22,18 +23,23 @@ const state = {
   ageEventId: '',
   streaksMode: 'current',
   streaksType: 'single',
-  streaksView: 'leaderboard',
+  streaksEventId: null,
+  improvementEventId: null,
+  improvementType: 'single',
+  consistencyEventId: null,
+  consistencyType: 'single',
   previousTab: 'home',
 };
 
 async function loadData() {
-  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes, streaksRes] = await Promise.all([
+  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes, streaksRes, recentRes] = await Promise.all([
     fetch('data/rankings.json', { cache: 'no-store' }),
     fetch('data/individual-rankings.json', { cache: 'no-store' }),
     fetch('data/historical-records.json', { cache: 'no-store' }),
     fetch('data/upcoming.json', { cache: 'no-store' }).catch(() => null),
     fetch('data/full-results.json', { cache: 'no-store' }).catch(() => null),
     fetch('data/streaks.json', { cache: 'no-store' }).catch(() => null),
+    fetch('data/recent-activity.json', { cache: 'no-store' }).catch(() => null),
   ]);
   rankingsData = await rankingsRes.json();
   individualData = await individualRes.json();
@@ -41,6 +47,7 @@ async function loadData() {
   const upcomingData = upcomingRes && upcomingRes.ok ? await upcomingRes.json() : null;
   fullResultsData = fullResultsRes && fullResultsRes.ok ? await fullResultsRes.json() : { entries: [] };
   streaksData = streaksRes && streaksRes.ok ? await streaksRes.json() : null;
+  recentActivityData = recentRes && recentRes.ok ? await recentRes.json() : null;
 
   for (const row of rankingsData.people || []) {
     peopleByWcaId.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
@@ -56,6 +63,11 @@ async function loadData() {
   populateIndividualEventSelect();
   populateHistoryEventSelect();
   populateAgeEventSelect();
+  populateStreaksEventSelect();
+  populateImprovementEventSelect();
+  populateConsistencyEventSelect();
+  setupImprovementDates();
+  setupProfileSearch();
   renderFaRecords();
   renderSor();
   renderKinch();
@@ -67,6 +79,9 @@ async function loadData() {
   renderAge();
   renderStreaks();
   renderUpcoming(upcomingData);
+  renderImprovement();
+  renderRecentActivity();
+  renderConsistency();
 }
 
 function nameLink(wcaId, name) {
@@ -485,7 +500,7 @@ function renderTop100() {
 function renderHistory() {
   const rows = historicalData.records.filter((r) => r.eventId === state.historyEventId);
   renderTable(document.getElementById('historical-records-table'), rows, [
-    { key: 'date', label: 'Date', value: (r) => r.date || '—' },
+    { key: 'date', label: 'Date', value: (r) => formatDate(r.date) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'result', label: 'Result', value: (r) => r.display },
@@ -551,37 +566,75 @@ function renderAge() {
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'result', label: 'Result', value: (r) => r.display },
-    { key: 'age', label: 'Standing since', value: (r) => (r.date ? `${r.date} (${daysAgo(r.date)}d)` : '—') },
+    { key: 'age', label: 'Standing since', value: (r) => (r.date ? `${formatDate(r.date)} (${daysAgo(r.date)}d)` : '—') },
   ]);
 }
 
 // ---------- Misc: PR Streaks ----------
 
-function renderStreaks() {
+function populateStreaksEventSelect() {
+  const select = document.getElementById('streaks-event-select');
   if (!streaksData) return;
-  document.getElementById('streaks-leaderboard-view').style.display =
-    state.streaksView === 'leaderboard' ? '' : 'none';
-  document.getElementById('streaks-detailed-view').style.display =
-    state.streaksView === 'detailed' ? '' : 'none';
-
-  const rows = streaksData[state.streaksMode][state.streaksType];
-  if (state.streaksView === 'leaderboard') {
-    renderTable(document.getElementById('streaks-table'), rows, [
-      { key: 'rank', label: '#', value: () => '' },
-      { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-      { key: 'total', label: 'Total (summed across events)', value: (r) => r.total },
-    ]);
-    addPositionColumn('streaks-table');
-  } else {
-    renderDetailedTable(
-      document.getElementById('streaks-detailed-view'),
-      rows,
-      'total',
-      'Total',
-      (v) => (v == null ? 0 : v),
-      (v) => (v == null ? 0 : v)
-    );
+  select.innerHTML = '';
+  for (const event of streaksData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
   }
+  state.streaksEventId = select.value;
+  select.addEventListener('change', () => {
+    state.streaksEventId = select.value;
+    renderStreaks();
+  });
+}
+
+function renderStreakList(containerId, rows, basis) {
+  const container = document.getElementById(containerId);
+  if (!rows || rows.length === 0) {
+    container.innerHTML = '<p class="empty-note">No results yet.</p>';
+    return;
+  }
+  const sorted = rows
+    .map((r) => ({ ...r, streak: r[basis][state.streaksMode] }))
+    .sort((a, b) => b.streak.count - a.streak.count);
+
+  container.innerHTML = sorted
+    .map(
+      (r) => `
+      <div class="streak-row">
+        <span>${nameLink(r.wcaId, r.name)}</span>
+        <span style="text-align:right;">
+          <span class="streak-count">${r.streak.count}</span>
+          ${r.streak.range ? `<span class="streak-range">${r.streak.range.start} \u2013 ${r.streak.range.end}</span>` : ''}
+        </span>
+      </div>
+    `
+    )
+    .join('');
+}
+
+function renderStreaks() {
+  if (!streaksData || !state.streaksEventId) return;
+  const rows = (streaksData.byEvent[state.streaksEventId] || {})[state.streaksType] || [];
+
+  // Reshape {current, currentRange, best, bestRange} into {count, range}
+  // for whichever mode is selected, for each basis.
+  const withCounts = rows.map((r) => ({
+    wcaId: r.wcaId,
+    name: r.name,
+    competitions: {
+      current: { count: r.competitions.current, range: r.competitions.currentRange },
+      best: { count: r.competitions.best, range: r.competitions.bestRange },
+    },
+    rounds: {
+      current: { count: r.rounds.current, range: r.rounds.currentRange },
+      best: { count: r.rounds.best, range: r.rounds.bestRange },
+    },
+  }));
+
+  renderStreakList('streaks-list', withCounts, 'competitions');
+  renderStreakList('streaks-side-list', withCounts, 'rounds');
 }
 
 // ---------- Misc: Upcoming competitions ----------
@@ -589,14 +642,14 @@ function renderStreaks() {
 function renderUpcoming(upcomingData) {
   const note = document.getElementById('upcoming-note');
   const container = document.getElementById('upcoming-table');
-  const competitions = (upcomingData?.competitions || []).slice(0, 5);
+  const competitions = upcomingData?.competitions || [];
 
   if (competitions.length === 0) {
-    note.textContent = 'Add competition IDs to config/upcoming-competitions.json to populate this.';
+    note.textContent = 'Add competition IDs to config/upcoming-competitions.json to populate this, or wait for the automatic scan to find one.';
     container.innerHTML = '';
     return;
   }
-  note.textContent = 'Next 5 upcoming competitions your group is attending.';
+  note.textContent = 'Every upcoming competition (next ~6 months) your group is attending.';
 
   const table = document.createElement('table');
   table.innerHTML = '<thead><tr><th>Date</th><th>Competition</th><th>Attending</th></tr></thead>';
@@ -604,7 +657,7 @@ function renderUpcoming(upcomingData) {
   competitions.forEach((c) => {
     const tr = document.createElement('tr');
     const attendeeNames = (c.attendees || []).map((a) => nameLink(a.wcaId, a.name)).join(', ') || '—';
-    tr.innerHTML = `<td>${c.date || '—'}</td><td><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a></td><td>${attendeeNames}</td>`;
+    tr.innerHTML = `<td>${formatDate(c.date)}</td><td><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a></td><td>${attendeeNames}</td>`;
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
@@ -696,7 +749,7 @@ function renderProfile(wcaId) {
         <td>${r.eventName}</td>
         <td>${r.type === 'single' ? 'Single' : 'Average'}</td>
         <td>${r.display}</td>
-        <td>${r.date ? `${r.date} (${daysAgo(r.date)}d)` : '—'}</td>
+        <td>${r.date ? `${formatDate(r.date)} (${daysAgo(r.date)}d)` : '—'}</td>
       </tr>
     `)
     .join('');
@@ -778,7 +831,7 @@ function renderProfileResultsForEvent(wcaId, eventId) {
     .map(
       (g) => `
       <div class="board" style="margin-bottom:1rem;">
-        <h3 style="margin:0 0 0.5rem;">${g.competitionName}<span class="board-note" style="display:inline; margin-left:0.5rem;">${g.date || ''}</span></h3>
+        <h3 style="margin:0 0 0.5rem;">${g.competitionName}<span class="board-note" style="display:inline; margin-left:0.5rem;">${formatDate(g.date)}</span></h3>
         <div class="scroll-table">
           <table>
             <thead><tr><th>Round</th><th>Placement</th><th>Single</th><th>Average</th><th>Solves</th></tr></thead>
@@ -879,6 +932,244 @@ function placementSuffix(n) {
     case 3: return 'rd';
     default: return 'th';
   }
+}
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  const parts = dateStr.split('-').map(Number);
+  const [y, m, d] = parts;
+  if (!y || !m || !d) return dateStr;
+  return `${d}${placementSuffix(d)} ${MONTH_NAMES[m - 1]} ${y}`;
+}
+
+// ---------- Improvement ----------
+
+function populateImprovementEventSelect() {
+  const select = document.getElementById('improvement-event-select');
+  select.innerHTML = '';
+  for (const event of rankingsData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
+  }
+  state.improvementEventId = select.value;
+  select.addEventListener('change', () => {
+    state.improvementEventId = select.value;
+    renderImprovement();
+  });
+}
+
+function setupImprovementDates() {
+  const dateA = document.getElementById('improvement-date-a');
+  const dateB = document.getElementById('improvement-date-b');
+  const today = new Date();
+  const ninetyDaysAgo = new Date(today.getTime() - 90 * 24 * 60 * 60 * 1000);
+  dateA.value = ninetyDaysAgo.toISOString().slice(0, 10);
+  dateB.value = today.toISOString().slice(0, 10);
+  dateA.addEventListener('change', renderImprovement);
+  dateB.addEventListener('change', renderImprovement);
+}
+
+// Best (lowest) value this person had recorded for this event+type at or
+// before the given date -- computed client-side from full-results.json,
+// which is also the foundation the future On This Date feature will reuse.
+function bestAsOfDate(wcaId, eventId, type, dateStr) {
+  let best = null;
+  for (const e of fullResultsData.entries || []) {
+    if (e.wcaId !== wcaId || e.eventId !== eventId) continue;
+    if (!e.date || e.date > dateStr) continue;
+    const v = e[type];
+    if (typeof v === 'number' && v > 0 && (best === null || v < best)) best = v;
+  }
+  return best;
+}
+
+function renderImprovement() {
+  const eventDef = rankingsData.events.find((e) => e.id === state.improvementEventId);
+  const container = document.getElementById('improvement-table');
+  if (!eventDef) return;
+  const dateA = document.getElementById('improvement-date-a').value;
+  const dateB = document.getElementById('improvement-date-b').value;
+  if (!dateA || !dateB) {
+    container.innerHTML = '<p class="empty-note">Pick both dates.</p>';
+    return;
+  }
+
+  const rows = (rankingsData.people || [])
+    .map((p) => {
+      const atA = bestAsOfDate(p.wcaId, eventDef.id, state.improvementType, dateA);
+      const atB = bestAsOfDate(p.wcaId, eventDef.id, state.improvementType, dateB);
+      const delta = atA != null && atB != null && eventDef.id !== '333mbf' ? atA - atB : null;
+      return { wcaId: p.wcaId, name: p.name, atA, atB, delta };
+    })
+    .filter((r) => r.atA != null || r.atB != null);
+
+  rows.sort((a, b) => (b.delta ?? -Infinity) - (a.delta ?? -Infinity));
+
+  renderTable(container, rows, [
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'atA', label: 'As of From date', value: (r) => (r.atA != null ? formatResultLike(r.atA, eventDef, state.improvementType === 'average') : '—') },
+    { key: 'atB', label: 'As of To date', value: (r) => (r.atB != null ? formatResultLike(r.atB, eventDef, state.improvementType === 'average') : '—') },
+    {
+      key: 'delta',
+      label: 'Improvement',
+      value: (r) => {
+        if (r.delta == null) return '—';
+        const sign = r.delta > 0 ? '\u2212' : r.delta < 0 ? '+' : '';
+        return `${sign}${formatResultLike(Math.abs(r.delta), eventDef, state.improvementType === 'average')}`;
+      },
+    },
+  ]);
+}
+
+// ---------- Home: Recent Activity ----------
+
+function renderRecentActivity() {
+  const container = document.getElementById('recent-activity-table');
+  const note = document.getElementById('recent-activity-note');
+  if (!recentActivityData) {
+    container.innerHTML = '<p class="empty-note">No data yet (needs the Update Full Result History workflow to have run).</p>';
+    return;
+  }
+  const items = recentActivityData.items || [];
+  note.textContent = `PR1/PR2/PR3 and podium finishes in the last ${recentActivityData.windowDays || 14} days.`;
+  if (items.length === 0) {
+    container.innerHTML = '<p class="empty-note">Nothing in the last two weeks.</p>';
+    return;
+  }
+  renderTable(container, items, [
+    { key: 'date', label: 'Date', value: (r) => formatDate(r.date) },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'event', label: 'Event', value: (r) => r.eventName },
+    { key: 'badges', label: 'Achievement', value: (r) => r.badges.join(', ') },
+    { key: 'comp', label: 'Competition', value: (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ') },
+  ]);
+}
+
+// ---------- Home: Profile search ----------
+
+function setupProfileSearch() {
+  const input = document.getElementById('profile-search');
+  const results = document.getElementById('profile-search-results');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    results.innerHTML = '';
+    if (q.length === 0) return;
+    const matches = Array.from(peopleByWcaId.entries())
+      .filter(([, p]) => p.name.toLowerCase().includes(q))
+      .slice(0, 8);
+    matches.forEach(([wcaId, p]) => {
+      const a = document.createElement('a');
+      a.href = '#';
+      a.className = 'search-result-item';
+      a.textContent = `${flagEmoji(p.countryIso2) ? flagEmoji(p.countryIso2) + ' ' : ''}${p.name}`;
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        input.value = '';
+        results.innerHTML = '';
+        showProfile(wcaId);
+      });
+      results.appendChild(a);
+    });
+  });
+}
+
+// ---------- CSV export ----------
+
+function tableContainerToCsv(containerId) {
+  const table = document.querySelector(`#${containerId} table`);
+  if (!table) return null;
+  const rows = Array.from(table.querySelectorAll('tr'));
+  return rows
+    .map((tr) =>
+      Array.from(tr.children)
+        .map((td) => `"${td.textContent.replace(/"/g, '""').trim()}"`)
+        .join(',')
+    )
+    .join('\n');
+}
+
+function downloadCsv(containerId, filename) {
+  const csv = tableContainerToCsv(containerId);
+  if (!csv) return;
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function setupCsvButtons() {
+  document.querySelectorAll('.csv-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      downloadCsv(btn.dataset.container, btn.dataset.filename || 'export.csv');
+    });
+  });
+}
+
+// ---------- Misc: Consistency ----------
+
+function populateConsistencyEventSelect() {
+  const select = document.getElementById('consistency-event-select');
+  if (!select) return;
+  select.innerHTML = '';
+  for (const event of rankingsData.events) {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    select.appendChild(opt);
+  }
+  state.consistencyEventId = select.value;
+  select.addEventListener('change', () => {
+    state.consistencyEventId = select.value;
+    renderConsistency();
+  });
+}
+
+function standardDeviation(values) {
+  const mean = values.reduce((a, b) => a + b, 0) / values.length;
+  const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
+  return Math.sqrt(variance);
+}
+
+function renderConsistency() {
+  const container = document.getElementById('consistency-table');
+  if (!container || !state.consistencyEventId) return;
+  const eventDef = rankingsData.events.find((e) => e.id === state.consistencyEventId);
+  const type = state.consistencyType;
+
+  const byPerson = new Map();
+  for (const e of fullResultsData.entries || []) {
+    if (e.eventId !== state.consistencyEventId) continue;
+    const v = e[type];
+    if (typeof v !== 'number' || v <= 0) continue;
+    if (!byPerson.has(e.wcaId)) byPerson.set(e.wcaId, { name: e.name, values: [] });
+    byPerson.get(e.wcaId).values.push(v);
+  }
+
+  const rows = Array.from(byPerson.entries())
+    .filter(([, d]) => d.values.length >= 3) // need a few data points for std dev to mean anything
+    .map(([wcaId, d]) => ({
+      wcaId,
+      name: d.name,
+      count: d.values.length,
+      stdDev: standardDeviation(d.values),
+    }))
+    .sort((a, b) => a.stdDev - b.stdDev);
+
+  renderTable(container, rows, [
+    { key: 'rank', label: '#', value: () => '' },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'count', label: 'Results counted', value: (r) => r.count },
+    { key: 'stdDev', label: 'Std. deviation', value: (r) => formatResultLike(Math.round(r.stdDev), eventDef, type === 'average') },
+  ]);
+  addPositionColumn('consistency-table');
 }
 
 // ---------- Tabs & subtabs ----------
@@ -1049,10 +1340,15 @@ setupToggle('streaks-type-toggle', 'type', (type) => {
   state.streaksType = type;
   renderStreaks();
 });
-setupToggle('streaks-view-toggle', 'view', (view) => {
-  state.streaksView = view;
-  renderStreaks();
+setupToggle('improvement-type-toggle', 'type', (type) => {
+  state.improvementType = type;
+  renderImprovement();
 });
+setupToggle('consistency-type-toggle', 'type', (type) => {
+  state.consistencyType = type;
+  renderConsistency();
+});
+setupCsvButtons();
 
 loadData().catch((err) => {
   console.error(err);

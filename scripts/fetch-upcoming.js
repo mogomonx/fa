@@ -15,8 +15,8 @@ const UPCOMING_CONFIG_PATH = path.join(__dirname, '..', 'config', 'upcoming-comp
 const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'upcoming.json');
 
 // How far ahead to scan. Wider = more API calls (one WCIF fetch per
-// competition found in the window).
-const SCAN_DAYS_AHEAD = 120;
+// competition found in the window). 182 days = ~6 months.
+const SCAN_DAYS_AHEAD = 182;
 
 function todayStr() {
   return new Date().toISOString().slice(0, 10);

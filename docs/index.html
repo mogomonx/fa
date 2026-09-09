@@ -23,11 +23,23 @@
     <button class="tab-btn" data-tab="overall">Sum of Ranks &amp; Kinch</button>
     <button class="tab-btn" data-tab="misc">Misc</button>
     <button class="tab-btn" data-tab="settings">Settings</button>
+    <button class="tab-btn" data-tab="improvement">Improvement</button>
   </nav>
 
   <main class="container">
 
     <section id="tab-home" class="tab-panel active">
+      <div class="panel-controls">
+        <input type="text" id="profile-search" placeholder="Jump to a profile by name..." autocomplete="off">
+      </div>
+      <div id="profile-search-results" class="search-results"></div>
+
+      <div class="board" style="margin-bottom:1.5rem;">
+        <h2>Recent activity</h2>
+        <p class="board-note" id="recent-activity-note">PR1/PR2/PR3 and podium finishes in the last 2 weeks.</p>
+        <div id="recent-activity-table"></div>
+      </div>
+
       <p class="board-note">A directory of what's here. (More will land on this page later.)</p>
       <div class="home-links" id="home-links">
         <a href="#" class="home-link" data-tab="records"><strong>FA Records</strong><span>The group's current best single/average per event, and who holds it.</span></a>
@@ -37,6 +49,7 @@
         <a href="#" class="home-link" data-tab="overall"><strong>Sum of Ranks &amp; Kinch</strong><span>The two combined ranking systems.</span></a>
         <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, FARs set per person, streaks, and other odds and ends.</span></a>
         <a href="#" class="home-link" data-tab="settings"><strong>Settings</strong><span>Customise the site's colours.</span></a>
+        <a href="#" class="home-link" data-tab="improvement"><strong>Improvement</strong><span>See how much someone's improved between two dates.</span></a>
       </div>
     </section>
 
@@ -52,6 +65,7 @@
           <button class="toggle-btn active" data-type="single">Single</button>
           <button class="toggle-btn" data-type="average">Average</button>
         </div>
+        <button class="csv-btn" data-container="event-table" data-filename="event-rankings.csv">Export CSV</button>
       </div>
       <div id="event-table"></div>
     </section>
@@ -64,6 +78,7 @@
           <button class="toggle-btn active" data-type="single">Single</button>
           <button class="toggle-btn" data-type="average">Average</button>
         </div>
+        <button class="csv-btn" data-container="individual-results-table" data-filename="individual-results.csv">Export CSV</button>
       </div>
       <div id="individual-results-table"></div>
     </section>
@@ -92,6 +107,7 @@
             <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
             <button class="toggle-btn" data-view="detailed">Detailed table</button>
           </div>
+          <button class="csv-btn" data-container="sum-of-ranks-table" data-filename="sum-of-ranks.csv">Export CSV</button>
         </div>
         <p class="board-note">Lower total is better. All 17 events count; an event nobody has a result for ties everyone at 1 (shown in red in the detailed table). Gold/silver/bronze = 1st/2nd/3rd.</p>
         <div id="sor-leaderboard-view">
@@ -122,6 +138,7 @@
         <button class="subtab-btn" data-subtab="age">Record Age</button>
         <button class="subtab-btn" data-subtab="streaks">PR Streaks</button>
         <button class="subtab-btn" data-subtab="upcoming">Upcoming Competitions</button>
+        <button class="subtab-btn" data-subtab="consistency">Consistency</button>
       </div>
 
       <div id="subtab-top100" class="subtab-panel active">
@@ -173,29 +190,43 @@
 
       <div id="subtab-streaks" class="subtab-panel">
         <div class="panel-controls">
-          <div class="toggle" id="streaks-mode-toggle">
-            <button class="toggle-btn active" data-mode="current">Current</button>
-            <button class="toggle-btn" data-mode="best">Best ever</button>
-          </div>
+          <select id="streaks-event-select"></select>
           <div class="toggle" id="streaks-type-toggle">
             <button class="toggle-btn active" data-type="single">Single</button>
             <button class="toggle-btn" data-type="average">Average</button>
           </div>
-          <div class="toggle" id="streaks-view-toggle">
-            <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
-            <button class="toggle-btn" data-view="detailed">Detailed table</button>
+          <div class="toggle" id="streaks-mode-toggle">
+            <button class="toggle-btn active" data-mode="current">Current</button>
+            <button class="toggle-btn" data-mode="best">Best ever</button>
           </div>
         </div>
-        <p class="board-note">Consecutive rounds in a row where each result was a new PR for that event.</p>
-        <div id="streaks-leaderboard-view">
-          <div id="streaks-table"></div>
+        <div class="streaks-layout">
+          <div class="board streaks-main">
+            <p class="board-note">Consecutive competitions in a row where each was a new PR for this event.</p>
+            <div id="streaks-list"></div>
+          </div>
+          <div class="board streaks-side">
+            <p class="board-note">Same, but counting consecutive rounds instead of competitions.</p>
+            <div id="streaks-side-list"></div>
+          </div>
         </div>
-        <div id="streaks-detailed-view" class="scroll-table" style="display:none;"></div>
       </div>
 
       <div id="subtab-upcoming" class="subtab-panel">
         <p class="board-note" id="upcoming-note"></p>
         <div id="upcoming-table"></div>
+      </div>
+
+      <div id="subtab-consistency" class="subtab-panel">
+        <div class="panel-controls">
+          <select id="consistency-event-select"></select>
+          <div class="toggle" id="consistency-type-toggle">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+        </div>
+        <p class="board-note">Standard deviation of all recorded results for this event — lower means more consistent. Needs at least 3 results to count.</p>
+        <div id="consistency-table"></div>
       </div>
     </section>
 
@@ -204,10 +235,34 @@
       <div class="settings-grid" id="settings-grid">
         <label>Background <input type="color" id="setting-bg" data-var="--bg"></label>
         <label>Panel <input type="color" id="setting-panel" data-var="--panel"></label>
+        <label>Panel border <input type="color" id="setting-panel-border" data-var="--panel-border"></label>
         <label>Text <input type="color" id="setting-text" data-var="--text"></label>
+        <label>Dim text <input type="color" id="setting-text-dim" data-var="--text-dim"></label>
         <label>Accent <input type="color" id="setting-accent" data-var="--accent"></label>
+        <label>Link colour <input type="color" id="setting-link" data-var="--link"></label>
+        <label>Gold <input type="color" id="setting-gold" data-var="--gold"></label>
+        <label>Silver <input type="color" id="setting-silver" data-var="--silver"></label>
+        <label>Bronze <input type="color" id="setting-bronze" data-var="--bronze"></label>
       </div>
       <button class="back-link" id="settings-reset" style="margin-top:1rem;">Reset to default</button>
+    </section>
+
+    <section id="tab-improvement" class="tab-panel">
+      <p class="board-note">Compares each person's best result as of two dates. Needs the Update Full Result History workflow to have run.</p>
+      <div class="panel-controls">
+        <select id="improvement-event-select"></select>
+        <div class="toggle" id="improvement-type-toggle">
+          <button class="toggle-btn active" data-type="single">Single</button>
+          <button class="toggle-btn" data-type="average">Average</button>
+        </div>
+      </div>
+      <div class="panel-controls">
+        <label>From <input type="date" id="improvement-date-a"></label>
+        <label>To <input type="date" id="improvement-date-b"></label>
+        <button class="csv-btn" data-container="improvement-table" data-filename="improvement.csv">Export CSV</button>
+      </div>
+      <p class="board-note">Sorted most-improved first.</p>
+      <div id="improvement-table"></div>
     </section>
 
     <section id="tab-profile" class="tab-panel">

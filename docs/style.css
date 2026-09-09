@@ -1,14 +1,19 @@
 :root {
   --bg: #17181c;
   --panel: #1f2126;
-  --panel-border: #c9f6ff;
+  --panel-border: #2c2f36;
   --text: #e9eaec;
-  --text-dim: #CCCCCC;
-  --accent: #c9f6ff;
-  --accent-dim: #00497a;
+  --text-dim: #9a9ea7;
+  --accent: #f2a83c;
+  --accent-dim: #8a6a35;
   --gold: #e0b84a;
   --silver: #b9c0c9;
   --bronze: #c98a52;
+  --link: #7fb3f5;
+}
+
+a {
+  color: var(--link);
 }
 
 * { box-sizing: border-box; }
@@ -218,6 +223,82 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 
 .subtab-panel { display: none; }
 .subtab-panel.active { display: block; }
+
+.streaks-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 700px) {
+  .streaks-layout { grid-template-columns: 1fr; }
+}
+
+.streak-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--panel-border);
+  font-size: 0.9rem;
+}
+
+.streak-row:last-child { border-bottom: none; }
+
+.streak-row .streak-count {
+  font-weight: 700;
+}
+
+.streak-row .streak-range {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  display: block;
+}
+
+#profile-search {
+  width: 100%;
+  max-width: 400px;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.search-results {
+  max-width: 400px;
+  margin-bottom: 1rem;
+}
+
+.search-results:empty { margin-bottom: 0; }
+
+.search-result-item {
+  display: block;
+  padding: 0.5rem 0.9rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-top: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.search-result-item:hover { color: var(--accent); }
+.search-result-item:first-child { border-top: 1px solid var(--panel-border); border-radius: 0 0 0 0; }
+.search-result-item:last-child { border-radius: 0 0 8px 8px; }
+
+.csv-btn {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: var(--text-dim);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.csv-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
 
 .settings-grid {
   display: grid;
