@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T00:17:47.872Z",
+  "generatedAt": "2026-09-09T00:48:39.559Z",
   "competitions": [
     {
       "id": "FTOpenCranbourne2027",
@@ -80,24 +80,6 @@
             "clock",
             "minx",
             "sq1"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "PuzzlingPakenhamSaturday2026",
-      "name": "Puzzling Pakenham Saturday 2026",
-      "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/PuzzlingPakenhamSaturday2026",
-      "attendees": [
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "eventIds": [
-            "222",
-            "333",
-            "skewb"
           ]
         }
       ]
