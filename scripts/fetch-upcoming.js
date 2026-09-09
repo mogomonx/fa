@@ -1,11 +1,9 @@
-// There's no public API to list "every upcoming competition a specific
-// person is registered for" -- that only exists via /api/v0/me, which
-// needs THAT person's own OAuth login. The only public way to check
-// registrations is per-competition, via that competition's public WCIF.
-//
-// So: maintain the competition IDs you know your group is attending in
-// config/upcoming-competitions.json, and this script checks each one's
-// public WCIF for our group's WCA IDs, writing docs/data/upcoming.json.
+// Automatically scans every upcoming WCA competition (within a window) for
+// our group's WCA IDs among the registrants, using each competition's
+// public WCIF. This replaces needing to manually list competition IDs --
+// though config/upcoming-competitions.json is still checked too, as a
+// fallback for competitions that don't use the WCA's internal registration
+// system (which can't be found by scanning, per the WCA's own docs).
 //
 // Run with: node scripts/fetch-upcoming.js
 
@@ -16,12 +14,47 @@ const MEMBERS_PATH = path.join(__dirname, '..', 'config', 'members.json');
 const UPCOMING_CONFIG_PATH = path.join(__dirname, '..', 'config', 'upcoming-competitions.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'upcoming.json');
 
+// How far ahead to scan. Wider = more API calls (one WCIF fetch per
+// competition found in the window).
+const SCAN_DAYS_AHEAD = 120;
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function futureDateStr(days) {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
 async function fetchJson(url) {
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`${url} returned ${res.status}`);
   }
   return res.json();
+}
+
+// Paginates through /api/v0/competitions for the given date window.
+async function listUpcomingCompetitionIds() {
+  const start = todayStr();
+  const end = futureDateStr(SCAN_DAYS_AHEAD);
+  const ids = [];
+  let page = 1;
+  // Safety cap so a pagination bug can't loop forever.
+  while (page <= 40) {
+    const url = `https://www.worldcubeassociation.org/api/v0/competitions?start=${start}&end=${end}&page=${page}`;
+    const batch = await fetchJson(url);
+    if (!Array.isArray(batch) || batch.length === 0) break;
+    for (const c of batch) {
+      if (c.id) ids.push(c.id);
+    }
+    if (batch.length < 25) break; // last page
+    page += 1;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+  }
+  return ids;
 }
 
 async function fetchCompetition(competitionId, wcaIds, nameOverrides) {
@@ -31,8 +64,6 @@ async function fetchCompetition(competitionId, wcaIds, nameOverrides) {
   const persons = wcif.persons || [];
   const attendees = [];
   for (const person of persons) {
-    // Only actually-registered people (registrantId is null for
-    // non-competing roles like organizers who aren't also competing).
     if (person.registrantId == null) continue;
     const wcaId = person.wcaId || person.wcaUserId;
     if (!wcaIds.has(wcaId)) continue;
@@ -59,18 +90,32 @@ async function main() {
   const wcaIds = new Set(members.map((m) => m.wcaId));
   const nameOverrides = new Map(members.map((m) => [m.wcaId, m.displayName]));
 
-  const { competitionIds } = JSON.parse(fs.readFileSync(UPCOMING_CONFIG_PATH, 'utf8'));
+  console.log(`Scanning upcoming competitions in the next ${SCAN_DAYS_AHEAD} days...`);
+  const scannedIds = await listUpcomingCompetitionIds();
+  console.log(`Found ${scannedIds.length} upcoming competitions to check.`);
+
+  let manualIds = [];
+  try {
+    manualIds = JSON.parse(fs.readFileSync(UPCOMING_CONFIG_PATH, 'utf8')).competitionIds || [];
+  } catch (e) {
+    // no manual list -- fine, the scan covers the normal case
+  }
+
+  const allIds = [...new Set([...scannedIds, ...manualIds])];
 
   const competitions = [];
-  for (const id of competitionIds) {
-    console.log(`Fetching ${id}...`);
+  for (let i = 0; i < allIds.length; i++) {
+    const id = allIds[i];
+    console.log(`Checking ${id} (${i + 1}/${allIds.length})...`);
     try {
       const comp = await fetchCompetition(id, wcaIds, nameOverrides);
-      competitions.push(comp);
+      if (comp.attendees.length > 0) {
+        competitions.push(comp);
+      }
     } catch (err) {
-      console.error(`  Failed to fetch ${id}: ${err.message}`);
+      console.error(`  Failed to check ${id}: ${err.message}`);
     }
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
 
   competitions.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
@@ -80,7 +125,7 @@ async function main() {
     OUTPUT_PATH,
     JSON.stringify({ generatedAt: new Date().toISOString(), competitions }, null, 2)
   );
-  console.log(`Wrote ${OUTPUT_PATH} (${competitions.length} competitions)`);
+  console.log(`Wrote ${OUTPUT_PATH} (${competitions.length} competitions with group attendees)`);
 }
 
 main().catch((err) => {

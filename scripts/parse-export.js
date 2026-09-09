@@ -119,6 +119,7 @@ async function main() {
       eventId,
       competitionId: row.competition_id || row.competitionId,
       round: row.round_type_id || row.roundTypeId,
+      pos: toNum(row.pos),
       single: toNum(row.best),
       average: toNum(row.average),
       attempts: null,
@@ -158,6 +159,7 @@ async function main() {
     competitionName: competitionNames.get(r.competitionId)?.name || r.competitionId,
     date: competitionNames.get(r.competitionId)?.date || null,
     round: r.round,
+    pos: r.pos,
     single: r.single,
     average: r.average,
     // Attempts arrays can have gaps if a round had fewer than 5 attempts

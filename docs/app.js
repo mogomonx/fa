@@ -2,6 +2,7 @@ let rankingsData = null;
 let individualData = null;
 let historicalData = null;
 let fullResultsData = null;
+let streaksData = null;
 let peopleByWcaId = new Map();
 
 const state = {
@@ -19,22 +20,27 @@ const state = {
   historyEventId: null,
   ageMode: 'far',
   ageEventId: '',
+  streaksMode: 'current',
+  streaksType: 'single',
+  streaksView: 'leaderboard',
   previousTab: 'home',
 };
 
 async function loadData() {
-  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes] = await Promise.all([
+  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes, streaksRes] = await Promise.all([
     fetch('data/rankings.json', { cache: 'no-store' }),
     fetch('data/individual-rankings.json', { cache: 'no-store' }),
     fetch('data/historical-records.json', { cache: 'no-store' }),
     fetch('data/upcoming.json', { cache: 'no-store' }).catch(() => null),
     fetch('data/full-results.json', { cache: 'no-store' }).catch(() => null),
+    fetch('data/streaks.json', { cache: 'no-store' }).catch(() => null),
   ]);
   rankingsData = await rankingsRes.json();
   individualData = await individualRes.json();
   historicalData = await historicalRes.json();
   const upcomingData = upcomingRes && upcomingRes.ok ? await upcomingRes.json() : null;
   fullResultsData = fullResultsRes && fullResultsRes.ok ? await fullResultsRes.json() : { entries: [] };
+  streaksData = streaksRes && streaksRes.ok ? await streaksRes.json() : null;
 
   for (const row of rankingsData.people || []) {
     peopleByWcaId.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
@@ -59,6 +65,7 @@ async function loadData() {
   renderHistory();
   renderFarCounts();
   renderAge();
+  renderStreaks();
   renderUpcoming(upcomingData);
 }
 
@@ -548,6 +555,35 @@ function renderAge() {
   ]);
 }
 
+// ---------- Misc: PR Streaks ----------
+
+function renderStreaks() {
+  if (!streaksData) return;
+  document.getElementById('streaks-leaderboard-view').style.display =
+    state.streaksView === 'leaderboard' ? '' : 'none';
+  document.getElementById('streaks-detailed-view').style.display =
+    state.streaksView === 'detailed' ? '' : 'none';
+
+  const rows = streaksData[state.streaksMode][state.streaksType];
+  if (state.streaksView === 'leaderboard') {
+    renderTable(document.getElementById('streaks-table'), rows, [
+      { key: 'rank', label: '#', value: () => '' },
+      { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+      { key: 'total', label: 'Total (summed across events)', value: (r) => r.total },
+    ]);
+    addPositionColumn('streaks-table');
+  } else {
+    renderDetailedTable(
+      document.getElementById('streaks-detailed-view'),
+      rows,
+      'total',
+      'Total',
+      (v) => (v == null ? 0 : v),
+      (v) => (v == null ? 0 : v)
+    );
+  }
+}
+
 // ---------- Misc: Upcoming competitions ----------
 
 function renderUpcoming(upcomingData) {
@@ -589,6 +625,12 @@ function showProfile(wcaId) {
 
 function statBox(label, value) {
   return `<div class="profile-stat"><div class="stat-value">${value}</div><div class="stat-label">${label}</div></div>`;
+}
+
+function officialRanksCell(ranks) {
+  if (!ranks) return '<span class="empty-note">—</span>';
+  const parts = [ranks.world, ranks.continent, ranks.country].map((v) => (v == null ? '—' : v));
+  return `<span class="solves-cell">${parts.join(' / ')}</span>`;
 }
 
 function renderProfile(wcaId) {
@@ -640,6 +682,8 @@ function renderProfile(wcaId) {
         <td>${s ? `${s.display} (#${s.rank})` : '—'}</td>
         <td>${event.hasAverage ? (a ? `${a.display} (#${a.rank})` : '—') : 'N/A'}</td>
         <td>${kinchComponent ? `<span style="color:${kinchColor(kinchComponent.score)}">${kinchComponent.score.toFixed(2)}</span><span class="kinch-source">${kinchComponent.source ? kinchComponent.source[0] : ''}</span>` : '—'}</td>
+        <td>${officialRanksCell(s?.officialRanks)}</td>
+        <td>${officialRanksCell(a?.officialRanks)}</td>
       </tr>
     `)
     .join('');
@@ -681,8 +725,8 @@ function renderProfile(wcaId) {
     ${currentRecords.length ? `<p class="board-note">Currently holds the FA Record in: ${currentRecords.join(', ')}.</p>` : ''}
     <div class="scroll-table">
       <table>
-        <thead><tr><th class="name-header">Event</th><th>Single</th><th>Average</th><th>Kinch</th></tr></thead>
-        <tbody>${eventRowsHtml || '<tr><td colspan="4" class="empty-note">No results yet.</td></tr>'}</tbody>
+        <thead><tr><th class="name-header">Event</th><th>Single</th><th>Average</th><th>Kinch</th><th>World / Cont. / Nat. (Single)</th><th>World / Cont. / Nat. (Average)</th></tr></thead>
+        <tbody>${eventRowsHtml || '<tr><td colspan="6" class="empty-note">No results yet.</td></tr>'}</tbody>
       </table>
     </div>
 
@@ -737,13 +781,14 @@ function renderProfileResultsForEvent(wcaId, eventId) {
         <h3 style="margin:0 0 0.5rem;">${g.competitionName}<span class="board-note" style="display:inline; margin-left:0.5rem;">${g.date || ''}</span></h3>
         <div class="scroll-table">
           <table>
-            <thead><tr><th>Round</th><th>Single</th><th>Average</th><th>Solves</th></tr></thead>
+            <thead><tr><th>Round</th><th>Placement</th><th>Single</th><th>Average</th><th>Solves</th></tr></thead>
             <tbody>
               ${g.rows
                 .map(
                   (r) => `
                 <tr>
                   <td>${roundLabelFallback(r.round)}</td>
+                  <td>${r.pos ? `${r.pos}${placementSuffix(r.pos)}` : '—'}</td>
                   <td>${formatResultLike(r.single, eventDef, false)}</td>
                   <td>${formatResultLike(r.average, eventDef, true)}</td>
                   <td>${solvesCellClient(r.attempts, eventDef)}</td>
@@ -826,6 +871,16 @@ function roundLabelFallback(round) {
   return map[round] || round || '—';
 }
 
+function placementSuffix(n) {
+  if (n % 100 >= 11 && n % 100 <= 13) return 'th';
+  switch (n % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+}
+
 // ---------- Tabs & subtabs ----------
 
 function showPanel(tabName) {
@@ -891,7 +946,56 @@ function setupToggle(id, attr, onChange) {
   });
 }
 
+// ---------- Settings (colour customisation) ----------
+
+const SETTINGS_STORAGE_KEY = 'fa-site-colours';
+
+function applyStoredSettings() {
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY) || '{}');
+  } catch (e) {
+    saved = {};
+  }
+  document.querySelectorAll('#settings-grid input[type="color"]').forEach((input) => {
+    const cssVar = input.dataset.var;
+    const computed = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+    const value = saved[cssVar] || computed || '#000000';
+    input.value = value;
+    if (saved[cssVar]) {
+      document.documentElement.style.setProperty(cssVar, saved[cssVar]);
+    }
+  });
+}
+
+function setupSettings() {
+  document.querySelectorAll('#settings-grid input[type="color"]').forEach((input) => {
+    input.addEventListener('input', () => {
+      const cssVar = input.dataset.var;
+      document.documentElement.style.setProperty(cssVar, input.value);
+      let saved;
+      try {
+        saved = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY) || '{}');
+      } catch (e) {
+        saved = {};
+      }
+      saved[cssVar] = input.value;
+      localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(saved));
+    });
+  });
+
+  document.getElementById('settings-reset').addEventListener('click', () => {
+    localStorage.removeItem(SETTINGS_STORAGE_KEY);
+    document.querySelectorAll('#settings-grid input[type="color"]').forEach((input) => {
+      document.documentElement.style.removeProperty(input.dataset.var);
+    });
+    applyStoredSettings();
+  });
+}
+
 setupTabs();
+setupSettings();
+applyStoredSettings();
 setupHomeLinks();
 setupNameLinkDelegation();
 setupSubtabs('overall-subtabs');
@@ -936,6 +1040,18 @@ setupToggle('far-view-toggle', 'view', (view) => {
 setupToggle('age-mode-toggle', 'mode', (mode) => {
   state.ageMode = mode;
   renderAge();
+});
+setupToggle('streaks-mode-toggle', 'mode', (mode) => {
+  state.streaksMode = mode;
+  renderStreaks();
+});
+setupToggle('streaks-type-toggle', 'type', (type) => {
+  state.streaksType = type;
+  renderStreaks();
+});
+setupToggle('streaks-view-toggle', 'view', (view) => {
+  state.streaksView = view;
+  renderStreaks();
 });
 
 loadData().catch((err) => {

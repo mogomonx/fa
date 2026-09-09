@@ -44,6 +44,7 @@ function rankEvent(people, event, type) {
       rank: place,
       value,
       display: formatResult(value, event, type === 'average'),
+      officialRanks: p.events[event.id]?.[type === 'average' ? 'averageRanks' : 'singleRanks'] || null,
     });
     rankByWcaId[p.wcaId] = place;
   });

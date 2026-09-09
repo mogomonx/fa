@@ -219,6 +219,30 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 .subtab-panel { display: none; }
 .subtab-panel.active { display: block; }
 
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.settings-grid label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+}
+
+.settings-grid input[type="color"] {
+  width: 2.5rem;
+  height: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .home-links {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));

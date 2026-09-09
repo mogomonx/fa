@@ -8,71 +8,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -83,71 +117,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -158,71 +226,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -233,71 +335,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -308,71 +444,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -383,71 +553,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -458,71 +662,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -533,71 +771,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -608,71 +880,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -683,71 +989,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -758,71 +1098,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -833,71 +1207,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -908,71 +1316,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -983,71 +1425,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -1058,71 +1534,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     },
@@ -1133,71 +1643,105 @@
       "events": {
         "222": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "666": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "777": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333fm": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333oh": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "clock": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "minx": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "pyram": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "skewb": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "sq1": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "444bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "555bf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         },
         "333mbf": {
           "single": null,
-          "average": null
+          "average": null,
+          "singleRanks": null,
+          "averageRanks": null
         }
       }
     }

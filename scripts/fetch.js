@@ -44,6 +44,12 @@ async function fetchPerson(wcaId, displayNameOverride) {
     events[eventId] = {
       single: rec.single?.best ?? null,
       average: rec.average?.best ?? null,
+      singleRanks: rec.single
+        ? { world: rec.single.world_rank ?? null, continent: rec.single.continent_rank ?? null, country: rec.single.country_rank ?? null }
+        : null,
+      averageRanks: rec.average
+        ? { world: rec.average.world_rank ?? null, continent: rec.average.continent_rank ?? null, country: rec.average.country_rank ?? null }
+        : null,
     };
   }
 

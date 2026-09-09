@@ -22,6 +22,7 @@
     <button class="tab-btn" data-tab="history">Historical Records</button>
     <button class="tab-btn" data-tab="overall">Sum of Ranks &amp; Kinch</button>
     <button class="tab-btn" data-tab="misc">Misc</button>
+    <button class="tab-btn" data-tab="settings">Settings</button>
   </nav>
 
   <main class="container">
@@ -34,7 +35,8 @@
         <a href="#" class="home-link" data-tab="individual"><strong>Individual Results</strong><span>Every result anyone's ever recorded, not just personal bests.</span></a>
         <a href="#" class="home-link" data-tab="history"><strong>Historical Records</strong><span>Every FA Record ever set, in order, by event.</span></a>
         <a href="#" class="home-link" data-tab="overall"><strong>Sum of Ranks &amp; Kinch</strong><span>The two combined ranking systems.</span></a>
-        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, FARs set per person, and other odds and ends.</span></a>
+        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, FARs set per person, streaks, and other odds and ends.</span></a>
+        <a href="#" class="home-link" data-tab="settings"><strong>Settings</strong><span>Customise the site's colours.</span></a>
       </div>
     </section>
 
@@ -118,6 +120,7 @@
         <button class="subtab-btn active" data-subtab="top100">Top 100</button>
         <button class="subtab-btn" data-subtab="farcounts">FARs Set</button>
         <button class="subtab-btn" data-subtab="age">Record Age</button>
+        <button class="subtab-btn" data-subtab="streaks">PR Streaks</button>
         <button class="subtab-btn" data-subtab="upcoming">Upcoming Competitions</button>
       </div>
 
@@ -168,10 +171,43 @@
         <div id="age-table"></div>
       </div>
 
+      <div id="subtab-streaks" class="subtab-panel">
+        <div class="panel-controls">
+          <div class="toggle" id="streaks-mode-toggle">
+            <button class="toggle-btn active" data-mode="current">Current</button>
+            <button class="toggle-btn" data-mode="best">Best ever</button>
+          </div>
+          <div class="toggle" id="streaks-type-toggle">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+          <div class="toggle" id="streaks-view-toggle">
+            <button class="toggle-btn active" data-view="leaderboard">Leaderboard</button>
+            <button class="toggle-btn" data-view="detailed">Detailed table</button>
+          </div>
+        </div>
+        <p class="board-note">Consecutive rounds in a row where each result was a new PR for that event.</p>
+        <div id="streaks-leaderboard-view">
+          <div id="streaks-table"></div>
+        </div>
+        <div id="streaks-detailed-view" class="scroll-table" style="display:none;"></div>
+      </div>
+
       <div id="subtab-upcoming" class="subtab-panel">
         <p class="board-note" id="upcoming-note"></p>
         <div id="upcoming-table"></div>
       </div>
+    </section>
+
+    <section id="tab-settings" class="tab-panel">
+      <p class="board-note">Colours are saved in your browser, so they're personal to this device.</p>
+      <div class="settings-grid" id="settings-grid">
+        <label>Background <input type="color" id="setting-bg" data-var="--bg"></label>
+        <label>Panel <input type="color" id="setting-panel" data-var="--panel"></label>
+        <label>Text <input type="color" id="setting-text" data-var="--text"></label>
+        <label>Accent <input type="color" id="setting-accent" data-var="--accent"></label>
+      </div>
+      <button class="back-link" id="settings-reset" style="margin-top:1rem;">Reset to default</button>
     </section>
 
     <section id="tab-profile" class="tab-panel">

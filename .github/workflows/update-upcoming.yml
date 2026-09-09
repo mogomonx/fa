@@ -1,18 +1,18 @@
-name: Update Personal Bests
+name: Update Upcoming Competitions
 
-# Cheap and fast (a handful of small API calls) -- keeps the FA Records
-# page, Event Rankings, and Sum of Ranks / Kinch fresh daily.
+# Separate from Personal Bests since this scans every upcoming WCA
+# competition in a ~4 month window (one WCIF fetch per competition found),
+# which is meaningfully heavier than the other daily jobs.
 on:
   schedule:
-    - cron: '0 6 * * *'   # 06:00 UTC every day
+    - cron: '0 7 * * *'   # 07:00 UTC every day
   workflow_dispatch: {}
   push:
     branches: [main]
     paths:
       - 'config/members.json'
-      - 'scripts/fetch.js'
-      - 'scripts/build-rankings.js'
-      - 'scripts/lib/**'
+      - 'config/upcoming-competitions.json'
+      - 'scripts/fetch-upcoming.js'
 
 permissions:
   contents: write
@@ -29,17 +29,14 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fetch personal bests from the WCA API
-        run: node scripts/fetch.js
-
-      - name: Build rankings
-        run: node scripts/build-rankings.js
+      - name: Scan upcoming competitions for group attendance
+        run: node scripts/fetch-upcoming.js
 
       - name: Commit updated data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs/data/results.json docs/data/rankings.json
-          git diff --staged --quiet || git commit -m 'Update personal bests'
+          git add docs/data/upcoming.json
+          git diff --staged --quiet || git commit -m 'Update upcoming competitions'
           git pull --rebase origin main
           git push
