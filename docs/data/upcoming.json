@@ -1,4 +1,106 @@
 {
-  "generatedAt": "2026-09-08T11:33:29.450Z",
-  "competitions": []
+  "generatedAt": "2026-09-09T00:17:47.872Z",
+  "competitions": [
+    {
+      "id": "FTOpenCranbourne2027",
+      "name": "FTOpen Cranbourne 2027",
+      "date": null,
+      "city": "Cranbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/FTOpenCranbourne2027",
+      "attendees": [
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "333fm",
+            "fto"
+          ]
+        },
+        {
+          "wcaId": "2023BENT02",
+          "name": "Hamish Bentley",
+          "eventIds": [
+            "333fm",
+            "fto"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FTOintheMadisonNewYear2027",
+      "name": "FTO in the Madison New Year 2027",
+      "date": null,
+      "city": "Madison, Wisconsin",
+      "url": "https://www.worldcubeassociation.org/competitions/FTOintheMadisonNewYear2027",
+      "attendees": [
+        {
+          "wcaId": "2018CROU02",
+          "name": "Sylvia Crouch",
+          "eventIds": [
+            "333",
+            "333bf",
+            "666",
+            "clock",
+            "fto",
+            "skewb"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RichmondClockClash2026",
+      "name": "Richmond Clock Clash 2026",
+      "date": null,
+      "city": "Melbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/RichmondClockClash2026",
+      "attendees": [
+        {
+          "wcaId": "2022SHAR23",
+          "name": "Connor Sharpe",
+          "eventIds": [
+            "333bf",
+            "333mbf",
+            "444bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "333bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PuzzlingPakenhamSaturday2026",
+      "name": "Puzzling Pakenham Saturday 2026",
+      "date": null,
+      "city": "Melbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/PuzzlingPakenhamSaturday2026",
+      "attendees": [
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "222",
+            "333",
+            "skewb"
+          ]
+        }
+      ]
+    }
+  ]
 }
