@@ -1,9 +1,9 @@
 {
-  "fetchedAt": "2026-09-09T06:12:19.966Z",
+  "fetchedAt": "2026-09-09T11:22:18.798Z",
   "people": [
     {
       "wcaId": "2022GART03",
-      "name": "Nova Garthon",
+      "name": "Nate Garthon",
       "countryIso2": "AU",
       "events": {
         "222": {
@@ -57,9 +57,9 @@
             "country": 191
           },
           "averageRanks": {
-            "world": 4295,
-            "continent": 186,
-            "country": 144
+            "world": 4296,
+            "continent": 187,
+            "country": 145
           }
         },
         "666": {
@@ -674,7 +674,7 @@
     },
     {
       "wcaId": "2022FETH01",
-      "name": "Miles Skye Fetherston",
+      "name": "Miles Fetherston",
       "countryIso2": "AU",
       "events": {
         "222": {
@@ -728,9 +728,9 @@
             "country": 131
           },
           "averageRanks": {
-            "world": 3794,
-            "continent": 162,
-            "country": 122
+            "world": 3795,
+            "continent": 163,
+            "country": 123
           }
         },
         "666": {
@@ -1317,7 +1317,7 @@
     },
     {
       "wcaId": "2023ARCI02",
-      "name": "Nicole Arcilla",
+      "name": "Gavriel Johann Arcilla",
       "countryIso2": "PH",
       "events": {
         "222": {
@@ -1458,12 +1458,12 @@
           "single": 1651,
           "average": 2212,
           "singleRanks": {
-            "world": 111966,
+            "world": 111969,
             "continent": 29700,
             "country": 2423
           },
           "averageRanks": {
-            "world": 107451,
+            "world": 107454,
             "continent": 28653,
             "country": 2347
           }
@@ -1801,9 +1801,9 @@
             "country": 143
           },
           "averageRanks": {
-            "world": 4115,
-            "continent": 178,
-            "country": 137
+            "world": 4116,
+            "continent": 179,
+            "country": 138
           }
         },
         "666": {
@@ -3037,7 +3037,7 @@
     },
     {
       "wcaId": "2023SCOT04",
-      "name": "Ash Scott",
+      "name": "Asaph Scott",
       "countryIso2": "AU",
       "events": {
         "222": {
@@ -3367,12 +3367,12 @@
           "single": 866,
           "average": 1264,
           "singleRanks": {
-            "world": 54237,
+            "world": 54238,
             "continent": 15439,
             "country": 12036
           },
           "averageRanks": {
-            "world": 54278,
+            "world": 54279,
             "continent": 15413,
             "country": 11984
           }
