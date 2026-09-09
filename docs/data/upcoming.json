@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T00:48:39.559Z",
+  "generatedAt": "2026-09-09T07:14:01.412Z",
   "competitions": [
     {
       "id": "FTOpenCranbourne2027",
@@ -48,37 +48,94 @@
       ]
     },
     {
-      "id": "RichmondClockClash2026",
-      "name": "Richmond Clock Clash 2026",
+      "id": "TakeYourTimeBrisbane2026",
+      "name": "Take Your Time Brisbane 2026",
       "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/RichmondClockClash2026",
+      "city": "Brisbane, Queensland",
+      "url": "https://www.worldcubeassociation.org/competitions/TakeYourTimeBrisbane2026",
       "attendees": [
         {
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "eventIds": [
-            "333bf",
-            "333mbf",
-            "444bf",
+            "333oh",
+            "444",
             "555",
             "666",
             "777",
             "clock",
-            "minx",
-            "sq1"
+            "minx"
           ]
         },
         {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
+          "wcaId": "2021LUAA01",
+          "name": "Aaron Lu",
           "eventIds": [
-            "333bf",
+            "333oh",
+            "444",
             "555",
             "666",
             "777",
             "clock",
-            "minx",
+            "minx"
+          ]
+        },
+        {
+          "wcaId": "2022JONE11",
+          "name": "Kyle Jones",
+          "eventIds": [
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx"
+          ]
+        },
+        {
+          "wcaId": "2022BURN09",
+          "name": "Joseph Burnett",
+          "eventIds": [
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx"
+          ]
+        },
+        {
+          "wcaId": "2019THEO03",
+          "name": "Connor Theodore",
+          "eventIds": [
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LethbridgeFavourites2026",
+      "name": "Lethbridge Favourites 2026",
+      "date": null,
+      "city": "Lethbridge, Alberta",
+      "url": "https://www.worldcubeassociation.org/competitions/LethbridgeFavourites2026",
+      "attendees": [
+        {
+          "wcaId": "2022HRDL01",
+          "name": "Mazar Hrdlicka",
+          "eventIds": [
+            "222",
+            "333",
+            "clock",
+            "pyram",
             "sq1"
           ]
         }
