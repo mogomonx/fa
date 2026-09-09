@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-09T00:49:11.689Z",
+  "fetchedAt": "2026-09-09T06:12:19.966Z",
   "people": [
     {
       "wcaId": "2022GART03",
@@ -24,12 +24,12 @@
           "single": 846,
           "average": 1073,
           "singleRanks": {
-            "world": 10406,
+            "world": 10407,
             "continent": 453,
             "country": 347
           },
           "averageRanks": {
-            "world": 12217,
+            "world": 12218,
             "continent": 502,
             "country": 393
           }
@@ -52,7 +52,7 @@
           "single": 7338,
           "average": 7615,
           "singleRanks": {
-            "world": 5753,
+            "world": 5754,
             "continent": 245,
             "country": 191
           },
@@ -71,7 +71,7 @@
             "country": 176
           },
           "averageRanks": {
-            "world": 4681,
+            "world": 4682,
             "continent": 206,
             "country": 158
           }
@@ -94,12 +94,12 @@
           "single": 6679,
           "average": 9860,
           "singleRanks": {
-            "world": 1853,
+            "world": 1855,
             "continent": 98,
             "country": 75
           },
           "averageRanks": {
-            "world": 1526,
+            "world": 1527,
             "continent": 83,
             "country": 62
           }
@@ -108,7 +108,7 @@
           "single": 52,
           "average": null,
           "singleRanks": {
-            "world": 10266,
+            "world": 10267,
             "continent": 468,
             "country": 371
           },
@@ -146,12 +146,12 @@
           "single": 5560,
           "average": 6169,
           "singleRanks": {
-            "world": 2684,
+            "world": 2685,
             "continent": 130,
             "country": 97
           },
           "averageRanks": {
-            "world": 2498,
+            "world": 2499,
             "continent": 124,
             "country": 93
           }
@@ -179,7 +179,7 @@
             "country": 95
           },
           "averageRanks": {
-            "world": 2392,
+            "world": 2393,
             "continent": 129,
             "country": 99
           }
@@ -188,7 +188,7 @@
           "single": 1536,
           "average": 1746,
           "singleRanks": {
-            "world": 4361,
+            "world": 4362,
             "continent": 218,
             "country": 168
           },
@@ -222,7 +222,7 @@
           "single": 960356703,
           "average": null,
           "singleRanks": {
-            "world": 2580,
+            "world": 2581,
             "continent": 140,
             "country": 109
           },
@@ -286,7 +286,7 @@
             "country": 19
           },
           "averageRanks": {
-            "world": 400,
+            "world": 401,
             "continent": 21,
             "country": 12
           }
@@ -314,7 +314,7 @@
             "country": 4
           },
           "averageRanks": {
-            "world": 131,
+            "world": 133,
             "continent": 5,
             "country": 3
           }
@@ -323,7 +323,7 @@
           "single": 2838,
           "average": 3849,
           "singleRanks": {
-            "world": 458,
+            "world": 459,
             "continent": 30,
             "country": 21
           },
@@ -426,7 +426,7 @@
             "country": 39
           },
           "averageRanks": {
-            "world": 835,
+            "world": 836,
             "continent": 53,
             "country": 39
           }
@@ -500,12 +500,12 @@
           "single": 2973,
           "average": 3589,
           "singleRanks": {
-            "world": 2255,
+            "world": 2256,
             "continent": 100,
             "country": 68
           },
           "averageRanks": {
-            "world": 2841,
+            "world": 2842,
             "continent": 131,
             "country": 94
           }
@@ -519,7 +519,7 @@
             "country": 62
           },
           "averageRanks": {
-            "world": 2153,
+            "world": 2155,
             "continent": 97,
             "country": 70
           }
@@ -528,12 +528,12 @@
           "single": 13061,
           "average": 13670,
           "singleRanks": {
-            "world": 2737,
+            "world": 2738,
             "continent": 123,
             "country": 93
           },
           "averageRanks": {
-            "world": 2488,
+            "world": 2489,
             "continent": 112,
             "country": 85
           }
@@ -562,7 +562,7 @@
           "single": 50,
           "average": null,
           "singleRanks": {
-            "world": 9738,
+            "world": 9739,
             "continent": 441,
             "country": 346
           },
@@ -647,7 +647,7 @@
             "country": 44
           },
           "averageRanks": {
-            "world": 470,
+            "world": 471,
             "continent": 28,
             "country": 20
           }
@@ -709,12 +709,12 @@
           "single": 3111,
           "average": 3626,
           "singleRanks": {
-            "world": 2964,
+            "world": 2966,
             "continent": 133,
             "country": 94
           },
           "averageRanks": {
-            "world": 3015,
+            "world": 3016,
             "continent": 139,
             "country": 101
           }
@@ -728,7 +728,7 @@
             "country": 131
           },
           "averageRanks": {
-            "world": 3793,
+            "world": 3794,
             "continent": 162,
             "country": 122
           }
@@ -742,7 +742,7 @@
             "country": 172
           },
           "averageRanks": {
-            "world": 4473,
+            "world": 4475,
             "continent": 200,
             "country": 153
           }
@@ -765,7 +765,7 @@
           "single": 12850,
           "average": null,
           "singleRanks": {
-            "world": 4413,
+            "world": 4414,
             "continent": 208,
             "country": 158
           },
@@ -780,7 +780,7 @@
             "country": 116
           },
           "averageRanks": {
-            "world": 3182,
+            "world": 3183,
             "continent": 180,
             "country": 136
           }
@@ -817,12 +817,12 @@
           "single": 5706,
           "average": 6000,
           "singleRanks": {
-            "world": 2940,
+            "world": 2941,
             "continent": 144,
             "country": 109
           },
           "averageRanks": {
-            "world": 2242,
+            "world": 2243,
             "continent": 111,
             "country": 81
           }
@@ -831,7 +831,7 @@
           "single": 253,
           "average": 350,
           "singleRanks": {
-            "world": 2937,
+            "world": 2938,
             "continent": 167,
             "country": 109
           },
@@ -850,7 +850,7 @@
             "country": 93
           },
           "averageRanks": {
-            "world": 2095,
+            "world": 2096,
             "continent": 112,
             "country": 84
           }
@@ -859,7 +859,7 @@
           "single": 1415,
           "average": 1627,
           "singleRanks": {
-            "world": 3656,
+            "world": 3657,
             "continent": 189,
             "country": 147
           },
@@ -926,12 +926,12 @@
           "single": 3212,
           "average": 3561,
           "singleRanks": {
-            "world": 3586,
+            "world": 3587,
             "continent": 888,
             "country": 98
           },
           "averageRanks": {
-            "world": 2715,
+            "world": 2716,
             "continent": 688,
             "country": 74
           }
@@ -954,7 +954,7 @@
           "single": 12393,
           "average": 13140,
           "singleRanks": {
-            "world": 2217,
+            "world": 2218,
             "continent": 587,
             "country": 55
           },
@@ -968,13 +968,13 @@
           "single": 19224,
           "average": 21307,
           "singleRanks": {
-            "world": 1992,
-            "continent": 502,
+            "world": 1993,
+            "continent": 503,
             "country": 49
           },
           "averageRanks": {
-            "world": 2355,
-            "continent": 595,
+            "world": 2356,
+            "continent": 596,
             "country": 57
           }
         },
@@ -982,8 +982,8 @@
           "single": 13958,
           "average": null,
           "singleRanks": {
-            "world": 4853,
-            "continent": 1090,
+            "world": 4854,
+            "continent": 1091,
             "country": 138
           },
           "averageRanks": null
@@ -1026,12 +1026,12 @@
           "single": 5991,
           "average": 6752,
           "singleRanks": {
-            "world": 3471,
+            "world": 3472,
             "continent": 931,
             "country": 91
           },
           "averageRanks": {
-            "world": 3417,
+            "world": 3418,
             "continent": 923,
             "country": 89
           }
@@ -1059,7 +1059,7 @@
             "country": 156
           },
           "averageRanks": {
-            "world": 2155,
+            "world": 2156,
             "continent": 568,
             "country": 45
           }
@@ -1073,7 +1073,7 @@
             "country": 5
           },
           "averageRanks": {
-            "world": 856,
+            "world": 857,
             "continent": 277,
             "country": 21
           }
@@ -1140,7 +1140,7 @@
             "country": 328
           },
           "averageRanks": {
-            "world": 1855,
+            "world": 1856,
             "continent": 467,
             "country": 367
           }
@@ -1168,18 +1168,18 @@
             "country": 292
           },
           "averageRanks": {
-            "world": 1751,
-            "continent": 447,
-            "country": 355
+            "world": 1752,
+            "continent": 448,
+            "country": 356
           }
         },
         "777": {
           "single": 20034,
           "average": 22857,
           "singleRanks": {
-            "world": 2336,
-            "continent": 599,
-            "country": 458
+            "world": 2337,
+            "continent": 600,
+            "country": 459
           },
           "averageRanks": {
             "world": 3052,
@@ -1201,9 +1201,9 @@
           "single": 41,
           "average": null,
           "singleRanks": {
-            "world": 6376,
-            "continent": 1440,
-            "country": 1101
+            "world": 6378,
+            "continent": 1442,
+            "country": 1103
           },
           "averageRanks": null
         },
@@ -1239,12 +1239,12 @@
           "single": 5849,
           "average": 6371,
           "singleRanks": {
-            "world": 3201,
+            "world": 3202,
             "continent": 863,
             "country": 638
           },
           "averageRanks": {
-            "world": 2796,
+            "world": 2797,
             "continent": 748,
             "country": 564
           }
@@ -1253,7 +1253,7 @@
           "single": 272,
           "average": 318,
           "singleRanks": {
-            "world": 3588,
+            "world": 3589,
             "continent": 923,
             "country": 732
           },
@@ -1307,9 +1307,9 @@
           "single": 980165301,
           "average": null,
           "singleRanks": {
-            "world": 3767,
-            "continent": 862,
-            "country": 660
+            "world": 3768,
+            "continent": 863,
+            "country": 661
           },
           "averageRanks": null
         }
@@ -1324,12 +1324,12 @@
           "single": 269,
           "average": 388,
           "singleRanks": {
-            "world": 20249,
+            "world": 20250,
             "continent": 5420,
             "country": 439
           },
           "averageRanks": {
-            "world": 12647,
+            "world": 12648,
             "continent": 3621,
             "country": 272
           }
@@ -1357,7 +1357,7 @@
             "country": 178
           },
           "averageRanks": {
-            "world": 4729,
+            "world": 4730,
             "continent": 1706,
             "country": 134
           }
@@ -1366,12 +1366,12 @@
           "single": 6455,
           "average": 6636,
           "singleRanks": {
-            "world": 3300,
+            "world": 3301,
             "continent": 1174,
             "country": 88
           },
           "averageRanks": {
-            "world": 2171,
+            "world": 2173,
             "continent": 783,
             "country": 53
           }
@@ -1415,7 +1415,7 @@
             "country": 66
           },
           "averageRanks": {
-            "world": 5164,
+            "world": 5166,
             "continent": 1475,
             "country": 69
           }
@@ -1438,7 +1438,7 @@
           "single": 878,
           "average": 1041,
           "singleRanks": {
-            "world": 6043,
+            "world": 6044,
             "continent": 1472,
             "country": 120
           },
@@ -1458,12 +1458,12 @@
           "single": 1651,
           "average": 2212,
           "singleRanks": {
-            "world": 111964,
+            "world": 111966,
             "continent": 29700,
             "country": 2423
           },
           "averageRanks": {
-            "world": 107449,
+            "world": 107451,
             "continent": 28653,
             "country": 2347
           }
@@ -1478,7 +1478,7 @@
           "single": 5382,
           "average": null,
           "singleRanks": {
-            "world": 20070,
+            "world": 20073,
             "continent": 4369,
             "country": 307
           },
@@ -1540,7 +1540,7 @@
             "country": 193
           },
           "averageRanks": {
-            "world": 3211,
+            "world": 3212,
             "continent": 161,
             "country": 125
           }
@@ -1554,7 +1554,7 @@
             "country": 158
           },
           "averageRanks": {
-            "world": 3965,
+            "world": 3966,
             "continent": 178,
             "country": 130
           }
@@ -1568,7 +1568,7 @@
             "country": 99
           },
           "averageRanks": {
-            "world": 2241,
+            "world": 2243,
             "continent": 100,
             "country": 73
           }
@@ -1577,12 +1577,12 @@
           "single": 12801,
           "average": 13245,
           "singleRanks": {
-            "world": 2539,
+            "world": 2540,
             "continent": 115,
             "country": 86
           },
           "averageRanks": {
-            "world": 2182,
+            "world": 2183,
             "continent": 100,
             "country": 76
           }
@@ -1591,12 +1591,12 @@
           "single": 19688,
           "average": 20774,
           "singleRanks": {
-            "world": 2181,
+            "world": 2182,
             "continent": 93,
             "country": 69
           },
           "averageRanks": {
-            "world": 2129,
+            "world": 2130,
             "continent": 91,
             "country": 68
           }
@@ -1605,7 +1605,7 @@
           "single": 6572,
           "average": 7364,
           "singleRanks": {
-            "world": 1811,
+            "world": 1813,
             "continent": 95,
             "country": 73
           },
@@ -1624,7 +1624,7 @@
             "country": 31
           },
           "averageRanks": {
-            "world": 1207,
+            "world": 1208,
             "continent": 67,
             "country": 52
           }
@@ -1666,7 +1666,7 @@
             "country": 38
           },
           "averageRanks": {
-            "world": 1248,
+            "world": 1249,
             "continent": 67,
             "country": 49
           }
@@ -1680,7 +1680,7 @@
             "country": 187
           },
           "averageRanks": {
-            "world": 4626,
+            "world": 4627,
             "continent": 223,
             "country": 162
           }
@@ -1737,7 +1737,7 @@
           "single": 950117601,
           "average": null,
           "singleRanks": {
-            "world": 1747,
+            "world": 1748,
             "continent": 97,
             "country": 75
           },
@@ -1768,12 +1768,12 @@
           "single": 766,
           "average": 1006,
           "singleRanks": {
-            "world": 6331,
+            "world": 6332,
             "continent": 297,
             "country": 230
           },
           "averageRanks": {
-            "world": 8785,
+            "world": 8787,
             "continent": 370,
             "country": 284
           }
@@ -1787,7 +1787,7 @@
             "country": 163
           },
           "averageRanks": {
-            "world": 5565,
+            "world": 5567,
             "continent": 239,
             "country": 182
           }
@@ -1796,7 +1796,7 @@
           "single": 6837,
           "average": 7544,
           "singleRanks": {
-            "world": 4273,
+            "world": 4275,
             "continent": 185,
             "country": 143
           },
@@ -1815,7 +1815,7 @@
             "country": 201
           },
           "averageRanks": {
-            "world": 5307,
+            "world": 5308,
             "continent": 243,
             "country": 185
           }
@@ -1824,7 +1824,7 @@
           "single": 28766,
           "average": 30105,
           "singleRanks": {
-            "world": 6699,
+            "world": 6700,
             "continent": 301,
             "country": 227
           },
@@ -1838,12 +1838,12 @@
           "single": 11839,
           "average": 20526,
           "singleRanks": {
-            "world": 4009,
+            "world": 4010,
             "continent": 188,
             "country": 145
           },
           "averageRanks": {
-            "world": 3034,
+            "world": 3036,
             "continent": 148,
             "country": 118
           }
@@ -1857,7 +1857,7 @@
             "country": 173
           },
           "averageRanks": {
-            "world": 3988,
+            "world": 3990,
             "continent": 214,
             "country": 165
           }
@@ -1894,12 +1894,12 @@
           "single": 5587,
           "average": 6263,
           "singleRanks": {
-            "world": 2736,
+            "world": 2737,
             "continent": 133,
             "country": 100
           },
           "averageRanks": {
-            "world": 2643,
+            "world": 2644,
             "continent": 133,
             "country": 100
           }
@@ -1913,7 +1913,7 @@
             "country": 355
           },
           "averageRanks": {
-            "world": 7339,
+            "world": 7340,
             "continent": 347,
             "country": 254
           }
@@ -1936,12 +1936,12 @@
           "single": 1417,
           "average": 2284,
           "singleRanks": {
-            "world": 3664,
+            "world": 3665,
             "continent": 191,
             "country": 148
           },
           "averageRanks": {
-            "world": 5097,
+            "world": 5099,
             "continent": 242,
             "country": 185
           }
@@ -1962,7 +1962,7 @@
           "single": 980096101,
           "average": null,
           "singleRanks": {
-            "world": 3492,
+            "world": 3493,
             "continent": 188,
             "country": 147
           },
@@ -1993,12 +1993,12 @@
           "single": 951,
           "average": 1073,
           "singleRanks": {
-            "world": 17448,
+            "world": 17449,
             "continent": 700,
             "country": 563
           },
           "averageRanks": {
-            "world": 12217,
+            "world": 12218,
             "continent": 502,
             "country": 393
           }
@@ -2026,7 +2026,7 @@
             "country": 122
           },
           "averageRanks": {
-            "world": 3432,
+            "world": 3433,
             "continent": 149,
             "country": 109
           }
@@ -2035,12 +2035,12 @@
           "single": 14159,
           "average": 15583,
           "singleRanks": {
-            "world": 3723,
+            "world": 3724,
             "continent": 169,
             "country": 129
           },
           "averageRanks": {
-            "world": 4035,
+            "world": 4036,
             "continent": 180,
             "country": 138
           }
@@ -2063,7 +2063,7 @@
           "single": 6177,
           "average": null,
           "singleRanks": {
-            "world": 1659,
+            "world": 1661,
             "continent": 89,
             "country": 67
           },
@@ -2073,12 +2073,12 @@
           "single": 42,
           "average": 4933,
           "singleRanks": {
-            "world": 6831,
+            "world": 6833,
             "continent": 328,
             "country": 251
           },
           "averageRanks": {
-            "world": 5057,
+            "world": 5059,
             "continent": 265,
             "country": 207
           }
@@ -2120,7 +2120,7 @@
             "country": 222
           },
           "averageRanks": {
-            "world": 6802,
+            "world": 6803,
             "continent": 316,
             "country": 236
           }
@@ -2129,7 +2129,7 @@
           "single": 256,
           "average": 655,
           "singleRanks": {
-            "world": 3039,
+            "world": 3040,
             "continent": 170,
             "country": 112
           },
@@ -2148,7 +2148,7 @@
             "country": 98
           },
           "averageRanks": {
-            "world": 2530,
+            "world": 2531,
             "continent": 136,
             "country": 105
           }
@@ -2183,7 +2183,7 @@
           "single": 960285101,
           "average": null,
           "singleRanks": {
-            "world": 2544,
+            "world": 2545,
             "continent": 135,
             "country": 104
           },
@@ -2205,7 +2205,7 @@
             "country": 477
           },
           "averageRanks": {
-            "world": 25757,
+            "world": 25758,
             "continent": 1275,
             "country": 1017
           }
@@ -2228,7 +2228,7 @@
           "single": 4509,
           "average": 5000,
           "singleRanks": {
-            "world": 15467,
+            "world": 15469,
             "continent": 582,
             "country": 451
           },
@@ -2242,12 +2242,12 @@
           "single": 9517,
           "average": 10576,
           "singleRanks": {
-            "world": 12914,
+            "world": 12916,
             "continent": 537,
             "country": 427
           },
           "averageRanks": {
-            "world": 12863,
+            "world": 12865,
             "continent": 541,
             "country": 429
           }
@@ -2270,7 +2270,7 @@
           "single": 31612,
           "average": 32526,
           "singleRanks": {
-            "world": 7938,
+            "world": 7939,
             "continent": 361,
             "country": 275
           },
@@ -2295,7 +2295,7 @@
             "country": 395
           },
           "averageRanks": {
-            "world": 5745,
+            "world": 5747,
             "continent": 291,
             "country": 230
           }
@@ -2332,12 +2332,12 @@
           "single": 5449,
           "average": 6151,
           "singleRanks": {
-            "world": 2513,
+            "world": 2514,
             "continent": 124,
             "country": 92
           },
           "averageRanks": {
-            "world": 2475,
+            "world": 2476,
             "continent": 121,
             "country": 90
           }
@@ -2346,7 +2346,7 @@
           "single": 458,
           "average": 854,
           "singleRanks": {
-            "world": 13847,
+            "world": 13849,
             "continent": 648,
             "country": 491
           },
@@ -2365,7 +2365,7 @@
             "country": 243
           },
           "averageRanks": {
-            "world": 7247,
+            "world": 7248,
             "continent": 331,
             "country": 250
           }
@@ -2433,7 +2433,7 @@
           "single": 4558,
           "average": 5110,
           "singleRanks": {
-            "world": 15985,
+            "world": 15987,
             "continent": 599,
             "country": 464
           },
@@ -2447,12 +2447,12 @@
           "single": 9900,
           "average": 10976,
           "singleRanks": {
-            "world": 14122,
+            "world": 14125,
             "continent": 586,
             "country": 466
           },
           "averageRanks": {
-            "world": 13969,
+            "world": 13971,
             "continent": 586,
             "country": 467
           }
@@ -2461,12 +2461,12 @@
           "single": 21507,
           "average": 22407,
           "singleRanks": {
-            "world": 9951,
+            "world": 9952,
             "continent": 446,
             "country": 350
           },
           "averageRanks": {
-            "world": 9143,
+            "world": 9144,
             "continent": 408,
             "country": 317
           }
@@ -2475,7 +2475,7 @@
           "single": 34583,
           "average": 40073,
           "singleRanks": {
-            "world": 9135,
+            "world": 9136,
             "continent": 397,
             "country": 305
           },
@@ -2523,12 +2523,12 @@
           "single": 889,
           "average": 1068,
           "singleRanks": {
-            "world": 6234,
+            "world": 6235,
             "continent": 296,
             "country": 218
           },
           "averageRanks": {
-            "world": 6121,
+            "world": 6122,
             "continent": 287,
             "country": 208
           }
@@ -2623,7 +2623,7 @@
             "country": 362
           },
           "averageRanks": {
-            "world": 9938,
+            "world": 9939,
             "continent": 517,
             "country": 406
           }
@@ -2637,7 +2637,7 @@
             "country": 669
           },
           "averageRanks": {
-            "world": 28500,
+            "world": 28502,
             "continent": 1090,
             "country": 887
           }
@@ -2646,7 +2646,7 @@
           "single": 4173,
           "average": 4795,
           "singleRanks": {
-            "world": 11922,
+            "world": 11924,
             "continent": 462,
             "country": 350
           },
@@ -2660,12 +2660,12 @@
           "single": 9186,
           "average": 9652,
           "singleRanks": {
-            "world": 11772,
+            "world": 11775,
             "continent": 493,
             "country": 387
           },
           "averageRanks": {
-            "world": 10122,
+            "world": 10124,
             "continent": 432,
             "country": 332
           }
@@ -2674,12 +2674,12 @@
           "single": 14607,
           "average": 16453,
           "singleRanks": {
-            "world": 4145,
+            "world": 4146,
             "continent": 189,
             "country": 141
           },
           "averageRanks": {
-            "world": 4792,
+            "world": 4793,
             "continent": 217,
             "country": 165
           }
@@ -2698,7 +2698,7 @@
           "single": 11852,
           "average": null,
           "singleRanks": {
-            "world": 4019,
+            "world": 4020,
             "continent": 189,
             "country": 146
           },
@@ -2713,7 +2713,7 @@
             "country": 156
           },
           "averageRanks": {
-            "world": 3001,
+            "world": 3002,
             "continent": 171,
             "country": 128
           }
@@ -2741,7 +2741,7 @@
             "country": 94
           },
           "averageRanks": {
-            "world": 2321,
+            "world": 2322,
             "continent": 135,
             "country": 97
           }
@@ -2769,7 +2769,7 @@
             "country": 419
           },
           "averageRanks": {
-            "world": 7699,
+            "world": 7700,
             "continent": 359,
             "country": 262
           }
@@ -2778,7 +2778,7 @@
           "single": 286,
           "average": 544,
           "singleRanks": {
-            "world": 3162,
+            "world": 3163,
             "continent": 178,
             "country": 136
           },
@@ -2836,7 +2836,7 @@
             "country": 709
           },
           "averageRanks": {
-            "world": 10400,
+            "world": 10401,
             "continent": 542,
             "country": 427
           }
@@ -2859,7 +2859,7 @@
           "single": 4092,
           "average": 4515,
           "singleRanks": {
-            "world": 11074,
+            "world": 11075,
             "continent": 437,
             "country": 330
           },
@@ -2878,7 +2878,7 @@
             "country": 306
           },
           "averageRanks": {
-            "world": 9273,
+            "world": 9274,
             "continent": 390,
             "country": 297
           }
@@ -2887,7 +2887,7 @@
           "single": 22186,
           "average": null,
           "singleRanks": {
-            "world": 10405,
+            "world": 10408,
             "continent": 464,
             "country": 365
           },
@@ -2897,7 +2897,7 @@
           "single": 33919,
           "average": null,
           "singleRanks": {
-            "world": 8874,
+            "world": 8875,
             "continent": 386,
             "country": 296
           },
@@ -2907,7 +2907,7 @@
           "single": 23452,
           "average": null,
           "singleRanks": {
-            "world": 8132,
+            "world": 8134,
             "continent": 363,
             "country": 295
           },
@@ -2964,7 +2964,7 @@
             "country": 322
           },
           "averageRanks": {
-            "world": 7462,
+            "world": 7463,
             "continent": 337,
             "country": 254
           }
@@ -2973,12 +2973,12 @@
           "single": 612,
           "average": 1020,
           "singleRanks": {
-            "world": 27024,
+            "world": 27026,
             "continent": 1333,
             "country": 1042
           },
           "averageRanks": {
-            "world": 33355,
+            "world": 33358,
             "continent": 1672,
             "country": 1314
           }
@@ -2987,7 +2987,7 @@
           "single": 591,
           "average": 669,
           "singleRanks": {
-            "world": 18387,
+            "world": 18389,
             "continent": 854,
             "country": 667
           },
@@ -3001,12 +3001,12 @@
           "single": 2727,
           "average": 3136,
           "singleRanks": {
-            "world": 11148,
+            "world": 11150,
             "continent": 552,
             "country": 426
           },
           "averageRanks": {
-            "world": 8809,
+            "world": 8811,
             "continent": 445,
             "country": 340
           }
@@ -3027,7 +3027,7 @@
           "single": 970100000,
           "average": null,
           "singleRanks": {
-            "world": 3054,
+            "world": 3055,
             "continent": 159,
             "country": 125
           },
@@ -3049,7 +3049,7 @@
             "country": 572
           },
           "averageRanks": {
-            "world": 14599,
+            "world": 14600,
             "continent": 750,
             "country": 587
           }
@@ -3058,12 +3058,12 @@
           "single": 1077,
           "average": 1338,
           "singleRanks": {
-            "world": 27827,
+            "world": 27828,
             "continent": 1076,
             "country": 863
           },
           "averageRanks": {
-            "world": 30428,
+            "world": 30430,
             "continent": 1172,
             "country": 956
           }
@@ -3072,12 +3072,12 @@
           "single": 5116,
           "average": 5799,
           "singleRanks": {
-            "world": 21935,
+            "world": 21939,
             "continent": 849,
             "country": 673
           },
           "averageRanks": {
-            "world": 21421,
+            "world": 21424,
             "continent": 825,
             "country": 650
           }
@@ -3086,12 +3086,12 @@
           "single": 10730,
           "average": 12667,
           "singleRanks": {
-            "world": 16613,
+            "world": 16616,
             "continent": 691,
             "country": 550
           },
           "averageRanks": {
-            "world": 18028,
+            "world": 18032,
             "continent": 755,
             "country": 600
           }
@@ -3121,7 +3121,7 @@
             "country": 42
           },
           "averageRanks": {
-            "world": 1229,
+            "world": 1230,
             "continent": 62,
             "country": 46
           }
@@ -3130,12 +3130,12 @@
           "single": 41,
           "average": 4767,
           "singleRanks": {
-            "world": 6376,
+            "world": 6378,
             "continent": 303,
             "country": 229
           },
           "averageRanks": {
-            "world": 4786,
+            "world": 4788,
             "continent": 256,
             "country": 201
           }
@@ -3177,7 +3177,7 @@
             "country": 340
           },
           "averageRanks": {
-            "world": 9374,
+            "world": 9375,
             "continent": 436,
             "country": 336
           }
@@ -3186,12 +3186,12 @@
           "single": 524,
           "average": 723,
           "singleRanks": {
-            "world": 19034,
+            "world": 19035,
             "continent": 910,
             "country": 701
           },
           "averageRanks": {
-            "world": 13269,
+            "world": 13270,
             "continent": 631,
             "country": 476
           }
@@ -3200,12 +3200,12 @@
           "single": 581,
           "average": 1014,
           "singleRanks": {
-            "world": 17831,
+            "world": 17833,
             "continent": 830,
             "country": 648
           },
           "averageRanks": {
-            "world": 21964,
+            "world": 21965,
             "continent": 1061,
             "country": 835
           }
@@ -3214,12 +3214,12 @@
           "single": 1945,
           "average": 3435,
           "singleRanks": {
-            "world": 6745,
+            "world": 6746,
             "continent": 333,
             "country": 254
           },
           "averageRanks": {
-            "world": 10089,
+            "world": 10093,
             "continent": 514,
             "country": 399
           }
@@ -3244,7 +3244,7 @@
           "single": 970131601,
           "average": null,
           "singleRanks": {
-            "world": 3212,
+            "world": 3213,
             "continent": 168,
             "country": 131
           },
@@ -3261,12 +3261,12 @@
           "single": 436,
           "average": 764,
           "singleRanks": {
-            "world": 58173,
+            "world": 58178,
             "continent": 16243,
             "country": 12394
           },
           "averageRanks": {
-            "world": 81825,
+            "world": 81828,
             "continent": 23263,
             "country": 17786
           }
@@ -3275,12 +3275,12 @@
           "single": 2094,
           "average": 2564,
           "singleRanks": {
-            "world": 121165,
+            "world": 121170,
             "continent": 32191,
             "country": 24378
           },
           "averageRanks": {
-            "world": 123101,
+            "world": 123105,
             "continent": 32748,
             "country": 24783
           }
@@ -3289,12 +3289,12 @@
           "single": 8906,
           "average": 10289,
           "singleRanks": {
-            "world": 52820,
+            "world": 52821,
             "continent": 14664,
             "country": 11005
           },
           "averageRanks": {
-            "world": 46926,
+            "world": 46928,
             "continent": 13166,
             "country": 9995
           }
@@ -3367,12 +3367,12 @@
           "single": 866,
           "average": 1264,
           "singleRanks": {
-            "world": 54235,
+            "world": 54237,
             "continent": 15439,
             "country": 12036
           },
           "averageRanks": {
-            "world": 54274,
+            "world": 54278,
             "continent": 15413,
             "country": 11984
           }
@@ -3381,12 +3381,12 @@
           "single": 746,
           "average": 988,
           "singleRanks": {
-            "world": 27270,
+            "world": 27273,
             "continent": 8038,
             "country": 6352
           },
           "averageRanks": {
-            "world": 20849,
+            "world": 20850,
             "continent": 5896,
             "country": 4594
           }
@@ -3395,7 +3395,7 @@
           "single": 4180,
           "average": null,
           "singleRanks": {
-            "world": 17097,
+            "world": 17101,
             "continent": 5559,
             "country": 4444
           },
