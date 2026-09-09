@@ -1,11 +1,11 @@
 :root {
   --bg: #17181c;
   --panel: #1f2126;
-  --panel-border: #2c2f36;
+  --panel-border: #c9f6ff;
   --text: #e9eaec;
-  --text-dim: #9a9ea7;
-  --accent: #f2a83c;
-  --accent-dim: #8a6a35;
+  --text-dim: #CCCCCC;
+  --accent: #c9f6ff;
+  --accent-dim: #00497a;
   --gold: #e0b84a;
   --silver: #b9c0c9;
   --bronze: #c98a52;
