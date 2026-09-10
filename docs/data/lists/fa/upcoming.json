@@ -1,22 +1,76 @@
 {
-  "generatedAt": "2026-09-10T07:13:49.440Z",
+  "generatedAt": "2026-09-10T12:14:37.965Z",
   "competitions": [
     {
-      "id": "NapervilleFall2026",
-      "name": "Naperville Fall 2026",
+      "id": "FMCEastMelbourne2026",
+      "name": "FMC East Melbourne 2026",
       "date": null,
-      "city": "Naperville, Illinois",
-      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
+      "city": "Melbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
       "attendees": [
         {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
           "eventIds": [
+            "333fm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AdelaideSpring2026",
+      "name": "Adelaide Spring 2026",
+      "date": null,
+      "city": "Adelaide, South Australia",
+      "url": "https://www.worldcubeassociation.org/competitions/AdelaideSpring2026",
+      "attendees": [
+        {
+          "wcaId": "2021BLAK01",
+          "name": "Jonah Blakeley",
+          "eventIds": [
+            "222",
             "333",
+            "333bf",
             "444",
-            "777",
-            "skewb",
-            "sq1"
+            "clock",
+            "skewb"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BelgraveOpen2026",
+      "name": "Belgrave Open 2026",
+      "date": null,
+      "city": "Melbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/BelgraveOpen2026",
+      "attendees": [
+        {
+          "wcaId": "2019WILL30",
+          "name": "Madeline Willoughby-Khan",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "333oh",
+            "444",
+            "555",
+            "pyram",
+            "skewb"
+          ]
+        },
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "333oh",
+            "444",
+            "555",
+            "pyram",
+            "skewb"
           ]
         }
       ]
