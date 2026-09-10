@@ -1,5 +1,123 @@
 {
-  "generatedAt": "2026-09-10T06:53:51.214Z",
+  "generatedAt": "2026-09-10T12:12:45.531Z",
   "windowDays": 14,
-  "items": []
+  "items": [
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR1 Average"
+      ],
+      "singleDisplay": "7.72",
+      "averageDisplay": "8.02",
+      "competitionName": "Calgary Fall 2026",
+      "round": "Round 2",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR1 Average"
+      ],
+      "singleDisplay": "11.06",
+      "averageDisplay": "12.29",
+      "competitionName": "Geelong Winter 2026",
+      "round": "Round 2",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR1 Average",
+        "1st place"
+      ],
+      "singleDisplay": "1.47",
+      "averageDisplay": "1.68",
+      "competitionName": "Calgary Fall 2026",
+      "round": "Round 1",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR2 Single"
+      ],
+      "singleDisplay": "1.58",
+      "averageDisplay": "3.56",
+      "competitionName": "Geelong Winter 2026",
+      "round": "Final",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "444",
+      "eventName": "4x4x4 Cube",
+      "badges": [
+        "PR1 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "45.58",
+      "averageDisplay": "51.10",
+      "competitionName": "Geelong Winter 2026",
+      "round": "Combined Final",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "333oh",
+      "eventName": "3x3x3 One-Handed",
+      "badges": [
+        "PR3 Single"
+      ],
+      "singleDisplay": "18.87",
+      "averageDisplay": "28.36",
+      "competitionName": "Geelong Winter 2026",
+      "round": "Combined Final",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "pyram",
+      "eventName": "Pyraminx",
+      "badges": [
+        "PR1 Single",
+        "PR3 Average",
+        "1st place"
+      ],
+      "singleDisplay": "1.53",
+      "averageDisplay": "2.00",
+      "competitionName": "Calgary Fall 2026",
+      "round": "Final",
+      "date": "2026-08-29"
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "badges": [
+        "PR2 Single",
+        "3rd place"
+      ],
+      "singleDisplay": "8.98",
+      "averageDisplay": "13.74",
+      "competitionName": "Calgary Fall 2026",
+      "round": "Combined Round",
+      "date": "2026-08-29"
+    }
+  ]
 }
