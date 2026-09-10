@@ -17,10 +17,12 @@ const fs = require('fs');
 const path = require('path');
 const { EVENTS, roundLabel } = require('./lib/events');
 const { hasResult, formatResult } = require('./lib/format');
+const { getListContext } = require('./lib/list-context');
 
-const FULL_RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'full-results.json');
-const RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'results.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'historical-records.json');
+const { dataDir: DATA_DIR } = getListContext();
+const FULL_RESULTS_PATH = path.join(DATA_DIR, 'full-results.json');
+const RESULTS_PATH = path.join(DATA_DIR, 'results.json');
+const OUTPUT_PATH = path.join(DATA_DIR, 'historical-records.json');
 
 function computeHistory(entries, event, type) {
   const relevant = entries
@@ -100,6 +102,7 @@ function main() {
     },
   };
 
+  fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
   console.log(`Wrote ${OUTPUT_PATH} (${allRecords.length} historical records)`);
 }

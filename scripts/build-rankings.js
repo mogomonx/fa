@@ -1,15 +1,18 @@
-// Reads docs/data/results.json and writes docs/data/rankings.json, containing
-// per-event single/average rankings plus Sum of Ranks and Kinch Rank tables.
+// Reads docs/data/lists/<listId>/results.json and writes rankings.json in
+// the same folder, containing per-event single/average rankings plus Sum
+// of Ranks and Kinch Rank tables.
 //
-// Run with: node scripts/build-rankings.js  (after scripts/fetch.js)
+// Run with: node scripts/build-rankings.js [listId]  (after scripts/fetch.js)
 
 const fs = require('fs');
 const path = require('path');
 const { EVENTS, SINGLE_ONLY_EVENTS } = require('./lib/events');
 const { hasResult, formatResult, mbldKinchRawScore } = require('./lib/format');
+const { getListContext } = require('./lib/list-context');
 
-const RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'results.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'rankings.json');
+const { dataDir: DATA_DIR, listName: LIST_NAME } = getListContext();
+const RESULTS_PATH = path.join(DATA_DIR, 'results.json');
+const OUTPUT_PATH = path.join(DATA_DIR, 'rankings.json');
 
 // Kinch formula: most events score off the AVERAGE. Blindfolded events and
 // Fewest Moves score off whichever of single/average is better for that
@@ -182,6 +185,7 @@ function main() {
   const output = {
     generatedAt: new Date().toISOString(),
     dataFetchedAt: fetchedAt,
+    listName: LIST_NAME,
     people: people.map((p) => ({ wcaId: p.wcaId, name: p.name, countryIso2: p.countryIso2 || null })),
     events: eventsOut,
     sumOfRanks: {
@@ -193,6 +197,7 @@ function main() {
     },
   };
 
+  fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
   console.log(`Wrote ${OUTPUT_PATH}`);
 }

@@ -15,9 +15,11 @@ const fs = require('fs');
 const path = require('path');
 const { EVENTS, roundLabel } = require('./lib/events');
 const { hasResult, formatResult } = require('./lib/format');
+const { getListContext } = require('./lib/list-context');
 
-const FULL_RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'full-results.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'recent-activity.json');
+const { dataDir: DATA_DIR } = getListContext();
+const FULL_RESULTS_PATH = path.join(DATA_DIR, 'full-results.json');
+const OUTPUT_PATH = path.join(DATA_DIR, 'recent-activity.json');
 
 const RECENT_WINDOW_DAYS = 14;
 
@@ -86,6 +88,7 @@ function main() {
 
   items.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
+  fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify({ generatedAt: new Date().toISOString(), windowDays: RECENT_WINDOW_DAYS, items }, null, 2)

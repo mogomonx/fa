@@ -17,10 +17,12 @@ const fs = require('fs');
 const path = require('path');
 const { EVENTS, roundLabel } = require('./lib/events');
 const { hasResult, formatResult } = require('./lib/format');
+const { getListContext } = require('./lib/list-context');
 
-const FULL_RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'full-results.json');
-const RESULTS_PATH = path.join(__dirname, '..', 'docs', 'data', 'results.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'individual-rankings.json');
+const { dataDir: DATA_DIR } = getListContext();
+const FULL_RESULTS_PATH = path.join(DATA_DIR, 'full-results.json');
+const RESULTS_PATH = path.join(DATA_DIR, 'results.json');
+const OUTPUT_PATH = path.join(DATA_DIR, 'individual-rankings.json');
 
 const TOP_N = 100;
 
@@ -282,6 +284,7 @@ function main() {
     },
   };
 
+  fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
   console.log(`Wrote ${OUTPUT_PATH}`);
 }

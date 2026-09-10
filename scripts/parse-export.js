@@ -1,22 +1,23 @@
 // Reads the extracted WCA results export (results.tsv + result_attempts.tsv
-// + competitions.tsv) and filters it down to just our group's WCA IDs,
-// writing docs/data/full-results.json in the shape the rest of the site
-// expects (one entry per person+competition+event+round).
+// + competitions.tsv) and filters it down to just one list's WCA IDs,
+// writing docs/data/lists/<listId>/full-results.json in the shape the rest
+// of the site expects (one entry per person+competition+event+round).
 //
 // This is the only public source for a person's full competition history --
 // the WCA v0 API's /persons/:id endpoint only gives personal bests, not a
 // list of competitions attended (see scripts/fetch.js).
 //
-// Usage: node scripts/parse-export.js <path-to-extracted-export-dir>
+// Usage: node scripts/parse-export.js <path-to-extracted-export-dir> [listId]
 
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const { EVENTS } = require('./lib/events');
+const { getListContext } = require('./lib/list-context');
 
 const EVENT_IDS = new Set(EVENTS.map((e) => e.id));
-const MEMBERS_PATH = path.join(__dirname, '..', 'config', 'members.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'full-results.json');
+const { membersPath: MEMBERS_PATH, dataDir: DATA_DIR } = getListContext(process.argv[3]);
+const OUTPUT_PATH = path.join(DATA_DIR, 'full-results.json');
 
 function findFile(dir, patterns) {
   const files = fs.readdirSync(dir);

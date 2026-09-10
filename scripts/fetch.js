@@ -1,5 +1,5 @@
-// Fetches personal records for every WCA ID in config/members.json from the
-// WCA v0 API, and writes docs/data/results.json.
+// Fetches personal records for every WCA ID in the given list from the
+// WCA v0 API, and writes docs/data/lists/<listId>/results.json.
 //
 // Note: this only gets each person's personal BESTS. Full competition
 // history (needed for the individual-result ranking, top-100 tally, and
@@ -7,15 +7,16 @@
 // scripts/parse-export.js -- because the v0 API has no way to list which
 // competitions a person has attended.
 //
-// Run with: node scripts/fetch.js
+// Run with: node scripts/fetch.js [listId]
 // Requires Node 18+ (uses the built-in fetch).
 
 const fs = require('fs');
 const path = require('path');
 const { EVENTS } = require('./lib/events');
+const { getListContext } = require('./lib/list-context');
 
-const MEMBERS_PATH = path.join(__dirname, '..', 'config', 'members.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'results.json');
+const { membersPath: MEMBERS_PATH, dataDir: DATA_DIR } = getListContext();
+const OUTPUT_PATH = path.join(DATA_DIR, 'results.json');
 
 const EVENT_IDS = new Set(EVENTS.map((e) => e.id));
 

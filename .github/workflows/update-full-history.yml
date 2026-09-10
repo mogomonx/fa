@@ -1,12 +1,13 @@
 name: Update Full Result History
 
-# Heavier: downloads the official WCA results export (~350MB) to get every
-# competition result anyone in the group has ever recorded, not just their
-# personal bests. Powers the Individual Results tab, the top-100 tally, and
-# the average solve breakdowns. Runs weekly since it's a much bigger
-# download than the daily personal-bests update -- run it manually
-# (Actions tab -> this workflow -> Run workflow) any time you want it
-# sooner, e.g. right after a competition your group attended.
+# Heavier: downloads the official WCA results export (~350MB) once, then
+# filters it for every list configured in config/lists-manifest.json.
+# Downloading once and filtering per-list (rather than downloading once
+# per list) keeps this from scaling badly as more lists get added.
+# Runs weekly since it's a much bigger download than the daily
+# personal-bests update -- run it manually (Actions tab -> this workflow
+# -> Run workflow) any time you want it sooner, e.g. right after a
+# competition your group attended.
 on:
   schedule:
     - cron: '0 6 * * 0'   # 06:00 UTC every Sunday
@@ -37,26 +38,23 @@ jobs:
           echo "Extracted files:"
           ls -la /tmp/wca-export
 
-      - name: Parse export for our group
-        run: node scripts/parse-export.js /tmp/wca-export
-
-      - name: Build individual-result rankings
-        run: node scripts/build-individual-rankings.js
-
-      - name: Build historical FA record list
-        run: node scripts/build-historical-records.js
-
-      - name: Build PR streaks
-        run: node scripts/build-streaks.js
-
-      - name: Build recent activity feed
-        run: node scripts/build-recent-activity.js
+      - name: Parse export + build derived data, for every list
+        run: |
+          for id in $(jq -r '.lists[].id' config/lists-manifest.json); do
+            echo "=== List: $id ==="
+            node scripts/parse-export.js /tmp/wca-export "$id"
+            node scripts/build-individual-rankings.js "$id"
+            node scripts/build-historical-records.js "$id"
+            node scripts/build-streaks.js "$id"
+            node scripts/build-recent-activity.js "$id"
+            node scripts/build-rolling-averages.js "$id"
+          done
 
       - name: Commit updated data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs/data/full-results.json docs/data/individual-rankings.json docs/data/historical-records.json docs/data/streaks.json docs/data/recent-activity.json
+          git add docs/data
           git diff --staged --quiet || git commit -m 'Update full result history'
           git pull --rebase origin main
           git push

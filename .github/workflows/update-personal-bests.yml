@@ -1,7 +1,8 @@
 name: Update Personal Bests
 
-# Cheap and fast (a handful of small API calls) -- keeps the FA Records
-# page, Event Rankings, and Sum of Ranks / Kinch fresh daily.
+# Cheap and fast (a handful of small API calls per list) -- keeps the FA
+# Records page, Event Rankings, and Sum of Ranks / Kinch fresh daily, for
+# every list configured in config/lists-manifest.json.
 on:
   schedule:
     - cron: '0 6 * * *'   # 06:00 UTC every day
@@ -9,7 +10,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'config/members.json'
+      - 'config/lists-manifest.json'
+      - 'config/lists/**'
       - 'scripts/fetch.js'
       - 'scripts/build-rankings.js'
       - 'scripts/lib/**'
@@ -29,17 +31,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fetch personal bests from the WCA API
-        run: node scripts/fetch.js
+      - name: Fetch personal bests + build rankings, for every list
+        run: |
+          for id in $(jq -r '.lists[].id' config/lists-manifest.json); do
+            echo "=== List: $id ==="
+            node scripts/fetch.js "$id"
+            node scripts/build-rankings.js "$id"
+          done
 
-      - name: Build rankings
-        run: node scripts/build-rankings.js
+      - name: Publish the lists manifest for the picker page
+        run: node scripts/publish-manifest.js
 
       - name: Commit updated data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs/data/results.json docs/data/rankings.json
+          git add docs/data
           git diff --staged --quiet || git commit -m 'Update personal bests'
           git pull --rebase origin main
           git push

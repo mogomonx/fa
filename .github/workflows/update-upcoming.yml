@@ -1,8 +1,9 @@
 name: Update Upcoming Competitions
 
 # Separate from Personal Bests since this scans every upcoming WCA
-# competition in a ~4 month window (one WCIF fetch per competition found),
-# which is meaningfully heavier than the other daily jobs.
+# competition in a ~6 month window (one WCIF fetch per competition found),
+# which is meaningfully heavier than the other daily jobs. Runs for every
+# list configured in config/lists-manifest.json.
 on:
   schedule:
     - cron: '0 7 * * *'   # 07:00 UTC every day
@@ -10,8 +11,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'config/members.json'
-      - 'config/upcoming-competitions.json'
+      - 'config/lists-manifest.json'
+      - 'config/lists/**'
       - 'scripts/fetch-upcoming.js'
 
 permissions:
@@ -29,14 +30,18 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Scan upcoming competitions for group attendance
-        run: node scripts/fetch-upcoming.js
+      - name: Scan upcoming competitions for group attendance, for every list
+        run: |
+          for id in $(jq -r '.lists[].id' config/lists-manifest.json); do
+            echo "=== List: $id ==="
+            node scripts/fetch-upcoming.js "$id"
+          done
 
       - name: Commit updated data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs/data/upcoming.json
+          git add docs/data
           git diff --staged --quiet || git commit -m 'Update upcoming competitions'
           git pull --rebase origin main
           git push

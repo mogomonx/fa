@@ -11,6 +11,7 @@
     <div class="header-inner">
       <h1 id="page-title">FA</h1>
       <p id="updated-at" class="updated-at">Loading…</p>
+      <a href="lists.html" class="board-note" style="display:inline-block; margin-top:0.25rem;">Switch list</a>
     </div>
   </header>
 
@@ -24,6 +25,8 @@
     <button class="tab-btn" data-tab="misc">Misc</button>
     <button class="tab-btn" data-tab="settings">Settings</button>
     <button class="tab-btn" data-tab="improvement">Improvement</button>
+    <button class="tab-btn" data-tab="compare">Compare</button>
+    <button class="tab-btn" data-tab="rolling">Rolling Averages</button>
   </nav>
 
   <main class="container">
@@ -50,6 +53,8 @@
         <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, FARs set per person, streaks, and other odds and ends.</span></a>
         <a href="#" class="home-link" data-tab="settings"><strong>Settings</strong><span>Customise the site's colours.</span></a>
         <a href="#" class="home-link" data-tab="improvement"><strong>Improvement</strong><span>See how much someone's improved between two dates.</span></a>
+        <a href="#" class="home-link" data-tab="compare"><strong>Compare</strong><span>Head-to-head between two people, or find your nemesis.</span></a>
+        <a href="#" class="home-link" data-tab="rolling"><strong>Rolling Averages</strong><span>Unofficial rolling mo3/ao5/ao12/ao25/ao50/ao100 rankings.</span></a>
       </div>
     </section>
 
@@ -190,11 +195,6 @@
 
       <div id="subtab-streaks" class="subtab-panel">
         <div class="panel-controls">
-          <select id="streaks-event-select"></select>
-          <div class="toggle" id="streaks-type-toggle">
-            <button class="toggle-btn active" data-type="single">Single</button>
-            <button class="toggle-btn" data-type="average">Average</button>
-          </div>
           <div class="toggle" id="streaks-mode-toggle">
             <button class="toggle-btn active" data-mode="current">Current</button>
             <button class="toggle-btn" data-mode="best">Best ever</button>
@@ -202,11 +202,18 @@
         </div>
         <div class="streaks-layout">
           <div class="board streaks-main">
-            <p class="board-note">Consecutive competitions in a row where each was a new PR for this event.</p>
+            <p class="board-note">Consecutive competitions in a row with a PR in ANY event — doesn't have to be the same event each time.</p>
             <div id="streaks-list"></div>
           </div>
           <div class="board streaks-side">
-            <p class="board-note">Same, but counting consecutive rounds instead of competitions.</p>
+            <p class="board-note">Fun stat: the same idea, but scoped to one specific event and counted by round instead of competition.</p>
+            <div class="panel-controls">
+              <select id="streaks-event-select"></select>
+              <div class="toggle" id="streaks-type-toggle">
+                <button class="toggle-btn active" data-type="single">Single</button>
+                <button class="toggle-btn" data-type="average">Average</button>
+              </div>
+            </div>
             <div id="streaks-side-list"></div>
           </div>
         </div>
@@ -263,6 +270,40 @@
       </div>
       <p class="board-note">Sorted most-improved first.</p>
       <div id="improvement-table"></div>
+    </section>
+
+    <section id="tab-compare" class="tab-panel">
+      <div class="subtabs" id="compare-subtabs">
+        <button class="subtab-btn active" data-subtab="h2h">Head-to-Head</button>
+        <button class="subtab-btn" data-subtab="nemesis">Nemesis</button>
+      </div>
+
+      <div id="subtab-h2h" class="subtab-panel active">
+        <div class="panel-controls">
+          <select id="h2h-person-a"></select>
+          <span class="board-note" style="margin:0;">vs</span>
+          <select id="h2h-person-b"></select>
+        </div>
+        <div id="h2h-table"></div>
+      </div>
+
+      <div id="subtab-nemesis" class="subtab-panel">
+        <div class="panel-controls">
+          <select id="nemesis-person-select"></select>
+        </div>
+        <p class="board-note">Whoever's ranked directly above you for each event, and the gap to catch them. Only shows events where you have a result.</p>
+        <div id="nemesis-table"></div>
+      </div>
+    </section>
+
+    <section id="tab-rolling" class="tab-panel">
+      <p class="board-note">Unofficial: the best rolling window of consecutive solves (spanning across rounds and competitions) for the selected format, not an official WCA average. Only solves with recorded per-attempt data count.</p>
+      <div class="panel-controls">
+        <select id="rolling-event-select"></select>
+        <select id="rolling-format-select"></select>
+        <button class="csv-btn" data-container="rolling-table" data-filename="rolling-averages.csv">Export CSV</button>
+      </div>
+      <div id="rolling-table"></div>
     </section>
 
     <section id="tab-profile" class="tab-panel">

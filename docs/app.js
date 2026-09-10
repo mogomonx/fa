@@ -1,9 +1,16 @@
+// Which list this page shows -- ?list=<id> in the URL, defaulting to the
+// site's primary list. The picker page (lists.html) links here with that
+// query param set.
+const LIST_ID = new URLSearchParams(window.location.search).get('list') || 'fa';
+const DATA_BASE = `data/lists/${LIST_ID}/`;
+
 let rankingsData = null;
 let individualData = null;
 let historicalData = null;
 let fullResultsData = null;
 let streaksData = null;
 let recentActivityData = null;
+let rollingData = null;
 let peopleByWcaId = new Map();
 
 const state = {
@@ -28,18 +35,21 @@ const state = {
   improvementType: 'single',
   consistencyEventId: null,
   consistencyType: 'single',
+  rollingEventId: null,
+  rollingFormat: 'ao5',
   previousTab: 'home',
 };
 
 async function loadData() {
-  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes, streaksRes, recentRes] = await Promise.all([
-    fetch('data/rankings.json', { cache: 'no-store' }),
-    fetch('data/individual-rankings.json', { cache: 'no-store' }),
-    fetch('data/historical-records.json', { cache: 'no-store' }),
-    fetch('data/upcoming.json', { cache: 'no-store' }).catch(() => null),
-    fetch('data/full-results.json', { cache: 'no-store' }).catch(() => null),
-    fetch('data/streaks.json', { cache: 'no-store' }).catch(() => null),
-    fetch('data/recent-activity.json', { cache: 'no-store' }).catch(() => null),
+  const [rankingsRes, individualRes, historicalRes, upcomingRes, fullResultsRes, streaksRes, recentRes, rollingRes] = await Promise.all([
+    fetch(`${DATA_BASE}rankings.json`, { cache: 'no-store' }),
+    fetch(`${DATA_BASE}individual-rankings.json`, { cache: 'no-store' }),
+    fetch(`${DATA_BASE}historical-records.json`, { cache: 'no-store' }),
+    fetch(`${DATA_BASE}upcoming.json`, { cache: 'no-store' }).catch(() => null),
+    fetch(`${DATA_BASE}full-results.json`, { cache: 'no-store' }).catch(() => null),
+    fetch(`${DATA_BASE}streaks.json`, { cache: 'no-store' }).catch(() => null),
+    fetch(`${DATA_BASE}recent-activity.json`, { cache: 'no-store' }).catch(() => null),
+    fetch(`${DATA_BASE}rolling-averages.json`, { cache: 'no-store' }).catch(() => null),
   ]);
   rankingsData = await rankingsRes.json();
   individualData = await individualRes.json();
@@ -48,9 +58,15 @@ async function loadData() {
   fullResultsData = fullResultsRes && fullResultsRes.ok ? await fullResultsRes.json() : { entries: [] };
   streaksData = streaksRes && streaksRes.ok ? await streaksRes.json() : null;
   recentActivityData = recentRes && recentRes.ok ? await recentRes.json() : null;
+  rollingData = rollingRes && rollingRes.ok ? await rollingRes.json() : null;
 
   for (const row of rankingsData.people || []) {
     peopleByWcaId.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
+  }
+
+  if (rankingsData.listName) {
+    document.getElementById('page-title').textContent = rankingsData.listName;
+    document.title = `${rankingsData.listName} Records`;
   }
 
   const updated = new Date(rankingsData.generatedAt);
@@ -82,6 +98,11 @@ async function loadData() {
   renderImprovement();
   renderRecentActivity();
   renderConsistency();
+  populateCompareSelects();
+  renderHeadToHead();
+  renderNemesis();
+  populateRollingSelects();
+  renderRolling();
 }
 
 function nameLink(wcaId, name) {
@@ -589,14 +610,14 @@ function populateStreaksEventSelect() {
   });
 }
 
-function renderStreakList(containerId, rows, basis) {
+function renderStreakList(containerId, rows) {
   const container = document.getElementById(containerId);
   if (!rows || rows.length === 0) {
     container.innerHTML = '<p class="empty-note">No results yet.</p>';
     return;
   }
   const sorted = rows
-    .map((r) => ({ ...r, streak: r[basis][state.streaksMode] }))
+    .map((r) => ({ ...r, streak: r.streak[state.streaksMode] }))
     .sort((a, b) => b.streak.count - a.streak.count);
 
   container.innerHTML = sorted
@@ -615,26 +636,32 @@ function renderStreakList(containerId, rows, basis) {
 }
 
 function renderStreaks() {
-  if (!streaksData || !state.streaksEventId) return;
-  const rows = (streaksData.byEvent[state.streaksEventId] || {})[state.streaksType] || [];
+  if (!streaksData) return;
 
-  // Reshape {current, currentRange, best, bestRange} into {count, range}
-  // for whichever mode is selected, for each basis.
-  const withCounts = rows.map((r) => ({
+  // Primary: one cross-event streak per person.
+  const overallRows = streaksData.overall.map((r) => ({
     wcaId: r.wcaId,
     name: r.name,
-    competitions: {
-      current: { count: r.competitions.current, range: r.competitions.currentRange },
-      best: { count: r.competitions.best, range: r.competitions.bestRange },
-    },
-    rounds: {
-      current: { count: r.rounds.current, range: r.rounds.currentRange },
-      best: { count: r.rounds.best, range: r.rounds.bestRange },
+    streak: {
+      current: { count: r.streak.current, range: r.streak.currentRange },
+      best: { count: r.streak.best, range: r.streak.bestRange },
     },
   }));
+  renderStreakList('streaks-list', overallRows);
 
-  renderStreakList('streaks-list', withCounts, 'competitions');
-  renderStreakList('streaks-side-list', withCounts, 'rounds');
+  // Secondary "fun stat": per-event, round-level.
+  if (state.streaksEventId) {
+    const eventRows = (streaksData.byEvent[state.streaksEventId] || {})[state.streaksType] || [];
+    const sideRows = eventRows.map((r) => ({
+      wcaId: r.wcaId,
+      name: r.name,
+      streak: {
+        current: { count: r.streak.current, range: r.streak.currentRange },
+        best: { count: r.streak.best, range: r.streak.bestRange },
+      },
+    }));
+    renderStreakList('streaks-side-list', sideRows);
+  }
 }
 
 // ---------- Misc: Upcoming competitions ----------
@@ -792,9 +819,33 @@ function renderProfile(wcaId) {
       </table>
     </div>
 
+    <h2 style="margin:1.5rem 0 0.5rem;">Real vs Rolling Averages</h2>
+    <p class="board-note">Their official average next to their best-ever unofficial rolling average of the chosen format (see the Rolling Averages tab for how this is calculated).</p>
+    <div class="panel-controls">
+      <select id="profile-rolling-format-select"></select>
+    </div>
+    <div id="profile-rolling-content"></div>
+
     <h2 style="margin:1.5rem 0 0.5rem;">Results overview</h2>
     ${resultsSectionHtml}
   `;
+
+  if (rollingData) {
+    const formatSelect = document.getElementById('profile-rolling-format-select');
+    formatSelect.innerHTML = '';
+    rollingData.formats.forEach((f) => {
+      const opt = document.createElement('option');
+      opt.value = f.key;
+      opt.textContent = f.label;
+      formatSelect.appendChild(opt);
+    });
+    formatSelect.value = state.rollingFormat;
+    formatSelect.addEventListener('change', () => renderProfileRolling(wcaId, formatSelect.value));
+    renderProfileRolling(wcaId, formatSelect.value);
+  } else {
+    document.getElementById('profile-rolling-content').innerHTML =
+      '<p class="empty-note">No data yet (needs the Update Full Result History workflow to have run).</p>';
+  }
 
   if (resultsEventOptions.length) {
     const select = document.getElementById('profile-results-event-select');
@@ -1172,6 +1223,235 @@ function renderConsistency() {
   addPositionColumn('consistency-table');
 }
 
+// ---------- Compare: Head-to-Head ----------
+
+function populateCompareSelects() {
+  const selectA = document.getElementById('h2h-person-a');
+  const selectB = document.getElementById('h2h-person-b');
+  const nemesisSelect = document.getElementById('nemesis-person-select');
+  const people = rankingsData.people || [];
+
+  [selectA, selectB, nemesisSelect].forEach((select) => {
+    select.innerHTML = '';
+    people.forEach((p) => {
+      const opt = document.createElement('option');
+      opt.value = p.wcaId;
+      opt.textContent = p.name;
+      select.appendChild(opt);
+    });
+  });
+  if (people.length > 1) selectB.selectedIndex = 1;
+
+  selectA.addEventListener('change', renderHeadToHead);
+  selectB.addEventListener('change', renderHeadToHead);
+  nemesisSelect.addEventListener('change', renderNemesis);
+}
+
+function findRankEntry(list, wcaId) {
+  return (list || []).find((r) => r.wcaId === wcaId) || null;
+}
+
+function renderHeadToHead() {
+  const wcaIdA = document.getElementById('h2h-person-a').value;
+  const wcaIdB = document.getElementById('h2h-person-b').value;
+  const container = document.getElementById('h2h-table');
+  if (!wcaIdA || !wcaIdB) return;
+
+  const nameA = peopleByWcaId.get(wcaIdA)?.name || wcaIdA;
+  const nameB = peopleByWcaId.get(wcaIdB)?.name || wcaIdB;
+  const kinchA = rankingsData.kinch.overall.find((r) => r.wcaId === wcaIdA);
+  const kinchB = rankingsData.kinch.overall.find((r) => r.wcaId === wcaIdB);
+
+  const rows = rankingsData.events
+    .map((event) => {
+      const sA = findRankEntry(event.single, wcaIdA);
+      const sB = findRankEntry(event.single, wcaIdB);
+      const aA = event.hasAverage ? findRankEntry(event.average, wcaIdA) : null;
+      const aB = event.hasAverage ? findRankEntry(event.average, wcaIdB) : null;
+      const kA = kinchA?.components?.[event.id];
+      const kB = kinchB?.components?.[event.id];
+      return { event, sA, sB, aA, aB, kA, kB };
+    })
+    .filter(({ sA, sB, aA, aB }) => sA || sB || aA || aB);
+
+  const cell = (entry, otherEntry) => {
+    if (!entry) return '<span class="empty-note">—</span>';
+    const better = otherEntry && entry.value < otherEntry.value;
+    return `<span${better ? ' class="rank-gold"' : ''}>${entry.display} (#${entry.rank})</span>`;
+  };
+  const kinchCell = (k, otherK) => {
+    if (!k) return '—';
+    const better = otherK && k.score > otherK.score;
+    return `<span${better ? ' style="color:var(--gold); font-weight:700;"' : ''}>${k.score.toFixed(2)}</span>`;
+  };
+
+  const html = `
+    <table>
+      <thead><tr>
+        <th>Event</th><th>${nameA} Single</th><th>${nameB} Single</th>
+        <th>${nameA} Average</th><th>${nameB} Average</th>
+        <th>${nameA} Kinch</th><th>${nameB} Kinch</th>
+      </tr></thead>
+      <tbody>
+        ${rows
+          .map(
+            ({ event, sA, sB, aA, aB, kA, kB }) => `
+          <tr>
+            <td>${event.name}</td>
+            <td>${cell(sA, sB)}</td><td>${cell(sB, sA)}</td>
+            <td>${event.hasAverage ? cell(aA, aB) : 'N/A'}</td><td>${event.hasAverage ? cell(aB, aA) : 'N/A'}</td>
+            <td>${kinchCell(kA, kB)}</td><td>${kinchCell(kB, kA)}</td>
+          </tr>
+        `
+          )
+          .join('')}
+      </tbody>
+    </table>
+  `;
+  container.innerHTML = rows.length ? html : '<p class="empty-note">No overlapping results yet.</p>';
+}
+
+// ---------- Compare: Nemesis ----------
+
+function renderNemesis() {
+  const wcaId = document.getElementById('nemesis-person-select').value;
+  const container = document.getElementById('nemesis-table');
+  if (!wcaId) return;
+
+  const rows = [];
+  for (const event of rankingsData.events) {
+    for (const type of ['single', 'average']) {
+      if (type === 'average' && !event.hasAverage) continue;
+      const list = event[type] || [];
+      const idx = list.findIndex((r) => r.wcaId === wcaId);
+      if (idx === -1) continue;
+      const me = list[idx];
+      if (idx === 0) {
+        rows.push({ eventId: event.id, event: event.name, type, nemesis: null, gap: null, me });
+      } else {
+        const nemesis = list[idx - 1];
+        rows.push({ eventId: event.id, event: event.name, type, nemesis, gap: me.value - nemesis.value, me });
+      }
+    }
+  }
+
+  renderTable(container, rows, [
+    { key: 'event', label: 'Event', value: (r) => r.event },
+    { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
+    { key: 'nemesis', label: 'Nemesis', value: (r) => (r.nemesis ? nameLink(r.nemesis.wcaId, r.nemesis.name) : "You're #1!") },
+    { key: 'their', label: 'Their result', value: (r) => (r.nemesis ? r.nemesis.display : '—') },
+    { key: 'gap', label: 'Gap to catch them', value: (r) => (r.gap != null ? formatResultLike(r.gap, rankingsData.events.find((e) => e.id === r.eventId), r.type === 'average') : '—') },
+  ]);
+}
+
+// ---------- Rolling Averages ----------
+
+function populateRollingSelects() {
+  if (!rollingData) return;
+  const eventSelect = document.getElementById('rolling-event-select');
+  const formatSelect = document.getElementById('rolling-format-select');
+
+  eventSelect.innerHTML = '';
+  rollingData.events.forEach((event) => {
+    const opt = document.createElement('option');
+    opt.value = event.id;
+    opt.textContent = event.name;
+    eventSelect.appendChild(opt);
+  });
+
+  formatSelect.innerHTML = '';
+  rollingData.formats.forEach((f) => {
+    const opt = document.createElement('option');
+    opt.value = f.key;
+    opt.textContent = f.label;
+    formatSelect.appendChild(opt);
+  });
+
+  state.rollingEventId = eventSelect.value;
+  state.rollingFormat = formatSelect.value;
+  eventSelect.addEventListener('change', () => {
+    state.rollingEventId = eventSelect.value;
+    renderRolling();
+  });
+  formatSelect.addEventListener('change', () => {
+    state.rollingFormat = formatSelect.value;
+    renderRolling();
+  });
+}
+
+function renderRolling() {
+  const container = document.getElementById('rolling-table');
+  if (!rollingData || !state.rollingEventId) {
+    container.innerHTML = '<p class="empty-note">No data yet (needs the Update Full Result History workflow to have run).</p>';
+    return;
+  }
+  const event = rollingData.events.find((e) => e.id === state.rollingEventId);
+  const rows = event ? event.byFormat[state.rollingFormat] : [];
+
+  renderTable(container, rows, [
+    { key: 'rank', label: '#', value: (r) => r.rank },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    {
+      key: 'solves',
+      label: 'Solves',
+      value: (r) => {
+        const text = r.solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
+        return `<span class="solves-cell">${text}</span>`;
+      },
+    },
+    {
+      key: 'sources',
+      label: 'Sources',
+      value: (r) => `<span class="solves-cell">${r.solves.map((s) => s.label).join(' \u2013 ')}</span>`,
+    },
+    { key: 'result', label: 'Result', value: (r) => r.display },
+  ]);
+}
+
+// Shows a person's official average next to their best rolling average
+// (of the chosen format) for every event, on their profile.
+function renderProfileRolling(wcaId, formatKey) {
+  const container = document.getElementById('profile-rolling-content');
+  if (!rollingData) return;
+
+  const rows = rollingData.events
+    .map((event) => {
+      const rollingRow = (event.byFormat[formatKey] || []).find((r) => r.wcaId === wcaId);
+      if (!rollingRow) return null;
+      const eventDef = rankingsData.events.find((e) => e.id === event.id);
+      const officialRow = eventDef?.hasAverage ? (eventDef.average || []).find((r) => r.wcaId === wcaId) : null;
+      return { eventName: event.name, official: officialRow, rolling: rollingRow };
+    })
+    .filter(Boolean);
+
+  if (rows.length === 0) {
+    container.innerHTML = '<p class="empty-note">Not enough solves recorded yet for this format.</p>';
+    return;
+  }
+
+  const html = `
+    <div class="scroll-table">
+      <table>
+        <thead><tr><th class="name-header">Event</th><th>Official average</th><th>Best rolling (${formatKey})</th></tr></thead>
+        <tbody>
+          ${rows
+            .map(
+              (r) => `
+            <tr>
+              <td>${r.eventName}</td>
+              <td>${r.official ? r.official.display : '—'}</td>
+              <td>${r.rolling.display}</td>
+            </tr>
+          `
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
 // ---------- Tabs & subtabs ----------
 
 function showPanel(tabName) {
@@ -1291,6 +1571,7 @@ setupHomeLinks();
 setupNameLinkDelegation();
 setupSubtabs('overall-subtabs');
 setupSubtabs('misc-subtabs');
+setupSubtabs('compare-subtabs');
 
 setupToggle('sor-type-toggle', 'type', (type) => {
   state.sorType = type;

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose a list</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Choose a list</h1>
+      <p class="updated-at">Pick which group's rankings to view.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="home-links" id="lists-directory">
+      <p class="empty-note">Loading…</p>
+    </div>
+  </main>
+
+  <script>
+    fetch('data/lists-manifest.json', { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((manifest) => {
+        const container = document.getElementById('lists-directory');
+        container.innerHTML = '';
+        (manifest.lists || []).forEach((list) => {
+          const a = document.createElement('a');
+          a.className = 'home-link';
+          a.href = `index.html?list=${encodeURIComponent(list.id)}`;
+          a.innerHTML = `<strong>${list.name}</strong><span>View this list's rankings</span>`;
+          container.appendChild(a);
+        });
+        if ((manifest.lists || []).length === 0) {
+          container.innerHTML = '<p class="empty-note">No lists configured yet.</p>';
+        }
+      })
+      .catch(() => {
+        document.getElementById('lists-directory').innerHTML =
+          '<p class="empty-note">Could not load the list of lists.</p>';
+      });
+  </script>
+</body>
+</html>

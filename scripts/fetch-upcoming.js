@@ -9,10 +9,10 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getListContext } = require('./lib/list-context');
 
-const MEMBERS_PATH = path.join(__dirname, '..', 'config', 'members.json');
-const UPCOMING_CONFIG_PATH = path.join(__dirname, '..', 'config', 'upcoming-competitions.json');
-const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'data', 'upcoming.json');
+const { membersPath: MEMBERS_PATH, upcomingConfigPath: UPCOMING_CONFIG_PATH, dataDir: DATA_DIR } = getListContext();
+const OUTPUT_PATH = path.join(DATA_DIR, 'upcoming.json');
 
 // How far ahead to scan. Wider = more API calls (one WCIF fetch per
 // competition found in the window). 182 days = ~6 months.
