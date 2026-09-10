@@ -1,4 +1,25 @@
 {
-  "generatedAt": null,
-  "competitions": []
+  "generatedAt": "2026-09-10T07:13:49.440Z",
+  "competitions": [
+    {
+      "id": "NapervilleFall2026",
+      "name": "Naperville Fall 2026",
+      "date": null,
+      "city": "Naperville, Illinois",
+      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
+      "attendees": [
+        {
+          "wcaId": "2018CROU02",
+          "name": "Sylvia Crouch",
+          "eventIds": [
+            "333",
+            "444",
+            "777",
+            "skewb",
+            "sq1"
+          ]
+        }
+      ]
+    }
+  ]
 }
