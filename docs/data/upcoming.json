@@ -1,39 +1,22 @@
 {
-  "generatedAt": "2026-09-09T11:25:18.044Z",
+  "generatedAt": "2026-09-10T07:13:49.440Z",
   "competitions": [
     {
-      "id": "FMCEastMelbourne2026",
-      "name": "FMC East Melbourne 2026",
+      "id": "NapervilleFall2026",
+      "name": "Naperville Fall 2026",
       "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
+      "city": "Naperville, Illinois",
+      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
       "attendees": [
         {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
+          "wcaId": "2018CROU02",
+          "name": "Sylvia Crouch",
           "eventIds": [
-            "333fm"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "AdelaideSpring2026",
-      "name": "Adelaide Spring 2026",
-      "date": null,
-      "city": "Adelaide, South Australia",
-      "url": "https://www.worldcubeassociation.org/competitions/AdelaideSpring2026",
-      "attendees": [
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "eventIds": [
-            "222",
             "333",
-            "333bf",
             "444",
-            "clock",
-            "skewb"
+            "777",
+            "skewb",
+            "sq1"
           ]
         }
       ]
