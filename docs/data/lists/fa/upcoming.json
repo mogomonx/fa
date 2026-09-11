@@ -1,76 +1,76 @@
 {
-  "generatedAt": "2026-09-10T12:14:37.965Z",
+  "generatedAt": "2026-09-11T07:13:23.840Z",
   "competitions": [
     {
-      "id": "FMCEastMelbourne2026",
-      "name": "FMC East Melbourne 2026",
+      "id": "TakeYourTimeBrisbane2026",
+      "name": "Take Your Time Brisbane 2026",
       "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
+      "city": "Brisbane, Queensland",
+      "url": "https://www.worldcubeassociation.org/competitions/TakeYourTimeBrisbane2026",
       "attendees": [
         {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
+          "wcaId": "2022SHAR23",
+          "name": "Connor Sharpe",
           "eventIds": [
-            "333fm"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "AdelaideSpring2026",
-      "name": "Adelaide Spring 2026",
-      "date": null,
-      "city": "Adelaide, South Australia",
-      "url": "https://www.worldcubeassociation.org/competitions/AdelaideSpring2026",
-      "attendees": [
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "444",
-            "clock",
-            "skewb"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "BelgraveOpen2026",
-      "name": "Belgrave Open 2026",
-      "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/BelgraveOpen2026",
-      "attendees": [
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
             "333oh",
             "444",
             "555",
-            "pyram",
-            "skewb"
+            "666",
+            "777",
+            "clock",
+            "minx"
           ]
         },
         {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
+          "wcaId": "2021LUAA01",
+          "name": "Aaron Lu",
           "eventIds": [
-            "222",
-            "333",
-            "333bf",
             "333oh",
             "444",
             "555",
-            "pyram",
-            "skewb"
+            "666",
+            "777",
+            "clock",
+            "minx"
+          ]
+        },
+        {
+          "wcaId": "2022JONE11",
+          "name": "Kyle Jones",
+          "eventIds": [
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx"
+          ]
+        },
+        {
+          "wcaId": "2022BURN09",
+          "name": "Joseph Burnett",
+          "eventIds": [
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx"
+          ]
+        },
+        {
+          "wcaId": "2019THEO03",
+          "name": "Connor Theodore",
+          "eventIds": [
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx"
           ]
         }
       ]
