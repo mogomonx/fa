@@ -1,76 +1,42 @@
 {
-  "generatedAt": "2026-09-11T07:13:23.840Z",
+  "generatedAt": "2026-09-12T07:11:05.707Z",
   "competitions": [
     {
-      "id": "TakeYourTimeBrisbane2026",
-      "name": "Take Your Time Brisbane 2026",
+      "id": "NapervilleFall2026",
+      "name": "Naperville Fall 2026",
       "date": null,
-      "city": "Brisbane, Queensland",
-      "url": "https://www.worldcubeassociation.org/competitions/TakeYourTimeBrisbane2026",
+      "city": "Naperville, Illinois",
+      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
       "attendees": [
         {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
+          "wcaId": "2018CROU02",
+          "name": "Sylvia Crouch",
           "eventIds": [
-            "333oh",
+            "333",
             "444",
-            "555",
-            "666",
             "777",
-            "clock",
-            "minx"
+            "skewb",
+            "sq1"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "LethbridgeFavourites2026",
+      "name": "Lethbridge Favourites 2026",
+      "date": null,
+      "city": "Lethbridge, Alberta",
+      "url": "https://www.worldcubeassociation.org/competitions/LethbridgeFavourites2026",
+      "attendees": [
         {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
+          "wcaId": "2022HRDL01",
+          "name": "Mazar Hrdlicka",
           "eventIds": [
-            "333oh",
-            "444",
-            "555",
-            "666",
-            "777",
+            "222",
+            "333",
             "clock",
-            "minx"
-          ]
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "eventIds": [
-            "333oh",
-            "444",
-            "555",
-            "666",
-            "777",
-            "clock",
-            "minx"
-          ]
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "eventIds": [
-            "333oh",
-            "444",
-            "555",
-            "666",
-            "777",
-            "clock",
-            "minx"
-          ]
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "eventIds": [
-            "333oh",
-            "444",
-            "555",
-            "666",
-            "777",
-            "clock",
-            "minx"
+            "pyram",
+            "sq1"
           ]
         }
       ]
