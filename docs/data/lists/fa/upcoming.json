@@ -1,55 +1,63 @@
 {
-  "generatedAt": "2026-09-14T07:12:24.702Z",
+  "generatedAt": "2026-09-15T07:13:50.563Z",
   "competitions": [
     {
-      "id": "RichmondClockClash2026",
-      "name": "Richmond Clock Clash 2026",
+      "id": "FMCEastMelbourne2026",
+      "name": "FMC East Melbourne 2026",
       "date": null,
       "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/RichmondClockClash2026",
+      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
+      "attendees": [
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "333fm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AdelaideSpring2026",
+      "name": "Adelaide Spring 2026",
+      "date": null,
+      "city": "Adelaide, South Australia",
+      "url": "https://www.worldcubeassociation.org/competitions/AdelaideSpring2026",
       "attendees": [
         {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "eventIds": [
+            "222",
+            "333",
             "333bf",
-            "333mbf",
-            "444bf",
-            "555",
-            "555bf",
-            "666",
-            "777",
+            "444",
             "clock",
-            "minx",
-            "sq1"
+            "skewb"
           ]
         },
         {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
+          "wcaId": "2021BLAK01",
+          "name": "Jonah Blakeley",
           "eventIds": [
+            "222",
+            "333",
             "333bf",
-            "333mbf",
-            "444bf",
-            "555",
-            "666",
-            "777",
+            "444",
             "clock",
-            "minx",
-            "sq1"
+            "skewb"
           ]
         },
         {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
+          "wcaId": "2022FETH01",
+          "name": "Miles Fetherston",
           "eventIds": [
+            "222",
+            "333",
             "333bf",
-            "555",
-            "666",
-            "777",
+            "444",
             "clock",
-            "minx",
-            "sq1"
+            "skewb"
           ]
         }
       ]
