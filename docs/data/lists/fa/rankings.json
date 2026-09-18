@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-17T06:12:36.327Z",
-  "dataFetchedAt": "2026-09-17T06:12:36.299Z",
+  "generatedAt": "2026-09-18T06:12:08.654Z",
+  "dataFetchedAt": "2026-09-18T06:12:08.626Z",
   "listName": "FA",
   "people": [
     {
@@ -114,7 +114,7 @@
           "value": 608,
           "display": "6.08",
           "officialRanks": {
-            "world": 1529,
+            "world": 1531,
             "continent": 80,
             "country": 57
           }
@@ -126,7 +126,7 @@
           "value": 611,
           "display": "6.11",
           "officialRanks": {
-            "world": 1578,
+            "world": 1580,
             "continent": 439,
             "country": 47
           }
@@ -138,7 +138,7 @@
           "value": 628,
           "display": "6.28",
           "officialRanks": {
-            "world": 1920,
+            "world": 1922,
             "continent": 100,
             "country": 71
           }
@@ -150,7 +150,7 @@
           "value": 646,
           "display": "6.46",
           "officialRanks": {
-            "world": 2344,
+            "world": 2347,
             "continent": 637,
             "country": 528
           }
@@ -162,7 +162,7 @@
           "value": 670,
           "display": "6.70",
           "officialRanks": {
-            "world": 2941,
+            "world": 2943,
             "continent": 154,
             "country": 117
           }
@@ -174,8 +174,8 @@
           "value": 671,
           "display": "6.71",
           "officialRanks": {
-            "world": 2961,
-            "continent": 1019,
+            "world": 2963,
+            "continent": 1020,
             "country": 96
           }
         },
@@ -186,7 +186,7 @@
           "value": 737,
           "display": "7.37",
           "officialRanks": {
-            "world": 5149,
+            "world": 5152,
             "continent": 250,
             "country": 193
           }
@@ -198,7 +198,7 @@
           "value": 766,
           "display": "7.66",
           "officialRanks": {
-            "world": 6360,
+            "world": 6363,
             "continent": 298,
             "country": 230
           }
@@ -210,69 +210,69 @@
           "value": 846,
           "display": "8.46",
           "officialRanks": {
-            "world": 10437,
+            "world": 10441,
             "continent": 453,
             "country": 347
           }
         },
         {
+          "wcaId": "2019WILL30",
+          "name": "Madeline Willoughby-Khan",
+          "rank": 11,
+          "value": 867,
+          "display": "8.67",
+          "officialRanks": {
+            "world": 11728,
+            "continent": 501,
+            "country": 391
+          }
+        },
+        {
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
-          "rank": 11,
+          "rank": 12,
           "value": 951,
           "display": "9.51",
           "officialRanks": {
-            "world": 17506,
-            "continent": 700,
-            "country": 563
+            "world": 17512,
+            "continent": 701,
+            "country": 564
           }
         },
         {
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
-          "rank": 12,
+          "rank": 13,
           "value": 957,
           "display": "9.57",
           "officialRanks": {
-            "world": 17943,
-            "continent": 716,
-            "country": 576
+            "world": 17948,
+            "continent": 717,
+            "country": 577
           }
         },
         {
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
-          "rank": 13,
+          "rank": 14,
           "value": 978,
           "display": "9.78",
           "officialRanks": {
-            "world": 19566,
-            "continent": 789,
-            "country": 636
+            "world": 19573,
+            "continent": 791,
+            "country": 638
           }
         },
         {
           "wcaId": "2023BENT02",
           "name": "Hamish Bentley",
-          "rank": 14,
+          "rank": 15,
           "value": 990,
           "display": "9.90",
           "officialRanks": {
-            "world": 20464,
-            "continent": 829,
-            "country": 669
-          }
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "rank": 15,
-          "value": 1013,
-          "display": "10.13",
-          "officialRanks": {
-            "world": 22417,
-            "continent": 889,
-            "country": 718
+            "world": 20474,
+            "continent": 831,
+            "country": 671
           }
         },
         {
@@ -282,9 +282,9 @@
           "value": 1077,
           "display": "10.77",
           "officialRanks": {
-            "world": 27912,
-            "continent": 1077,
-            "country": 863
+            "world": 27933,
+            "continent": 1080,
+            "country": 866
           }
         },
         {
@@ -294,7 +294,7 @@
           "value": 2094,
           "display": "20.94",
           "officialRanks": {
-            "world": 121525,
+            "world": 121613,
             "continent": 32313,
             "country": 24487
           }
@@ -308,9 +308,9 @@
           "value": 735,
           "display": "7.35",
           "officialRanks": {
-            "world": 946,
-            "continent": 50,
-            "country": 34
+            "world": 947,
+            "continent": 51,
+            "country": 35
           }
         },
         {
@@ -320,9 +320,9 @@
           "value": 748,
           "display": "7.48",
           "officialRanks": {
-            "world": 1105,
-            "continent": 55,
-            "country": 38
+            "world": 1106,
+            "continent": 56,
+            "country": 39
           }
         },
         {
@@ -332,9 +332,9 @@
           "value": 758,
           "display": "7.58",
           "officialRanks": {
-            "world": 1255,
-            "continent": 63,
-            "country": 45
+            "world": 1256,
+            "continent": 64,
+            "country": 46
           }
         },
         {
@@ -344,8 +344,8 @@
           "value": 787,
           "display": "7.87",
           "officialRanks": {
-            "world": 1684,
-            "continent": 623,
+            "world": 1686,
+            "continent": 624,
             "country": 50
           }
         },
@@ -356,7 +356,7 @@
           "value": 792,
           "display": "7.92",
           "officialRanks": {
-            "world": 1761,
+            "world": 1764,
             "continent": 505,
             "country": 422
           }
@@ -368,7 +368,7 @@
           "value": 802,
           "display": "8.02",
           "officialRanks": {
-            "world": 1966,
+            "world": 1969,
             "continent": 555,
             "country": 65
           }
@@ -380,9 +380,9 @@
           "value": 853,
           "display": "8.53",
           "officialRanks": {
-            "world": 3086,
-            "continent": 151,
-            "country": 116
+            "world": 3088,
+            "continent": 153,
+            "country": 118
           }
         },
         {
@@ -404,9 +404,9 @@
           "value": 1006,
           "display": "10.06",
           "officialRanks": {
-            "world": 8817,
-            "continent": 370,
-            "country": 284
+            "world": 8822,
+            "continent": 371,
+            "country": 285
           }
         },
         {
@@ -416,9 +416,9 @@
           "value": 1073,
           "display": "10.73",
           "officialRanks": {
-            "world": 12257,
-            "continent": 502,
-            "country": 393
+            "world": 12263,
+            "continent": 503,
+            "country": 394
           }
         },
         {
@@ -428,9 +428,9 @@
           "value": 1073,
           "display": "10.73",
           "officialRanks": {
-            "world": 12257,
-            "continent": 502,
-            "country": 393
+            "world": 12263,
+            "continent": 503,
+            "country": 394
           }
         },
         {
@@ -440,21 +440,21 @@
           "value": 1140,
           "display": "11.40",
           "officialRanks": {
-            "world": 16210,
-            "continent": 642,
-            "country": 514
+            "world": 16220,
+            "continent": 644,
+            "country": 516
           }
         },
         {
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "rank": 13,
-          "value": 1200,
-          "display": "12.00",
+          "value": 1157,
+          "display": "11.57",
           "officialRanks": {
-            "world": 20175,
-            "continent": 784,
-            "country": 628
+            "world": 17327,
+            "continent": 678,
+            "country": 544
           }
         },
         {
@@ -464,9 +464,9 @@
           "value": 1229,
           "display": "12.29",
           "officialRanks": {
-            "world": 22261,
-            "continent": 867,
-            "country": 694
+            "world": 22278,
+            "continent": 870,
+            "country": 697
           }
         },
         {
@@ -476,9 +476,9 @@
           "value": 1314,
           "display": "13.14",
           "officialRanks": {
-            "world": 28589,
-            "continent": 1091,
-            "country": 887
+            "world": 28612,
+            "continent": 1095,
+            "country": 891
           }
         },
         {
@@ -488,9 +488,9 @@
           "value": 1338,
           "display": "13.38",
           "officialRanks": {
-            "world": 30519,
-            "continent": 1173,
-            "country": 956
+            "world": 30541,
+            "continent": 1177,
+            "country": 960
           }
         },
         {
@@ -500,9 +500,9 @@
           "value": 2564,
           "display": "25.64",
           "officialRanks": {
-            "world": 123470,
-            "continent": 32868,
-            "country": 24891
+            "world": 123557,
+            "continent": 32869,
+            "country": 24892
           }
         }
       ]
@@ -555,7 +555,7 @@
           "value": 79,
           "display": "0.79",
           "officialRanks": {
-            "world": 408,
+            "world": 409,
             "continent": 114,
             "country": 13
           }
@@ -564,12 +564,12 @@
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "rank": 5,
-          "value": 103,
-          "display": "1.03",
+          "value": 102,
+          "display": "1.02",
           "officialRanks": {
-            "world": 1153,
-            "continent": 97,
-            "country": 63
+            "world": 1117,
+            "continent": 98,
+            "country": 64
           }
         },
         {
@@ -579,9 +579,9 @@
           "value": 107,
           "display": "1.07",
           "officialRanks": {
-            "world": 1307,
-            "continent": 109,
-            "country": 72
+            "world": 1311,
+            "continent": 112,
+            "country": 75
           }
         },
         {
@@ -591,105 +591,105 @@
           "value": 123,
           "display": "1.23",
           "officialRanks": {
-            "world": 2119,
-            "continent": 164,
-            "country": 117
-          }
-        },
-        {
-          "wcaId": "2022GART03",
-          "name": "Nate Garthon",
-          "rank": 8,
-          "value": 162,
-          "display": "1.62",
-          "officialRanks": {
-            "world": 5052,
-            "continent": 298,
-            "country": 220
-          }
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "rank": 9,
-          "value": 164,
-          "display": "1.64",
-          "officialRanks": {
-            "world": 5217,
-            "continent": 303,
-            "country": 223
-          }
-        },
-        {
-          "wcaId": "2022BURN09",
-          "name": "Joseph Burnett",
-          "rank": 10,
-          "value": 166,
-          "display": "1.66",
-          "officialRanks": {
-            "world": 5386,
-            "continent": 317,
-            "country": 233
-          }
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "rank": 11,
-          "value": 196,
-          "display": "1.96",
-          "officialRanks": {
-            "world": 8430,
-            "continent": 459,
-            "country": 348
-          }
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 12,
-          "value": 200,
-          "display": "2.00",
-          "officialRanks": {
-            "world": 8902,
-            "continent": 475,
-            "country": 362
-          }
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "rank": 13,
-          "value": 222,
-          "display": "2.22",
-          "officialRanks": {
-            "world": 11967,
-            "continent": 621,
-            "country": 477
-          }
-        },
-        {
-          "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
-          "rank": 14,
-          "value": 237,
-          "display": "2.37",
-          "officialRanks": {
-            "world": 14402,
-            "continent": 737,
-            "country": 572
+            "world": 2126,
+            "continent": 168,
+            "country": 121
           }
         },
         {
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
-          "rank": 15,
-          "value": 255,
-          "display": "2.55",
+          "rank": 8,
+          "value": 155,
+          "display": "1.55",
           "officialRanks": {
-            "world": 17626,
-            "continent": 907,
-            "country": 709
+            "world": 4464,
+            "continent": 270,
+            "country": 198
+          }
+        },
+        {
+          "wcaId": "2022GART03",
+          "name": "Nate Garthon",
+          "rank": 9,
+          "value": 162,
+          "display": "1.62",
+          "officialRanks": {
+            "world": 5058,
+            "continent": 303,
+            "country": 225
+          }
+        },
+        {
+          "wcaId": "2021BLAK01",
+          "name": "Jonah Blakeley",
+          "rank": 10,
+          "value": 164,
+          "display": "1.64",
+          "officialRanks": {
+            "world": 5223,
+            "continent": 308,
+            "country": 228
+          }
+        },
+        {
+          "wcaId": "2022BURN09",
+          "name": "Joseph Burnett",
+          "rank": 11,
+          "value": 166,
+          "display": "1.66",
+          "officialRanks": {
+            "world": 5393,
+            "continent": 322,
+            "country": 238
+          }
+        },
+        {
+          "wcaId": "2022SHAR23",
+          "name": "Connor Sharpe",
+          "rank": 12,
+          "value": 196,
+          "display": "1.96",
+          "officialRanks": {
+            "world": 8436,
+            "continent": 464,
+            "country": 353
+          }
+        },
+        {
+          "wcaId": "2023BENT02",
+          "name": "Hamish Bentley",
+          "rank": 13,
+          "value": 200,
+          "display": "2.00",
+          "officialRanks": {
+            "world": 8909,
+            "continent": 480,
+            "country": 367
+          }
+        },
+        {
+          "wcaId": "2021LUAA01",
+          "name": "Aaron Lu",
+          "rank": 14,
+          "value": 222,
+          "display": "2.22",
+          "officialRanks": {
+            "world": 11974,
+            "continent": 626,
+            "country": 482
+          }
+        },
+        {
+          "wcaId": "2023SCOT04",
+          "name": "Asaph Scott",
+          "rank": 15,
+          "value": 237,
+          "display": "2.37",
+          "officialRanks": {
+            "world": 14413,
+            "continent": 745,
+            "country": 580
           }
         },
         {
@@ -699,8 +699,8 @@
           "value": 269,
           "display": "2.69",
           "officialRanks": {
-            "world": 20324,
-            "continent": 5436,
+            "world": 20339,
+            "continent": 5438,
             "country": 439
           }
         },
@@ -711,8 +711,8 @@
           "value": 436,
           "display": "4.36",
           "officialRanks": {
-            "world": 58336,
-            "continent": 16293,
+            "world": 58356,
+            "continent": 16294,
             "country": 12440
           }
         }
@@ -761,9 +761,9 @@
           "value": 213,
           "display": "2.13",
           "officialRanks": {
-            "world": 1228,
-            "continent": 88,
-            "country": 61
+            "world": 1230,
+            "continent": 89,
+            "country": 62
           }
         },
         {
@@ -773,7 +773,7 @@
           "value": 243,
           "display": "2.43",
           "officialRanks": {
-            "world": 2003,
+            "world": 2005,
             "continent": 568,
             "country": 463
           }
@@ -785,9 +785,9 @@
           "value": 246,
           "display": "2.46",
           "officialRanks": {
-            "world": 2112,
-            "continent": 135,
-            "country": 99
+            "world": 2114,
+            "continent": 136,
+            "country": 100
           }
         },
         {
@@ -797,9 +797,9 @@
           "value": 251,
           "display": "2.51",
           "officialRanks": {
-            "world": 2282,
-            "continent": 143,
-            "country": 105
+            "world": 2284,
+            "continent": 144,
+            "country": 106
           }
         },
         {
@@ -833,9 +833,9 @@
           "value": 323,
           "display": "3.23",
           "officialRanks": {
-            "world": 6221,
-            "continent": 337,
-            "country": 252
+            "world": 6223,
+            "continent": 338,
+            "country": 253
           }
         },
         {
@@ -845,33 +845,33 @@
           "value": 329,
           "display": "3.29",
           "officialRanks": {
-            "world": 6687,
-            "continent": 354,
-            "country": 268
-          }
-        },
-        {
-          "wcaId": "2023BENT02",
-          "name": "Hamish Bentley",
-          "rank": 12,
-          "value": 365,
-          "display": "3.65",
-          "officialRanks": {
-            "world": 9981,
-            "continent": 517,
-            "country": 406
+            "world": 6689,
+            "continent": 355,
+            "country": 269
           }
         },
         {
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
-          "rank": 13,
-          "value": 369,
-          "display": "3.69",
+          "rank": 12,
+          "value": 334,
+          "display": "3.34",
           "officialRanks": {
-            "world": 10448,
-            "continent": 542,
-            "country": 427
+            "world": 7114,
+            "continent": 377,
+            "country": 289
+          }
+        },
+        {
+          "wcaId": "2023BENT02",
+          "name": "Hamish Bentley",
+          "rank": 13,
+          "value": 365,
+          "display": "3.65",
+          "officialRanks": {
+            "world": 9987,
+            "continent": 521,
+            "country": 410
           }
         },
         {
@@ -881,8 +881,8 @@
           "value": 388,
           "display": "3.88",
           "officialRanks": {
-            "world": 12706,
-            "continent": 3639,
+            "world": 12712,
+            "continent": 3640,
             "country": 273
           }
         },
@@ -893,9 +893,9 @@
           "value": 403,
           "display": "4.03",
           "officialRanks": {
-            "world": 14669,
-            "continent": 750,
-            "country": 587
+            "world": 14674,
+            "continent": 753,
+            "country": 590
           }
         },
         {
@@ -905,9 +905,9 @@
           "value": 474,
           "display": "4.74",
           "officialRanks": {
-            "world": 25840,
-            "continent": 1276,
-            "country": 1017
+            "world": 25851,
+            "continent": 1284,
+            "country": 1025
           }
         },
         {
@@ -917,7 +917,7 @@
           "value": 764,
           "display": "7.64",
           "officialRanks": {
-            "world": 82048,
+            "world": 82065,
             "continent": 23344,
             "country": 17860
           }
@@ -948,7 +948,7 @@
           "value": 2843,
           "display": "28.43",
           "officialRanks": {
-            "world": 1671,
+            "world": 1672,
             "continent": 424,
             "country": 331
           }
@@ -960,9 +960,9 @@
           "value": 2973,
           "display": "29.73",
           "officialRanks": {
-            "world": 2268,
-            "continent": 101,
-            "country": 69
+            "world": 2269,
+            "continent": 102,
+            "country": 70
           }
         },
         {
@@ -972,9 +972,9 @@
           "value": 3111,
           "display": "31.11",
           "officialRanks": {
-            "world": 2982,
-            "continent": 135,
-            "country": 95
+            "world": 2983,
+            "continent": 136,
+            "country": 96
           }
         },
         {
@@ -984,7 +984,7 @@
           "value": 3212,
           "display": "32.12",
           "officialRanks": {
-            "world": 3603,
+            "world": 3604,
             "continent": 890,
             "country": 98
           }
@@ -996,9 +996,9 @@
           "value": 3339,
           "display": "33.39",
           "officialRanks": {
-            "world": 4461,
-            "continent": 192,
-            "country": 141
+            "world": 4463,
+            "continent": 194,
+            "country": 143
           }
         },
         {
@@ -1008,9 +1008,9 @@
           "value": 3416,
           "display": "34.16",
           "officialRanks": {
-            "world": 5056,
-            "continent": 215,
-            "country": 160
+            "world": 5058,
+            "continent": 217,
+            "country": 162
           }
         },
         {
@@ -1020,9 +1020,9 @@
           "value": 3446,
           "display": "34.46",
           "officialRanks": {
-            "world": 5252,
-            "continent": 220,
-            "country": 164
+            "world": 5254,
+            "continent": 222,
+            "country": 166
           }
         },
         {
@@ -1032,8 +1032,8 @@
           "value": 3596,
           "display": "35.96",
           "officialRanks": {
-            "world": 6437,
-            "continent": 2301,
+            "world": 6438,
+            "continent": 2302,
             "country": 178
           }
         },
@@ -1080,9 +1080,9 @@
           "value": 4173,
           "display": "41.73",
           "officialRanks": {
-            "world": 11965,
-            "continent": 464,
-            "country": 352
+            "world": 11966,
+            "continent": 465,
+            "country": 353
           }
         },
         {
@@ -1092,21 +1092,21 @@
           "value": 4509,
           "display": "45.09",
           "officialRanks": {
-            "world": 15518,
-            "continent": 583,
-            "country": 452
+            "world": 15520,
+            "continent": 585,
+            "country": 454
           }
         },
         {
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "rank": 15,
-          "value": 4558,
-          "display": "45.58",
+          "value": 4517,
+          "display": "45.17",
           "officialRanks": {
-            "world": 16041,
-            "continent": 600,
-            "country": 465
+            "world": 15596,
+            "continent": 588,
+            "country": 457
           }
         },
         {
@@ -1116,9 +1116,9 @@
           "value": 5116,
           "display": "51.16",
           "officialRanks": {
-            "world": 22018,
-            "continent": 851,
-            "country": 675
+            "world": 22023,
+            "continent": 855,
+            "country": 679
           }
         },
         {
@@ -1128,7 +1128,7 @@
           "value": 8906,
           "display": "1:29.06",
           "officialRanks": {
-            "world": 52967,
+            "world": 52974,
             "continent": 14715,
             "country": 11054
           }
@@ -1214,9 +1214,9 @@
           "value": 3896,
           "display": "38.96",
           "officialRanks": {
-            "world": 4660,
-            "continent": 210,
-            "country": 159
+            "world": 4661,
+            "continent": 211,
+            "country": 160
           }
         },
         {
@@ -1226,8 +1226,8 @@
           "value": 3914,
           "display": "39.14",
           "officialRanks": {
-            "world": 4760,
-            "continent": 1713,
+            "world": 4762,
+            "continent": 1714,
             "country": 134
           }
         },
@@ -1298,9 +1298,9 @@
           "value": 5000,
           "display": "50.00",
           "officialRanks": {
-            "world": 13823,
-            "continent": 542,
-            "country": 412
+            "world": 13825,
+            "continent": 544,
+            "country": 414
           }
         },
         {
@@ -1310,9 +1310,9 @@
           "value": 5110,
           "display": "51.10",
           "officialRanks": {
-            "world": 14875,
-            "continent": 568,
-            "country": 436
+            "world": 14877,
+            "continent": 570,
+            "country": 438
           }
         },
         {
@@ -1322,9 +1322,9 @@
           "value": 5799,
           "display": "57.99",
           "officialRanks": {
-            "world": 21493,
-            "continent": 826,
-            "country": 651
+            "world": 21501,
+            "continent": 833,
+            "country": 658
           }
         },
         {
@@ -1334,7 +1334,7 @@
           "value": 10289,
           "display": "1:42.89",
           "officialRanks": {
-            "world": 47047,
+            "world": 47054,
             "continent": 13204,
             "country": 10031
           }
@@ -1389,7 +1389,7 @@
           "value": 5750,
           "display": "57.50",
           "officialRanks": {
-            "world": 1761,
+            "world": 1762,
             "continent": 85,
             "country": 62
           }
@@ -1401,9 +1401,9 @@
           "value": 6330,
           "display": "1:03.30",
           "officialRanks": {
-            "world": 3024,
-            "continent": 132,
-            "country": 100
+            "world": 3026,
+            "continent": 133,
+            "country": 101
           }
         },
         {
@@ -1413,8 +1413,8 @@
           "value": 6455,
           "display": "1:04.55",
           "officialRanks": {
-            "world": 3314,
-            "continent": 1178,
+            "world": 3316,
+            "continent": 1179,
             "country": 88
           }
         },
@@ -1425,7 +1425,7 @@
           "value": 6588,
           "display": "1:05.88",
           "officialRanks": {
-            "world": 3671,
+            "world": 3672,
             "continent": 160,
             "country": 123
           }
@@ -1449,9 +1449,9 @@
           "value": 6722,
           "display": "1:07.22",
           "officialRanks": {
-            "world": 4006,
-            "continent": 171,
-            "country": 133
+            "world": 4007,
+            "continent": 172,
+            "country": 134
           }
         },
         {
@@ -1461,9 +1461,9 @@
           "value": 6837,
           "display": "1:08.37",
           "officialRanks": {
-            "world": 4293,
-            "continent": 186,
-            "country": 144
+            "world": 4296,
+            "continent": 188,
+            "country": 146
           }
         },
         {
@@ -1473,21 +1473,21 @@
           "value": 7338,
           "display": "1:13.38",
           "officialRanks": {
-            "world": 5775,
-            "continent": 247,
-            "country": 193
+            "world": 5776,
+            "continent": 248,
+            "country": 194
           }
         },
         {
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "rank": 12,
-          "value": 8471,
-          "display": "1:24.71",
+          "value": 8166,
+          "display": "1:21.66",
           "officialRanks": {
-            "world": 9425,
-            "continent": 407,
-            "country": 312
+            "world": 8360,
+            "continent": 362,
+            "country": 274
           }
         },
         {
@@ -1497,9 +1497,9 @@
           "value": 9186,
           "display": "1:31.86",
           "officialRanks": {
-            "world": 11805,
-            "continent": 495,
-            "country": 389
+            "world": 11807,
+            "continent": 497,
+            "country": 391
           }
         },
         {
@@ -1509,21 +1509,21 @@
           "value": 9517,
           "display": "1:35.17",
           "officialRanks": {
-            "world": 12953,
-            "continent": 538,
-            "country": 428
+            "world": 12956,
+            "continent": 541,
+            "country": 431
           }
         },
         {
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "rank": 15,
-          "value": 9900,
-          "display": "1:39.00",
+          "value": 9603,
+          "display": "1:36.03",
           "officialRanks": {
-            "world": 14166,
-            "continent": 587,
-            "country": 467
+            "world": 13217,
+            "continent": 552,
+            "country": 439
           }
         },
         {
@@ -1533,9 +1533,9 @@
           "value": 10730,
           "display": "1:47.30",
           "officialRanks": {
-            "world": 16670,
-            "continent": 695,
-            "country": 554
+            "world": 16673,
+            "continent": 698,
+            "country": 557
           }
         }
       ],
@@ -1559,7 +1559,7 @@
           "value": 6347,
           "display": "1:03.47",
           "officialRanks": {
-            "world": 1643,
+            "world": 1644,
             "continent": 408,
             "country": 40
           }
@@ -1571,7 +1571,7 @@
           "value": 6350,
           "display": "1:03.50",
           "officialRanks": {
-            "world": 1648,
+            "world": 1649,
             "continent": 411,
             "country": 329
           }
@@ -1619,9 +1619,9 @@
           "value": 7264,
           "display": "1:12.64",
           "officialRanks": {
-            "world": 3450,
-            "continent": 150,
-            "country": 110
+            "world": 3452,
+            "continent": 152,
+            "country": 112
           }
         },
         {
@@ -1631,9 +1631,9 @@
           "value": 7417,
           "display": "1:14.17",
           "officialRanks": {
-            "world": 3813,
-            "continent": 164,
-            "country": 124
+            "world": 3815,
+            "continent": 166,
+            "country": 126
           }
         },
         {
@@ -1643,9 +1643,9 @@
           "value": 7461,
           "display": "1:14.61",
           "officialRanks": {
-            "world": 3926,
-            "continent": 169,
-            "country": 129
+            "world": 3929,
+            "continent": 172,
+            "country": 132
           }
         },
         {
@@ -1655,9 +1655,9 @@
           "value": 7544,
           "display": "1:15.44",
           "officialRanks": {
-            "world": 4138,
-            "continent": 180,
-            "country": 139
+            "world": 4140,
+            "continent": 182,
+            "country": 141
           }
         },
         {
@@ -1667,21 +1667,21 @@
           "value": 7615,
           "display": "1:16.15",
           "officialRanks": {
-            "world": 4314,
-            "continent": 188,
-            "country": 146
+            "world": 4316,
+            "continent": 190,
+            "country": 148
           }
         },
         {
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "rank": 12,
-          "value": 9373,
-          "display": "1:33.73",
+          "value": 8874,
+          "display": "1:28.74",
           "officialRanks": {
-            "world": 9308,
-            "continent": 395,
-            "country": 302
+            "world": 7822,
+            "continent": 332,
+            "country": 252
           }
         },
         {
@@ -1691,9 +1691,9 @@
           "value": 9652,
           "display": "1:36.52",
           "officialRanks": {
-            "world": 10154,
-            "continent": 434,
-            "country": 334
+            "world": 10156,
+            "continent": 436,
+            "country": 336
           }
         },
         {
@@ -1703,21 +1703,21 @@
           "value": 10576,
           "display": "1:45.76",
           "officialRanks": {
-            "world": 12897,
-            "continent": 541,
-            "country": 429
+            "world": 12901,
+            "continent": 545,
+            "country": 433
           }
         },
         {
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "rank": 15,
-          "value": 10976,
-          "display": "1:49.76",
+          "value": 10806,
+          "display": "1:48.06",
           "officialRanks": {
-            "world": 14009,
-            "continent": 586,
-            "country": 467
+            "world": 13580,
+            "continent": 572,
+            "country": 456
           }
         },
         {
@@ -1727,9 +1727,9 @@
           "value": 12667,
           "display": "2:06.67",
           "officialRanks": {
-            "world": 18094,
-            "continent": 760,
-            "country": 605
+            "world": 18096,
+            "continent": 762,
+            "country": 607
           }
         }
       ]
@@ -2223,7 +2223,7 @@
           "value": 31612,
           "display": "5:16.12",
           "officialRanks": {
-            "world": 7973,
+            "world": 7974,
             "continent": 366,
             "country": 280
           }
@@ -2235,7 +2235,7 @@
           "value": 33919,
           "display": "5:39.19",
           "officialRanks": {
-            "world": 8913,
+            "world": 8914,
             "continent": 393,
             "country": 303
           }
@@ -2247,7 +2247,7 @@
           "value": 34583,
           "display": "5:45.83",
           "officialRanks": {
-            "world": 9173,
+            "world": 9175,
             "continent": 404,
             "country": 312
           }
@@ -2259,7 +2259,7 @@
           "value": 41815,
           "display": "6:58.15",
           "officialRanks": {
-            "world": 11403,
+            "world": 11404,
             "continent": 508,
             "country": 402
           }
@@ -2417,7 +2417,7 @@
           "value": 40073,
           "display": "6:40.73",
           "officialRanks": {
-            "world": 8832,
+            "world": 8833,
             "continent": 390,
             "country": 299
           }
@@ -2472,9 +2472,9 @@
           "value": 5086,
           "display": "50.86",
           "officialRanks": {
-            "world": 1239,
-            "continent": 68,
-            "country": 50
+            "world": 1240,
+            "continent": 69,
+            "country": 51
           }
         },
         {
@@ -2532,9 +2532,9 @@
           "value": 11839,
           "display": "1:58.39",
           "officialRanks": {
-            "world": 4016,
-            "continent": 188,
-            "country": 145
+            "world": 4017,
+            "continent": 189,
+            "country": 146
           }
         },
         {
@@ -2544,9 +2544,9 @@
           "value": 11852,
           "display": "1:58.52",
           "officialRanks": {
-            "world": 4026,
-            "continent": 189,
-            "country": 146
+            "world": 4027,
+            "continent": 190,
+            "country": 147
           }
         },
         {
@@ -2556,7 +2556,7 @@
           "value": 12850,
           "display": "2:08.50",
           "officialRanks": {
-            "world": 4419,
+            "world": 4420,
             "continent": 208,
             "country": 158
           }
@@ -2568,7 +2568,7 @@
           "value": 13958,
           "display": "2:19.58",
           "officialRanks": {
-            "world": 4860,
+            "world": 4861,
             "continent": 1091,
             "country": 138
           }
@@ -2580,9 +2580,9 @@
           "value": 23452,
           "display": "3:54.52",
           "officialRanks": {
-            "world": 8149,
-            "continent": 365,
-            "country": 297
+            "world": 8153,
+            "continent": 367,
+            "country": 299
           }
         }
       ],
@@ -2673,7 +2673,7 @@
           "value": 26,
           "display": "26",
           "officialRanks": {
-            "world": 766,
+            "world": 767,
             "continent": 41,
             "country": 31
           }
@@ -2685,7 +2685,7 @@
           "value": 29,
           "display": "29",
           "officialRanks": {
-            "world": 1498,
+            "world": 1499,
             "continent": 76,
             "country": 56
           }
@@ -2697,7 +2697,7 @@
           "value": 29,
           "display": "29",
           "officialRanks": {
-            "world": 1498,
+            "world": 1499,
             "continent": 76,
             "country": 56
           }
@@ -2709,7 +2709,7 @@
           "value": 31,
           "display": "31",
           "officialRanks": {
-            "world": 2148,
+            "world": 2149,
             "continent": 109,
             "country": 81
           }
@@ -2721,7 +2721,7 @@
           "value": 33,
           "display": "33",
           "officialRanks": {
-            "world": 2881,
+            "world": 2884,
             "continent": 156,
             "country": 116
           }
@@ -2733,7 +2733,7 @@
           "value": 33,
           "display": "33",
           "officialRanks": {
-            "world": 2881,
+            "world": 2884,
             "continent": 156,
             "country": 116
           }
@@ -2745,7 +2745,7 @@
           "value": 36,
           "display": "36",
           "officialRanks": {
-            "world": 4133,
+            "world": 4137,
             "continent": 204,
             "country": 156
           }
@@ -2757,7 +2757,7 @@
           "value": 37,
           "display": "37",
           "officialRanks": {
-            "world": 4589,
+            "world": 4593,
             "continent": 1211,
             "country": 66
           }
@@ -2769,7 +2769,7 @@
           "value": 37,
           "display": "37",
           "officialRanks": {
-            "world": 4589,
+            "world": 4593,
             "continent": 225,
             "country": 173
           }
@@ -2781,7 +2781,7 @@
           "value": 41,
           "display": "41",
           "officialRanks": {
-            "world": 6382,
+            "world": 6385,
             "continent": 1445,
             "country": 1105
           }
@@ -2793,7 +2793,7 @@
           "value": 41,
           "display": "41",
           "officialRanks": {
-            "world": 6382,
+            "world": 6385,
             "continent": 303,
             "country": 229
           }
@@ -2805,7 +2805,7 @@
           "value": 42,
           "display": "42",
           "officialRanks": {
-            "world": 6836,
+            "world": 6839,
             "continent": 328,
             "country": 251
           }
@@ -2817,7 +2817,7 @@
           "value": 50,
           "display": "50",
           "officialRanks": {
-            "world": 9748,
+            "world": 9750,
             "continent": 441,
             "country": 346
           }
@@ -2829,7 +2829,7 @@
           "value": 52,
           "display": "52",
           "officialRanks": {
-            "world": 10276,
+            "world": 10279,
             "continent": 468,
             "country": 371
           }
@@ -2841,7 +2841,7 @@
           "value": 54,
           "display": "54",
           "officialRanks": {
-            "world": 10735,
+            "world": 10738,
             "continent": 495,
             "country": 395
           }
@@ -2855,7 +2855,7 @@
           "value": 3333,
           "display": "33.33",
           "officialRanks": {
-            "world": 1209,
+            "world": 1210,
             "continent": 67,
             "country": 52
           }
@@ -2867,7 +2867,7 @@
           "value": 3433,
           "display": "34.33",
           "officialRanks": {
-            "world": 1432,
+            "world": 1433,
             "continent": 87,
             "country": 68
           }
@@ -2879,7 +2879,7 @@
           "value": 3433,
           "display": "34.33",
           "officialRanks": {
-            "world": 1432,
+            "world": 1433,
             "continent": 87,
             "country": 68
           }
@@ -2891,7 +2891,7 @@
           "value": 3467,
           "display": "34.67",
           "officialRanks": {
-            "world": 1513,
+            "world": 1515,
             "continent": 91,
             "country": 72
           }
@@ -2903,7 +2903,7 @@
           "value": 3633,
           "display": "36.33",
           "officialRanks": {
-            "world": 1907,
+            "world": 1909,
             "continent": 112,
             "country": 87
           }
@@ -2915,7 +2915,7 @@
           "value": 4033,
           "display": "40.33",
           "officialRanks": {
-            "world": 3006,
+            "world": 3010,
             "continent": 171,
             "country": 128
           }
@@ -2927,7 +2927,7 @@
           "value": 4100,
           "display": "41.00",
           "officialRanks": {
-            "world": 3187,
+            "world": 3191,
             "continent": 180,
             "country": 136
           }
@@ -2939,7 +2939,7 @@
           "value": 4400,
           "display": "44.00",
           "officialRanks": {
-            "world": 3995,
+            "world": 3999,
             "continent": 214,
             "country": 165
           }
@@ -2951,7 +2951,7 @@
           "value": 4767,
           "display": "47.67",
           "officialRanks": {
-            "world": 4793,
+            "world": 4797,
             "continent": 256,
             "country": 201
           }
@@ -2963,7 +2963,7 @@
           "value": 4933,
           "display": "49.33",
           "officialRanks": {
-            "world": 5064,
+            "world": 5068,
             "continent": 265,
             "country": 207
           }
@@ -2975,7 +2975,7 @@
           "value": 5000,
           "display": "50.00",
           "officialRanks": {
-            "world": 5171,
+            "world": 5175,
             "continent": 1475,
             "country": 69
           }
@@ -2987,7 +2987,7 @@
           "value": 5633,
           "display": "56.33",
           "officialRanks": {
-            "world": 5755,
+            "world": 5760,
             "continent": 291,
             "country": 230
           }
@@ -3006,7 +3006,7 @@
           "value": 985,
           "display": "9.85",
           "officialRanks": {
-            "world": 709,
+            "world": 710,
             "continent": 39,
             "country": 27
           }
@@ -3018,7 +3018,7 @@
           "value": 1028,
           "display": "10.28",
           "officialRanks": {
-            "world": 934,
+            "world": 935,
             "continent": 324,
             "country": 31
           }
@@ -3036,26 +3036,26 @@
           }
         },
         {
-          "wcaId": "2022HRDL01",
-          "name": "Mazar Hrdlicka",
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
           "rank": 4,
-          "value": 1253,
-          "display": "12.53",
+          "value": 1246,
+          "display": "12.46",
           "officialRanks": {
-            "world": 2749,
-            "continent": 709,
-            "country": 84
+            "world": 2681,
+            "continent": 119,
+            "country": 81
           }
         },
         {
-          "wcaId": "2021BUTE03",
-          "name": "Alex Butera",
+          "wcaId": "2022HRDL01",
+          "name": "Mazar Hrdlicka",
           "rank": 5,
-          "value": 1254,
-          "display": "12.54",
+          "value": 1253,
+          "display": "12.53",
           "officialRanks": {
-            "world": 2759,
-            "continent": 122,
+            "world": 2751,
+            "continent": 710,
             "country": 84
           }
         },
@@ -3066,9 +3066,9 @@
           "value": 1390,
           "display": "13.90",
           "officialRanks": {
-            "world": 4396,
-            "continent": 1088,
-            "country": 833
+            "world": 4397,
+            "continent": 1089,
+            "country": 834
           }
         },
         {
@@ -3078,7 +3078,7 @@
           "value": 1411,
           "display": "14.11",
           "officialRanks": {
-            "world": 4685,
+            "world": 4686,
             "continent": 201,
             "country": 148
           }
@@ -3090,7 +3090,7 @@
           "value": 1444,
           "display": "14.44",
           "officialRanks": {
-            "world": 5149,
+            "world": 5150,
             "continent": 213,
             "country": 159
           }
@@ -3102,9 +3102,9 @@
           "value": 1586,
           "display": "15.86",
           "officialRanks": {
-            "world": 7337,
-            "continent": 291,
-            "country": 225
+            "world": 7339,
+            "continent": 292,
+            "country": 226
           }
         },
         {
@@ -3114,9 +3114,9 @@
           "value": 1664,
           "display": "16.64",
           "officialRanks": {
-            "world": 8664,
-            "continent": 345,
-            "country": 265
+            "world": 8666,
+            "continent": 347,
+            "country": 267
           }
         },
         {
@@ -3174,7 +3174,7 @@
           "value": 2037,
           "display": "20.37",
           "officialRanks": {
-            "world": 15885,
+            "world": 15886,
             "continent": 610,
             "country": 488
           }
@@ -3186,7 +3186,7 @@
           "value": 2080,
           "display": "20.80",
           "officialRanks": {
-            "world": 16784,
+            "world": 16785,
             "continent": 643,
             "country": 514
           }
@@ -3198,7 +3198,7 @@
           "value": 5029,
           "display": "50.29",
           "officialRanks": {
-            "world": 56946,
+            "world": 56957,
             "continent": 15206,
             "country": 11308
           }
@@ -3233,12 +3233,12 @@
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "rank": 3,
-          "value": 1500,
-          "display": "15.00",
+          "value": 1436,
+          "display": "14.36",
           "officialRanks": {
-            "world": 1979,
-            "continent": 101,
-            "country": 71
+            "world": 1532,
+            "continent": 77,
+            "country": 57
           }
         },
         {
@@ -3284,7 +3284,7 @@
           "value": 1613,
           "display": "16.13",
           "officialRanks": {
-            "world": 3002,
+            "world": 3001,
             "continent": 140,
             "country": 102
           }
@@ -3308,9 +3308,9 @@
           "value": 2072,
           "display": "20.72",
           "officialRanks": {
-            "world": 8714,
-            "continent": 326,
-            "country": 252
+            "world": 8715,
+            "continent": 327,
+            "country": 253
           }
         },
         {
@@ -3332,7 +3332,7 @@
           "value": 2277,
           "display": "22.77",
           "officialRanks": {
-            "world": 11881,
+            "world": 11882,
             "continent": 442,
             "country": 348
           }
@@ -3344,9 +3344,9 @@
           "value": 2371,
           "display": "23.71",
           "officialRanks": {
-            "world": 13440,
-            "continent": 506,
-            "country": 400
+            "world": 13442,
+            "continent": 507,
+            "country": 401
           }
         },
         {
@@ -3356,9 +3356,9 @@
           "value": 2405,
           "display": "24.05",
           "officialRanks": {
-            "world": 13978,
-            "continent": 523,
-            "country": 416
+            "world": 13980,
+            "continent": 524,
+            "country": 417
           }
         },
         {
@@ -3368,9 +3368,9 @@
           "value": 2482,
           "display": "24.82",
           "officialRanks": {
-            "world": 15226,
-            "continent": 569,
-            "country": 455
+            "world": 15229,
+            "continent": 570,
+            "country": 456
           }
         },
         {
@@ -3380,9 +3380,9 @@
           "value": 2531,
           "display": "25.31",
           "officialRanks": {
-            "world": 16057,
-            "continent": 601,
-            "country": 481
+            "world": 16060,
+            "continent": 602,
+            "country": 482
           }
         },
         {
@@ -3392,9 +3392,9 @@
           "value": 2626,
           "display": "26.26",
           "officialRanks": {
-            "world": 17684,
-            "continent": 662,
-            "country": 532
+            "world": 17687,
+            "continent": 664,
+            "country": 534
           }
         },
         {
@@ -3404,7 +3404,7 @@
           "value": 6281,
           "display": "1:02.81",
           "officialRanks": {
-            "world": 52474,
+            "world": 52483,
             "continent": 14250,
             "country": 10600
           }
@@ -3555,7 +3555,7 @@
           "value": 697,
           "display": "6.97",
           "officialRanks": {
-            "world": 3468,
+            "world": 3470,
             "continent": 178,
             "country": 127
           }
@@ -3567,7 +3567,7 @@
           "value": 715,
           "display": "7.15",
           "officialRanks": {
-            "world": 3709,
+            "world": 3711,
             "continent": 191,
             "country": 137
           }
@@ -3579,7 +3579,7 @@
           "value": 735,
           "display": "7.35",
           "officialRanks": {
-            "world": 3974,
+            "world": 3976,
             "continent": 1151,
             "country": 950
           }
@@ -3591,7 +3591,7 @@
           "value": 767,
           "display": "7.67",
           "officialRanks": {
-            "world": 4386,
+            "world": 4388,
             "continent": 218,
             "country": 153
           }
@@ -3603,7 +3603,7 @@
           "value": 878,
           "display": "8.78",
           "officialRanks": {
-            "world": 6064,
+            "world": 6065,
             "continent": 1479,
             "country": 121
           }
@@ -3615,7 +3615,7 @@
           "value": 889,
           "display": "8.89",
           "officialRanks": {
-            "world": 6255,
+            "world": 6256,
             "continent": 296,
             "country": 218
           }
@@ -3797,7 +3797,7 @@
           "value": 904,
           "display": "9.04",
           "officialRanks": {
-            "world": 4055,
+            "world": 4056,
             "continent": 1200,
             "country": 985
           }
@@ -3876,7 +3876,7 @@
           "value": 5560,
           "display": "55.60",
           "officialRanks": {
-            "world": 2704,
+            "world": 2705,
             "continent": 130,
             "country": 97
           }
@@ -3888,7 +3888,7 @@
           "value": 5587,
           "display": "55.87",
           "officialRanks": {
-            "world": 2757,
+            "world": 2758,
             "continent": 133,
             "country": 100
           }
@@ -3948,7 +3948,7 @@
           "value": 6908,
           "display": "1:09.08",
           "officialRanks": {
-            "world": 5281,
+            "world": 5282,
             "continent": 248,
             "country": 186
           }
@@ -4130,7 +4130,7 @@
           "value": 7512,
           "display": "1:15.12",
           "officialRanks": {
-            "world": 4744,
+            "world": 4745,
             "continent": 219,
             "country": 162
           }
@@ -4190,7 +4190,7 @@
           "value": 9959,
           "display": "1:39.59",
           "officialRanks": {
-            "world": 9426,
+            "world": 9427,
             "continent": 436,
             "country": 336
           }
@@ -4257,9 +4257,9 @@
           "value": 253,
           "display": "2.53",
           "officialRanks": {
-            "world": 2943,
-            "continent": 167,
-            "country": 109
+            "world": 2944,
+            "continent": 168,
+            "country": 110
           }
         },
         {
@@ -4269,9 +4269,9 @@
           "value": 256,
           "display": "2.56",
           "officialRanks": {
-            "world": 3045,
-            "continent": 170,
-            "country": 112
+            "world": 3046,
+            "continent": 171,
+            "country": 113
           }
         },
         {
@@ -4317,7 +4317,7 @@
           "value": 401,
           "display": "4.01",
           "officialRanks": {
-            "world": 9990,
+            "world": 9992,
             "continent": 479,
             "country": 355
           }
@@ -4329,7 +4329,7 @@
           "value": 402,
           "display": "4.02",
           "officialRanks": {
-            "world": 10060,
+            "world": 10062,
             "continent": 480,
             "country": 356
           }
@@ -4341,7 +4341,7 @@
           "value": 429,
           "display": "4.29",
           "officialRanks": {
-            "world": 11840,
+            "world": 11842,
             "continent": 560,
             "country": 419
           }
@@ -4353,7 +4353,7 @@
           "value": 458,
           "display": "4.58",
           "officialRanks": {
-            "world": 13876,
+            "world": 13878,
             "continent": 649,
             "country": 491
           }
@@ -4365,9 +4365,9 @@
           "value": 524,
           "display": "5.24",
           "officialRanks": {
-            "world": 19075,
-            "continent": 911,
-            "country": 701
+            "world": 19077,
+            "continent": 912,
+            "country": 702
           }
         },
         {
@@ -4377,7 +4377,7 @@
           "value": 612,
           "display": "6.12",
           "officialRanks": {
-            "world": 27090,
+            "world": 27091,
             "continent": 1335,
             "country": 1042
           }
@@ -4389,7 +4389,7 @@
           "value": 866,
           "display": "8.66",
           "officialRanks": {
-            "world": 54362,
+            "world": 54368,
             "continent": 15489,
             "country": 12084
           }
@@ -4401,8 +4401,8 @@
           "value": 1651,
           "display": "16.51",
           "officialRanks": {
-            "world": 112252,
-            "continent": 29732,
+            "world": 112268,
+            "continent": 29733,
             "country": 2426
           }
         }
@@ -4571,21 +4571,21 @@
           "value": 854,
           "display": "8.54",
           "officialRanks": {
-            "world": 21162,
-            "continent": 1014,
-            "country": 781
+            "world": 21164,
+            "continent": 1015,
+            "country": 782
           }
         },
         {
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "rank": 15,
-          "value": 1020,
-          "display": "10.20",
+          "value": 957,
+          "display": "9.57",
           "officialRanks": {
-            "world": 33443,
-            "continent": 1674,
-            "country": 1314
+            "world": 28504,
+            "continent": 1413,
+            "country": 1105
           }
         },
         {
@@ -4595,7 +4595,7 @@
           "value": 1264,
           "display": "12.64",
           "officialRanks": {
-            "world": 54408,
+            "world": 54417,
             "continent": 15468,
             "country": 12037
           }
@@ -4607,8 +4607,8 @@
           "value": 2212,
           "display": "22.12",
           "officialRanks": {
-            "world": 107726,
-            "continent": 28688,
+            "world": 107740,
+            "continent": 28689,
             "country": 2350
           }
         }
@@ -4782,9 +4782,9 @@
           "value": 581,
           "display": "5.81",
           "officialRanks": {
-            "world": 17852,
-            "continent": 830,
-            "country": 648
+            "world": 17856,
+            "continent": 833,
+            "country": 651
           }
         },
         {
@@ -4794,9 +4794,9 @@
           "value": 591,
           "display": "5.91",
           "officialRanks": {
-            "world": 18410,
-            "continent": 854,
-            "country": 667
+            "world": 18414,
+            "continent": 857,
+            "country": 670
           }
         },
         {
@@ -4806,7 +4806,7 @@
           "value": 746,
           "display": "7.46",
           "officialRanks": {
-            "world": 27323,
+            "world": 27328,
             "continent": 8065,
             "country": 6376
           }
@@ -4840,13 +4840,13 @@
         {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
-          "rank": 3,
-          "value": 338,
-          "display": "3.38",
+          "rank": 2,
+          "value": 326,
+          "display": "3.26",
           "officialRanks": {
-            "world": 618,
-            "continent": 37,
-            "country": 25
+            "world": 527,
+            "continent": 28,
+            "country": 19
           }
         },
         {
@@ -4892,7 +4892,7 @@
           "value": 452,
           "display": "4.52",
           "officialRanks": {
-            "world": 2162,
+            "world": 2163,
             "continent": 569,
             "country": 45
           }
@@ -4904,9 +4904,9 @@
           "value": 464,
           "display": "4.64",
           "officialRanks": {
-            "world": 2400,
-            "continent": 129,
-            "country": 99
+            "world": 2401,
+            "continent": 130,
+            "country": 100
           }
         },
         {
@@ -4916,9 +4916,9 @@
           "value": 471,
           "display": "4.71",
           "officialRanks": {
-            "world": 2536,
-            "continent": 136,
-            "country": 105
+            "world": 2537,
+            "continent": 137,
+            "country": 106
           }
         },
         {
@@ -4928,9 +4928,9 @@
           "value": 544,
           "display": "5.44",
           "officialRanks": {
-            "world": 4304,
-            "continent": 210,
-            "country": 158
+            "world": 4305,
+            "continent": 211,
+            "country": 159
           }
         },
         {
@@ -4988,7 +4988,7 @@
           "value": 988,
           "display": "9.88",
           "officialRanks": {
-            "world": 20885,
+            "world": 20889,
             "continent": 5914,
             "country": 4611
           }
@@ -5000,9 +5000,9 @@
           "value": 1014,
           "display": "10.14",
           "officialRanks": {
-            "world": 22006,
-            "continent": 1061,
-            "country": 835
+            "world": 22010,
+            "continent": 1065,
+            "country": 839
           }
         }
       ]
@@ -5091,7 +5091,7 @@
           "value": 1086,
           "display": "10.86",
           "officialRanks": {
-            "world": 1945,
+            "world": 1946,
             "continent": 106,
             "country": 78
           }
@@ -5103,7 +5103,7 @@
           "value": 1095,
           "display": "10.95",
           "officialRanks": {
-            "world": 1993,
+            "world": 1994,
             "continent": 109,
             "country": 81
           }
@@ -5115,7 +5115,7 @@
           "value": 1342,
           "display": "13.42",
           "officialRanks": {
-            "world": 3236,
+            "world": 3237,
             "continent": 171,
             "country": 132
           }
@@ -5127,7 +5127,7 @@
           "value": 1415,
           "display": "14.15",
           "officialRanks": {
-            "world": 3662,
+            "world": 3664,
             "continent": 190,
             "country": 148
           }
@@ -5139,7 +5139,7 @@
           "value": 1417,
           "display": "14.17",
           "officialRanks": {
-            "world": 3670,
+            "world": 3672,
             "continent": 192,
             "country": 149
           }
@@ -5151,7 +5151,7 @@
           "value": 1536,
           "display": "15.36",
           "officialRanks": {
-            "world": 4370,
+            "world": 4371,
             "continent": 221,
             "country": 171
           }
@@ -5163,7 +5163,7 @@
           "value": 1945,
           "display": "19.45",
           "officialRanks": {
-            "world": 6763,
+            "world": 6764,
             "continent": 336,
             "country": 257
           }
@@ -5175,7 +5175,7 @@
           "value": 2727,
           "display": "27.27",
           "officialRanks": {
-            "world": 11182,
+            "world": 11184,
             "continent": 556,
             "country": 430
           }
@@ -5187,7 +5187,7 @@
           "value": 4180,
           "display": "41.80",
           "officialRanks": {
-            "world": 17149,
+            "world": 17152,
             "continent": 5577,
             "country": 4461
           }
@@ -5199,7 +5199,7 @@
           "value": 5382,
           "display": "53.82",
           "officialRanks": {
-            "world": 20138,
+            "world": 20140,
             "continent": 4376,
             "country": 311
           }
@@ -5321,7 +5321,7 @@
           "value": 1746,
           "display": "17.46",
           "officialRanks": {
-            "world": 2858,
+            "world": 2859,
             "continent": 152,
             "country": 116
           }
@@ -5333,7 +5333,7 @@
           "value": 1866,
           "display": "18.66",
           "officialRanks": {
-            "world": 3345,
+            "world": 3346,
             "continent": 177,
             "country": 134
           }
@@ -5357,7 +5357,7 @@
           "value": 3136,
           "display": "31.36",
           "officialRanks": {
-            "world": 8832,
+            "world": 8835,
             "continent": 448,
             "country": 343
           }
@@ -5369,7 +5369,7 @@
           "value": 3435,
           "display": "34.35",
           "officialRanks": {
-            "world": 10113,
+            "world": 10115,
             "continent": 516,
             "country": 401
           }
@@ -5493,7 +5493,7 @@
           "value": 101600,
           "display": "16:56.00",
           "officialRanks": {
-            "world": 549,
+            "world": 550,
             "continent": 32,
             "country": 25
           }
@@ -5505,7 +5505,7 @@
           "value": 123100,
           "display": "20:31.00",
           "officialRanks": {
-            "world": 711,
+            "world": 712,
             "continent": 40,
             "country": 32
           }
@@ -5517,7 +5517,7 @@
           "value": 149300,
           "display": "24:53.00",
           "officialRanks": {
-            "world": 849,
+            "world": 850,
             "continent": 51,
             "country": 41
           }
@@ -5659,10 +5659,10 @@
       {
         "wcaId": "2022BURN09",
         "name": "Joseph Burnett",
-        "total": 42,
+        "total": 43,
         "components": {
           "222": {
-            "rank": 10,
+            "rank": 11,
             "hasResult": true
           },
           "333": {
@@ -5734,7 +5734,7 @@
       {
         "wcaId": "2021BUTE03",
         "name": "Alex Butera",
-        "total": 80,
+        "total": 79,
         "components": {
           "222": {
             "rank": 5,
@@ -5769,7 +5769,7 @@
             "hasResult": true
           },
           "333oh": {
-            "rank": 5,
+            "rank": 4,
             "hasResult": true
           },
           "clock": {
@@ -5809,10 +5809,10 @@
       {
         "wcaId": "2021BLAK01",
         "name": "Jonah Blakeley",
-        "total": 89,
+        "total": 90,
         "components": {
           "222": {
-            "rank": 9,
+            "rank": 10,
             "hasResult": true
           },
           "333": {
@@ -5957,81 +5957,6 @@
         }
       },
       {
-        "wcaId": "2022HRDL01",
-        "name": "Mazar Hrdlicka",
-        "total": 104,
-        "components": {
-          "222": {
-            "rank": 4,
-            "hasResult": true
-          },
-          "333": {
-            "rank": 3,
-            "hasResult": true
-          },
-          "444": {
-            "rank": 5,
-            "hasResult": true
-          },
-          "555": {
-            "rank": 3,
-            "hasResult": true
-          },
-          "666": {
-            "rank": 3,
-            "hasResult": true
-          },
-          "777": {
-            "rank": 2,
-            "hasResult": true
-          },
-          "333bf": {
-            "rank": 12,
-            "hasResult": true
-          },
-          "333fm": {
-            "rank": 16,
-            "hasResult": false
-          },
-          "333oh": {
-            "rank": 4,
-            "hasResult": true
-          },
-          "clock": {
-            "rank": 7,
-            "hasResult": true
-          },
-          "minx": {
-            "rank": 8,
-            "hasResult": true
-          },
-          "pyram": {
-            "rank": 2,
-            "hasResult": true
-          },
-          "skewb": {
-            "rank": 11,
-            "hasResult": true
-          },
-          "sq1": {
-            "rank": 1,
-            "hasResult": true
-          },
-          "444bf": {
-            "rank": 7,
-            "hasResult": false
-          },
-          "555bf": {
-            "rank": 5,
-            "hasResult": false
-          },
-          "333mbf": {
-            "rank": 11,
-            "hasResult": false
-          }
-        }
-      },
-      {
         "wcaId": "2022JONE11",
         "name": "Kyle Jones",
         "total": 105,
@@ -6090,6 +6015,81 @@
           },
           "sq1": {
             "rank": 5,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 7,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 5,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 11,
+            "hasResult": false
+          }
+        }
+      },
+      {
+        "wcaId": "2022HRDL01",
+        "name": "Mazar Hrdlicka",
+        "total": 105,
+        "components": {
+          "222": {
+            "rank": 4,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 16,
+            "hasResult": false
+          },
+          "333oh": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 1,
             "hasResult": true
           },
           "444bf": {
@@ -6182,81 +6182,6 @@
         }
       },
       {
-        "wcaId": "2022SHAR23",
-        "name": "Connor Sharpe",
-        "total": 140,
-        "components": {
-          "222": {
-            "rank": 11,
-            "hasResult": true
-          },
-          "333": {
-            "rank": 11,
-            "hasResult": true
-          },
-          "444": {
-            "rank": 11,
-            "hasResult": true
-          },
-          "555": {
-            "rank": 7,
-            "hasResult": true
-          },
-          "666": {
-            "rank": 6,
-            "hasResult": true
-          },
-          "777": {
-            "rank": 6,
-            "hasResult": true
-          },
-          "333bf": {
-            "rank": 5,
-            "hasResult": true
-          },
-          "333fm": {
-            "rank": 12,
-            "hasResult": true
-          },
-          "333oh": {
-            "rank": 12,
-            "hasResult": true
-          },
-          "clock": {
-            "rank": 9,
-            "hasResult": true
-          },
-          "minx": {
-            "rank": 13,
-            "hasResult": true
-          },
-          "pyram": {
-            "rank": 6,
-            "hasResult": true
-          },
-          "skewb": {
-            "rank": 8,
-            "hasResult": true
-          },
-          "sq1": {
-            "rank": 6,
-            "hasResult": true
-          },
-          "444bf": {
-            "rank": 7,
-            "hasResult": false
-          },
-          "555bf": {
-            "rank": 5,
-            "hasResult": false
-          },
-          "333mbf": {
-            "rank": 5,
-            "hasResult": true
-          }
-        }
-      },
-      {
         "wcaId": "2019THEO03",
         "name": "Connor Theodore",
         "total": 142,
@@ -6332,12 +6257,87 @@
         }
       },
       {
-        "wcaId": "2022GART03",
-        "name": "Nate Garthon",
-        "total": 144,
+        "wcaId": "2022SHAR23",
+        "name": "Connor Sharpe",
+        "total": 142,
         "components": {
           "222": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "skewb": {
             "rank": 8,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 7,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 5,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 5,
+            "hasResult": true
+          }
+        }
+      },
+      {
+        "wcaId": "2022GART03",
+        "name": "Nate Garthon",
+        "total": 145,
+        "components": {
+          "222": {
+            "rank": 9,
             "hasResult": true
           },
           "333": {
@@ -6484,14 +6484,14 @@
       {
         "wcaId": "2022TOLH01",
         "name": "Gemma Tolhurst",
-        "total": 178,
+        "total": 179,
         "components": {
           "222": {
             "rank": 3,
             "hasResult": true
           },
           "333": {
-            "rank": 13,
+            "rank": 14,
             "hasResult": true
           },
           "444": {
@@ -6559,14 +6559,14 @@
       {
         "wcaId": "2023BENT02",
         "name": "Hamish Bentley",
-        "total": 179,
+        "total": 181,
         "components": {
           "222": {
-            "rank": 12,
+            "rank": 13,
             "hasResult": true
           },
           "333": {
-            "rank": 14,
+            "rank": 15,
             "hasResult": true
           },
           "444": {
@@ -6632,16 +6632,91 @@
         }
       },
       {
-        "wcaId": "2021LUAA01",
-        "name": "Aaron Lu",
-        "total": 203,
+        "wcaId": "2019WILL30",
+        "name": "Madeline Willoughby-Khan",
+        "total": 195,
         "components": {
           "222": {
-            "rank": 13,
+            "rank": 8,
             "hasResult": true
           },
           "333": {
+            "rank": 11,
+            "hasResult": true
+          },
+          "444": {
             "rank": 12,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 12,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 13,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 5,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 15,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 7,
+            "hasResult": false
+          },
+          "555bf": {
+            "rank": 5,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 7,
+            "hasResult": true
+          }
+        }
+      },
+      {
+        "wcaId": "2021LUAA01",
+        "name": "Aaron Lu",
+        "total": 205,
+        "components": {
+          "222": {
+            "rank": 14,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 13,
             "hasResult": true
           },
           "444": {
@@ -6707,87 +6782,12 @@
         }
       },
       {
-        "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "total": 206,
-        "components": {
-          "222": {
-            "rank": 15,
-            "hasResult": true
-          },
-          "333": {
-            "rank": 15,
-            "hasResult": true
-          },
-          "444": {
-            "rank": 12,
-            "hasResult": true
-          },
-          "555": {
-            "rank": 12,
-            "hasResult": true
-          },
-          "666": {
-            "rank": 14,
-            "hasResult": true
-          },
-          "777": {
-            "rank": 14,
-            "hasResult": true
-          },
-          "333bf": {
-            "rank": 13,
-            "hasResult": true
-          },
-          "333fm": {
-            "rank": 5,
-            "hasResult": true
-          },
-          "333oh": {
-            "rank": 14,
-            "hasResult": true
-          },
-          "clock": {
-            "rank": 15,
-            "hasResult": true
-          },
-          "minx": {
-            "rank": 14,
-            "hasResult": true
-          },
-          "pyram": {
-            "rank": 15,
-            "hasResult": true
-          },
-          "skewb": {
-            "rank": 15,
-            "hasResult": true
-          },
-          "sq1": {
-            "rank": 14,
-            "hasResult": true
-          },
-          "444bf": {
-            "rank": 7,
-            "hasResult": false
-          },
-          "555bf": {
-            "rank": 5,
-            "hasResult": false
-          },
-          "333mbf": {
-            "rank": 7,
-            "hasResult": true
-          }
-        }
-      },
-      {
         "wcaId": "2023SCOT04",
         "name": "Asaph Scott",
-        "total": 207,
+        "total": 208,
         "components": {
           "222": {
-            "rank": 14,
+            "rank": 15,
             "hasResult": true
           },
           "333": {
@@ -7009,6 +7009,81 @@
         }
       },
       {
+        "wcaId": "2021BUTE03",
+        "name": "Alex Butera",
+        "total": 72,
+        "components": {
+          "222": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "333": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "444": {
+            "rank": 7,
+            "hasResult": true
+          },
+          "555": {
+            "rank": 9,
+            "hasResult": true
+          },
+          "666": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "777": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "333bf": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333fm": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "333oh": {
+            "rank": 3,
+            "hasResult": true
+          },
+          "clock": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "minx": {
+            "rank": 8,
+            "hasResult": true
+          },
+          "pyram": {
+            "rank": 6,
+            "hasResult": true
+          },
+          "skewb": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "sq1": {
+            "rank": 2,
+            "hasResult": true
+          },
+          "444bf": {
+            "rank": 1,
+            "hasResult": true
+          },
+          "555bf": {
+            "rank": 1,
+            "hasResult": false
+          },
+          "333mbf": {
+            "rank": 1,
+            "hasResult": false
+          }
+        }
+      },
+      {
         "wcaId": "2018CROU02",
         "name": "Sylvia Crouch",
         "total": 73,
@@ -7072,81 +7147,6 @@
           "444bf": {
             "rank": 2,
             "hasResult": false
-          },
-          "555bf": {
-            "rank": 1,
-            "hasResult": false
-          },
-          "333mbf": {
-            "rank": 1,
-            "hasResult": false
-          }
-        }
-      },
-      {
-        "wcaId": "2021BUTE03",
-        "name": "Alex Butera",
-        "total": 73,
-        "components": {
-          "222": {
-            "rank": 3,
-            "hasResult": true
-          },
-          "333": {
-            "rank": 7,
-            "hasResult": true
-          },
-          "444": {
-            "rank": 7,
-            "hasResult": true
-          },
-          "555": {
-            "rank": 9,
-            "hasResult": true
-          },
-          "666": {
-            "rank": 8,
-            "hasResult": true
-          },
-          "777": {
-            "rank": 8,
-            "hasResult": true
-          },
-          "333bf": {
-            "rank": 2,
-            "hasResult": true
-          },
-          "333fm": {
-            "rank": 2,
-            "hasResult": true
-          },
-          "333oh": {
-            "rank": 3,
-            "hasResult": true
-          },
-          "clock": {
-            "rank": 2,
-            "hasResult": true
-          },
-          "minx": {
-            "rank": 8,
-            "hasResult": true
-          },
-          "pyram": {
-            "rank": 6,
-            "hasResult": true
-          },
-          "skewb": {
-            "rank": 3,
-            "hasResult": true
-          },
-          "sq1": {
-            "rank": 2,
-            "hasResult": true
-          },
-          "444bf": {
-            "rank": 1,
-            "hasResult": true
           },
           "555bf": {
             "rank": 1,
@@ -7836,10 +7836,10 @@
       {
         "wcaId": "2023BENT02",
         "name": "Hamish Bentley",
-        "total": 162,
+        "total": 163,
         "components": {
           "222": {
-            "rank": 12,
+            "rank": 13,
             "hasResult": true
           },
           "333": {
@@ -7911,10 +7911,10 @@
       {
         "wcaId": "2019WILL30",
         "name": "Madeline Willoughby-Khan",
-        "total": 175,
+        "total": 174,
         "components": {
           "222": {
-            "rank": 13,
+            "rank": 12,
             "hasResult": true
           },
           "333": {
@@ -8290,7 +8290,7 @@
       {
         "wcaId": "2021BUTE03",
         "name": "Alex Butera",
-        "score": 70.8,
+        "score": 71.17,
         "components": {
           "222": {
             "score": 95.95,
@@ -8325,7 +8325,7 @@
             "source": "average"
           },
           "333oh": {
-            "score": 73.6,
+            "score": 76.88,
             "source": "average"
           },
           "clock": {
@@ -8341,7 +8341,7 @@
             "source": "average"
           },
           "skewb": {
-            "score": 82.84,
+            "score": 85.89,
             "source": "average"
           },
           "sq1": {
@@ -9040,7 +9040,7 @@
       {
         "wcaId": "2022TOLH01",
         "name": "Gemma Tolhurst",
-        "score": 39.61,
+        "score": 39.65,
         "components": {
           "222": {
             "score": 77.93,
@@ -9055,7 +9055,7 @@
             "source": "average"
           },
           "555": {
-            "score": 48.01,
+            "score": 48.77,
             "source": "average"
           },
           "666": {
@@ -9188,6 +9188,81 @@
         }
       },
       {
+        "wcaId": "2019WILL30",
+        "name": "Madeline Willoughby-Khan",
+        "score": 33.09,
+        "components": {
+          "222": {
+            "score": 49.7,
+            "source": "average"
+          },
+          "333": {
+            "score": 63.53,
+            "source": "average"
+          },
+          "444": {
+            "score": 63.94,
+            "source": "average"
+          },
+          "555": {
+            "score": 59.39,
+            "source": "average"
+          },
+          "666": {
+            "score": 0,
+            "source": null
+          },
+          "777": {
+            "score": 0,
+            "source": null
+          },
+          "333bf": {
+            "score": 5.56,
+            "source": "single"
+          },
+          "333fm": {
+            "score": 91.74,
+            "source": "average"
+          },
+          "333oh": {
+            "score": 45.9,
+            "source": "average"
+          },
+          "clock": {
+            "score": 29.12,
+            "source": "average"
+          },
+          "minx": {
+            "score": 47.13,
+            "source": "average"
+          },
+          "pyram": {
+            "score": 19.02,
+            "source": "average"
+          },
+          "skewb": {
+            "score": 41.85,
+            "source": "average"
+          },
+          "sq1": {
+            "score": 31.51,
+            "source": "average"
+          },
+          "444bf": {
+            "score": 0,
+            "source": null
+          },
+          "555bf": {
+            "score": 0,
+            "source": null
+          },
+          "333mbf": {
+            "score": 14.19,
+            "source": "single"
+          }
+        }
+      },
+      {
         "wcaId": "2021LUAA01",
         "name": "Aaron Lu",
         "score": 33,
@@ -9259,81 +9334,6 @@
           "333mbf": {
             "score": 0,
             "source": null
-          }
-        }
-      },
-      {
-        "wcaId": "2019WILL30",
-        "name": "Madeline Willoughby-Khan",
-        "score": 32.43,
-        "components": {
-          "222": {
-            "score": 44.99,
-            "source": "average"
-          },
-          "333": {
-            "score": 61.25,
-            "source": "average"
-          },
-          "444": {
-            "score": 63.94,
-            "source": "average"
-          },
-          "555": {
-            "score": 56.23,
-            "source": "average"
-          },
-          "666": {
-            "score": 0,
-            "source": null
-          },
-          "777": {
-            "score": 0,
-            "source": null
-          },
-          "333bf": {
-            "score": 5.56,
-            "source": "single"
-          },
-          "333fm": {
-            "score": 91.74,
-            "source": "average"
-          },
-          "333oh": {
-            "score": 45.9,
-            "source": "average"
-          },
-          "clock": {
-            "score": 29.12,
-            "source": "average"
-          },
-          "minx": {
-            "score": 47.13,
-            "source": "average"
-          },
-          "pyram": {
-            "score": 17.84,
-            "source": "average"
-          },
-          "skewb": {
-            "score": 41.85,
-            "source": "average"
-          },
-          "sq1": {
-            "score": 31.51,
-            "source": "average"
-          },
-          "444bf": {
-            "score": 0,
-            "source": null
-          },
-          "555bf": {
-            "score": 0,
-            "source": null
-          },
-          "333mbf": {
-            "score": 14.19,
-            "source": "single"
           }
         }
       },
