@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T07:14:40.643Z",
+  "generatedAt": "2026-09-18T07:12:06.365Z",
   "competitions": [
     {
       "id": "NapervilleFall2026",
@@ -22,74 +22,17 @@
       ]
     },
     {
-      "id": "BrisbaneFinnishAfternoon2026",
-      "name": "Brisbane Finnish Afternoon 2026",
+      "id": "AlgorithmsinArthursSeat2026",
+      "name": "Algorithms in Arthurs Seat 2026",
       "date": null,
-      "city": "Brisbane, Queensland",
-      "url": "https://www.worldcubeassociation.org/competitions/BrisbaneFinnishAfternoon2026",
-      "attendees": [
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "eventIds": [
-            "222",
-            "333"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "BendigoBlitz2026",
-      "name": "Bendigo Blitz 2026",
-      "date": null,
-      "city": "Bendigo, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/BendigoBlitz2026",
+      "city": "Arthurs Seat, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/AlgorithmsinArthursSeat2026",
       "attendees": [
         {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "eventIds": [
-            "222",
             "333",
-            "333bf",
-            "333oh",
-            "444",
-            "555",
-            "clock",
-            "minx",
-            "pyram",
-            "skewb"
-          ]
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333oh",
-            "444",
-            "555",
-            "clock",
-            "minx",
-            "pyram",
-            "skewb"
-          ]
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333oh",
-            "444",
-            "555",
-            "clock",
-            "minx",
-            "pyram",
             "skewb"
           ]
         }
