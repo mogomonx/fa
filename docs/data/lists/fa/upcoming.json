@@ -1,26 +1,6 @@
 {
-  "generatedAt": "2026-09-18T07:12:06.365Z",
+  "generatedAt": "2026-09-19T07:11:02.420Z",
   "competitions": [
-    {
-      "id": "NapervilleFall2026",
-      "name": "Naperville Fall 2026",
-      "date": null,
-      "city": "Naperville, Illinois",
-      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
-      "attendees": [
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "eventIds": [
-            "333",
-            "444",
-            "777",
-            "skewb",
-            "sq1"
-          ]
-        }
-      ]
-    },
     {
       "id": "AlgorithmsinArthursSeat2026",
       "name": "Algorithms in Arthurs Seat 2026",
