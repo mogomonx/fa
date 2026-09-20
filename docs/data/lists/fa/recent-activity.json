@@ -1,5 +1,296 @@
 {
-  "generatedAt": "2026-09-13T06:17:07.418Z",
+  "generatedAt": "2026-09-20T06:12:13.232Z",
   "windowDays": 14,
-  "items": []
+  "items": [
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR2 Average"
+      ],
+      "singleDisplay": "7.96",
+      "averageDisplay": "8.69",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR3 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "10.28",
+      "averageDisplay": "11.57",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR3 Single"
+      ],
+      "singleDisplay": "10.26",
+      "averageDisplay": "13.05",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR1 Single",
+        "PR2 Average"
+      ],
+      "singleDisplay": "8.67",
+      "averageDisplay": "11.75",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 2",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR3 Average"
+      ],
+      "singleDisplay": "1.44",
+      "averageDisplay": "1.80",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR1 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "1.55",
+      "averageDisplay": "3.34",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR3 Average"
+      ],
+      "singleDisplay": "3.47",
+      "averageDisplay": "3.69",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 2",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR1 Single"
+      ],
+      "singleDisplay": "1.02",
+      "averageDisplay": "2.13",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "444",
+      "eventName": "4x4x4 Cube",
+      "badges": [
+        "PR3 Average"
+      ],
+      "singleDisplay": "38.07",
+      "averageDisplay": "41.63",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "444",
+      "eventName": "4x4x4 Cube",
+      "badges": [
+        "PR2 Single",
+        "PR2 Average"
+      ],
+      "singleDisplay": "41.88",
+      "averageDisplay": "46.87",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "444",
+      "eventName": "4x4x4 Cube",
+      "badges": [
+        "PR1 Single"
+      ],
+      "singleDisplay": "45.17",
+      "averageDisplay": "53.40",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "555",
+      "eventName": "5x5x5 Cube",
+      "badges": [
+        "PR2 Average"
+      ],
+      "singleDisplay": "1:10.60",
+      "averageDisplay": "1:14.78",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "555",
+      "eventName": "5x5x5 Cube",
+      "badges": [
+        "PR1 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "1:21.66",
+      "averageDisplay": "1:28.74",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "555",
+      "eventName": "5x5x5 Cube",
+      "badges": [
+        "PR1 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "1:36.03",
+      "averageDisplay": "1:48.06",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "333bf",
+      "eventName": "3x3x3 Blindfolded",
+      "badges": [
+        "PR2 Single"
+      ],
+      "singleDisplay": "3:56.31",
+      "averageDisplay": null,
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "333oh",
+      "eventName": "3x3x3 One-Handed",
+      "badges": [
+        "PR3 Single",
+        "PR3 Average"
+      ],
+      "singleDisplay": "21.72",
+      "averageDisplay": "24.41",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Combined Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333oh",
+      "eventName": "3x3x3 One-Handed",
+      "badges": [
+        "PR1 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "12.46",
+      "averageDisplay": "14.36",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Final",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "pyram",
+      "eventName": "Pyraminx",
+      "badges": [
+        "PR2 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "6.83",
+      "averageDisplay": "9.57",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "badges": [
+        "PR1 Average"
+      ],
+      "singleDisplay": "2.35",
+      "averageDisplay": "3.26",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    },
+    {
+      "wcaId": "2019WILL30",
+      "name": "Madeline Willoughby-Khan",
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "badges": [
+        "PR2 Single",
+        "PR2 Average"
+      ],
+      "singleDisplay": "6.93",
+      "averageDisplay": "8.64",
+      "competitionName": "Belgrave Open 2026",
+      "round": "Round 1",
+      "date": "2026-09-12"
+    }
+  ]
 }

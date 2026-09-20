@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T06:17:07.264Z",
+  "generatedAt": "2026-09-20T06:12:13.090Z",
   "records": [
     {
       "eventId": "333bf",
@@ -242,18 +242,6 @@
       "date": "2026-05-09"
     },
     {
-      "eventId": "333fm",
-      "eventName": "3x3x3 Fewest Moves",
-      "type": "average",
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "value": 3467,
-      "display": "34.67",
-      "competitionName": "Please Be Finished Brisbane 2026",
-      "round": "Final",
-      "date": "2026-03-14"
-    },
-    {
       "eventId": "minx",
       "eventName": "Megaminx",
       "type": "single",
@@ -410,18 +398,6 @@
       "date": "2025-12-14"
     },
     {
-      "eventId": "333fm",
-      "eventName": "3x3x3 Fewest Moves",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 3600,
-      "display": "36.00",
-      "competitionName": "Marino Madness 2025",
-      "round": "Final",
-      "date": "2025-11-30"
-    },
-    {
       "eventId": "333bf",
       "eventName": "3x3x3 Blindfolded",
       "type": "single",
@@ -480,30 +456,6 @@
       "competitionName": "Speedy Southport 2025",
       "round": "Final",
       "date": "2025-11-22"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "average",
-      "wcaId": "2022HRDL01",
-      "name": "Mazar Hrdlicka",
-      "value": 1156,
-      "display": "11.56",
-      "competitionName": "Crossfield Fall 2025",
-      "round": "Combined Round",
-      "date": "2025-11-01"
-    },
-    {
-      "eventId": "333fm",
-      "eventName": "3x3x3 Fewest Moves",
-      "type": "average",
-      "wcaId": "2022TOLH01",
-      "name": "Gemma Tolhurst",
-      "value": 3633,
-      "display": "36.33",
-      "competitionName": "FMC East Melbourne 2025",
-      "round": "Final",
-      "date": "2025-10-25"
     },
     {
       "eventId": "444",
@@ -854,6 +806,18 @@
       "date": "2025-08-30"
     },
     {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1006,
+      "display": "10.06",
+      "competitionName": "Kooyong Clock Clash 2025",
+      "round": "Round 2",
+      "date": "2025-08-16"
+    },
+    {
       "eventId": "clock",
       "eventName": "Clock",
       "type": "average",
@@ -876,6 +840,18 @@
       "competitionName": "Coffs Big Banana Bonanza 2025",
       "round": "Final",
       "date": "2025-08-09"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1035,
+      "display": "10.35",
+      "competitionName": "Spark Melbourne July 2025",
+      "round": "Combined Round",
+      "date": "2025-07-26"
     },
     {
       "eventId": "333",
@@ -998,18 +974,6 @@
       "date": "2025-05-17"
     },
     {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 1275,
-      "display": "12.75",
-      "competitionName": "Evanston Qualifier 2025",
-      "round": "Final",
-      "date": "2025-05-16"
-    },
-    {
       "eventId": "clock",
       "eventName": "Clock",
       "type": "single",
@@ -1130,6 +1094,18 @@
       "date": "2025-04-11"
     },
     {
+      "eventId": "333bf",
+      "eventName": "3x3x3 Blindfolded",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 7247,
+      "display": "1:12.47",
+      "competitionName": "Solving in Sale 2025",
+      "round": "Final",
+      "date": "2025-04-11"
+    },
+    {
       "eventId": "333oh",
       "eventName": "3x3x3 One-Handed",
       "type": "single",
@@ -1173,18 +1149,6 @@
       "name": "Joseph Burnett",
       "value": 5176,
       "display": "51.76",
-      "competitionName": "QLD State Championship 2025",
-      "round": "Final",
-      "date": "2025-04-11"
-    },
-    {
-      "eventId": "pyram",
-      "eventName": "Pyraminx",
-      "type": "single",
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "value": 184,
-      "display": "1.84",
       "competitionName": "QLD State Championship 2025",
       "round": "Final",
       "date": "2025-04-11"
@@ -1418,42 +1382,6 @@
       "date": "2025-02-01"
     },
     {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 921,
-      "display": "9.21",
-      "competitionName": "Naperville Winter 2025",
-      "round": "Combined Final",
-      "date": "2025-02-01"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 809,
-      "display": "8.09",
-      "competitionName": "Naperville Winter 2025",
-      "round": "Round 2",
-      "date": "2025-02-01"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 1401,
-      "display": "14.01",
-      "competitionName": "Naperville Winter 2025",
-      "round": "Combined Final",
-      "date": "2025-02-01"
-    },
-    {
       "eventId": "333bf",
       "eventName": "3x3x3 Blindfolded",
       "type": "single",
@@ -1476,6 +1404,42 @@
       "competitionName": "Melbourne Summer 2025",
       "round": "Round 3",
       "date": "2025-01-24"
+    },
+    {
+      "eventId": "333fm",
+      "eventName": "3x3x3 Fewest Moves",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 3433,
+      "display": "34.33",
+      "competitionName": "Adelaide Summer 2025",
+      "round": "Final",
+      "date": "2025-01-10"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 232,
+      "display": "2.32",
+      "competitionName": "Adelaide Summer 2025",
+      "round": "Combined Round",
+      "date": "2025-01-10"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1056,
+      "display": "10.56",
+      "competitionName": "Tassie Summer 2025",
+      "round": "Combined Round",
+      "date": "2025-01-04"
     },
     {
       "eventId": "666",
@@ -1502,6 +1466,30 @@
       "date": "2024-12-19"
     },
     {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 147,
+      "display": "1.47",
+      "competitionName": "Rubik's WCA Oceanic Championship 2024",
+      "round": "Round 2",
+      "date": "2024-12-19"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1075,
+      "display": "10.75",
+      "competitionName": "Rubik's WCA Oceanic Championship 2024",
+      "round": "Round 2",
+      "date": "2024-12-19"
+    },
+    {
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "type": "single",
@@ -1512,6 +1500,18 @@
       "competitionName": "Concordia Turning Fall 2024",
       "round": "Final",
       "date": "2024-12-07"
+    },
+    {
+      "eventId": "444bf",
+      "eventName": "4x4x4 Blindfolded",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 63100,
+      "display": "10:31.00",
+      "competitionName": "Melbourne Cube Days 2024",
+      "round": "Final",
+      "date": "2024-11-30"
     },
     {
       "eventId": "333bf",
@@ -1644,6 +1644,18 @@
       "competitionName": "Canadian Prairie Championship 2024",
       "round": "Combined Round",
       "date": "2024-11-02"
+    },
+    {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 199,
+      "display": "1.99",
+      "competitionName": "Nimble Newborough 2024",
+      "round": "Round 1",
+      "date": "2024-10-26"
     },
     {
       "eventId": "minx",
@@ -1793,12 +1805,12 @@
       "eventId": "pyram",
       "eventName": "Pyraminx",
       "type": "single",
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "value": 193,
-      "display": "1.93",
-      "competitionName": "Chilling in Toowoomba 2024",
-      "round": "Round 1",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 167,
+      "display": "1.67",
+      "competitionName": "Geelong Winter 2024",
+      "round": "Final",
       "date": "2024-08-24"
     },
     {
@@ -1850,18 +1862,6 @@
       "date": "2024-07-18"
     },
     {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 954,
-      "display": "9.54",
-      "competitionName": "Rubik's WCA North American Championship 2024",
-      "round": "Round 1",
-      "date": "2024-07-18"
-    },
-    {
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "type": "single",
@@ -1883,6 +1883,18 @@
       "display": "35.94",
       "competitionName": "Australian Nationals 2024",
       "round": "Round 2",
+      "date": "2024-07-12"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 346,
+      "display": "3.46",
+      "competitionName": "Australian Nationals 2024",
+      "round": "Final",
       "date": "2024-07-12"
     },
     {
@@ -1982,16 +1994,40 @@
       "date": "2024-06-28"
     },
     {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 205,
+      "display": "2.05",
+      "competitionName": "Apollo Bay Cubing 2024",
+      "round": "Round 1",
+      "date": "2024-06-15"
+    },
+    {
       "eventId": "444",
       "eventName": "4x4x4 Cube",
       "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 3717,
-      "display": "37.17",
-      "competitionName": "Ackerman Spring 2024",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 3716,
+      "display": "37.16",
+      "competitionName": "Kensington May Upstairs 2024",
+      "round": "Final",
+      "date": "2024-05-11"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 373,
+      "display": "3.73",
+      "competitionName": "Kensington May Upstairs 2024",
       "round": "Combined Final",
-      "date": "2024-06-15"
+      "date": "2024-05-11"
     },
     {
       "eventId": "222",
@@ -2003,6 +2039,18 @@
       "display": "1.07",
       "competitionName": "SA Sprint Showdown 2024",
       "round": "Round 2",
+      "date": "2024-05-04"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 269,
+      "display": "2.69",
+      "competitionName": "SA Sprint Showdown 2024",
+      "round": "Combined Final",
       "date": "2024-05-04"
     },
     {
@@ -2054,14 +2102,14 @@
       "date": "2024-04-06"
     },
     {
-      "eventId": "clock",
-      "eventName": "Clock",
+      "eventId": "sq1",
+      "eventName": "Square-1",
       "type": "average",
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "value": 433,
-      "display": "4.33",
-      "competitionName": "Wide Bay Cubing 2024",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1097,
+      "display": "10.97",
+      "competitionName": "Solving In Sale 2024",
       "round": "Combined Final",
       "date": "2024-04-06"
     },
@@ -2212,23 +2260,11 @@
     {
       "eventId": "clock",
       "eventName": "Clock",
-      "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 562,
-      "display": "5.62",
-      "competitionName": "DuPage Winter 2024",
-      "round": "Combined Final",
-      "date": "2024-02-03"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
       "type": "single",
-      "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
-      "value": 557,
-      "display": "5.57",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 390,
+      "display": "3.90",
       "competitionName": "Melbourne Summer 2024",
       "round": "Combined Final",
       "date": "2024-01-19"
@@ -2237,22 +2273,10 @@
       "eventId": "clock",
       "eventName": "Clock",
       "type": "single",
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "value": 437,
-      "display": "4.37",
-      "competitionName": "Melbourne Summer 2024",
-      "round": "Combined Final",
-      "date": "2024-01-19"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "single",
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "value": 418,
-      "display": "4.18",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 328,
+      "display": "3.28",
       "competitionName": "Melbourne Summer 2024",
       "round": "Final",
       "date": "2024-01-19"
@@ -2261,10 +2285,10 @@
       "eventId": "clock",
       "eventName": "Clock",
       "type": "average",
-      "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
-      "value": 688,
-      "display": "6.88",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 525,
+      "display": "5.25",
       "competitionName": "Melbourne Summer 2024",
       "round": "Combined Final",
       "date": "2024-01-19"
@@ -2273,10 +2297,10 @@
       "eventId": "clock",
       "eventName": "Clock",
       "type": "average",
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "value": 605,
-      "display": "6.05",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 430,
+      "display": "4.30",
       "competitionName": "Melbourne Summer 2024",
       "round": "Final",
       "date": "2024-01-19"
@@ -2306,6 +2330,30 @@
       "date": "2024-01-13"
     },
     {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 433,
+      "display": "4.33",
+      "competitionName": "Tassie Summer 2024",
+      "round": "Combined Round",
+      "date": "2024-01-13"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1116,
+      "display": "11.16",
+      "competitionName": "Tassie Summer 2024",
+      "round": "Combined Round",
+      "date": "2024-01-13"
+    },
+    {
       "eventId": "pyram",
       "eventName": "Pyraminx",
       "type": "single",
@@ -2316,30 +2364,6 @@
       "competitionName": "New Zealand Nationals 2023",
       "round": "Round 2",
       "date": "2023-12-08"
-    },
-    {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "single",
-      "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
-      "value": 145,
-      "display": "1.45",
-      "competitionName": "Mildura Madness 2023",
-      "round": "Round 1",
-      "date": "2023-12-02"
-    },
-    {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "average",
-      "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
-      "value": 217,
-      "display": "2.17",
-      "competitionName": "Mildura Madness 2023",
-      "round": "Round 1",
-      "date": "2023-12-02"
     },
     {
       "eventId": "333oh",
@@ -2378,18 +2402,6 @@
       "date": "2023-11-26"
     },
     {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 813,
-      "display": "8.13",
-      "competitionName": "Peoria Fall 2023",
-      "round": "Final",
-      "date": "2023-11-18"
-    },
-    {
       "eventId": "pyram",
       "eventName": "Pyraminx",
       "type": "average",
@@ -2402,39 +2414,27 @@
       "date": "2023-11-18"
     },
     {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
+      "eventId": "333mbf",
+      "eventName": "3x3x3 Multi-Blind",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 970077100,
+      "display": "2/2 12:51",
+      "competitionName": "Melbourne Cube Days 2023",
+      "round": "Final",
+      "date": "2023-11-11"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
       "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 303,
-      "display": "3.03",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 581,
+      "display": "5.81",
       "competitionName": "Playford Cubing 2023",
-      "round": "Final",
-      "date": "2023-11-04"
-    },
-    {
-      "eventId": "skewb",
-      "eventName": "Skewb",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 259,
-      "display": "2.59",
-      "competitionName": "Playford Cubing 2023",
-      "round": "Round 1",
-      "date": "2023-11-04"
-    },
-    {
-      "eventId": "skewb",
-      "eventName": "Skewb",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 199,
-      "display": "1.99",
-      "competitionName": "Playford Cubing 2023",
-      "round": "Final",
+      "round": "Combined Round",
       "date": "2023-11-04"
     },
     {
@@ -2462,18 +2462,6 @@
       "date": "2023-11-04"
     },
     {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 885,
-      "display": "8.85",
-      "competitionName": "Pyraminx in Pewaukee 2023",
-      "round": "Combined Final",
-      "date": "2023-10-07"
-    },
-    {
       "eventId": "333",
       "eventName": "3x3x3 Cube",
       "type": "average",
@@ -2483,6 +2471,18 @@
       "display": "8.78",
       "competitionName": "Australian Nationals 2023",
       "round": "Round 2",
+      "date": "2023-09-28"
+    },
+    {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 120,
+      "display": "1.20",
+      "competitionName": "Australian Nationals 2023",
+      "round": "Round 1",
       "date": "2023-09-28"
     },
     {
@@ -2522,18 +2522,6 @@
       "date": "2023-09-28"
     },
     {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "single",
-      "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
-      "value": 596,
-      "display": "5.96",
-      "competitionName": "Australian Nationals 2023",
-      "round": "Round 2",
-      "date": "2023-09-28"
-    },
-    {
       "eventId": "minx",
       "eventName": "Megaminx",
       "type": "average",
@@ -2555,6 +2543,30 @@
       "display": "4.26",
       "competitionName": "Australian Nationals 2023",
       "round": "Round 2",
+      "date": "2023-09-28"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 408,
+      "display": "4.08",
+      "competitionName": "Australian Nationals 2023",
+      "round": "Round 1",
+      "date": "2023-09-28"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 673,
+      "display": "6.73",
+      "competitionName": "Australian Nationals 2023",
+      "round": "Final",
       "date": "2023-09-28"
     },
     {
@@ -2680,18 +2692,6 @@
     {
       "eventId": "skewb",
       "eventName": "Skewb",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 266,
-      "display": "2.66",
-      "competitionName": "South Australian Open 2023",
-      "round": "Final",
-      "date": "2023-09-02"
-    },
-    {
-      "eventId": "skewb",
-      "eventName": "Skewb",
       "type": "average",
       "wcaId": "2021BLAK01",
       "name": "Jonah Blakeley",
@@ -2735,18 +2735,6 @@
       "display": "37.00",
       "competitionName": "Silent South Australia 2023",
       "round": "Final",
-      "date": "2023-08-26"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 924,
-      "display": "9.24",
-      "competitionName": "Silent South Australia 2023",
-      "round": "Combined Final",
       "date": "2023-08-26"
     },
     {
@@ -2822,52 +2810,16 @@
       "date": "2023-08-19"
     },
     {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 734,
-      "display": "7.34",
-      "competitionName": "Naperville Summer 2023",
-      "round": "Combined Final",
-      "date": "2023-08-19"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 1120,
-      "display": "11.20",
-      "competitionName": "Naperville Summer 2023",
-      "round": "Combined Final",
-      "date": "2023-08-19"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 1063,
-      "display": "10.63",
-      "competitionName": "Naperville Summer 2023",
-      "round": "Combined Final",
-      "date": "2023-08-19"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "average",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 1512,
-      "display": "15.12",
-      "competitionName": "Naperville Summer 2023",
-      "round": "Combined Final",
-      "date": "2023-08-19"
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 419,
+      "display": "4.19",
+      "competitionName": "Geelong Winter 2023",
+      "round": "Round 1",
+      "date": "2023-07-29"
     },
     {
       "eventId": "333",
@@ -2930,6 +2882,18 @@
       "date": "2023-07-08"
     },
     {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 436,
+      "display": "4.36",
+      "competitionName": "Victorian Open 2023",
+      "round": "Round 2",
+      "date": "2023-07-01"
+    },
+    {
       "eventId": "minx",
       "eventName": "Megaminx",
       "type": "average",
@@ -2942,64 +2906,40 @@
       "date": "2023-06-25"
     },
     {
-      "eventId": "skewb",
-      "eventName": "Skewb",
+      "eventId": "333fm",
+      "eventName": "3x3x3 Fewest Moves",
       "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 463,
-      "display": "4.63",
-      "competitionName": "Adelaide Winter Sunday 2023",
-      "round": "Round 1",
-      "date": "2023-06-25"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1265,
-      "display": "12.65",
-      "competitionName": "Adelaide Winter Sunday 2023",
-      "round": "Combined Round",
-      "date": "2023-06-25"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1765,
-      "display": "17.65",
-      "competitionName": "Adelaide Winter Sunday 2023",
-      "round": "Combined Round",
-      "date": "2023-06-25"
-    },
-    {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 181,
-      "display": "1.81",
-      "competitionName": "Adelaide Autumn 2023",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 5200,
+      "display": "52.00",
+      "competitionName": "Side N Blind Narre Warren 2023",
       "round": "Final",
-      "date": "2023-05-21"
+      "date": "2023-06-03"
     },
     {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 336,
-      "display": "3.36",
-      "competitionName": "Adelaide Autumn 2023",
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 488,
+      "display": "4.88",
+      "competitionName": "Side N Blind Narre Warren 2023",
+      "round": "Combined Final",
+      "date": "2023-06-03"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 456,
+      "display": "4.56",
+      "competitionName": "Side N Blind Narre Warren 2023",
       "round": "Final",
-      "date": "2023-05-21"
+      "date": "2023-06-03"
     },
     {
       "eventId": "555",
@@ -3050,6 +2990,78 @@
       "date": "2023-05-13"
     },
     {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1167,
+      "display": "11.67",
+      "competitionName": "Apollo Bay Cubing 2023",
+      "round": "Combined Round",
+      "date": "2023-05-13"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 461,
+      "display": "4.61",
+      "competitionName": "Chilling in Canberra 2023",
+      "round": "Final",
+      "date": "2023-05-06"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 793,
+      "display": "7.93",
+      "competitionName": "Chilling in Canberra 2023",
+      "round": "Combined Round",
+      "date": "2023-05-06"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 155,
+      "display": "1.55",
+      "competitionName": "Solving in Sale 2023",
+      "round": "Round 1",
+      "date": "2023-04-15"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 484,
+      "display": "4.84",
+      "competitionName": "Solving in Sale 2023",
+      "round": "Round 1",
+      "date": "2023-04-15"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 468,
+      "display": "4.68",
+      "competitionName": "Solving in Sale 2023",
+      "round": "Final",
+      "date": "2023-04-15"
+    },
+    {
       "eventId": "333",
       "eventName": "3x3x3 Cube",
       "type": "average",
@@ -3074,15 +3086,39 @@
       "date": "2023-04-01"
     },
     {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 531,
+      "display": "5.31",
+      "competitionName": "Sydney Ultimate Clock Clash 2023",
+      "round": "Semi Final",
+      "date": "2023-03-26"
+    },
+    {
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "type": "single",
-      "wcaId": "2022TOLH01",
-      "name": "Gemma Tolhurst",
-      "value": 193,
-      "display": "1.93",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 135,
+      "display": "1.35",
       "competitionName": "Speedcubing at Seaworks 2023",
-      "round": "Round 2",
+      "round": "Round 1",
+      "date": "2023-03-18"
+    },
+    {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 209,
+      "display": "2.09",
+      "competitionName": "Speedcubing at Seaworks 2023",
+      "round": "Round 1",
       "date": "2023-03-18"
     },
     {
@@ -3124,23 +3160,11 @@
     {
       "eventId": "clock",
       "eventName": "Clock",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 819,
-      "display": "8.19",
-      "competitionName": "On the Side South Australia 2023",
-      "round": "Combined Round",
-      "date": "2023-03-11"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
       "type": "average",
-      "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
-      "value": 1271,
-      "display": "12.71",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 688,
+      "display": "6.88",
       "competitionName": "On the Side South Australia 2023",
       "round": "Combined Round",
       "date": "2023-03-11"
@@ -3160,37 +3184,13 @@
     {
       "eventId": "sq1",
       "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1785,
-      "display": "17.85",
-      "competitionName": "On the Side South Australia 2023",
-      "round": "Combined Final",
-      "date": "2023-03-11"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1356,
-      "display": "13.56",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1169,
+      "display": "11.69",
       "competitionName": "On the Side South Australia 2023",
       "round": "Combined Round",
-      "date": "2023-03-11"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1960,
-      "display": "19.60",
-      "competitionName": "On the Side South Australia 2023",
-      "round": "Combined Final",
       "date": "2023-03-11"
     },
     {
@@ -3206,6 +3206,30 @@
       "date": "2023-03-11"
     },
     {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 564,
+      "display": "5.64",
+      "competitionName": "February Fitzroy Fun 2023",
+      "round": "Combined Final",
+      "date": "2023-02-11"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1197,
+      "display": "11.97",
+      "competitionName": "February Fitzroy Fun 2023",
+      "round": "Combined Final",
+      "date": "2023-02-11"
+    },
+    {
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "type": "single",
@@ -3215,30 +3239,6 @@
       "display": "2.21",
       "competitionName": "Brisbane Summer 2023",
       "round": "Round 2",
-      "date": "2023-02-04"
-    },
-    {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "average",
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "value": 381,
-      "display": "3.81",
-      "competitionName": "Brisbane Summer 2023",
-      "round": "Round 2",
-      "date": "2023-02-04"
-    },
-    {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "average",
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "value": 359,
-      "display": "3.59",
-      "competitionName": "Brisbane Summer 2023",
-      "round": "Final",
       "date": "2023-02-04"
     },
     {
@@ -3302,28 +3302,124 @@
       "date": "2023-01-28"
     },
     {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 324,
+      "display": "3.24",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Round 3",
+      "date": "2023-01-20"
+    },
+    {
       "eventId": "skewb",
       "eventName": "Skewb",
       "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 372,
-      "display": "3.72",
-      "competitionName": "Adelaide Summer 2023",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 334,
+      "display": "3.34",
+      "competitionName": "Melbourne Summer 2023",
       "round": "Round 1",
-      "date": "2023-01-28"
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 250,
+      "display": "2.50",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Round 3",
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 516,
+      "display": "5.16",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Round 1",
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1310,
+      "display": "13.10",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Combined Final",
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 856,
+      "display": "8.56",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Round 2",
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1476,
+      "display": "14.76",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Combined Final",
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1399,
+      "display": "13.99",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Round 2",
+      "date": "2023-01-20"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1394,
+      "display": "13.94",
+      "competitionName": "Melbourne Summer 2023",
+      "round": "Final",
+      "date": "2023-01-20"
     },
     {
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 391,
-      "display": "3.91",
-      "competitionName": "Rubik's WCA Oceanic Championship 2022",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 355,
+      "display": "3.55",
+      "competitionName": "Tassie Summer 2023",
       "round": "Round 1",
-      "date": "2022-12-15"
+      "date": "2023-01-08"
     },
     {
       "eventId": "333bf",
@@ -3333,6 +3429,30 @@
       "name": "Jonah Blakeley",
       "value": 11099,
       "display": "1:50.99",
+      "competitionName": "Rubik's WCA Oceanic Championship 2022",
+      "round": "Round 1",
+      "date": "2022-12-15"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 670,
+      "display": "6.70",
+      "competitionName": "Rubik's WCA Oceanic Championship 2022",
+      "round": "Round 1",
+      "date": "2022-12-15"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 784,
+      "display": "7.84",
       "competitionName": "Rubik's WCA Oceanic Championship 2022",
       "round": "Round 1",
       "date": "2022-12-15"
@@ -3360,18 +3480,6 @@
       "competitionName": "Rubik's WCA Oceanic Championship 2022",
       "round": "Combined Final",
       "date": "2022-12-15"
-    },
-    {
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 435,
-      "display": "4.35",
-      "competitionName": "South Australian Open 2022",
-      "round": "Round 1",
-      "date": "2022-11-05"
     },
     {
       "eventId": "666",
@@ -3407,30 +3515,6 @@
       "display": "3:06.64",
       "competitionName": "South Australian Open 2022",
       "round": "Final",
-      "date": "2022-11-05"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1128,
-      "display": "11.28",
-      "competitionName": "South Australian Open 2022",
-      "round": "Combined Round",
-      "date": "2022-11-05"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1422,
-      "display": "14.22",
-      "competitionName": "South Australian Open 2022",
-      "round": "Combined Round",
       "date": "2022-11-05"
     },
     {
@@ -3470,16 +3554,100 @@
       "date": "2022-11-05"
     },
     {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 223,
+      "display": "2.23",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Round 1",
+      "date": "2022-10-15"
+    },
+    {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 391,
+      "display": "3.91",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Round 1",
+      "date": "2022-10-15"
+    },
+    {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 373,
+      "display": "3.73",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Round 2",
+      "date": "2022-10-15"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 697,
+      "display": "6.97",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Combined Final",
+      "date": "2022-10-15"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 927,
+      "display": "9.27",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Combined Final",
+      "date": "2022-10-15"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 904,
+      "display": "9.04",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Final",
+      "date": "2022-10-15"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 433,
+      "display": "4.33",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Round 1",
+      "date": "2022-10-15"
+    },
+    {
       "eventId": "sq1",
       "eventName": "Square-1",
       "type": "average",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 2552,
-      "display": "25.52",
-      "competitionName": "South Australian Open 2022",
-      "round": "Combined Round",
-      "date": "2022-11-05"
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1666,
+      "display": "16.66",
+      "competitionName": "Koalafication Melbourne 2022",
+      "round": "Combined Final",
+      "date": "2022-10-15"
     },
     {
       "eventId": "444",
@@ -3554,30 +3722,6 @@
       "date": "2022-09-30"
     },
     {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1817,
-      "display": "18.17",
-      "competitionName": "Australian Nationals 2022",
-      "round": "Combined Final",
-      "date": "2022-09-30"
-    },
-    {
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 1873,
-      "display": "18.73",
-      "competitionName": "Australian Nationals 2022",
-      "round": "Combined Final",
-      "date": "2022-09-30"
-    },
-    {
       "eventId": "333fm",
       "eventName": "3x3x3 Fewest Moves",
       "type": "single",
@@ -3628,18 +3772,6 @@
     {
       "eventId": "pyram",
       "eventName": "Pyraminx",
-      "type": "single",
-      "wcaId": "2018CROU02",
-      "name": "Sylvia Crouch",
-      "value": 538,
-      "display": "5.38",
-      "competitionName": "Cubing Peoria 2022",
-      "round": "Round 1",
-      "date": "2022-09-24"
-    },
-    {
-      "eventId": "pyram",
-      "eventName": "Pyraminx",
       "type": "average",
       "wcaId": "2018CROU02",
       "name": "Sylvia Crouch",
@@ -3648,6 +3780,54 @@
       "competitionName": "Cubing Peoria 2022",
       "round": "Round 1",
       "date": "2022-09-24"
+    },
+    {
+      "eventId": "pyram",
+      "eventName": "Pyraminx",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 431,
+      "display": "4.31",
+      "competitionName": "Apollo Bay Cubing 2022",
+      "round": "Round 2",
+      "date": "2022-09-10"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 441,
+      "display": "4.41",
+      "competitionName": "Apollo Bay Cubing 2022",
+      "round": "Final",
+      "date": "2022-09-10"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1346,
+      "display": "13.46",
+      "competitionName": "Apollo Bay Cubing 2022",
+      "round": "Combined Round",
+      "date": "2022-09-10"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 2174,
+      "display": "21.74",
+      "competitionName": "Apollo Bay Cubing 2022",
+      "round": "Combined Round",
+      "date": "2022-09-10"
     },
     {
       "eventId": "333",
@@ -3683,18 +3863,6 @@
       "display": "13.05",
       "competitionName": "Runaway Bay Sunday Challenge 2022",
       "round": "Round 2",
-      "date": "2022-09-04"
-    },
-    {
-      "eventId": "clock",
-      "eventName": "Clock",
-      "type": "average",
-      "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "value": 2206,
-      "display": "22.06",
-      "competitionName": "Runaway Bay Sunday Challenge 2022",
-      "round": "Combined Round",
       "date": "2022-09-04"
     },
     {
@@ -3772,30 +3940,6 @@
     {
       "eventId": "skewb",
       "eventName": "Skewb",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 578,
-      "display": "5.78",
-      "competitionName": "Clare Valley Cubing 2022",
-      "round": "Round 1",
-      "date": "2022-08-21"
-    },
-    {
-      "eventId": "skewb",
-      "eventName": "Skewb",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 488,
-      "display": "4.88",
-      "competitionName": "Clare Valley Cubing 2022",
-      "round": "Final",
-      "date": "2022-08-21"
-    },
-    {
-      "eventId": "skewb",
-      "eventName": "Skewb",
       "type": "average",
       "wcaId": "2021BLAK01",
       "name": "Jonah Blakeley",
@@ -3816,6 +3960,30 @@
       "competitionName": "Clare Valley Cubing 2022",
       "round": "Final",
       "date": "2022-08-21"
+    },
+    {
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 440,
+      "display": "4.40",
+      "competitionName": "Melbourne Trilogy Sunday 2022",
+      "round": "Round 1",
+      "date": "2022-08-14"
+    },
+    {
+      "eventId": "333oh",
+      "eventName": "3x3x3 One-Handed",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 2808,
+      "display": "28.08",
+      "competitionName": "Melbourne Trilogy Sunday 2022",
+      "round": "Combined Final",
+      "date": "2022-08-14"
     },
     {
       "eventId": "222",
@@ -3852,6 +4020,66 @@
       "competitionName": "Queensland Open 2022",
       "round": "Combined Final",
       "date": "2022-07-23"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1276,
+      "display": "12.76",
+      "competitionName": "Abbotsford Begins 2022",
+      "round": "Combined Final",
+      "date": "2022-07-03"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1244,
+      "display": "12.44",
+      "competitionName": "Abbotsford Begins 2022",
+      "round": "Semi Final",
+      "date": "2022-07-03"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1549,
+      "display": "15.49",
+      "competitionName": "Abbotsford Begins 2022",
+      "round": "Combined Final",
+      "date": "2022-07-03"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 1902,
+      "display": "19.02",
+      "competitionName": "Abbotsford Begins 2022",
+      "round": "Semi Final",
+      "date": "2022-07-03"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 2340,
+      "display": "23.40",
+      "competitionName": "Abbotsford Begins 2022",
+      "round": "Semi Final",
+      "date": "2022-07-03"
     },
     {
       "eventId": "333",
@@ -3938,6 +4166,42 @@
       "date": "2022-05-22"
     },
     {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 453,
+      "display": "4.53",
+      "competitionName": "Solving in Sale 2022",
+      "round": "Round 1",
+      "date": "2022-04-09"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 3055,
+      "display": "30.55",
+      "competitionName": "Solving in Sale 2022",
+      "round": "Combined Final",
+      "date": "2022-04-09"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 3538,
+      "display": "35.38",
+      "competitionName": "Solving in Sale 2022",
+      "round": "Combined Final",
+      "date": "2022-04-09"
+    },
+    {
       "eventId": "clock",
       "eventName": "Clock",
       "type": "single",
@@ -3948,6 +4212,54 @@
       "competitionName": "Brisbane Autumn 2022",
       "round": "Combined Round",
       "date": "2022-04-02"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 653,
+      "display": "6.53",
+      "competitionName": "Brilliant Ballarat 2022",
+      "round": "Round 1",
+      "date": "2022-02-12"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 3633,
+      "display": "36.33",
+      "competitionName": "Brilliant Ballarat 2022",
+      "round": "Combined Round",
+      "date": "2022-02-12"
+    },
+    {
+      "eventId": "sq1",
+      "eventName": "Square-1",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 4414,
+      "display": "44.14",
+      "competitionName": "Brilliant Ballarat 2022",
+      "round": "Combined Round",
+      "date": "2022-02-12"
+    },
+    {
+      "eventId": "clock",
+      "eventName": "Clock",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 2235,
+      "display": "22.35",
+      "competitionName": "Melbourne Summer 2022",
+      "round": "Combined Final",
+      "date": "2022-01-21"
     },
     {
       "eventId": "333",
@@ -4636,18 +4948,6 @@
   ],
   "currentRecordsByAge": [
     {
-      "eventId": "skewb",
-      "eventName": "Skewb",
-      "type": "single",
-      "wcaId": "2021BLAK01",
-      "name": "Jonah Blakeley",
-      "value": 199,
-      "display": "1.99",
-      "competitionName": "Playford Cubing 2023",
-      "round": "Final",
-      "date": "2023-11-04"
-    },
-    {
       "eventId": "333fm",
       "eventName": "3x3x3 Fewest Moves",
       "type": "single",
@@ -4660,6 +4960,18 @@
       "date": "2024-04-20"
     },
     {
+      "eventId": "444bf",
+      "eventName": "4x4x4 Blindfolded",
+      "type": "average",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 63100,
+      "display": "10:31.00",
+      "competitionName": "Melbourne Cube Days 2024",
+      "round": "Final",
+      "date": "2024-11-30"
+    },
+    {
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "type": "single",
@@ -4670,6 +4982,18 @@
       "competitionName": "Concordia Turning Fall 2024",
       "round": "Final",
       "date": "2024-12-07"
+    },
+    {
+      "eventId": "skewb",
+      "eventName": "Skewb",
+      "type": "single",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "value": 147,
+      "display": "1.47",
+      "competitionName": "Rubik's WCA Oceanic Championship 2024",
+      "round": "Round 2",
+      "date": "2024-12-19"
     },
     {
       "eventId": "222",
@@ -5013,7 +5337,7 @@
       {
         "wcaId": "2022BURN09",
         "name": "Joseph Burnett",
-        "total": 57,
+        "total": 55,
         "components": {
           "222": 0,
           "333": 2,
@@ -5026,7 +5350,7 @@
           "333oh": 9,
           "clock": 0,
           "minx": 12,
-          "pyram": 3,
+          "pyram": 1,
           "skewb": 0,
           "sq1": 0,
           "444bf": 1,
@@ -5037,9 +5361,9 @@
       {
         "wcaId": "2021BLAK01",
         "name": "Jonah Blakeley",
-        "total": 57,
+        "total": 43,
         "components": {
-          "222": 1,
+          "222": 0,
           "333": 0,
           "444": 5,
           "555": 5,
@@ -5048,35 +5372,59 @@
           "333bf": 3,
           "333fm": 3,
           "333oh": 3,
-          "clock": 4,
+          "clock": 1,
           "minx": 5,
           "pyram": 1,
-          "skewb": 7,
-          "sq1": 5,
+          "skewb": 1,
+          "sq1": 1,
           "444bf": 1,
           "555bf": 1,
           "333mbf": 2
         }
       },
       {
+        "wcaId": "2021BUTE03",
+        "name": "Alex Butera",
+        "total": 38,
+        "components": {
+          "222": 3,
+          "333": 0,
+          "444": 1,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 1,
+          "clock": 14,
+          "minx": 0,
+          "pyram": 2,
+          "skewb": 8,
+          "sq1": 8,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 1
+        }
+      },
+      {
         "wcaId": "2018CROU02",
         "name": "Sylvia Crouch",
-        "total": 32,
+        "total": 25,
         "components": {
           "222": 4,
           "333": 8,
-          "444": 5,
+          "444": 4,
           "555": 2,
           "666": 2,
           "777": 0,
           "333bf": 0,
           "333fm": 0,
           "333oh": 2,
-          "clock": 1,
+          "clock": 0,
           "minx": 0,
-          "pyram": 3,
+          "pyram": 2,
           "skewb": 1,
-          "sq1": 4,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -5085,7 +5433,7 @@
       {
         "wcaId": "2022JONE11",
         "name": "Kyle Jones",
-        "total": 18,
+        "total": 16,
         "components": {
           "222": 2,
           "333": 5,
@@ -5096,7 +5444,7 @@
           "333bf": 0,
           "333fm": 0,
           "333oh": 0,
-          "clock": 7,
+          "clock": 5,
           "minx": 0,
           "pyram": 4,
           "skewb": 0,
@@ -5131,30 +5479,6 @@
         }
       },
       {
-        "wcaId": "2022FETH01",
-        "name": "Miles Fetherston",
-        "total": 9,
-        "components": {
-          "222": 2,
-          "333": 0,
-          "444": 2,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 1,
-          "clock": 2,
-          "minx": 2,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
         "wcaId": "2019THEO03",
         "name": "Connor Theodore",
         "total": 7,
@@ -5172,6 +5496,30 @@
           "minx": 0,
           "pyram": 0,
           "skewb": 1,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
+        "wcaId": "2022FETH01",
+        "name": "Miles Fetherston",
+        "total": 6,
+        "components": {
+          "222": 1,
+          "333": 0,
+          "444": 2,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 1,
+          "clock": 0,
+          "minx": 2,
+          "pyram": 0,
+          "skewb": 0,
           "sq1": 0,
           "444bf": 0,
           "555bf": 0,
@@ -5197,30 +5545,6 @@
           "pyram": 1,
           "skewb": 0,
           "sq1": 1,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "total": 1,
-        "components": {
-          "222": 1,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -5323,6 +5647,30 @@
         }
       },
       {
+        "wcaId": "2022TOLH01",
+        "name": "Gemma Tolhurst",
+        "total": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
         "wcaId": "2023BENT02",
         "name": "Hamish Bentley",
         "total": 0,
@@ -5397,33 +5745,9 @@
     ],
     "average": [
       {
-        "wcaId": "2021BLAK01",
-        "name": "Jonah Blakeley",
-        "total": 51,
-        "components": {
-          "222": 4,
-          "333": 1,
-          "444": 5,
-          "555": 4,
-          "666": 5,
-          "777": 4,
-          "333bf": 2,
-          "333fm": 4,
-          "333oh": 4,
-          "clock": 3,
-          "minx": 3,
-          "pyram": 1,
-          "skewb": 7,
-          "sq1": 4,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
         "wcaId": "2022BURN09",
         "name": "Joseph Burnett",
-        "total": 49,
+        "total": 48,
         "components": {
           "222": 0,
           "333": 1,
@@ -5432,7 +5756,7 @@
           "666": 6,
           "777": 5,
           "333bf": 2,
-          "333fm": 1,
+          "333fm": 0,
           "333oh": 7,
           "clock": 0,
           "minx": 13,
@@ -5445,9 +5769,57 @@
         }
       },
       {
+        "wcaId": "2021BUTE03",
+        "name": "Alex Butera",
+        "total": 46,
+        "components": {
+          "222": 8,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 1,
+          "333fm": 2,
+          "333oh": 0,
+          "clock": 10,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 7,
+          "sq1": 17,
+          "444bf": 1,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
+        "wcaId": "2021BLAK01",
+        "name": "Jonah Blakeley",
+        "total": 40,
+        "components": {
+          "222": 0,
+          "333": 1,
+          "444": 5,
+          "555": 4,
+          "666": 5,
+          "777": 4,
+          "333bf": 2,
+          "333fm": 3,
+          "333oh": 4,
+          "clock": 1,
+          "minx": 3,
+          "pyram": 1,
+          "skewb": 6,
+          "sq1": 1,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
         "wcaId": "2018CROU02",
         "name": "Sylvia Crouch",
-        "total": 44,
+        "total": 37,
         "components": {
           "222": 4,
           "333": 14,
@@ -5458,11 +5830,11 @@
           "333bf": 0,
           "333fm": 0,
           "333oh": 2,
-          "clock": 5,
+          "clock": 1,
           "minx": 0,
           "pyram": 4,
           "skewb": 1,
-          "sq1": 3,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -5471,9 +5843,9 @@
       {
         "wcaId": "2022JONE11",
         "name": "Kyle Jones",
-        "total": 20,
+        "total": 16,
         "components": {
-          "222": 2,
+          "222": 0,
           "333": 4,
           "444": 0,
           "555": 0,
@@ -5482,7 +5854,7 @@
           "333bf": 0,
           "333fm": 0,
           "333oh": 0,
-          "clock": 8,
+          "clock": 6,
           "minx": 0,
           "pyram": 5,
           "skewb": 0,
@@ -5495,9 +5867,9 @@
       {
         "wcaId": "2022FETH01",
         "name": "Miles Fetherston",
-        "total": 11,
+        "total": 8,
         "components": {
-          "222": 2,
+          "222": 1,
           "333": 0,
           "444": 1,
           "555": 0,
@@ -5506,7 +5878,7 @@
           "333bf": 0,
           "333fm": 0,
           "333oh": 3,
-          "clock": 2,
+          "clock": 0,
           "minx": 3,
           "pyram": 0,
           "skewb": 0,
@@ -5519,7 +5891,7 @@
       {
         "wcaId": "2019THEO03",
         "name": "Connor Theodore",
-        "total": 9,
+        "total": 8,
         "components": {
           "222": 1,
           "333": 2,
@@ -5530,7 +5902,7 @@
           "333bf": 0,
           "333fm": 0,
           "333oh": 2,
-          "clock": 2,
+          "clock": 1,
           "minx": 0,
           "pyram": 0,
           "skewb": 2,
@@ -5543,7 +5915,7 @@
       {
         "wcaId": "2022HRDL01",
         "name": "Mazar Hrdlicka",
-        "total": 5,
+        "total": 4,
         "components": {
           "222": 0,
           "333": 0,
@@ -5558,7 +5930,7 @@
           "minx": 0,
           "pyram": 4,
           "skewb": 0,
-          "sq1": 1,
+          "sq1": 0,
           "444bf": 0,
           "555bf": 0,
           "333mbf": 0
@@ -5577,30 +5949,6 @@
           "777": 0,
           "333bf": 0,
           "333fm": 0,
-          "333oh": 0,
-          "clock": 0,
-          "minx": 0,
-          "pyram": 0,
-          "skewb": 0,
-          "sq1": 0,
-          "444bf": 0,
-          "555bf": 0,
-          "333mbf": 0
-        }
-      },
-      {
-        "wcaId": "2022TOLH01",
-        "name": "Gemma Tolhurst",
-        "total": 1,
-        "components": {
-          "222": 0,
-          "333": 0,
-          "444": 0,
-          "555": 0,
-          "666": 0,
-          "777": 0,
-          "333bf": 0,
-          "333fm": 1,
           "333oh": 0,
           "clock": 0,
           "minx": 0,
@@ -5663,6 +6011,30 @@
       {
         "wcaId": "2021LUAA01",
         "name": "Aaron Lu",
+        "total": 0,
+        "components": {
+          "222": 0,
+          "333": 0,
+          "444": 0,
+          "555": 0,
+          "666": 0,
+          "777": 0,
+          "333bf": 0,
+          "333fm": 0,
+          "333oh": 0,
+          "clock": 0,
+          "minx": 0,
+          "pyram": 0,
+          "skewb": 0,
+          "sq1": 0,
+          "444bf": 0,
+          "555bf": 0,
+          "333mbf": 0
+        }
+      },
+      {
+        "wcaId": "2022TOLH01",
+        "name": "Gemma Tolhurst",
         "total": 0,
         "components": {
           "222": 0,

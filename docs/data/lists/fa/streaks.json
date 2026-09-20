@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T06:17:07.356Z",
+  "generatedAt": "2026-09-20T06:12:13.175Z",
   "overall": [
     {
       "wcaId": "2022GART03",
@@ -178,7 +178,7 @@
       "wcaId": "2022TOLH01",
       "name": "Gemma Tolhurst",
       "streak": {
-        "current": 4,
+        "current": 5,
         "currentRange": {
           "start": "Brilliant Ballarat 2026",
           "end": "Current"
@@ -210,12 +210,12 @@
       "wcaId": "2019WILL30",
       "name": "Madeline Willoughby-Khan",
       "streak": {
-        "current": 13,
+        "current": 14,
         "currentRange": {
           "start": "Odd Day in Sydney 2019",
           "end": "Current"
         },
-        "best": 13,
+        "best": 14,
         "bestRange": {
           "start": "Odd Day in Sydney 2019",
           "end": "Current"
@@ -248,6 +248,22 @@
         "bestRange": {
           "start": "Spokane Winter 2025",
           "end": "Pocatello Potato Palooza 2026"
+        }
+      }
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "streak": {
+        "current": 30,
+        "currentRange": {
+          "start": "Side N Blind Narre Warren 2024",
+          "end": "Current"
+        },
+        "best": 40,
+        "bestRange": {
+          "start": "Barwon Cube for the Kids 2021",
+          "end": "Australian Nationals 2024"
         }
       }
     }
@@ -538,6 +554,22 @@
               "end": "Southwest Idaho Newcomers 2025 (1)"
             }
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Belgrave Open 2026 (f)",
+              "end": "Current"
+            },
+            "best": 1,
+            "bestRange": {
+              "start": "Barwon Cube for the Kids 2021 (1)",
+              "end": "Current"
+            }
+          }
         }
       ],
       "average": [
@@ -751,6 +783,19 @@
               "end": "Southwest Idaho Newcomers 2025 (1)"
             }
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Barwon Cube for the Kids 2021 (1)",
+              "end": "Barwon Cube for the Kids 2021 (2)"
+            }
+          }
         }
       ]
     },
@@ -935,8 +980,11 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Belgrave Open 2026 (2)",
+              "end": "Current"
+            },
             "best": 3,
             "bestRange": {
               "start": "Victorian Open 2023 (1)",
@@ -967,6 +1015,19 @@
             "bestRange": {
               "start": "Spokane Winter 2025 (1)",
               "end": "Southwest Idaho Newcomers 2025 (1)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Solving in Sale 2021 (2)",
+              "end": "Melbourne Summer 2022 (2)"
             }
           }
         }
@@ -1122,11 +1183,8 @@
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Geelong Winter 2026 (2)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Koalafication Melbourne 2022 (1)",
@@ -1183,6 +1241,19 @@
             "bestRange": {
               "start": "Spokane Winter 2025 (1)",
               "end": "Southwest Idaho Newcomers 2025 (1)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Barwon Cube for the Kids 2021 (1)",
+              "end": "Melbourne Summer 2022 (1)"
             }
           }
         }
@@ -1352,7 +1423,7 @@
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Geelong Winter 2026 (d)",
               "end": "Current"
@@ -1384,11 +1455,8 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Speedcubing at Seaworks 2023 (d)",
@@ -1422,6 +1490,19 @@
             "bestRange": {
               "start": "Southwest Idaho Newcomers 2025 (1)",
               "end": "Boise One-Handed Blitz 2025 (d)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Melbourne Summer 2022 (d)",
+              "end": "Solving in Sale 2022 (c)"
             }
           }
         }
@@ -1583,11 +1664,8 @@
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Geelong Winter 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 2,
             "bestRange": {
               "start": "Geelong Winter 2024 (d)",
@@ -1615,11 +1693,8 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 2,
-            "currentRange": {
-              "start": "Melbourne Summer 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Speedcubing at Seaworks 2023 (d)",
@@ -1653,6 +1728,19 @@
             "bestRange": {
               "start": "Southwest Idaho Newcomers 2025 (1)",
               "end": "Current"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Rubik's WCA Oceanic Championship 2022 (d)",
+              "end": "Brilliant Ballarat 2023 (d)"
             }
           }
         }
@@ -1825,8 +1913,11 @@
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Belgrave Open 2026 (d)",
+              "end": "Current"
+            },
             "best": 5,
             "bestRange": {
               "start": "Brilliant Ballarat 2023 (c)",
@@ -1854,12 +1945,15 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Belgrave Open 2026 (d)",
+              "end": "Current"
+            },
             "best": 1,
             "bestRange": {
               "start": "Melbourne Cube Days 2023 (c)",
-              "end": "Melbourne Cube Days 2023 (c)"
+              "end": "Current"
             }
           }
         },
@@ -1887,6 +1981,19 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Solving in Sale 2022 (c)",
+              "end": "Rubik's WCA Oceanic Championship 2022 (d)"
+            }
           }
         }
       ],
@@ -2053,7 +2160,7 @@
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Braybrook Big Cubes 2026 (d)",
               "end": "Current"
@@ -2085,12 +2192,12 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Australian Nationals 2026 (d)",
               "end": "Current"
             },
-            "best": 1,
+            "best": 2,
             "bestRange": {
               "start": "Australian Nationals 2026 (d)",
               "end": "Current"
@@ -2121,6 +2228,19 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "February Fitzroy Fun 2023 (d)",
+              "end": "Brilliant Ballarat 2023 (c)"
+            }
           }
         }
       ]
@@ -2334,6 +2454,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Adelaide Summer 2026 (f)",
+              "end": "Side N Blind Narre Warren 2026 (c)"
+            }
+          }
         }
       ],
       "average": [
@@ -2546,6 +2679,22 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 2,
+            "currentRange": {
+              "start": "Side N Blind Narre Warren 2026 (c)",
+              "end": "Current"
+            },
+            "best": 2,
+            "bestRange": {
+              "start": "On the Side South Australia 2023 (f)",
+              "end": "Current"
+            }
           }
         }
       ]
@@ -2783,6 +2932,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 5,
+            "bestRange": {
+              "start": "Melbourne Summer 2023 (d)",
+              "end": "Melbourne Cube Days 2023 (c)"
+            }
+          }
         }
       ],
       "average": [
@@ -3008,6 +3170,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Kensington May Upstairs 2024 (f)",
+              "end": "Kew Clock Clash 2024 (c)"
+            }
+          }
         }
       ]
     },
@@ -3211,6 +3386,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Speedcubing at Seaworks 2023 (1)",
+              "end": "Apollo Bay Cubing 2023 (f)"
+            }
+          }
         }
       ],
       "average": [
@@ -3396,6 +3584,19 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Adelaide Summer 2025 (1)",
+              "end": "Solving in Sale 2025 (f)"
+            }
           }
         }
       ]
@@ -3620,6 +3821,19 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Side N Blind Narre Warren 2023 (f)",
+              "end": "Melbourne Cube Days 2023 (f)"
+            }
           }
         }
       ],
@@ -3846,6 +4060,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 5,
+            "bestRange": {
+              "start": "Side N Blind Narre Warren 2023 (f)",
+              "end": "Adelaide Summer 2025 (f)"
+            }
+          }
         }
       ]
     },
@@ -4067,6 +4294,22 @@
               "end": "Current"
             }
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Belgrave Open 2026 (f)",
+              "end": "Current"
+            },
+            "best": 3,
+            "bestRange": {
+              "start": "Melbourne Cube Days 2023 (d)",
+              "end": "Mildura Madness 2023 (f)"
+            }
+          }
         }
       ],
       "average": [
@@ -4252,11 +4495,8 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 2,
-            "currentRange": {
-              "start": "Melbourne Summer 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Victorian Open 2023 (d)",
@@ -4290,6 +4530,22 @@
             "bestRange": {
               "start": "Boise One-Handed Blitz 2025 (d)",
               "end": "Current"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Belgrave Open 2026 (f)",
+              "end": "Current"
+            },
+            "best": 2,
+            "bestRange": {
+              "start": "Melbourne Trilogy Sunday 2022 (d)",
+              "end": "Apollo Bay Cubing 2022 (d)"
             }
           }
         }
@@ -4505,6 +4761,19 @@
             "bestRange": {
               "start": "Spokane Winter 2025 (c)",
               "end": "Spokane Winter 2025 (c)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Melbourne Summer 2022 (d)",
+              "end": "Koalafication Melbourne 2022 (d)"
             }
           }
         }
@@ -4726,6 +4995,19 @@
               "end": "Current"
             }
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Koalafication Melbourne 2022 (d)",
+              "end": "Rubik's WCA Oceanic Championship 2022 (1)"
+            }
+          }
         }
       ]
     },
@@ -4944,6 +5226,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Koalafication Melbourne 2022 (d)",
+              "end": "Melbourne Summer 2023 (d)"
+            }
+          }
         }
       ],
       "average": [
@@ -5160,6 +5455,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "On the Side South Australia 2024 (c)",
+              "end": "Altona Algorithms 2024 (f)"
+            }
+          }
         }
       ]
     },
@@ -5347,15 +5655,12 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (1)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 1,
             "bestRange": {
               "start": "Australian Nationals 2026 (1)",
-              "end": "Current"
+              "end": "Australian Nationals 2026 (1)"
             }
           }
         },
@@ -5382,6 +5687,19 @@
             "bestRange": {
               "start": "Spokane Winter 2025 (f)",
               "end": "Utah Speedcubing Pride 2025 (f)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Solving in Sale 2021 (1)",
+              "end": "Melbourne Summer 2022 (2)"
             }
           }
         }
@@ -5569,12 +5887,12 @@
           "wcaId": "2019WILL30",
           "name": "Madeline Willoughby-Khan",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Australian Nationals 2026 (1)",
               "end": "Current"
             },
-            "best": 1,
+            "best": 2,
             "bestRange": {
               "start": "Australian Nationals 2026 (1)",
               "end": "Current"
@@ -5604,6 +5922,19 @@
             "bestRange": {
               "start": "Spokane Winter 2025 (f)",
               "end": "Rexburg Rumble 2025 (d)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Solving in Sale 2021 (1)",
+              "end": "Melbourne Summer 2022 (1)"
             }
           }
         }
@@ -5818,6 +6149,19 @@
               "end": "Utah Speedcubing Pride 2025 (d)"
             }
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Apollo Bay Cubing 2022 (f)",
+              "end": "Koalafication Melbourne 2022 (1)"
+            }
+          }
         }
       ],
       "average": [
@@ -6023,6 +6367,19 @@
             "bestRange": {
               "start": "Utah Speedcubing Pride 2025 (f)",
               "end": "Gem State Sprint 2026 (1)"
+            }
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Solving in Sale 2022 (1)",
+              "end": "Apollo Bay Cubing 2022 (f)"
             }
           }
         }
@@ -6255,6 +6612,19 @@
               "end": "Current"
             }
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 5,
+            "bestRange": {
+              "start": "Brilliant Ballarat 2022 (c)",
+              "end": "Apollo Bay Cubing 2022 (c)"
+            }
+          }
         }
       ],
       "average": [
@@ -6474,6 +6844,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 6,
+            "bestRange": {
+              "start": "Brilliant Ballarat 2022 (c)",
+              "end": "Koalafication Melbourne 2022 (d)"
+            }
+          }
         }
       ]
     },
@@ -6668,6 +7051,22 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Side N Blind Narre Warren 2026 (f)",
+              "end": "Current"
+            },
+            "best": 3,
+            "bestRange": {
+              "start": "Melbourne Cube Days 2024 (f)",
+              "end": "Melbourne Summer 2026 (f)"
+            }
+          }
         }
       ],
       "average": [
@@ -6829,6 +7228,22 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Melbourne Cube Days 2024 (f)",
+              "end": "Current"
+            },
+            "best": 1,
+            "bestRange": {
+              "start": "Melbourne Cube Days 2024 (f)",
+              "end": "Current"
+            }
           }
         }
       ]
@@ -7009,6 +7424,22 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 2,
+            "currentRange": {
+              "start": "Side N Blind Narre Warren 2024 (f)",
+              "end": "Current"
+            },
+            "best": 2,
+            "bestRange": {
+              "start": "Side N Blind Narre Warren 2024 (f)",
+              "end": "Current"
+            }
+          }
         }
       ],
       "average": [
@@ -7165,6 +7596,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7380,6 +7821,19 @@
             "best": 0,
             "bestRange": null
           }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 1,
+            "bestRange": {
+              "start": "Melbourne Cube Days 2023 (f)",
+              "end": "Melbourne Cube Days 2023 (f)"
+            }
+          }
         }
       ],
       "average": [
@@ -7536,6 +7990,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
           "streak": {
             "current": 0,
             "currentRange": null,
