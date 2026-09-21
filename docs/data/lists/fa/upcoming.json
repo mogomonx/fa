@@ -1,68 +1,37 @@
 {
-  "generatedAt": "2026-09-20T07:11:30.313Z",
+  "generatedAt": "2026-09-21T07:12:56.088Z",
   "competitions": [
     {
-      "id": "MelbourneCubeDays2026",
-      "name": "Melbourne Cube Days 2026",
+      "id": "NapervilleFall2026",
+      "name": "Naperville Fall 2026",
       "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/MelbourneCubeDays2026",
+      "city": "Naperville, Illinois",
+      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
+      "attendees": [
+        {
+          "wcaId": "2018CROU02",
+          "name": "Sylvia Crouch",
+          "eventIds": [
+            "333",
+            "444",
+            "777",
+            "skewb",
+            "sq1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AlgorithmsinArthursSeat2026",
+      "name": "Algorithms in Arthurs Seat 2026",
+      "date": null,
+      "city": "Arthurs Seat, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/AlgorithmsinArthursSeat2026",
       "attendees": [
         {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333fm",
-            "333mbf",
-            "333oh",
-            "444",
-            "444bf",
-            "555",
-            "555bf",
-            "666",
-            "777"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "LegazpiMultiDays2026",
-      "name": "Legazpi Multi Days 2026",
-      "date": null,
-      "city": "Legazpi City, Albay",
-      "url": "https://www.worldcubeassociation.org/competitions/LegazpiMultiDays2026",
-      "attendees": [
-        {
-          "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
-          "eventIds": [
-            "222",
-            "333bf",
-            "333fm",
-            "333mbf",
-            "333oh",
-            "444bf",
-            "555bf",
-            "pyram"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "PuzzlingPakenhamSaturday2026",
-      "name": "Puzzling Pakenham Saturday 2026",
-      "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/PuzzlingPakenhamSaturday2026",
-      "attendees": [
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "eventIds": [
-            "222",
             "333",
             "skewb"
           ]
