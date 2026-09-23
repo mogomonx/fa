@@ -1,95 +1,18 @@
 {
-  "generatedAt": "2026-09-22T07:12:12.029Z",
+  "generatedAt": "2026-09-23T07:12:20.562Z",
   "competitions": [
     {
-      "id": "NapervilleFall2026",
-      "name": "Naperville Fall 2026",
+      "id": "AlgorithmsinArthursSeat2026",
+      "name": "Algorithms in Arthurs Seat 2026",
       "date": null,
-      "city": "Naperville, Illinois",
-      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
-      "attendees": [
-        {
-          "wcaId": "2018CROU02",
-          "name": "Sylvia Crouch",
-          "eventIds": [
-            "333",
-            "444",
-            "777",
-            "skewb",
-            "sq1"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "BrisbaneFinnishAfternoon2026",
-      "name": "Brisbane Finnish Afternoon 2026",
-      "date": null,
-      "city": "Brisbane, Queensland",
-      "url": "https://www.worldcubeassociation.org/competitions/BrisbaneFinnishAfternoon2026",
-      "attendees": [
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "eventIds": [
-            "222",
-            "333"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "BendigoBlitz2026",
-      "name": "Bendigo Blitz 2026",
-      "date": null,
-      "city": "Bendigo, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/BendigoBlitz2026",
+      "city": "Arthurs Seat, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/AlgorithmsinArthursSeat2026",
       "attendees": [
         {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "eventIds": [
-            "222",
             "333",
-            "333bf",
-            "333oh",
-            "444",
-            "555",
-            "clock",
-            "minx",
-            "pyram",
-            "skewb"
-          ]
-        },
-        {
-          "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333oh",
-            "444",
-            "555",
-            "clock",
-            "minx",
-            "pyram",
-            "skewb"
-          ]
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333oh",
-            "444",
-            "555",
-            "clock",
-            "minx",
-            "pyram",
             "skewb"
           ]
         }
