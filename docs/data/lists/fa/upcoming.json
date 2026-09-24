@@ -1,18 +1,108 @@
 {
-  "generatedAt": "2026-09-23T07:12:20.562Z",
+  "generatedAt": "2026-09-24T07:13:10.876Z",
   "competitions": [
     {
-      "id": "AlgorithmsinArthursSeat2026",
-      "name": "Algorithms in Arthurs Seat 2026",
+      "id": "MelbourneCubeDays2026",
+      "name": "Melbourne Cube Days 2026",
       "date": null,
-      "city": "Arthurs Seat, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/AlgorithmsinArthursSeat2026",
+      "city": "Melbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/MelbourneCubeDays2026",
       "attendees": [
         {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "eventIds": [
+            "222",
             "333",
+            "333bf",
+            "333fm",
+            "333mbf",
+            "333oh",
+            "444",
+            "444bf",
+            "555",
+            "555bf",
+            "666",
+            "777"
+          ]
+        },
+        {
+          "wcaId": "2019WILL30",
+          "name": "Madeline Willoughby-Khan",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "333fm",
+            "333mbf",
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PBFBrisbane2026",
+      "name": "Please Be Finnished Brisbane 2026",
+      "date": null,
+      "city": "Brisbane, Queensland",
+      "url": "https://www.worldcubeassociation.org/competitions/PBFBrisbane2026",
+      "attendees": [
+        {
+          "wcaId": "2022SHAR23",
+          "name": "Connor Sharpe",
+          "eventIds": [
+            "333bf",
+            "333mbf",
+            "444bf",
+            "555bf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AdelaideSpring2026",
+      "name": "Adelaide Spring 2026",
+      "date": null,
+      "city": "Adelaide, South Australia",
+      "url": "https://www.worldcubeassociation.org/competitions/AdelaideSpring2026",
+      "attendees": [
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "444",
+            "clock",
+            "skewb"
+          ]
+        },
+        {
+          "wcaId": "2021BLAK01",
+          "name": "Jonah Blakeley",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "444",
+            "clock",
+            "skewb"
+          ]
+        },
+        {
+          "wcaId": "2022FETH01",
+          "name": "Miles Fetherston",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "444",
+            "clock",
             "skewb"
           ]
         }
