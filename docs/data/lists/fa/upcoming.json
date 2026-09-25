@@ -1,12 +1,32 @@
 {
-  "generatedAt": "2026-09-24T07:13:10.876Z",
+  "generatedAt": "2026-09-25T07:13:07.504Z",
   "competitions": [
     {
-      "id": "MelbourneCubeDays2026",
-      "name": "Melbourne Cube Days 2026",
+      "id": "NapervilleFall2026",
+      "name": "Naperville Fall 2026",
       "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/MelbourneCubeDays2026",
+      "city": "Naperville, Illinois",
+      "url": "https://www.worldcubeassociation.org/competitions/NapervilleFall2026",
+      "attendees": [
+        {
+          "wcaId": "2018CROU02",
+          "name": "Sylvia Crouch",
+          "eventIds": [
+            "333",
+            "444",
+            "777",
+            "skewb",
+            "sq1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BendigoBlitz2026",
+      "name": "Bendigo Blitz 2026",
+      "date": null,
+      "city": "Bendigo, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/BendigoBlitz2026",
       "attendees": [
         {
           "wcaId": "2021BUTE03",
@@ -15,82 +35,12 @@
             "222",
             "333",
             "333bf",
-            "333fm",
-            "333mbf",
-            "333oh",
-            "444",
-            "444bf",
-            "555",
-            "555bf",
-            "666",
-            "777"
-          ]
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333fm",
-            "333mbf",
             "333oh",
             "444",
             "555",
-            "666",
-            "777"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "PBFBrisbane2026",
-      "name": "Please Be Finnished Brisbane 2026",
-      "date": null,
-      "city": "Brisbane, Queensland",
-      "url": "https://www.worldcubeassociation.org/competitions/PBFBrisbane2026",
-      "attendees": [
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "eventIds": [
-            "333bf",
-            "333mbf",
-            "444bf",
-            "555bf"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "AdelaideSpring2026",
-      "name": "Adelaide Spring 2026",
-      "date": null,
-      "city": "Adelaide, South Australia",
-      "url": "https://www.worldcubeassociation.org/competitions/AdelaideSpring2026",
-      "attendees": [
-        {
-          "wcaId": "2021BUTE03",
-          "name": "Alex Butera",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "444",
             "clock",
-            "skewb"
-          ]
-        },
-        {
-          "wcaId": "2021BLAK01",
-          "name": "Jonah Blakeley",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "444",
-            "clock",
+            "minx",
+            "pyram",
             "skewb"
           ]
         },
@@ -101,8 +51,28 @@
             "222",
             "333",
             "333bf",
+            "333oh",
             "444",
+            "555",
             "clock",
+            "minx",
+            "pyram",
+            "skewb"
+          ]
+        },
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "333oh",
+            "444",
+            "555",
+            "clock",
+            "minx",
+            "pyram",
             "skewb"
           ]
         }
