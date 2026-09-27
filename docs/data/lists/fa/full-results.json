@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-20T06:12:12.819Z",
+  "fetchedAt": "2026-09-27T06:13:11.659Z",
   "entries": [
     {
       "wcaId": "2018CROU02",
@@ -101743,6 +101743,974 @@
         924,
         834,
         1194
+      ]
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "333",
+      "competitionId": "LethbridgeFavourites2026",
+      "competitionName": "Lethbridge Favourites 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 3,
+      "single": 651,
+      "average": 906,
+      "attempts": [
+        1337,
+        651,
+        708,
+        757,
+        1253
+      ]
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "222",
+      "competitionId": "LethbridgeFavourites2026",
+      "competitionName": "Lethbridge Favourites 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 2,
+      "single": 145,
+      "average": 245,
+      "attempts": [
+        194,
+        345,
+        196,
+        145,
+        461
+      ]
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "pyram",
+      "competitionId": "LethbridgeFavourites2026",
+      "competitionName": "Lethbridge Favourites 2026",
+      "date": "2026-09-19",
+      "round": "c",
+      "pos": 14,
+      "single": 195,
+      "average": -1,
+      "attempts": [
+        206,
+        -1,
+        195,
+        948,
+        -1
+      ]
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "clock",
+      "competitionId": "LethbridgeFavourites2026",
+      "competitionName": "Lethbridge Favourites 2026",
+      "date": "2026-09-19",
+      "round": "c",
+      "pos": 1,
+      "single": 350,
+      "average": 459,
+      "attempts": [
+        350,
+        393,
+        722,
+        473,
+        511
+      ]
+    },
+    {
+      "wcaId": "2022HRDL01",
+      "name": "Mazar Hrdlicka",
+      "eventId": "sq1",
+      "competitionId": "LethbridgeFavourites2026",
+      "competitionName": "Lethbridge Favourites 2026",
+      "date": "2026-09-19",
+      "round": "c",
+      "pos": 3,
+      "single": 820,
+      "average": 1588,
+      "attempts": [
+        1188,
+        1689,
+        24537,
+        1887,
+        820
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "333oh",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 2,
+      "single": 1005,
+      "average": 1104,
+      "attempts": [
+        1083,
+        1545,
+        1027,
+        1203,
+        1005
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "333oh",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 17,
+      "single": 1902,
+      "average": 2113,
+      "attempts": [
+        2832,
+        2016,
+        2297,
+        1902,
+        2027
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "333oh",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 20,
+      "single": 1887,
+      "average": 2384,
+      "attempts": [
+        2528,
+        2516,
+        2558,
+        1887,
+        2109
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "333oh",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 23,
+      "single": 1976,
+      "average": 2527,
+      "attempts": [
+        1976,
+        2429,
+        2370,
+        2783,
+        3096
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "333oh",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 24,
+      "single": 2037,
+      "average": 2681,
+      "attempts": [
+        2618,
+        2583,
+        2037,
+        2843,
+        2901
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 3,
+      "single": 2911,
+      "average": 3170,
+      "attempts": [
+        2945,
+        3680,
+        3383,
+        2911,
+        3182
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 8,
+      "single": 3444,
+      "average": 3633,
+      "attempts": [
+        3577,
+        3697,
+        3880,
+        3444,
+        3624
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 14,
+      "single": 3352,
+      "average": 4139,
+      "attempts": [
+        4545,
+        4194,
+        4112,
+        4110,
+        3352
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 15,
+      "single": 3244,
+      "average": 4155,
+      "attempts": [
+        3244,
+        3954,
+        4661,
+        4328,
+        4184
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 26,
+      "single": 4035,
+      "average": 5090,
+      "attempts": [
+        4668,
+        5192,
+        5925,
+        4035,
+        5410
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 3,
+      "single": 4454,
+      "average": 5664,
+      "attempts": [
+        5444,
+        5992,
+        5654,
+        5893,
+        4454
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 8,
+      "single": 6366,
+      "average": 6955,
+      "attempts": [
+        7547,
+        6393,
+        6366,
+        6924,
+        8156
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 12,
+      "single": 6435,
+      "average": 7658,
+      "attempts": [
+        7807,
+        7707,
+        7461,
+        8109,
+        6435
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 15,
+      "single": 7472,
+      "average": 7883,
+      "attempts": [
+        7827,
+        7815,
+        8132,
+        7472,
+        8006
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 24,
+      "single": 9046,
+      "average": 9967,
+      "attempts": [
+        9046,
+        11059,
+        9207,
+        11020,
+        9675
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "666",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 1,
+      "single": 9206,
+      "average": 9466,
+      "attempts": [
+        9206,
+        9818,
+        9373
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "666",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 7,
+      "single": 11486,
+      "average": 13391,
+      "attempts": [
+        16212,
+        12476,
+        11486
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "666",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 12,
+      "single": 14100,
+      "average": 15266,
+      "attempts": [
+        14235,
+        17462,
+        14100
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "666",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 20,
+      "single": 16537,
+      "average": 17815,
+      "attempts": [
+        18255,
+        16537,
+        18653
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "666",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 22,
+      "single": 17809,
+      "average": 18697,
+      "attempts": [
+        17809,
+        19294,
+        18989
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "777",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 2,
+      "single": 14124,
+      "average": 15035,
+      "attempts": [
+        15329,
+        14124,
+        15653
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "777",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 8,
+      "single": 20193,
+      "average": 21320,
+      "attempts": [
+        22875,
+        20892,
+        20193
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "777",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 13,
+      "single": 24198,
+      "average": 24901,
+      "attempts": [
+        24198,
+        24632,
+        25873
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "777",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 17,
+      "single": 27406,
+      "average": 28573,
+      "attempts": [
+        28884,
+        29428,
+        27406
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "777",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 21,
+      "single": 31065,
+      "average": 31425,
+      "attempts": [
+        31733,
+        31478,
+        31065
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 2,
+      "single": 282,
+      "average": 353,
+      "attempts": [
+        402,
+        337,
+        282,
+        321,
+        721
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 6,
+      "single": 495,
+      "average": 593,
+      "attempts": [
+        629,
+        -1,
+        495,
+        533,
+        616
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 9,
+      "single": 551,
+      "average": 676,
+      "attempts": [
+        693,
+        628,
+        706,
+        551,
+        764
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 10,
+      "single": 608,
+      "average": 683,
+      "attempts": [
+        695,
+        630,
+        608,
+        724,
+        1382
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 15,
+      "single": 691,
+      "average": 841,
+      "attempts": [
+        -1,
+        691,
+        776,
+        825,
+        921
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 6,
+      "single": 4774,
+      "average": 5179,
+      "attempts": [
+        4774,
+        5534,
+        -1,
+        5034,
+        4970
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 10,
+      "single": 5311,
+      "average": 5580,
+      "attempts": [
+        5682,
+        5409,
+        5648,
+        5311,
+        6281
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 15,
+      "single": 6417,
+      "average": 6670,
+      "attempts": [
+        6541,
+        6417,
+        6549,
+        6919,
+        7260
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 19,
+      "single": 7025,
+      "average": 8439,
+      "attempts": [
+        11222,
+        7025,
+        8706,
+        8301,
+        8311
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "d",
+      "pos": 23,
+      "single": 9008,
+      "average": 9924,
+      "attempts": [
+        10557,
+        10478,
+        9008,
+        9437,
+        9856
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "333oh",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 3,
+      "single": 1134,
+      "average": 1250,
+      "attempts": [
+        1307,
+        1429,
+        1134,
+        1281,
+        1162
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 3,
+      "single": 2860,
+      "average": 3138,
+      "attempts": [
+        3454,
+        2860,
+        2948,
+        3266,
+        3200
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "444",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 12,
+      "single": 3658,
+      "average": 4172,
+      "attempts": [
+        3658,
+        4511,
+        4441,
+        4278,
+        3797
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 3,
+      "single": 4869,
+      "average": 5455,
+      "attempts": [
+        5776,
+        5520,
+        5399,
+        5445,
+        4869
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 10,
+      "single": 7024,
+      "average": 7268,
+      "attempts": [
+        7583,
+        7158,
+        8258,
+        7064,
+        7024
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "555",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 12,
+      "single": 6891,
+      "average": 7549,
+      "attempts": [
+        6891,
+        7633,
+        7644,
+        7964,
+        7371
+      ]
+    },
+    {
+      "wcaId": "2022JONE11",
+      "name": "Kyle Jones",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 1,
+      "single": 298,
+      "average": 324,
+      "attempts": [
+        315,
+        298,
+        704,
+        301,
+        356
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 4,
+      "single": 463,
+      "average": 551,
+      "attempts": [
+        480,
+        576,
+        -1,
+        598,
+        463
+      ]
+    },
+    {
+      "wcaId": "2019THEO03",
+      "name": "Connor Theodore",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 8,
+      "single": 520,
+      "average": 602,
+      "attempts": [
+        566,
+        520,
+        -1,
+        684,
+        557
+      ]
+    },
+    {
+      "wcaId": "2022SHAR23",
+      "name": "Connor Sharpe",
+      "eventId": "clock",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 12,
+      "single": 542,
+      "average": -1,
+      "attempts": [
+        542,
+        -1,
+        698,
+        682,
+        -1
+      ]
+    },
+    {
+      "wcaId": "2022BURN09",
+      "name": "Joseph Burnett",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 5,
+      "single": 4178,
+      "average": 4578,
+      "attempts": [
+        4584,
+        4691,
+        4521,
+        4629,
+        4178
+      ]
+    },
+    {
+      "wcaId": "2021LUAA01",
+      "name": "Aaron Lu",
+      "eventId": "minx",
+      "competitionId": "TakeYourTimeBrisbane2026",
+      "competitionName": "Take Your Time Brisbane 2026",
+      "date": "2026-09-19",
+      "round": "f",
+      "pos": 10,
+      "single": 5828,
+      "average": 6043,
+      "attempts": [
+        6492,
+        6211,
+        5828,
+        5920,
+        5999
       ]
     }
   ]

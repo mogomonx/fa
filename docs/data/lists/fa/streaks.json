@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T06:12:13.175Z",
+  "generatedAt": "2026-09-27T06:13:12.102Z",
   "overall": [
     {
       "wcaId": "2022GART03",
@@ -21,12 +21,12 @@
       "wcaId": "2022BURN09",
       "name": "Joseph Burnett",
       "streak": {
-        "current": 29,
+        "current": 30,
         "currentRange": {
           "start": "Northside Spring Sunday 2022",
           "end": "Current"
         },
-        "best": 29,
+        "best": 30,
         "bestRange": {
           "start": "Northside Spring Sunday 2022",
           "end": "Current"
@@ -37,7 +37,7 @@
       "wcaId": "2022JONE11",
       "name": "Kyle Jones",
       "streak": {
-        "current": 12,
+        "current": 13,
         "currentRange": {
           "start": "Australian Nationals FMC 2025",
           "end": "Current"
@@ -69,12 +69,12 @@
       "wcaId": "2022HRDL01",
       "name": "Mazar Hrdlicka",
       "streak": {
-        "current": 20,
+        "current": 21,
         "currentRange": {
           "start": "Sylvan Solves 2022",
           "end": "Current"
         },
-        "best": 20,
+        "best": 21,
         "bestRange": {
           "start": "Sylvan Solves 2022",
           "end": "Current"
@@ -133,8 +133,11 @@
       "wcaId": "2019THEO03",
       "name": "Connor Theodore",
       "streak": {
-        "current": 0,
-        "currentRange": null,
+        "current": 1,
+        "currentRange": {
+          "start": "Take Your Time Brisbane 2026",
+          "end": "Current"
+        },
         "best": 28,
         "bestRange": {
           "start": "Gold Coast Spring 2019",
@@ -146,12 +149,12 @@
       "wcaId": "2022SHAR23",
       "name": "Connor Sharpe",
       "streak": {
-        "current": 41,
+        "current": 42,
         "currentRange": {
           "start": "Queensland Open 2022",
           "end": "Current"
         },
-        "best": 41,
+        "best": 42,
         "bestRange": {
           "start": "Queensland Open 2022",
           "end": "Current"
@@ -162,7 +165,7 @@
       "wcaId": "2021LUAA01",
       "name": "Aaron Lu",
       "streak": {
-        "current": 2,
+        "current": 3,
         "currentRange": {
           "start": "Big Cube Time Brisbane 2026",
           "end": "Current"
@@ -1291,11 +1294,8 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Toowoomba Carnival of Cubing 2026 (f)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 2,
             "bestRange": {
               "start": "Even Day in Bacolod 2022 (1)",
@@ -1378,8 +1378,11 @@
           "wcaId": "2019THEO03",
           "name": "Connor Theodore",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (d)",
+              "end": "Current"
+            },
             "best": 3,
             "bestRange": {
               "start": "Northside Cube Days 2020 (d)",
@@ -1391,7 +1394,7 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Toowoomba Carnival of Cubing 2026 (d)",
               "end": "Current"
@@ -1407,7 +1410,7 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
               "end": "Current"
@@ -1415,7 +1418,7 @@
             "best": 2,
             "bestRange": {
               "start": "Queensland Open 2023 (d)",
-              "end": "Australian Nationals 2023 (d)"
+              "end": "Current"
             }
           }
         },
@@ -1538,11 +1541,8 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 2,
-            "currentRange": {
-              "start": "Toowoomba Carnival of Cubing 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Even Day in Bacolod 2022 (1)",
@@ -1635,8 +1635,11 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (d)",
+              "end": "Current"
+            },
             "best": 2,
             "bestRange": {
               "start": "QLD State Championship 2025 (d)",
@@ -1648,11 +1651,8 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Big Cube Time Brisbane 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 4,
             "bestRange": {
               "start": "Queensland Open 2023 (d)",
@@ -1781,15 +1781,12 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 1,
             "bestRange": {
               "start": "Melbourne Summer 2024 (d)",
-              "end": "Current"
+              "end": "Melbourne Summer 2024 (d)"
             }
           }
         },
@@ -1865,11 +1862,8 @@
           "wcaId": "2019THEO03",
           "name": "Connor Theodore",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Queensland Open 2023 (c)",
@@ -1881,15 +1875,12 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 3,
-            "currentRange": {
-              "start": "Big Cube Time Brisbane 2026 (e)",
-              "end": "Current"
-            },
-            "best": 3,
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
             "bestRange": {
               "start": "Big Cube Time Brisbane 2026 (e)",
-              "end": "Current"
+              "end": "Take Your Time Brisbane 2026 (d)"
             }
           }
         },
@@ -1897,7 +1888,7 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 3,
+            "current": 4,
             "currentRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
               "end": "Current"
@@ -1905,7 +1896,7 @@
             "best": 4,
             "bestRange": {
               "start": "Queensland Open 2024 (c)",
-              "end": "QLD State Championship 2025 (c)"
+              "end": "Current"
             }
           }
         },
@@ -2115,11 +2106,8 @@
           "wcaId": "2019THEO03",
           "name": "Connor Theodore",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Wide Bay Cubing 2026 (d)",
@@ -2131,11 +2119,8 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Brisbane Summer 2024 (c)",
@@ -2147,8 +2132,11 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (d)",
+              "end": "Current"
+            },
             "best": 2,
             "bestRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
@@ -2277,14 +2265,14 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Big Cube Time Brisbane 2026 (e)",
               "end": "Current"
             },
-            "best": 1,
+            "best": 2,
             "bestRange": {
-              "start": "Melbourne Summer 2025 (d)",
+              "start": "Big Cube Time Brisbane 2026 (e)",
               "end": "Current"
             }
           }
@@ -2371,8 +2359,11 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 3,
             "bestRange": {
               "start": "Melbourne Summer 2024 (d)",
@@ -2384,12 +2375,15 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 1,
             "bestRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
-              "end": "Big Cube Time Brisbane 2026 (d)"
+              "end": "Current"
             }
           }
         },
@@ -2500,7 +2494,7 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 1,
+            "current": 2,
             "currentRange": {
               "start": "Big Cube Time Brisbane 2026 (e)",
               "end": "Current"
@@ -2600,8 +2594,11 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 2,
             "bestRange": {
               "start": "Brisbane: At 6's and 7's 2024 (1)",
@@ -2613,12 +2610,15 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 1,
             "bestRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
-              "end": "Big Cube Time Brisbane 2026 (d)"
+              "end": "Current"
             }
           }
         },
@@ -2731,8 +2731,11 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 4,
             "bestRange": {
               "start": "Speedy Southport 2024 (d)",
@@ -2824,8 +2827,11 @@
           "wcaId": "2019THEO03",
           "name": "Connor Theodore",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 3,
             "bestRange": {
               "start": "Speedy Southport 2024 (d)",
@@ -2837,15 +2843,12 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 2,
-            "currentRange": {
-              "start": "Big Cube Time Brisbane 2026 (e)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 2,
             "bestRange": {
               "start": "Speedy Southport 2025 (d)",
-              "end": "Current"
+              "end": "Melbourne Summer 2026 (c)"
             }
           }
         },
@@ -2853,12 +2856,12 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 4,
+            "current": 5,
             "currentRange": {
               "start": "QLD State Championship 2025 (c)",
               "end": "Current"
             },
-            "best": 4,
+            "best": 5,
             "bestRange": {
               "start": "QLD State Championship 2025 (c)",
               "end": "Current"
@@ -2978,12 +2981,12 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 3,
+            "current": 4,
             "currentRange": {
               "start": "NZ North Island Championship 2026 (d)",
               "end": "Current"
             },
-            "best": 3,
+            "best": 4,
             "bestRange": {
               "start": "NZ North Island Championship 2026 (d)",
               "end": "Current"
@@ -3074,12 +3077,12 @@
           "wcaId": "2019THEO03",
           "name": "Connor Theodore",
           "streak": {
-            "current": 2,
+            "current": 3,
             "currentRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
               "end": "Current"
             },
-            "best": 2,
+            "best": 3,
             "bestRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
               "end": "Current"
@@ -3090,8 +3093,11 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
             "best": 2,
             "bestRange": {
               "start": "Speedy Southport 2025 (d)",
@@ -3103,12 +3109,12 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 2,
+            "current": 3,
             "currentRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
               "end": "Current"
             },
-            "best": 2,
+            "best": 3,
             "bestRange": {
               "start": "Big Cube Time Brisbane 2026 (d)",
               "end": "Current"
@@ -4202,11 +4208,8 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Toowoomba Carnival of Cubing 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Queensland Open 2022 (d)",
@@ -4450,11 +4453,8 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Queensland Open 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Brisbane Summer 2024 (d)",
@@ -4687,8 +4687,11 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (d)",
+              "end": "Current"
+            },
             "best": 4,
             "bestRange": {
               "start": "Speedy Southport 2025 (d)",
@@ -4838,8 +4841,11 @@
           "wcaId": "2022HRDL01",
           "name": "Mazar Hrdlicka",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Lethbridge Favourites 2026 (c)",
+              "end": "Current"
+            },
             "best": 4,
             "bestRange": {
               "start": "Mother Earth's Charter Spring 2024 (c)",
@@ -4916,12 +4922,15 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (d)",
+              "end": "Current"
+            },
             "best": 1,
             "bestRange": {
               "start": "Speedy Southport 2025 (d)",
-              "end": "Speedy Southport 2025 (d)"
+              "end": "Current"
             }
           }
         },
@@ -5030,11 +5039,8 @@
           "wcaId": "2022BURN09",
           "name": "Joseph Burnett",
           "streak": {
-            "current": 2,
-            "currentRange": {
-              "start": "Toowoomba Carnival of Cubing 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 4,
             "bestRange": {
               "start": "Brisbane Summer 2024 (c)",
@@ -5046,8 +5052,11 @@
           "wcaId": "2022JONE11",
           "name": "Kyle Jones",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (d)",
+              "end": "Current"
+            },
             "best": 2,
             "bestRange": {
               "start": "Queensland Open 2023 (d)",
@@ -5150,11 +5159,8 @@
           "wcaId": "2021LUAA01",
           "name": "Aaron Lu",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Queensland Open 2026 (d)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 4,
             "bestRange": {
               "start": "Brisbane Summer 2025 (d)",
@@ -5259,11 +5265,8 @@
           "wcaId": "2022BURN09",
           "name": "Joseph Burnett",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Toowoomba Carnival of Cubing 2026 (f)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 6,
             "bestRange": {
               "start": "Brisbane Summer 2025 (f)",
@@ -5529,11 +5532,8 @@
           "wcaId": "2022HRDL01",
           "name": "Mazar Hrdlicka",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Calgary Fall 2026 (f)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 2,
             "bestRange": {
               "start": "Afraid in Airdrie 2023 (1)",
