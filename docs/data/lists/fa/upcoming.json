@@ -1,64 +1,25 @@
 {
-  "generatedAt": "2026-09-29T07:13:46.666Z",
+  "generatedAt": "2026-09-30T07:14:03.955Z",
   "competitions": [
     {
-      "id": "MelbourneCubeDays2026",
-      "name": "Melbourne Cube Days 2026",
+      "id": "LegazpiMultiDays2026",
+      "name": "Legazpi Multi Days 2026",
       "date": null,
-      "city": "Melbourne, Victoria",
-      "url": "https://www.worldcubeassociation.org/competitions/MelbourneCubeDays2026",
+      "city": "Legazpi City, Albay",
+      "url": "https://www.worldcubeassociation.org/competitions/LegazpiMultiDays2026",
       "attendees": [
         {
-          "wcaId": "2021BUTE03",
-          "name": "Alex Butera",
+          "wcaId": "2023ARCI02",
+          "name": "Gavriel Johann Arcilla",
           "eventIds": [
             "222",
-            "333",
             "333bf",
             "333fm",
             "333mbf",
             "333oh",
-            "444",
             "444bf",
-            "555",
             "555bf",
-            "666",
-            "777"
-          ]
-        },
-        {
-          "wcaId": "2019WILL30",
-          "name": "Madeline Willoughby-Khan",
-          "eventIds": [
-            "222",
-            "333",
-            "333bf",
-            "333fm",
-            "333mbf",
-            "333oh",
-            "444",
-            "555",
-            "666",
-            "777"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "PBFBrisbane2026",
-      "name": "Please Be Finnished Brisbane 2026",
-      "date": null,
-      "city": "Brisbane, Queensland",
-      "url": "https://www.worldcubeassociation.org/competitions/PBFBrisbane2026",
-      "attendees": [
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "eventIds": [
-            "333bf",
-            "333mbf",
-            "444bf",
-            "555bf"
+            "pyram"
           ]
         }
       ]
