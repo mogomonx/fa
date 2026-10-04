@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-27T06:13:11.659Z",
+  "fetchedAt": "2026-10-04T11:20:32.129Z",
   "entries": [
     {
       "wcaId": "2018CROU02",
@@ -102711,6 +102711,671 @@
         5828,
         5920,
         5999
+      ]
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "222",
+      "competitionId": "PuzzlingPakenhamSaturday2026",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "date": "2026-09-26",
+      "round": "1",
+      "pos": 3,
+      "single": 181,
+      "average": 236,
+      "attempts": [
+        382,
+        296,
+        213,
+        200,
+        181
+      ]
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "333",
+      "competitionId": "PuzzlingPakenhamSaturday2026",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "date": "2026-09-26",
+      "round": "1",
+      "pos": 21,
+      "single": 1147,
+      "average": 1549,
+      "attempts": [
+        1147,
+        1636,
+        1818,
+        1194,
+        2570
+      ]
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "skewb",
+      "competitionId": "PuzzlingPakenhamSaturday2026",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "date": "2026-09-26",
+      "round": "1",
+      "pos": 20,
+      "single": 495,
+      "average": 950,
+      "attempts": [
+        1183,
+        750,
+        1304,
+        495,
+        918
+      ]
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "222",
+      "competitionId": "PuzzlingPakenhamSaturday2026",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "date": "2026-09-26",
+      "round": "f",
+      "pos": 15,
+      "single": 171,
+      "average": -1,
+      "attempts": [
+        -1,
+        202,
+        171,
+        -1,
+        221
+      ]
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "333",
+      "competitionId": "PuzzlingPakenhamSaturday2026",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "date": "2026-09-26",
+      "round": "2",
+      "pos": 18,
+      "single": 1136,
+      "average": 1256,
+      "attempts": [
+        2915,
+        1321,
+        1158,
+        1288,
+        1136
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "222",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 1,
+      "single": 139,
+      "average": 212,
+      "attempts": [
+        522,
+        298,
+        173,
+        139,
+        164
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "222",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 2,
+      "single": 189,
+      "average": 237,
+      "attempts": [
+        276,
+        189,
+        194,
+        242,
+        489
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "222",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 3,
+      "single": 116,
+      "average": 256,
+      "attempts": [
+        251,
+        293,
+        317,
+        223,
+        116
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 3,
+      "single": 761,
+      "average": 891,
+      "attempts": [
+        821,
+        761,
+        973,
+        879,
+        981
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 4,
+      "single": 788,
+      "average": 893,
+      "attempts": [
+        982,
+        910,
+        871,
+        788,
+        899
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 7,
+      "single": 927,
+      "average": 1047,
+      "attempts": [
+        1034,
+        1015,
+        1114,
+        927,
+        1091
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333bf",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 3,
+      "single": 6822,
+      "average": -1,
+      "attempts": [
+        8567,
+        -1,
+        6822,
+        -1,
+        -1
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "333bf",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 4,
+      "single": 6957,
+      "average": -1,
+      "attempts": [
+        -1,
+        -1,
+        9512,
+        -1,
+        6957
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "333bf",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 9,
+      "single": 13188,
+      "average": 14123,
+      "attempts": [
+        13188,
+        13460,
+        14011,
+        14898,
+        15075
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "444",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "c",
+      "pos": 1,
+      "single": 3262,
+      "average": 3547,
+      "attempts": [
+        3854,
+        3814,
+        3343,
+        3262,
+        3484
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "444",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "c",
+      "pos": 2,
+      "single": 2822,
+      "average": 3805,
+      "attempts": [
+        3544,
+        2822,
+        3690,
+        4181,
+        4268
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "444",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "c",
+      "pos": 7,
+      "single": 4455,
+      "average": 4579,
+      "attempts": [
+        5532,
+        4642,
+        4455,
+        4546,
+        4549
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "clock",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "c",
+      "pos": 1,
+      "single": 295,
+      "average": 363,
+      "attempts": [
+        402,
+        346,
+        295,
+        342,
+        -1
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "clock",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "c",
+      "pos": 2,
+      "single": 431,
+      "average": 728,
+      "attempts": [
+        -1,
+        431,
+        964,
+        623,
+        596
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "clock",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "c",
+      "pos": 3,
+      "single": 816,
+      "average": 859,
+      "attempts": [
+        816,
+        840,
+        890,
+        1098,
+        847
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "skewb",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 1,
+      "single": 338,
+      "average": 417,
+      "attempts": [
+        372,
+        338,
+        492,
+        827,
+        387
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "skewb",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 2,
+      "single": 189,
+      "average": 418,
+      "attempts": [
+        403,
+        567,
+        369,
+        189,
+        483
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "skewb",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "1",
+      "pos": 4,
+      "single": 483,
+      "average": 608,
+      "attempts": [
+        695,
+        788,
+        483,
+        544,
+        585
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "222",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 1,
+      "single": 155,
+      "average": 197,
+      "attempts": [
+        221,
+        155,
+        160,
+        280,
+        211
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "222",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 2,
+      "single": 150,
+      "average": 242,
+      "attempts": [
+        169,
+        150,
+        598,
+        372,
+        184
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "222",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 4,
+      "single": 283,
+      "average": 330,
+      "attempts": [
+        306,
+        472,
+        349,
+        283,
+        336
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "2",
+      "pos": 5,
+      "single": 834,
+      "average": 965,
+      "attempts": [
+        1077,
+        874,
+        834,
+        1114,
+        944
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "2",
+      "pos": 6,
+      "single": 818,
+      "average": 992,
+      "attempts": [
+        1115,
+        818,
+        865,
+        996,
+        1135
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "2",
+      "pos": 3,
+      "single": 793,
+      "average": 922,
+      "attempts": [
+        872,
+        793,
+        1180,
+        954,
+        941
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "skewb",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 1,
+      "single": 316,
+      "average": 362,
+      "attempts": [
+        408,
+        341,
+        316,
+        -1,
+        338
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "skewb",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 2,
+      "single": 242,
+      "average": 387,
+      "attempts": [
+        407,
+        395,
+        522,
+        358,
+        242
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "skewb",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 3,
+      "single": 340,
+      "average": 472,
+      "attempts": [
+        340,
+        483,
+        348,
+        640,
+        586
+      ]
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 1,
+      "single": 618,
+      "average": 862,
+      "attempts": [
+        973,
+        774,
+        1071,
+        838,
+        618
+      ]
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 4,
+      "single": 824,
+      "average": 959,
+      "attempts": [
+        914,
+        824,
+        1030,
+        1071,
+        934
+      ]
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333",
+      "competitionId": "AdelaideSpring2026",
+      "competitionName": "Adelaide Spring 2026",
+      "date": "2026-10-03",
+      "round": "f",
+      "pos": 5,
+      "single": 773,
+      "average": 974,
+      "attempts": [
+        934,
+        773,
+        1028,
+        959,
+        1030
       ]
     }
   ]

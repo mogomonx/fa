@@ -1,538 +1,354 @@
 {
-  "generatedAt": "2026-09-27T06:13:12.174Z",
+  "generatedAt": "2026-10-04T11:20:33.048Z",
   "windowDays": 14,
   "items": [
     {
-      "wcaId": "2022HRDL01",
-      "name": "Mazar Hrdlicka",
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "3rd place"
+      ],
+      "singleDisplay": "7.61",
+      "averageDisplay": "8.91",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 1",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "3rd place"
+      ],
+      "singleDisplay": "7.93",
+      "averageDisplay": "9.22",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 2",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
       "eventId": "333",
       "eventName": "3x3x3 Cube",
       "badges": [
         "PR2 Single",
-        "3rd place"
+        "1st place"
       ],
-      "singleDisplay": "6.51",
-      "averageDisplay": "9.06",
-      "competitionName": "Lethbridge Favourites 2026",
+      "singleDisplay": "6.18",
+      "averageDisplay": "8.62",
+      "competitionName": "Adelaide Spring 2026",
       "round": "Final",
-      "date": "2026-09-19"
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022HRDL01",
-      "name": "Mazar Hrdlicka",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "1st place"
+      ],
+      "singleDisplay": "1.39",
+      "averageDisplay": "2.12",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 1",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR1 Average",
+        "2nd place"
+      ],
+      "singleDisplay": "1.89",
+      "averageDisplay": "2.37",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 1",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR2 Single",
+        "3rd place"
+      ],
+      "singleDisplay": "1.16",
+      "averageDisplay": "2.56",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 1",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "PR2 Average",
+        "1st place"
+      ],
+      "singleDisplay": "1.55",
+      "averageDisplay": "1.97",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Final",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
       "eventId": "222",
       "eventName": "2x2x2 Cube",
       "badges": [
         "2nd place"
       ],
-      "singleDisplay": "1.45",
-      "averageDisplay": "2.45",
-      "competitionName": "Lethbridge Favourites 2026",
+      "singleDisplay": "1.50",
+      "averageDisplay": "2.42",
+      "competitionName": "Adelaide Spring 2026",
       "round": "Final",
-      "date": "2026-09-19"
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
       "eventId": "444",
       "eventName": "4x4x4 Cube",
+      "badges": [
+        "PR3 Single",
+        "PR1 Average",
+        "1st place"
+      ],
+      "singleDisplay": "32.62",
+      "averageDisplay": "35.47",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Combined Round",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "444",
+      "eventName": "4x4x4 Cube",
+      "badges": [
+        "PR1 Single",
+        "PR2 Average",
+        "2nd place"
+      ],
+      "singleDisplay": "28.22",
+      "averageDisplay": "38.05",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Combined Round",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "333bf",
+      "eventName": "3x3x3 Blindfolded",
+      "badges": [
+        "3rd place"
+      ],
+      "singleDisplay": "1:08.22",
+      "averageDisplay": null,
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Final",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "333bf",
+      "eventName": "3x3x3 Blindfolded",
+      "badges": [
+        "PR2 Single"
+      ],
+      "singleDisplay": "1:09.57",
+      "averageDisplay": null,
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Final",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "333bf",
+      "eventName": "3x3x3 Blindfolded",
+      "badges": [
+        "PR2 Single",
+        "PR1 Average"
+      ],
+      "singleDisplay": "2:11.88",
+      "averageDisplay": "2:21.23",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Final",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "clock",
+      "eventName": "Clock",
+      "badges": [
+        "PR3 Average",
+        "1st place"
+      ],
+      "singleDisplay": "2.95",
+      "averageDisplay": "3.63",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Combined Round",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "clock",
+      "eventName": "Clock",
+      "badges": [
+        "2nd place"
+      ],
+      "singleDisplay": "4.31",
+      "averageDisplay": "7.28",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Combined Round",
+      "date": "2026-10-03"
+    },
+    {
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "clock",
+      "eventName": "Clock",
       "badges": [
         "PR3 Average",
         "3rd place"
       ],
-      "singleDisplay": "29.11",
-      "averageDisplay": "31.70",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
+      "singleDisplay": "8.16",
+      "averageDisplay": "8.59",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Combined Round",
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "badges": [
-        "PR2 Average"
-      ],
-      "singleDisplay": "34.44",
-      "averageDisplay": "36.33",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022SHAR23",
-      "name": "Connor Sharpe",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "33.52",
-      "averageDisplay": "41.39",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR2 Average"
-      ],
-      "singleDisplay": "32.44",
-      "averageDisplay": "41.55",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR2 Average"
-      ],
-      "singleDisplay": "40.35",
-      "averageDisplay": "50.90",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
-      "badges": [
-        "PR2 Average",
-        "3rd place"
-      ],
-      "singleDisplay": "28.60",
-      "averageDisplay": "31.38",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "555",
-      "eventName": "5x5x5 Cube",
-      "badges": [
-        "PR1 Single",
-        "3rd place"
-      ],
-      "singleDisplay": "44.54",
-      "averageDisplay": "56.64",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022SHAR23",
-      "name": "Connor Sharpe",
-      "eventId": "555",
-      "eventName": "5x5x5 Cube",
-      "badges": [
-        "PR1 Single"
-      ],
-      "singleDisplay": "1:04.35",
-      "averageDisplay": "1:16.58",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "eventId": "555",
-      "eventName": "5x5x5 Cube",
-      "badges": [
-        "PR2 Average"
-      ],
-      "singleDisplay": "1:14.72",
-      "averageDisplay": "1:18.83",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "555",
-      "eventName": "5x5x5 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "1:30.46",
-      "averageDisplay": "1:39.67",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "555",
-      "eventName": "5x5x5 Cube",
-      "badges": [
-        "PR2 Single",
-        "3rd place"
-      ],
-      "singleDisplay": "48.69",
-      "averageDisplay": "54.55",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "666",
-      "eventName": "6x6x6 Cube",
-      "badges": [
-        "PR3 Single",
-        "PR2 Average",
         "1st place"
       ],
-      "singleDisplay": "1:32.06",
-      "averageDisplay": "1:34.66",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
+      "singleDisplay": "3.38",
+      "averageDisplay": "4.17",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 1",
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "eventId": "666",
-      "eventName": "6x6x6 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "1:54.86",
-      "averageDisplay": "2:13.91",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022SHAR23",
-      "name": "Connor Sharpe",
-      "eventId": "666",
-      "eventName": "6x6x6 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "2:21.00",
-      "averageDisplay": "2:32.66",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "eventId": "666",
-      "eventName": "6x6x6 Cube",
-      "badges": [
-        "PR2 Single",
-        "PR2 Average"
-      ],
-      "singleDisplay": "2:45.37",
-      "averageDisplay": "2:58.15",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "666",
-      "eventName": "6x6x6 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "2:58.09",
-      "averageDisplay": "3:06.97",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "777",
-      "eventName": "7x7x7 Cube",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "badges": [
         "2nd place"
       ],
-      "singleDisplay": "2:21.24",
-      "averageDisplay": "2:30.35",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
+      "singleDisplay": "1.89",
+      "averageDisplay": "4.18",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Round 1",
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "eventId": "777",
-      "eventName": "7x7x7 Cube",
+      "wcaId": "2021BLAK01",
+      "name": "Jonah Blakeley",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "badges": [
-        "PR1 Single",
-        "PR1 Average"
+        "1st place"
       ],
-      "singleDisplay": "3:21.93",
-      "averageDisplay": "3:33.20",
-      "competitionName": "Take Your Time Brisbane 2026",
+      "singleDisplay": "3.16",
+      "averageDisplay": "3.62",
+      "competitionName": "Adelaide Spring 2026",
       "round": "Final",
-      "date": "2026-09-19"
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022SHAR23",
-      "name": "Connor Sharpe",
-      "eventId": "777",
-      "eventName": "7x7x7 Cube",
+      "wcaId": "2021BUTE03",
+      "name": "Alex Butera",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "badges": [
-        "PR3 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "4:01.98",
-      "averageDisplay": "4:09.01",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "eventId": "777",
-      "eventName": "7x7x7 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "4:34.06",
-      "averageDisplay": "4:45.73",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "777",
-      "eventName": "7x7x7 Cube",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "5:10.65",
-      "averageDisplay": "5:14.25",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "333oh",
-      "eventName": "3x3x3 One-Handed",
-      "badges": [
-        "PR2 Single",
-        "PR2 Average",
         "2nd place"
       ],
-      "singleDisplay": "10.05",
-      "averageDisplay": "11.04",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
+      "singleDisplay": "2.42",
+      "averageDisplay": "3.87",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Final",
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2019THEO03",
-      "name": "Connor Theodore",
-      "eventId": "333oh",
-      "eventName": "3x3x3 One-Handed",
+      "wcaId": "2022FETH01",
+      "name": "Miles Fetherston",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "badges": [
-        "PR2 Average"
+        "PR3 Average",
+        "3rd place"
       ],
-      "singleDisplay": "19.02",
-      "averageDisplay": "21.13",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
+      "singleDisplay": "3.40",
+      "averageDisplay": "4.72",
+      "competitionName": "Adelaide Spring 2026",
+      "round": "Final",
+      "date": "2026-10-03"
     },
     {
-      "wcaId": "2022SHAR23",
-      "name": "Connor Sharpe",
-      "eventId": "333oh",
-      "eventName": "3x3x3 One-Handed",
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "333",
+      "eventName": "3x3x3 Cube",
+      "badges": [
+        "PR3 Average"
+      ],
+      "singleDisplay": "11.36",
+      "averageDisplay": "12.56",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "round": "Round 2",
+      "date": "2026-09-26"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "222",
+      "eventName": "2x2x2 Cube",
+      "badges": [
+        "3rd place"
+      ],
+      "singleDisplay": "1.81",
+      "averageDisplay": "2.36",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "round": "Round 1",
+      "date": "2026-09-26"
+    },
+    {
+      "wcaId": "2022TOLH01",
+      "name": "Gemma Tolhurst",
+      "eventId": "skewb",
+      "eventName": "Skewb",
       "badges": [
         "PR3 Single"
       ],
-      "singleDisplay": "18.87",
-      "averageDisplay": "23.84",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "333oh",
-      "eventName": "3x3x3 One-Handed",
-      "badges": [
-        "PR2 Single",
-        "PR3 Average"
-      ],
-      "singleDisplay": "20.37",
-      "averageDisplay": "26.81",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022BURN09",
-      "name": "Joseph Burnett",
-      "eventId": "333oh",
-      "eventName": "3x3x3 One-Handed",
-      "badges": [
-        "3rd place"
-      ],
-      "singleDisplay": "11.34",
-      "averageDisplay": "12.50",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022HRDL01",
-      "name": "Mazar Hrdlicka",
-      "eventId": "clock",
-      "eventName": "Clock",
-      "badges": [
-        "PR2 Single",
-        "PR1 Average",
-        "1st place"
-      ],
-      "singleDisplay": "3.50",
-      "averageDisplay": "4.59",
-      "competitionName": "Lethbridge Favourites 2026",
-      "round": "Combined Round",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "eventId": "clock",
-      "eventName": "Clock",
-      "badges": [
-        "2nd place"
-      ],
-      "singleDisplay": "2.82",
-      "averageDisplay": "3.53",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "clock",
-      "eventName": "Clock",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "6.91",
-      "averageDisplay": "8.41",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "eventId": "clock",
-      "eventName": "Clock",
-      "badges": [
-        "1st place"
-      ],
-      "singleDisplay": "2.98",
-      "averageDisplay": "3.24",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "minx",
-      "eventName": "Megaminx",
-      "badges": [
-        "PR1 Single",
-        "PR1 Average"
-      ],
-      "singleDisplay": "53.11",
-      "averageDisplay": "55.80",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022JONE11",
-      "name": "Kyle Jones",
-      "eventId": "minx",
-      "eventName": "Megaminx",
-      "badges": [
-        "PR1 Single",
-        "PR2 Average"
-      ],
-      "singleDisplay": "1:10.25",
-      "averageDisplay": "1:24.39",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Combined Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2021LUAA01",
-      "name": "Aaron Lu",
-      "eventId": "minx",
-      "eventName": "Megaminx",
-      "badges": [
-        "PR2 Average"
-      ],
-      "singleDisplay": "58.28",
-      "averageDisplay": "1:00.43",
-      "competitionName": "Take Your Time Brisbane 2026",
-      "round": "Final",
-      "date": "2026-09-19"
-    },
-    {
-      "wcaId": "2022HRDL01",
-      "name": "Mazar Hrdlicka",
-      "eventId": "sq1",
-      "eventName": "Square-1",
-      "badges": [
-        "PR2 Single",
-        "3rd place"
-      ],
-      "singleDisplay": "8.20",
-      "averageDisplay": "15.88",
-      "competitionName": "Lethbridge Favourites 2026",
-      "round": "Combined Round",
-      "date": "2026-09-19"
+      "singleDisplay": "4.95",
+      "averageDisplay": "9.50",
+      "competitionName": "Puzzling Pakenham Saturday 2026",
+      "round": "Round 1",
+      "date": "2026-09-26"
     }
   ]
 }

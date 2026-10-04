@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-27T06:13:12.102Z",
+  "generatedAt": "2026-10-04T11:20:32.785Z",
   "overall": [
     {
       "wcaId": "2022GART03",
@@ -53,12 +53,12 @@
       "wcaId": "2022FETH01",
       "name": "Miles Fetherston",
       "streak": {
-        "current": 26,
+        "current": 27,
         "currentRange": {
           "start": "Clare Valley Cubing 2022",
           "end": "Current"
         },
-        "best": 26,
+        "best": 27,
         "bestRange": {
           "start": "Clare Valley Cubing 2022",
           "end": "Current"
@@ -117,7 +117,7 @@
       "wcaId": "2021BLAK01",
       "name": "Jonah Blakeley",
       "streak": {
-        "current": 5,
+        "current": 6,
         "currentRange": {
           "start": "Marino Madness 2025",
           "end": "Current"
@@ -181,11 +181,8 @@
       "wcaId": "2022TOLH01",
       "name": "Gemma Tolhurst",
       "streak": {
-        "current": 5,
-        "currentRange": {
-          "start": "Brilliant Ballarat 2026",
-          "end": "Current"
-        },
+        "current": 0,
+        "currentRange": null,
         "best": 34,
         "bestRange": {
           "start": "Koalafication Melbourne 2022",
@@ -258,11 +255,8 @@
       "wcaId": "2021BUTE03",
       "name": "Alex Butera",
       "streak": {
-        "current": 30,
-        "currentRange": {
-          "start": "Side N Blind Narre Warren 2024",
-          "end": "Current"
-        },
+        "current": 0,
+        "currentRange": null,
         "best": 40,
         "bestRange": {
           "start": "Barwon Cube for the Kids 2021",
@@ -562,15 +556,12 @@
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Belgrave Open 2026 (f)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 1,
             "bestRange": {
               "start": "Barwon Cube for the Kids 2021 (1)",
-              "end": "Current"
+              "end": "Barwon Cube for the Kids 2021 (1)"
             }
           }
         }
@@ -1307,11 +1298,8 @@
           "wcaId": "2022FETH01",
           "name": "Miles Fetherston",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Australian Nationals 2026 (2)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 3,
             "bestRange": {
               "start": "Clare Valley Cubing 2022 (c)",
@@ -1365,8 +1353,11 @@
           "wcaId": "2021BLAK01",
           "name": "Jonah Blakeley",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Adelaide Spring 2026 (c)",
+              "end": "Current"
+            },
             "best": 5,
             "bestRange": {
               "start": "SA State Championship 2021 (d)",
@@ -1554,8 +1545,11 @@
           "wcaId": "2022FETH01",
           "name": "Miles Fetherston",
           "streak": {
-            "current": 0,
-            "currentRange": null,
+            "current": 1,
+            "currentRange": {
+              "start": "Adelaide Spring 2026 (c)",
+              "end": "Current"
+            },
             "best": 3,
             "bestRange": {
               "start": "Brilliant Ballarat 2023 (d)",
@@ -3451,10 +3445,16 @@
           "wcaId": "2022FETH01",
           "name": "Miles Fetherston",
           "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
+            "current": 1,
+            "currentRange": {
+              "start": "Adelaide Spring 2026 (f)",
+              "end": "Current"
+            },
+            "best": 1,
+            "bestRange": {
+              "start": "Adelaide Spring 2026 (f)",
+              "end": "Current"
+            }
           }
         },
         {
@@ -4825,11 +4825,8 @@
           "wcaId": "2022FETH01",
           "name": "Miles Fetherston",
           "streak": {
-            "current": 1,
-            "currentRange": {
-              "start": "Adelaide Summer 2026 (c)",
-              "end": "Current"
-            },
+            "current": 0,
+            "currentRange": null,
             "best": 2,
             "bestRange": {
               "start": "On the Side South Australia 2023 (c)",
