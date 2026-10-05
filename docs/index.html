@@ -252,6 +252,15 @@
         <label>Bronze <input type="color" id="setting-bronze" data-var="--bronze"></label>
       </div>
       <button class="back-link" id="settings-reset" style="margin-top:1rem;">Reset to default</button>
+
+      <h2 style="margin:2rem 0 0.5rem;">On This Date</h2>
+      <p class="board-note">View the whole site as it stood on a past date — FA Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Historical Records, Record Age, Streaks, Compare, and profiles all recompute from that date. Recent Activity, Upcoming Competitions, Rolling Averages, and Consistency stay live regardless, since they don't have a meaningful "as of a past date" version (or aren't supported yet). Saved in your browser, so it stays set until you clear it.</p>
+      <div class="panel-controls">
+        <input type="date" id="time-travel-date">
+        <button class="csv-btn" id="time-travel-apply">View this date</button>
+        <button class="csv-btn" id="time-travel-clear">Back to live</button>
+      </div>
+      <p class="board-note" id="time-travel-status"></p>
     </section>
 
     <section id="tab-improvement" class="tab-panel">
