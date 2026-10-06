@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T07:18:01.600Z",
+  "generatedAt": "2026-10-06T07:14:26.070Z",
   "competitions": [
     {
       "id": "RunawayBayReturns2026",
@@ -62,6 +62,22 @@
             "minx",
             "skewb",
             "sq1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FMCEastMelbourne2026",
+      "name": "FMC East Melbourne 2026",
+      "date": null,
+      "city": "Melbourne, Victoria",
+      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
+      "attendees": [
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "333fm"
           ]
         }
       ]
