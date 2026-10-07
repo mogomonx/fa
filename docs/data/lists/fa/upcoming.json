@@ -1,39 +1,97 @@
 {
-  "generatedAt": "2026-10-07T08:31:44.108Z",
+  "generatedAt": "2026-10-07T09:02:55.407Z",
   "competitions": [
     {
-      "id": "RichmondClockClash2026",
-      "name": "Richmond Clock Clash 2026",
-      "date": "2026-10-24",
-      "endDate": "2026-10-25",
+      "id": "FMCEastMelbourne2026",
+      "name": "FMC East Melbourne 2026",
+      "date": "2026-10-31",
+      "endDate": "2026-10-31",
       "city": "Melbourne, Victoria",
       "eventIds": [
-        "555",
-        "666",
-        "777",
-        "333bf",
-        "clock",
-        "minx",
-        "sq1",
-        "444bf",
-        "555bf",
-        "333mbf"
+        "333fm"
       ],
-      "url": "https://www.worldcubeassociation.org/competitions/RichmondClockClash2026",
+      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
       "attendees": [
         {
-          "wcaId": "2021BUTE03",
-          "name": "Alex Butera",
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
           "eventIds": [
-            "333bf",
-            "333mbf",
-            "444bf",
+            "333fm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RunawayBayReturns2026",
+      "name": "Runaway Bay Returns 2026",
+      "date": "2026-11-21",
+      "endDate": "2026-11-22",
+      "city": "Gold Coast, Queensland",
+      "eventIds": [
+        "333",
+        "444",
+        "555",
+        "777",
+        "clock",
+        "minx",
+        "skewb",
+        "sq1"
+      ],
+      "url": "https://www.worldcubeassociation.org/competitions/RunawayBayReturns2026",
+      "attendees": [
+        {
+          "wcaId": "2022JONE11",
+          "name": "Kyle Jones",
+          "eventIds": [
+            "333",
+            "444",
             "555",
-            "555bf",
-            "666",
             "777",
             "clock",
             "minx",
+            "skewb",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "eventIds": [
+            "333",
+            "444",
+            "555",
+            "777",
+            "clock",
+            "minx",
+            "skewb",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2019THEO03",
+          "name": "Connor Theodore",
+          "eventIds": [
+            "333",
+            "444",
+            "555",
+            "777",
+            "clock",
+            "minx",
+            "skewb",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2021LUAA01",
+          "name": "Aaron Lu",
+          "eventIds": [
+            "333",
+            "444",
+            "555",
+            "777",
+            "clock",
+            "minx",
+            "skewb",
             "sq1"
           ]
         },
@@ -41,40 +99,13 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "eventIds": [
-            "333bf",
-            "333mbf",
-            "444bf",
+            "333",
+            "444",
             "555",
-            "666",
             "777",
             "clock",
             "minx",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "eventIds": [
-            "333bf",
-            "555",
-            "666",
-            "777",
-            "clock",
-            "minx",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "eventIds": [
-            "333bf",
-            "555",
-            "666",
-            "777",
-            "clock",
-            "minx",
+            "skewb",
             "sq1"
           ]
         }
