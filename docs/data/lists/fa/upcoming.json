@@ -1,97 +1,39 @@
 {
-  "generatedAt": "2026-10-07T09:02:55.407Z",
+  "generatedAt": "2026-10-07T13:00:57.814Z",
   "competitions": [
     {
-      "id": "FMCEastMelbourne2026",
-      "name": "FMC East Melbourne 2026",
-      "date": "2026-10-31",
-      "endDate": "2026-10-31",
+      "id": "RichmondClockClash2026",
+      "name": "Richmond Clock Clash 2026",
+      "date": "2026-10-24",
+      "endDate": "2026-10-25",
       "city": "Melbourne, Victoria",
       "eventIds": [
-        "333fm"
-      ],
-      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
-      "attendees": [
-        {
-          "wcaId": "2022TOLH01",
-          "name": "Gemma Tolhurst",
-          "eventIds": [
-            "333fm"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "RunawayBayReturns2026",
-      "name": "Runaway Bay Returns 2026",
-      "date": "2026-11-21",
-      "endDate": "2026-11-22",
-      "city": "Gold Coast, Queensland",
-      "eventIds": [
-        "333",
-        "444",
         "555",
+        "666",
         "777",
+        "333bf",
         "clock",
         "minx",
-        "skewb",
-        "sq1"
+        "sq1",
+        "444bf",
+        "555bf",
+        "333mbf"
       ],
-      "url": "https://www.worldcubeassociation.org/competitions/RunawayBayReturns2026",
+      "url": "https://www.worldcubeassociation.org/competitions/RichmondClockClash2026",
       "attendees": [
         {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
           "eventIds": [
-            "333",
-            "444",
+            "333bf",
+            "333mbf",
+            "444bf",
             "555",
+            "555bf",
+            "666",
             "777",
             "clock",
             "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2021RAVI01",
-          "name": "VJ Ravipati",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
             "sq1"
           ]
         },
@@ -99,13 +41,68 @@
           "wcaId": "2022SHAR23",
           "name": "Connor Sharpe",
           "eventIds": [
-            "333",
-            "444",
+            "333bf",
+            "333mbf",
+            "444bf",
             "555",
+            "666",
             "777",
             "clock",
             "minx",
-            "skewb",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2022TOLH01",
+          "name": "Gemma Tolhurst",
+          "eventIds": [
+            "333bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2022JONE11",
+          "name": "Kyle Jones",
+          "eventIds": [
+            "333bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CheeseCubingWisconsin2026",
+      "name": "Cheese Cubing Wisconsin 2026",
+      "date": "2026-10-24",
+      "endDate": "2026-10-24",
+      "city": "Eau Claire, Wisconsin",
+      "eventIds": [
+        "333",
+        "222",
+        "555",
+        "minx",
+        "sq1"
+      ],
+      "url": "https://www.worldcubeassociation.org/competitions/CheeseCubingWisconsin2026",
+      "attendees": [
+        {
+          "wcaId": "2013JOHN10",
+          "name": "Brian Johnson",
+          "eventIds": [
+            "222",
+            "333",
+            "555",
+            "minx",
             "sq1"
           ]
         }
