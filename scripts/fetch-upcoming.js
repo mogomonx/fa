@@ -75,11 +75,13 @@ async function fetchCompetition(competitionId, wcaIds, nameOverrides) {
     });
   }
 
-  return {
+    return {
     id: competitionId,
     name: info.name,
-    date: info.date?.from || null,
+    date: info.start_date || null,
+    endDate: info.end_date || null,
     city: info.city || null,
+    eventIds: info.event_ids || [],
     url: `https://www.worldcubeassociation.org/competitions/${competitionId}`,
     attendees,
   };
