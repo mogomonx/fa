@@ -1,18 +1,24 @@
 import { store, state } from '../store.js';
-import { nameLink, renderTable } from '../ui.js';
+import { nameLink, renderTable, populateEventSelect } from '../ui.js';
 
 export function populateRollingSelects() {
   if (!store.rolling) return;
-  const eventSelect = document.getElementById('rolling-event-select');
-  const formatSelect = document.getElementById('rolling-format-select');
+  populateEventSelect('rolling-event-select', store.rolling.events, 'rollingEventId', renderRolling);
 
-  eventSelect.innerHTML = '';
-  store.rolling.events.forEach((event) => {
+  const formatSelect = document.getElementById('rolling-format-select');
+  formatSelect.innerHTML = '';
+  store.rolling.formats.forEach((f) => {
     const opt = document.createElement('option');
-    opt.value = event.id;
-    opt.textContent = event.name;
-    eventSelect.appendChild(opt);
+    opt.value = f.key;
+    opt.textContent = f.label;
+    formatSelect.appendChild(opt);
   });
+  state.rollingFormat = formatSelect.value;
+  formatSelect.onchange = () => {
+    state.rollingFormat = formatSelect.value;
+    renderRolling();
+  };
+}
 
   formatSelect.innerHTML = '';
   store.rolling.formats.forEach((f) => {
