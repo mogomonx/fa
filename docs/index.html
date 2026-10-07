@@ -65,7 +65,7 @@
 
     <section id="tab-events" class="tab-panel">
       <div class="panel-controls">
-        <select id="event-select"></select>
+        <div class="event-picker" id="event-select"></div>
         <div class="toggle" id="event-type-toggle">
           <button class="toggle-btn active" data-type="single">Single</button>
           <button class="toggle-btn" data-type="average">Average</button>
@@ -78,7 +78,7 @@
     <section id="tab-individual" class="tab-panel">
       <p class="board-note">Every recorded result (not just personal bests) ranked within the group. "PRn" shows which of that person's own results this is (PR1 = their current best).</p>
       <div class="panel-controls">
-        <select id="individual-event-select"></select>
+        <div class="event-picker" id="individual-event-select"></div>
         <div class="toggle" id="individual-type-toggle">
           <button class="toggle-btn active" data-type="single">Single</button>
           <button class="toggle-btn" data-type="average">Average</button>
@@ -90,7 +90,7 @@
 
     <section id="tab-history" class="tab-panel">
       <div class="panel-controls">
-        <select id="history-event-select"></select>
+        <div class="event-picker" id="history-event-select"></div>
       </div>
       <p class="board-note">Every FA Record ever set for this event, most recent first.</p>
       <div id="historical-records-table"></div>
@@ -187,7 +187,7 @@
             <button class="toggle-btn active" data-mode="far">FARs only</button>
             <button class="toggle-btn" data-mode="allpr">All PRs</button>
           </div>
-          <select id="age-event-select"><option value="">All events</option></select>
+          <div class="event-picker" id="age-event-select" data-all="true"></div>
         </div>
         <p class="board-note" id="age-note"></p>
         <div id="age-table"></div>
@@ -208,7 +208,7 @@
           <div class="board streaks-side">
             <p class="board-note">Fun stat: the same idea, but scoped to one specific event and counted by round instead of competition.</p>
             <div class="panel-controls">
-              <select id="streaks-event-select"></select>
+              <div class="event-picker" id="streaks-event-select"></div>
               <div class="toggle" id="streaks-type-toggle">
                 <button class="toggle-btn active" data-type="single">Single</button>
                 <button class="toggle-btn" data-type="average">Average</button>
@@ -226,7 +226,7 @@
 
       <div id="subtab-consistency" class="subtab-panel">
         <div class="panel-controls">
-          <select id="consistency-event-select"></select>
+          <div class="event-picker" id="consistency-event-select"></div>
           <div class="toggle" id="consistency-type-toggle">
             <button class="toggle-btn active" data-type="single">Single</button>
             <button class="toggle-btn" data-type="average">Average</button>
@@ -266,7 +266,7 @@
     <section id="tab-improvement" class="tab-panel">
       <p class="board-note">Compares each person's best result as of two dates. Needs the Update Full Result History workflow to have run.</p>
       <div class="panel-controls">
-        <select id="improvement-event-select"></select>
+        <div class="event-picker" id="improvement-event-select"></div>
         <div class="toggle" id="improvement-type-toggle">
           <button class="toggle-btn active" data-type="single">Single</button>
           <button class="toggle-btn" data-type="average">Average</button>
@@ -308,7 +308,7 @@
     <section id="tab-rolling" class="tab-panel">
       <p class="board-note">Unofficial: the best rolling window of consecutive solves (spanning across rounds and competitions) for the selected format, not an official WCA average. Only solves with recorded per-attempt data count.</p>
       <div class="panel-controls">
-        <select id="rolling-event-select"></select>
+        	<div class="event-picker" id="rolling-event-select"></div>
         <select id="rolling-format-select"></select>
         <button class="csv-btn" data-container="rolling-table" data-filename="rolling-averages.csv">Export CSV</button>
       </div>
