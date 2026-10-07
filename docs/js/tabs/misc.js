@@ -1,6 +1,7 @@
 import { store, state } from '../store.js';
 import { formatDate, daysAgo, formatResultLike, standardDeviation } from '../format.js';
 import { nameLink, renderTable, renderDetailedTable, addPositionColumn } from '../ui.js';
+import { eventIcon } from '../icons.js';
 
 // ---------- FARs set ----------
 
@@ -43,7 +44,7 @@ export function renderAge() {
   if (state.ageEventId) rows = rows.filter((r) => r.eventId === state.ageEventId);
 
   renderTable(document.getElementById('age-table'), rows, [
-    { key: 'event', label: 'Event', value: (r) => r.eventName },
+    { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, r.eventName) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
     { key: 'result', label: 'Result', value: (r) => r.display },
