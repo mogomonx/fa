@@ -10,6 +10,7 @@
   --silver: #b9c0c9;
   --bronze: #c98a52;
   --link: #7fb3f5;
+  --event-icon-colour: #e9eaec;
 }
 
 a {
@@ -430,3 +431,12 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   color: var(--text-dim);
   font-size: 0.8rem;
 }
+
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.event-icon { display: inline-flex; vertical-align: middle; color: var(--event-icon-colour); }
+.event-icon svg { width: 1.5em; height: 1.5em; fill: currentColor; }
+.event-picker { display: flex; flex-wrap: wrap; gap: 0.35rem; flex: 1 1 100%; }
+.event-btn { display: inline-flex; align-items: center; background: var(--panel); border: 1px solid var(--panel-border); border-radius: 8px; padding: 0.3rem 0.5rem; cursor: pointer; color: var(--text-dim); font-size: 0.85rem; }
+.event-btn:hover { border-color: var(--accent-dim); }
+.event-btn.active { background: var(--accent-dim); border-color: var(--accent-dim); color: var(--text); }
+.event-btn .event-icon svg { width: 1.6rem; height: 1.6rem; }
