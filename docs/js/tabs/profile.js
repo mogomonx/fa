@@ -1,6 +1,7 @@
 import { store, state } from '../store.js';
 import { formatDate, daysAgo, flagEmoji, kinchColor, formatResultLike, roundLabelFallback, placementSuffix } from '../format.js';
-import { showPanel } from '../ui.js';
+import { showPanel, populateEventSelect } from '../ui.js';
+import { eventIcon } from '../icons.js';
 
 export function showProfile(wcaId) {
   const activeTab = document.querySelector('.tab-btn.active');
@@ -67,8 +68,8 @@ function renderProfile(wcaId) {
 
   const currentRecords = [];
   for (const event of rankings.events) {
-    if ((event.single || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${event.name} (Single)`);
-    if (event.hasAverage && (event.average || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${event.name} (Average)`);
+    if ((event.single || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${eventIcon(event.id, event.name)} (Single)`);
+    if (event.hasAverage && (event.average || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${eventIcon(event.id, event.name)} (Average)`);
   }
 
   const eventRows = rankings.events
@@ -82,7 +83,7 @@ function renderProfile(wcaId) {
   const eventRowsHtml = eventRows
     .map(({ event, s, a, kinchComponent }) => `
       <tr>
-        <td>${event.name}</td>
+        <td>${eventIcon(event.id, event.name)}</td>
         <td>${s ? `${s.display} (#${s.rank})` : '—'}</td>
         <td>${event.hasAverage ? (a ? `${a.display} (#${a.rank})` : '—') : 'N/A'}</td>
         <td>${kinchComponent ? `<span style="color:${kinchColor(kinchComponent.score)}">${kinchComponent.score.toFixed(2)}</span><span class="kinch-source">${kinchComponent.source ? kinchComponent.source[0] : ''}</span>` : '—'}</td>
@@ -97,7 +98,7 @@ function renderProfile(wcaId) {
     .filter((r) => r.wcaId === wcaId)
     .map((r) => `
       <tr>
-        <td>${r.eventName}</td>
+        <td>${eventIcon(r.eventId, r.eventName)}</td>
         <td>${r.type === 'single' ? 'Single' : 'Average'}</td>
         <td>${r.display}</td>
         <td>${r.date ? `${formatDate(r.date)} (${daysAgo(r.date)}d)` : '—'}</td>
@@ -111,9 +112,7 @@ function renderProfile(wcaId) {
   const resultsSectionHtml = resultsEventOptions.length
     ? `
       <div class="panel-controls">
-        <select id="profile-results-event-select">
-          ${resultsEventOptions.map((e) => `<option value="${e.id}">${e.name}</option>`).join('')}
-        </select>
+                <div class="event-picker" id="profile-results-event-select"></div>
       </div>
       <div id="profile-results-content"></div>
     `
@@ -167,10 +166,10 @@ function renderProfile(wcaId) {
       '<p class="empty-note">No data yet (needs the Update Full Result History workflow to have run).</p>';
   }
 
-  if (resultsEventOptions.length) {
-    const select = document.getElementById('profile-results-event-select');
-    select.addEventListener('change', () => renderProfileResultsForEvent(wcaId, select.value));
-    renderProfileResultsForEvent(wcaId, select.value);
+    if (resultsEventOptions.length) {
+    populateEventSelect('profile-results-event-select', resultsEventOptions, 'profileResultsEventId',
+      () => renderProfileResultsForEvent(wcaId, state.profileResultsEventId));
+    renderProfileResultsForEvent(wcaId, state.profileResultsEventId);
   }
 }
 
@@ -261,7 +260,7 @@ function renderProfileRolling(wcaId, formatKey) {
       if (!rollingRow) return null;
       const eventDef = store.rankings.events.find((e) => e.id === event.id);
       const officialRow = eventDef?.hasAverage ? (eventDef.average || []).find((r) => r.wcaId === wcaId) : null;
-      return { eventName: event.name, official: officialRow, rolling: rollingRow };
+      return { eventId: event.id, eventName: event.name, official: officialRow, rolling: rollingRow };
     })
     .filter(Boolean);
 
@@ -279,7 +278,7 @@ function renderProfileRolling(wcaId, formatKey) {
             .map(
               (r) => `
             <tr>
-              <td>${r.eventName}</td>
+              <td>${eventIcon(r.eventId, r.eventName)}</td>
               <td>${r.official ? r.official.display : '—'}</td>
               <td>${r.rolling.display}</td>
             </tr>
