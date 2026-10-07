@@ -1,6 +1,7 @@
 import { store } from '../store.js';
 import { formatResultLike } from '../format.js';
 import { nameLink, renderTable } from '../ui.js';
+import { eventIcon } from '../icons.js';
 
 const SELECT_IDS = ['h2h-person-a', 'h2h-person-b', 'nemesis-person-select'];
 
@@ -79,7 +80,7 @@ export function renderHeadToHead() {
           .map(
             ({ event, sA, sB, aA, aB, kA, kB }) => `
           <tr>
-            <td>${event.name}</td>
+            <td>${eventIcon(event.id, event.name)}</td>
             <td>${cell(sA, sB)}</td><td>${cell(sB, sA)}</td>
             <td>${event.hasAverage ? cell(aA, aB) : 'N/A'}</td><td>${event.hasAverage ? cell(aB, aA) : 'N/A'}</td>
             <td>${kinchCell(kA, kB)}</td><td>${kinchCell(kB, kA)}</td>
@@ -117,7 +118,7 @@ export function renderNemesis() {
   }
 
   renderTable(container, rows, [
-    { key: 'event', label: 'Event', value: (r) => r.event },
+    { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, r.event) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'nemesis', label: 'Nemesis', value: (r) => (r.nemesis ? nameLink(r.nemesis.wcaId, r.nemesis.name) : "You're #1!") },
     { key: 'their', label: 'Their result', value: (r) => (r.nemesis ? r.nemesis.display : '—') },
