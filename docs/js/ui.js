@@ -91,20 +91,40 @@ export function renderDetailedTable(container, rows, totalKey, totalLabel, forma
 
 // ---------- Event dropdowns ----------
 
-// Fills a <select> with events and wires it to state[stateKey] + onChange.
-// Replaces the six near-identical populate*EventSelect functions. Uses
-// `onchange =` (not addEventListener) so repopulating never stacks
-// listeners, keeps any blank "All" option, and preserves the selection.
-export function populateEventSelect(selectId, events, stateKey, onChange) {
-  const select = document.getElementById(selectId);
-  if (!select || !events) return;
-  const previous = select.value;
-  Array.from(select.options).filter((o) => o.value !== '').forEach((o) => o.remove());
-  for (const event of events) {
-    const opt = document.createElement('option');
-    opt.value = event.id;
-    opt.textContent = event.name;
-    select.appendChild(opt);
+// Builds a row of event-icon buttons inside <div class="event-picker" id="...">.
+// Add data-all="true" to the div for a leading "All" button (value '').
+// Sets state[stateKey]; safe to call repeatedly (time travel keeps the selection).
+export function populateEventSelect(pickerId, events, stateKey, onChange) {
+  const picker = document.getElementById(pickerId);
+  if (!picker || !events) return;
+  const hasAll = picker.dataset.all === 'true';
+  const ids = events.map((e) => e.id);
+  let current = picker.dataset.value;
+  if (current === undefined || !(ids.includes(current) || (hasAll && current === ''))) {
+    current = hasAll ? '' : ids[0] || '';
+  }
+  picker.dataset.value = current;
+  picker.innerHTML = '';
+
+  const addBtn = (value, html, label) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'event-btn' + (value === current ? ' active' : '');
+    b.title = label;
+    b.setAttribute('aria-label', label);
+    b.innerHTML = html;
+    b.onclick = () => {
+      picker.dataset.value = value;
+      state[stateKey] = value;
+      picker.querySelectorAll('.event-btn').forEach((x) => x.classList.toggle('active', x === b));
+      onChange();
+    };
+    picker.appendChild(b);
+  };
+  if (hasAll) addBtn('', 'All', 'All events');
+  events.forEach((e) => addBtn(e.id, eventIcon(e.id, e.name, { title: false }), e.name));
+  state[stateKey] = current;
+}
   }
   if (Array.from(select.options).some((o) => o.value === previous)) select.value = previous;
   state[stateKey] = select.value;
