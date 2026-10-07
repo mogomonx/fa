@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-04T11:20:32.785Z",
+  "generatedAt": "2026-10-07T04:59:59.078Z",
   "overall": [
     {
       "wcaId": "2022GART03",
-      "name": "Nate Garthon",
+      "name": "Nova Garthon",
       "streak": {
         "current": 2,
         "currentRange": {
@@ -51,7 +51,7 @@
     },
     {
       "wcaId": "2022FETH01",
-      "name": "Miles Fetherston",
+      "name": "Miles Skye Fetherston",
       "streak": {
         "current": 27,
         "currentRange": {
@@ -99,7 +99,7 @@
     },
     {
       "wcaId": "2023ARCI02",
-      "name": "Gavriel Johann Arcilla",
+      "name": "Nicole Arcilla",
       "streak": {
         "current": 9,
         "currentRange": {
@@ -224,7 +224,7 @@
     },
     {
       "wcaId": "2023SCOT04",
-      "name": "Asaph Scott",
+      "name": "Ash Scott",
       "streak": {
         "current": 8,
         "currentRange": {
@@ -248,6 +248,22 @@
         "bestRange": {
           "start": "Spokane Winter 2025",
           "end": "Pocatello Potato Palooza 2026"
+        }
+      }
+    },
+    {
+      "wcaId": "2021RAVI01",
+      "name": "VJ Ravipati",
+      "streak": {
+        "current": 35,
+        "currentRange": {
+          "start": "Brisbane Is Back On 2021",
+          "end": "Current"
+        },
+        "best": 35,
+        "bestRange": {
+          "start": "Brisbane Is Back On 2021",
+          "end": "Current"
         }
       }
     },
@@ -340,7 +356,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -379,7 +395,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -418,7 +434,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -525,7 +541,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -553,6 +569,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Brisbane Is Back On 2021 (1)",
+              "end": "Northside Duology Part 2 2022 (1)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -569,7 +598,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -608,7 +637,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -647,7 +676,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -751,7 +780,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -779,6 +808,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Northside Duology Part 2 2022 (1)",
+              "end": "Brisbane Autumn 2022 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -797,7 +839,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -836,7 +878,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -875,7 +917,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -988,7 +1030,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1013,6 +1055,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Brisbane Autumn 2022 (1)",
+              "end": "Brisbane's 20 in 21 in 2022 (1)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -1029,7 +1084,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1068,7 +1123,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1107,7 +1162,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1214,7 +1269,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1239,6 +1294,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Runaway Bay May Saturday 2023 (1)",
+              "end": "Runaway Bay May Saturday 2023 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -1257,7 +1325,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1296,7 +1364,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1335,7 +1403,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -1460,7 +1528,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -1488,6 +1556,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Brisbane Is Back On 2021 (d)",
+              "end": "Brisbane Autumn 2022 (d)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -1504,7 +1585,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1543,7 +1624,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -1585,7 +1666,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 4,
             "currentRange": {
@@ -1698,7 +1779,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1726,6 +1807,22 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
+            "best": 4,
+            "bestRange": {
+              "start": "Queensland Open 2023 (d)",
+              "end": "Australian Nationals 2023 (d)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -1744,7 +1841,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -1786,7 +1883,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -1825,7 +1922,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 3,
             "currentRange": {
@@ -1944,7 +2041,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -1969,6 +2066,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 5,
+            "bestRange": {
+              "start": "Brisbane Autumn 2022 (c)",
+              "end": "Queensland Open 2023 (c)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -1985,7 +2095,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -2027,7 +2137,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2069,7 +2179,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 3,
             "currentRange": {
@@ -2188,7 +2298,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -2213,6 +2323,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Queensland Open 2023 (c)",
+              "end": "Brisbane Summer 2024 (c)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -2231,7 +2354,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2273,7 +2396,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2312,7 +2435,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2425,7 +2548,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2441,6 +2564,22 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 2,
+            "currentRange": {
+              "start": "Australian Nationals 2025 (d)",
+              "end": "Current"
+            },
+            "best": 2,
+            "bestRange": {
+              "start": "Eastside Side Events 2024 (c)",
+              "end": "Current"
+            }
           }
         },
         {
@@ -2460,7 +2599,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2502,7 +2641,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 3,
             "currentRange": {
@@ -2547,7 +2686,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2657,7 +2796,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2673,6 +2812,22 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
+            "best": 3,
+            "bestRange": {
+              "start": "Queensland Open 2024 (c)",
+              "end": "QLD State Championship 2025 (c)"
+            }
           }
         },
         {
@@ -2697,7 +2852,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2739,7 +2894,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 5,
             "currentRange": {
@@ -2787,7 +2942,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -2909,7 +3064,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2931,6 +3086,22 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Take Your Time Brisbane 2026 (f)",
+              "end": "Current"
+            },
+            "best": 5,
+            "bestRange": {
+              "start": "Eastside Side Events 2024 (d)",
+              "end": "Please Be Finished Brisbane 2025 (d)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -2947,7 +3118,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -2989,7 +3160,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 3,
             "currentRange": {
@@ -3037,7 +3208,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -3153,7 +3324,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3169,6 +3340,22 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 2,
+            "currentRange": {
+              "start": "Speedy Southport 2025 (d)",
+              "end": "Current"
+            },
+            "best": 3,
+            "bestRange": {
+              "start": "Speedy Southport 2024 (d)",
+              "end": "Please Be Finished Brisbane 2025 (d)"
+            }
           }
         },
         {
@@ -3190,7 +3377,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3226,7 +3413,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3268,7 +3455,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3366,7 +3553,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3388,6 +3575,22 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Queensland Open 2026 (f)",
+              "end": "Current"
+            },
+            "best": 2,
+            "bestRange": {
+              "start": "Please Be Finished Brisbane 2026 (1)",
+              "end": "Please Be Finished Brisbane 2026 (2)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -3404,7 +3607,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -3443,7 +3646,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -3479,7 +3682,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3568,7 +3771,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 6,
             "currentRange": {
@@ -3593,6 +3796,22 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 1,
+            "currentRange": {
+              "start": "Brisbane Summer 2025 (1)",
+              "end": "Current"
+            },
+            "best": 1,
+            "bestRange": {
+              "start": "Brisbane Summer 2025 (1)",
+              "end": "Current"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -3611,7 +3830,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3653,7 +3872,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3689,7 +3908,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3805,7 +4024,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 4,
             "currentRange": {
@@ -3830,6 +4049,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Please Be Quiet Brisbane 2023 (f)",
+              "end": "Please Be Quiet Brisbane 2024 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -3846,7 +4078,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -3882,7 +4114,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -3918,7 +4150,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -4043,7 +4275,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -4068,6 +4300,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "QLD Quiet State Championship 2025 (f)",
+              "end": "Australian Nationals FMC 2025 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -4086,7 +4331,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4125,7 +4370,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4164,7 +4409,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4271,7 +4516,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4299,6 +4544,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 4,
+            "bestRange": {
+              "start": "Brisbane Autumn 2022 (d)",
+              "end": "Brisbane's 20 in 21 in 2022 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -4318,7 +4576,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4357,7 +4615,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4399,7 +4657,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4506,7 +4764,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4534,6 +4792,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Brisbane Is Back On 2021 (d)",
+              "end": "Northside Duology Part 2 2022 (d)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -4555,7 +4826,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4594,7 +4865,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4633,7 +4904,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4740,7 +5011,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 4,
             "currentRange": {
@@ -4768,6 +5039,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 6,
+            "bestRange": {
+              "start": "Eastside Side Events 2024 (d)",
+              "end": "QLD State Championship 2025 (d)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -4784,7 +5068,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4823,7 +5107,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4865,7 +5149,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4972,7 +5256,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 4,
             "currentRange": {
@@ -5003,6 +5287,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 7,
+            "bestRange": {
+              "start": "Eastside Side Events 2024 (d)",
+              "end": "QLD State Championship 2025 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -5021,7 +5318,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5063,7 +5360,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -5105,7 +5402,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5209,7 +5506,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5231,6 +5528,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Brisbane Summer 2024 (c)",
+              "end": "Eastside Side Events 2024 (2)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -5247,7 +5557,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5286,7 +5596,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -5328,7 +5638,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5435,7 +5745,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5457,6 +5767,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 5,
+            "bestRange": {
+              "start": "Brisbane Summer 2024 (c)",
+              "end": "Queensland Open 2024 (d)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -5475,7 +5798,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5514,7 +5837,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5556,7 +5879,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -5663,7 +5986,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5688,6 +6011,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Brisbane Summer 2023 (2)",
+              "end": "Brisbane Summer 2023 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -5704,7 +6040,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5746,7 +6082,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -5788,7 +6124,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -5898,7 +6234,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5923,6 +6259,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 3,
+            "bestRange": {
+              "start": "Rubik's WCA Oceanic Championship 2022 (2)",
+              "end": "Brisbane Summer 2023 (2)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -5941,7 +6290,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -5980,7 +6329,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6019,7 +6368,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6120,7 +6469,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -6148,6 +6497,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Brisbane Is Back On 2021 (1)",
+              "end": "Brisbane Is Back On 2021 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -6164,7 +6526,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6203,7 +6565,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6242,7 +6604,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6343,7 +6705,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6368,6 +6730,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": "Brisbane Is Back On 2021 (1)",
+              "end": "Brisbane Is Back On 2021 (f)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -6386,7 +6761,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -6428,7 +6803,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6467,7 +6842,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -6580,7 +6955,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -6611,6 +6986,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 2,
+            "bestRange": {
+              "start": " Runaway Bay Saturday Challenge 2022 (c)",
+              "end": "Northside Spring Saturday 2022 (c)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -6627,7 +7015,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -6672,7 +7060,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6711,7 +7099,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6818,7 +7206,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -6843,6 +7231,19 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 1,
+            "bestRange": {
+              "start": " Runaway Bay Saturday Challenge 2022 (c)",
+              "end": " Runaway Bay Saturday Challenge 2022 (c)"
+            }
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -6861,7 +7262,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -6903,7 +7304,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -6933,7 +7334,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -7025,7 +7426,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -7042,6 +7443,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7069,7 +7480,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7099,7 +7510,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7129,7 +7540,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7209,7 +7620,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7220,6 +7631,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7249,7 +7670,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 1,
             "currentRange": {
@@ -7288,7 +7709,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7318,7 +7739,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7404,7 +7825,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7415,6 +7836,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7442,7 +7873,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7472,7 +7903,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7502,7 +7933,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7582,7 +8013,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7593,6 +8024,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7616,7 +8057,7 @@
       "single": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -7655,7 +8096,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7691,7 +8132,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -7795,7 +8236,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 2,
             "currentRange": {
@@ -7820,6 +8261,16 @@
           }
         },
         {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
           "wcaId": "2021BUTE03",
           "name": "Alex Butera",
           "streak": {
@@ -7836,7 +8287,7 @@
       "average": [
         {
           "wcaId": "2022GART03",
-          "name": "Nate Garthon",
+          "name": "Nova Garthon",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7866,7 +8317,7 @@
         },
         {
           "wcaId": "2022FETH01",
-          "name": "Miles Fetherston",
+          "name": "Miles Skye Fetherston",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7896,7 +8347,7 @@
         },
         {
           "wcaId": "2023ARCI02",
-          "name": "Gavriel Johann Arcilla",
+          "name": "Nicole Arcilla",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7976,7 +8427,7 @@
         },
         {
           "wcaId": "2023SCOT04",
-          "name": "Asaph Scott",
+          "name": "Ash Scott",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -7987,6 +8438,16 @@
         {
           "wcaId": "2025THUR01",
           "name": "Emily Thurston",
+          "streak": {
+            "current": 0,
+            "currentRange": null,
+            "best": 0,
+            "bestRange": null
+          }
+        },
+        {
+          "wcaId": "2021RAVI01",
+          "name": "VJ Ravipati",
           "streak": {
             "current": 0,
             "currentRange": null,
