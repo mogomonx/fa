@@ -1,6 +1,7 @@
 import { store } from '../store.js';
 import { formatDate, flagEmoji } from '../format.js';
 import { nameLink, renderTable } from '../ui.js';
+import { eventIcon } from '../icons.js';
 import { showProfile } from './profile.js';
 
 export function renderFaRecords() {
@@ -21,7 +22,7 @@ export function renderFaRecords() {
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${event.name}</td>
+      <td>${eventIcon(event.id, event.name)}</td>
       <td>${singleHolders[0] ? singleHolders[0].display : '—'}</td>
       <td>${singleHolders.map((h) => nameLink(h.wcaId, h.name)).join(', ') || '—'}</td>
       <td>${event.hasAverage ? (averageHolders[0] ? averageHolders[0].display : '—') : 'N/A'}</td>
@@ -51,7 +52,14 @@ export function renderRecentActivity() {
   renderTable(container, items, [
     { key: 'date', label: 'Date', value: (r) => formatDate(r.date) },
     { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-    { key: 'event', label: 'Event', value: (r) => r.eventName },
+    {
+      key: 'event',
+      label: 'Event',
+      value: (r) => {
+        const ev = store.rankings.events.find((e) => e.id === r.eventId || e.name === r.eventName);
+        return eventIcon(ev?.id, r.eventName);
+      },
+    },
     { key: 'badges', label: 'Achievement', value: (r) => r.badges.join(', ') },
     { key: 'comp', label: 'Competition', value: (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ') },
   ]);
