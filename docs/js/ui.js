@@ -69,7 +69,7 @@ export function renderDetailedTable(container, rows, totalKey, totalLabel, forma
   thead.innerHTML = `<tr>
     <th>#</th>
     <th class="name-header">Name</th>
-    ${eventCols.map((e) => `<th>${e.name}</th>`).join('')}
+    ${eventCols.map((e) => `<th>${eventIcon(e.id, e.name)}</th>`).join('')}
     <th>${totalLabel}</th>
   </tr>`;
   table.appendChild(thead);
@@ -89,7 +89,7 @@ export function renderDetailedTable(container, rows, totalKey, totalLabel, forma
   container.appendChild(table);
 }
 
-// ---------- Event dropdowns ----------
+// ---------- Event pickers ----------
 
 // Builds a row of event-icon buttons inside <div class="event-picker" id="...">.
 // Add data-all="true" to the div for a leading "All" button (value '').
@@ -124,14 +124,6 @@ export function populateEventSelect(pickerId, events, stateKey, onChange) {
   if (hasAll) addBtn('', 'All', 'All events');
   events.forEach((e) => addBtn(e.id, eventIcon(e.id, e.name, { title: false }), e.name));
   state[stateKey] = current;
-}
-  }
-  if (Array.from(select.options).some((o) => o.value === previous)) select.value = previous;
-  state[stateKey] = select.value;
-  select.onchange = () => {
-    state[stateKey] = select.value;
-    onChange();
-  };
 }
 
 // ---------- Toggles, tabs, subtabs ----------
