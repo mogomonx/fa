@@ -1,3 +1,4 @@
+import { eventIcon } from './icons.js';
 import { store, state } from './store.js';
 
 // ---------- Links & table helpers ----------
