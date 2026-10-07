@@ -170,7 +170,7 @@ Design decisions:
 4. `index.html` loads `<script type="module" src="js/main.js"></script>`.
 5. Local testing needs a server (`python -m http.server` inside `docs/`); modules won't load from `file://`. GitHub Pages works unchanged.
 
-Status: **all modules written, untested. Old app.js still in use until the split is verified.**
+Status: **live**
 
 ---
 
