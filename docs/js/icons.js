@@ -1,4 +1,4 @@
-import { EVENT_ICONS } from './icons-data.js'; // generated from your SVGs
+import { EVENT_ICONS } from './icons-data.js';
 
 // Icon for an event. Falls back to plain text if there's no icon, so a missing
 // SVG never breaks a table. The hidden text keeps CSV export and screen readers working.
