@@ -19,7 +19,7 @@ WCA public WCIF ─────► update-upcoming.yml      (daily)
                   docs/data/lists/<listId>/*.json   (owned by workflows — never edit by hand)
                               │
                               ▼
-                 docs/index.html + docs/app.js  (fetches JSON, renders in browser)
+                 docs/index.html + docs/js/main.js  (fetches JSON, renders in browser)
 ```
 
 ### Data sources
@@ -45,9 +45,11 @@ Each loops over every list in `config/lists-manifest.json`.
 ```
 docs/
   index.html        single-page, tab-based UI
-  app.js            all client logic (currently one file, ~1,800 lines)
   style.css
   lists.html        list picker; links to index.html?list=<id>
+  js/               ES modules (full tree in section 8)
+    icons.js        eventIcon(eventId, name) helper
+    icons-data.js   generated: eventId -> inline SVG (17 official event icons)
   data/lists/<listId>/*.json    workflow-owned output
 scripts/
   *.js              Node build scripts; take optional listId CLI arg
@@ -84,22 +86,29 @@ All fetched from `data/lists/<listId>/`. Optional ones fail soft (feature shows 
 
 ---
 
-## 4. Client (`docs/app.js`)
+## 4. Client (`docs/js/`)
 
-Single-page app. Globals hold the loaded JSON; a `state` object holds UI selections (selected event, single/average, view toggles). Each tab has a `render*()` function that rebuilds its DOM from the globals. `loadData()` fetches everything, then calls every render function.
+Single-page app built from ES modules (layout in section 8). Loaded JSON lives on the `store` object, UI selections on `state`. Each tab module has `render*()` functions that rebuild their DOM from `store`. `main.js` fetches everything with `loadData()`, then calls `renderAll()`.
 
-Shared helpers: `renderTable` (generic table from column definitions), `renderDetailedTable` (per-event breakdown table used by SoR, Kinch, Top 100, FAR counts), `nameLink` (clickable name → profile), `formatResultLike` (client-side result formatter, incl. FMC and Multi-Blind), `formatDate` (renders "1st January 2023"), CSV export via `data-container` buttons.
+Shared helpers: `renderTable` (generic table from column definitions), `renderDetailedTable` (per-event breakdown table used by SoR, Kinch, Top 100, FAR counts), `nameLink` (clickable name → profile), `eventIcon` (every place an event name is displayed goes through it), `populateEventSelect` (builds the row of event-icon buttons), `formatResultLike` (client-side result formatter, incl. FMC and Multi-Blind), `formatDate` (renders "1st January 2023"), CSV export via `data-container` buttons.
 
 ### Tabs
-Home (FA Records, recent activity, profile search) · Overall (Sum of Ranks, Kinch) · Event Rankings · Individual Results · Top 100 · Historical Records · Misc (FARs Set, Record Age, PR Streaks, Upcoming, Consistency) · Improvement · Compare (Head-to-Head, Nemesis) · Rolling Averages · Profile (opened via name links) · Settings (10 colour options + On This Date control).
+Home (FA Records, recent activity, profile search) · Overall (Sum of Ranks, Kinch) · Event Rankings · Individual Results · Top 100 · Historical Records · Misc (FARs Set, Record Age, PR Streaks, Upcoming, Consistency) · Improvement · Compare (Head-to-Head, Nemesis) · Rolling Averages · Profile (opened via name links) · Settings (11 colour options incl. event icon colour + On This Date control).
+
+### Event icons
+Official WCA event SVGs, inlined from `icons-data.js` with `fill="currentColor"` and coloured by `--event-icon-colour` (Settings option, saved in `fa-site-colours`).
+- `eventIcon(id, name)` outputs the icon plus visually hidden text (`.sr-only`), so CSV export (which reads `textContent`) and screen readers still get the event name. Falls back to plain text if an icon is missing.
+- Used in: table Event columns, detailed-table headers, profile (event table, PR ages, rolling table, "currently holds" line), FA Records, Recent Activity, Record Age, Compare.
+- Event dropdowns are now `<div class="event-picker" id="…">` rows of buttons built by `populateEventSelect`. Add `data-all="true"` to the div for a leading "All" button (used by Record Age). The selected id is kept in `picker.dataset.value` and `state[stateKey]`; repopulating (time travel) never stacks listeners.
+- To add or replace an icon: edit one `"eventId": "<svg…>"` entry in `icons-data.js`.
 
 ### On This Date (time travel)
-Settings-page date picker. Recomputes, entirely client-side from `full-results.json` filtered to `date <= cutoff`, the same results the build scripts produce live: FA Records, Event Rankings, Sum of Ranks, Kinch, Individual Results, Top 100, Historical Records, Record Age, PR Streaks (primary metric only). Mechanism: swaps the global data objects (`rankingsData`, `individualData`, `historicalData`, `streaksData`) for recomputed ones, then re-renders. Profiles and Compare pick it up automatically because they read the same globals. Live data is cached in `live*Data` variables for restoring. Selected date persists in localStorage.
+Settings-page date picker. Recomputes, entirely client-side from `full-results.json` filtered to `date <= cutoff`, the same results the build scripts produce live: FA Records, Event Rankings, Sum of Ranks, Kinch, Individual Results, Top 100, Historical Records, Record Age, PR Streaks (primary metric only). Mechanism: swaps the data objects on `store` (`rankings`, `individual`, `historical`, `streaks`) for recomputed ones, then re-renders. Profiles and Compare pick it up automatically because they read the same `store`. Live data is cached in `store.live` for restoring. Selected date persists in localStorage.
 
 **Not covered by time travel:** Rolling Averages, Consistency, round-level streak side panel (all show live data regardless of date). Recent Activity and Upcoming are intentionally always live.
 
 ### localStorage keys
-- `fa-site-colours` — Settings colour overrides
+- `fa-site-colours` — Settings colour overrides (includes event icon colour)
 - `fa-time-travel-date` — On This Date cutoff
 
 ---
@@ -120,25 +129,25 @@ Settings-page date picker. Recomputes, entirely client-side from `full-results.j
 
 ## 6. Deploy rules
 
-- **Client-only change** (`docs/app.js`, `index.html`, `style.css`): replace the touched files, commit, push. No workflow re-run needed.
+- **Client-only change** (`docs/js/`, `index.html`, `style.css`): replace the touched files, commit, push. No workflow re-run needed.
 - **Build script or data-shape change:** replace `scripts/`, `config/`, `.github/` as needed, commit, push, then re-run the relevant workflow(s) from the Actions tab.
 - **Never manually edit `docs/data/`.** Workflows own it; manual edits cause merge conflicts with the automated commits.
+- After a push, GitHub Pages takes 1–2 minutes to redeploy (check the Actions tab for a green tick). Browsers cache module files, so test with a hard refresh (Cmd+Shift+R) or a private window.
 
 ---
 
 ## 7. Known issues / gaps
 
-- `populateAgeEventSelect` doesn't clear its dropdown, so applying time travel appends the event list again.
-- All `populate*` functions add a new `change` listener on every call, so after time travel each dropdown change fires multiple re-renders.
-- Six near-identical `populate*EventSelect` functions could be one helper.
+- Upcoming Competitions returns only one competition even though other announced comps have group registrants (data side: `update-upcoming.yml` and its script). Deferred.
 - On This Date gaps listed in section 4.
 - No UI for creating a new list from typed WCA IDs.
+- All event icons share one colour; no per-event colours.
 
 ---
 
-## 8. Planned refactor: split `app.js` into ES modules
+## 8. Module layout (done)
 
-Goal: any task only needs one or two small files pasted/edited instead of the whole 1,800-line file.
+`app.js` was split into ES modules so any task only needs one or two small files pasted/edited instead of the whole file.
 
 ```
 docs/js/
@@ -146,7 +155,9 @@ docs/js/
   format.js           formatDate, formatResultLike, flagEmoji, kinchColor, roundLabelFallback,
                       placementSuffix, daysAgo, standardDeviation
   ui.js               renderTable, renderDetailedTable, nameLink, medalRowClass, addPositionColumn,
-                      setupToggle, setupSubtabs, showPanel, CSV helpers, populateEventSelect helper
+                      setupToggle, setupSubtabs, showPanel, CSV helpers, populateEventSelect (icon picker)
+  icons.js            eventIcon helper
+  icons-data.js       generated eventId -> SVG map
   settings.js         colour customisation
   tabs/
     home.js           FA Records, Recent Activity, profile search
@@ -197,5 +208,7 @@ The static-JSON-rebuild model won't scale to all of WCA. Plan, as separate piece
 ## 10. Working conventions (for AI-assisted sessions)
 
 - One task per conversation. Open with this file plus only the module(s) the task touches.
-- Ask for changed functions or find-and-replace patches, not full-file rewrites.
+- Ask for full-file replacements for modules under ~300 lines. Multi-part find-and-replace patches left stray lines from old functions and caused syntax errors. Use patches only for one-line changes.
+- Before pushing, a JS file can be syntax-checked with `node --check file.js`.
+- Browser used for testing: Opera.
 - Update this file when the architecture changes.
