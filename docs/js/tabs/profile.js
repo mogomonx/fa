@@ -112,7 +112,7 @@ function renderProfile(wcaId) {
   const resultsSectionHtml = resultsEventOptions.length
     ? `
       <div class="panel-controls">
-                <div class="event-picker" id="profile-results-event-select"></div>
+        <div class="event-picker" id="profile-results-event-select"></div>
       </div>
       <div id="profile-results-content"></div>
     `
@@ -166,9 +166,10 @@ function renderProfile(wcaId) {
       '<p class="empty-note">No data yet (needs the Update Full Result History workflow to have run).</p>';
   }
 
-    if (resultsEventOptions.length) {
-    populateEventSelect('profile-results-event-select', resultsEventOptions, 'profileResultsEventId',
-      () => renderProfileResultsForEvent(wcaId, state.profileResultsEventId));
+  if (resultsEventOptions.length) {
+    populateEventSelect('profile-results-event-select', resultsEventOptions, 'profileResultsEventId', () =>
+      renderProfileResultsForEvent(wcaId, state.profileResultsEventId)
+    );
     renderProfileResultsForEvent(wcaId, state.profileResultsEventId);
   }
 }
