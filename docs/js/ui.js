@@ -1,5 +1,5 @@
-import { eventIcon } from './icons.js';
 import { store, state } from './store.js';
+import { eventIcon } from './icons.js';
 
 // ---------- Links & table helpers ----------
 
