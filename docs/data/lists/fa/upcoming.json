@@ -1,22 +1,139 @@
 {
-  "generatedAt": "2026-10-08T05:03:44.974Z",
+  "generatedAt": "2026-10-08T14:23:56.593Z",
   "competitions": [
     {
-      "id": "FMCEastMelbourne2026",
-      "name": "FMC East Melbourne 2026",
-      "date": "2026-10-31",
-      "endDate": "2026-10-31",
+      "id": "RichmondClockClash2026",
+      "name": "Richmond Clock Clash 2026",
+      "date": "2026-10-24",
+      "endDate": "2026-10-25",
       "city": "Melbourne, Victoria",
       "eventIds": [
-        "333fm"
+        "555",
+        "666",
+        "777",
+        "333bf",
+        "clock",
+        "minx",
+        "sq1",
+        "444bf",
+        "555bf",
+        "333mbf"
       ],
-      "url": "https://www.worldcubeassociation.org/competitions/FMCEastMelbourne2026",
+      "url": "https://www.worldcubeassociation.org/competitions/RichmondClockClash2026",
       "attendees": [
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "eventIds": [
+            "333bf",
+            "333mbf",
+            "444bf",
+            "555",
+            "555bf",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2022SHAR23",
+          "name": "Connor Sharpe",
+          "eventIds": [
+            "333bf",
+            "333mbf",
+            "444bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        },
         {
           "wcaId": "2022TOLH01",
           "name": "Gemma Tolhurst",
           "eventIds": [
-            "333fm"
+            "333bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        },
+        {
+          "wcaId": "2022JONE11",
+          "name": "Kyle Jones",
+          "eventIds": [
+            "333bf",
+            "555",
+            "666",
+            "777",
+            "clock",
+            "minx",
+            "sq1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MelbourneCubeDays2026",
+      "name": "Melbourne Cube Days 2026",
+      "date": "2026-11-14",
+      "endDate": "2026-11-15",
+      "city": "Melbourne, Victoria",
+      "eventIds": [
+        "333",
+        "222",
+        "444",
+        "555",
+        "666",
+        "777",
+        "333bf",
+        "333fm",
+        "333oh",
+        "444bf",
+        "555bf",
+        "333mbf"
+      ],
+      "url": "https://www.worldcubeassociation.org/competitions/MelbourneCubeDays2026",
+      "attendees": [
+        {
+          "wcaId": "2021BUTE03",
+          "name": "Alex Butera",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "333fm",
+            "333mbf",
+            "333oh",
+            "444",
+            "444bf",
+            "555",
+            "555bf",
+            "666",
+            "777"
+          ]
+        },
+        {
+          "wcaId": "2019WILL30",
+          "name": "Madeline Willoughby-Khan",
+          "eventIds": [
+            "222",
+            "333",
+            "333bf",
+            "333fm",
+            "333mbf",
+            "333oh",
+            "444",
+            "555",
+            "666",
+            "777"
           ]
         }
       ]
