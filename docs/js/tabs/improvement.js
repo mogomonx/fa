@@ -1,6 +1,7 @@
 import { store, state } from '../store.js';
 import { formatResultLike } from '../format.js';
 import { nameLink, renderTable } from '../ui.js';
+import { setupRangePicker } from '../datepicker.js';
 
 export function setupImprovementDates() {
   const dateA = document.getElementById('improvement-date-a');
@@ -11,6 +12,7 @@ export function setupImprovementDates() {
   dateB.value = today.toISOString().slice(0, 10);
   dateA.addEventListener('change', renderImprovement);
   dateB.addEventListener('change', renderImprovement);
+  setupRangePicker(dateA, dateB);
 }
 
 // Best (lowest) value this person had recorded for this event+type at or
