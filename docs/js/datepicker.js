@@ -1,147 +1,176 @@
-import { store } from '../store.js';
-import { flagEmoji, kinchColor } from '../format.js';
-import { medalRowClass } from '../ui.js';
-import { showProfile } from './profile.js';
+// Booking-style date range picker: a popup with two months side by side
+// (one on narrow screens). Click a start date, then an end date.
+//
+// Attaches to two existing readonly text inputs holding ISO dates
+// (YYYY-MM-DD). When a range is chosen it writes both values and fires a
+// 'change' event on each, so existing change listeners keep working.
+// Opening from the end input keeps the start date and only asks for a new end.
 
-// WCA profile pictures aren't in our data files, so they're fetched from the
-// public WCA API in the browser and cached in localStorage for a week.
-const AVATAR_KEY = 'fa-avatars';
-const AVATAR_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-const inflight = new Map();
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DOW = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
-function loadAvatarCache() {
-  try {
-    return JSON.parse(localStorage.getItem(AVATAR_KEY) || '{}');
-  } catch (e) {
-    return {};
-  }
+const pad = (n) => String(n).padStart(2, '0');
+const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+function parse(s) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
+  return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
 }
 
-function saveAvatarCache(cache) {
-  try {
-    localStorage.setItem(AVATAR_KEY, JSON.stringify(cache));
-  } catch (e) {
-    // storage full or blocked -- avatars just won't be cached
-  }
-}
+export function setupRangePicker(startInput, endInput) {
+  if (!startInput || !endInput) return;
 
-function fetchAvatarUrl(wcaId) {
-  if (!inflight.has(wcaId)) {
-    const p = fetch(`https://www.worldcubeassociation.org/api/v0/persons/${wcaId}`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`WCA API ${res.status}`);
-        return res.json();
-      })
-      .then((data) => data.person?.avatar?.thumb_url || data.person?.avatar?.url || null)
-      .finally(() => inflight.delete(wcaId));
-    inflight.set(wcaId, p);
-  }
-  return inflight.get(wcaId);
-}
+  const pop = document.createElement('div');
+  pop.className = 'range-picker';
+  pop.hidden = true;
+  document.body.appendChild(pop);
 
-function applyAvatar(el, url) {
-  if (!el || !url) return;
-  const img = new Image();
-  img.alt = '';
-  img.className = 'avatar-img';
-  img.onload = () => {
-    el.textContent = '';
-    el.appendChild(img);
-  };
-  img.src = url;
-}
+  let isOpen = false;
+  let today = null;
+  let view = null; // first day of the left-hand month
+  let start = null;
+  let end = null;
+  let phase = 'start'; // which date the next click sets
+  let hover = null; // ISO string under the cursor while choosing an end
 
-function loadAvatars(container) {
-  const cache = loadAvatarCache();
-  const now = Date.now();
-  const missing = [];
-  container.querySelectorAll('.avatar').forEach((el) => {
-    const id = el.dataset.wcaid;
-    const hit = cache[id];
-    if (hit && now - hit.t < AVATAR_TTL_MS) applyAvatar(el, hit.url);
-    else missing.push(el);
-  });
-  if (missing.length === 0) return;
-
-  Promise.allSettled(
-    missing.map((el) =>
-      fetchAvatarUrl(el.dataset.wcaid).then((url) => {
-        cache[el.dataset.wcaid] = { url, t: Date.now() };
-        applyAvatar(el, url);
-      })
-    )
-  ).then(() => saveAvatarCache(cache));
-}
-
-function initials(name) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-}
-
-export function renderMembers() {
-  const container = document.getElementById('members-table');
-  if (!container || !store.rankings) return;
-
-  const kinchByWca = new Map(
-    (store.rankings.kinch?.overall || []).map((r, i) => [r.wcaId, { score: r.score, pos: i + 1 }])
-  );
-
-  const members = (store.rankings.people || []).slice().sort((a, b) => {
-    const ka = kinchByWca.get(a.wcaId);
-    const kb = kinchByWca.get(b.wcaId);
-    if (ka && kb) return ka.pos - kb.pos;
-    if (ka) return -1;
-    if (kb) return 1;
-    return a.name.localeCompare(b.name);
-  });
-
-  if (members.length === 0) {
-    container.innerHTML = '<p class="empty-note">No members yet.</p>';
-    return;
+  function monthHtml(y, m) {
+    const offset = (new Date(y, m, 1).getDay() + 6) % 7; // Monday first
+    const days = new Date(y, m + 1, 0).getDate();
+    let cells = DOW.map((d) => `<span class="rp-dow">${d}</span>`).join('');
+    cells += '<span></span>'.repeat(offset);
+    for (let d = 1; d <= days; d++) {
+      const date = new Date(y, m, d);
+      cells += `<button type="button" class="rp-day${iso(date) === iso(today) ? ' rp-today' : ''}" data-date="${iso(date)}"${date > today ? ' disabled' : ''}>${d}</button>`;
+    }
+    return `<div class="rp-month"><div class="rp-title">${MONTHS[m]} ${y}</div><div class="rp-grid">${cells}</div></div>`;
   }
 
-  const rows = members
-    .map((p) => {
-      const k = kinchByWca.get(p.wcaId);
-      const cls = ['member-row', k ? medalRowClass(k.pos) : ''].filter(Boolean).join(' ');
-      const flag = flagEmoji(p.countryIso2) || '';
-      return `
-        <tr class="${cls}" data-wcaid="${p.wcaId}" tabindex="0" role="link">
-          <td class="rank-cell">${k ? k.pos : '—'}</td>
-          <td class="avatar-cell"><span class="avatar" data-wcaid="${p.wcaId}">${initials(p.name)}</span></td>
-          <td>${p.name}</td>
-          <td>${flag}<span class="country-code">${p.countryIso2 || ''}</span></td>
-          <td>${k ? `<span style="color:${kinchColor(k.score)}">${k.score.toFixed(2)}</span>` : '—'}</td>
-        </tr>`;
-    })
-    .join('');
+  function render() {
+    const right = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+    const atMax = view >= new Date(today.getFullYear(), today.getMonth(), 1);
+    pop.innerHTML = `
+      <div class="rp-head">
+        <span class="rp-status"></span>
+        <span class="rp-navs">
+          <button type="button" class="rp-nav" data-nav="-1" aria-label="Previous month">&lsaquo;</button>
+          <button type="button" class="rp-nav" data-nav="1" aria-label="Next month"${atMax ? ' disabled' : ''}>&rsaquo;</button>
+        </span>
+      </div>
+      <div class="rp-months">
+        ${monthHtml(view.getFullYear(), view.getMonth())}
+        ${monthHtml(right.getFullYear(), right.getMonth())}
+      </div>`;
+    paint();
+  }
 
-  container.innerHTML = `
-    <table>
-      <thead><tr><th>Kinch</th><th></th><th>Name</th><th>Country</th><th>Score</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
-
-  if (!container.dataset.bound) {
-    container.dataset.bound = '1';
-    container.addEventListener('click', (e) => {
-      const row = e.target.closest('.member-row');
-      if (row) showProfile(row.dataset.wcaid);
+  // Updates highlight classes + status text without rebuilding the DOM.
+  function paint() {
+    const s = start ? iso(start) : null;
+    const e = end ? iso(end) : null;
+    const previewEnd = phase === 'end' && s && hover && hover >= s ? hover : e;
+    pop.querySelectorAll('.rp-day').forEach((b) => {
+      const k = b.dataset.date;
+      b.classList.toggle('rp-start', k === s);
+      b.classList.toggle('rp-end', !!previewEnd && k === previewEnd);
+      b.classList.toggle('rp-in', !!(s && previewEnd && k > s && k < previewEnd));
     });
-    container.addEventListener('keydown', (e) => {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      const row = e.target.closest('.member-row');
-      if (row) {
+    const status = pop.querySelector('.rp-status');
+    if (status) status.textContent = phase === 'start' ? 'Select a start date' : 'Now select an end date';
+  }
+
+  function position(anchor) {
+    const r = anchor.getBoundingClientRect();
+    const w = pop.offsetWidth;
+    const maxLeft = document.documentElement.clientWidth - w - 8;
+    pop.style.top = `${window.scrollY + r.bottom + 6}px`;
+    pop.style.left = `${Math.max(8, Math.min(r.left + window.scrollX, maxLeft))}px`;
+  }
+
+  function open(opener) {
+    today = new Date();
+    today.setHours(0, 0, 0, 0);
+    start = parse(startInput.value);
+    end = parse(endInput.value);
+    phase = opener === endInput && start ? 'end' : 'start';
+    hover = null;
+    const anchor = start || today;
+    view = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+    const max = new Date(today.getFullYear(), today.getMonth(), 1);
+    if (view > max) view = max;
+    isOpen = true;
+    pop.hidden = false;
+    render();
+    position(opener);
+  }
+
+  function close() {
+    isOpen = false;
+    pop.hidden = true;
+  }
+
+  function pick(key) {
+    if (phase === 'start' || (start && key < iso(start))) {
+      start = parse(key);
+      end = null;
+      phase = 'end';
+      hover = null;
+      paint();
+      return;
+    }
+    end = parse(key);
+    startInput.value = iso(start);
+    endInput.value = iso(end);
+    startInput.dispatchEvent(new Event('change', { bubbles: true }));
+    endInput.dispatchEvent(new Event('change', { bubbles: true }));
+    close();
+  }
+
+  pop.addEventListener('click', (e) => {
+    const nav = e.target.closest('[data-nav]');
+    if (nav) {
+      if (nav.disabled) return;
+      view = new Date(view.getFullYear(), view.getMonth() + Number(nav.dataset.nav), 1);
+      render();
+      return;
+    }
+    const day = e.target.closest('.rp-day');
+    if (day && !day.disabled) pick(day.dataset.date);
+  });
+
+  pop.addEventListener('mouseover', (e) => {
+    const day = e.target.closest('.rp-day');
+    if (day && phase === 'end') {
+      hover = day.dataset.date;
+      paint();
+    }
+  });
+
+  pop.addEventListener('mouseleave', () => {
+    hover = null;
+    if (isOpen) paint();
+  });
+
+  [startInput, endInput].forEach((input) => {
+    input.addEventListener('click', () => open(input));
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        showProfile(row.dataset.wcaid);
+        open(input);
       }
     });
-  }
+  });
 
-  loadAvatars(container);
+  document.addEventListener('mousedown', (e) => {
+    if (!isOpen) return;
+    if (pop.contains(e.target) || e.target === startInput || e.target === endInput) return;
+    close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) close();
+  });
+
+  window.addEventListener('resize', () => {
+    if (isOpen) close();
+  });
 }
