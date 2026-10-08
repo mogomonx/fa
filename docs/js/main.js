@@ -52,7 +52,6 @@ function renderAll() {
   renderNemesis();
   renderMembers();
 }
-}
 
 // Passed to time travel so it can refresh the UI after swapping data.
 function refreshAll() {
