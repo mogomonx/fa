@@ -141,13 +141,43 @@ export function setupToggle(id, attr, onChange) {
   });
 }
 
-export function showPanel(tabName) {
-  document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
-  const btn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
-  if (btn) btn.classList.add('active');
-  const panel = document.getElementById(`tab-${tabName}`);
-  if (panel) panel.classList.add('active');
+// ---------- Side menu ----------
+
+export function closeSideMenu() {
+  document.body.classList.remove('menu-open');
+  const toggle = document.getElementById('menu-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+  }
+}
+
+export function setupSideMenu() {
+  const toggle = document.getElementById('menu-toggle');
+  const backdrop = document.getElementById('menu-backdrop');
+  if (!toggle) return;
+  toggle.addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  if (backdrop) backdrop.addEventListener('click', closeSideMenu);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSideMenu();
+  });
+}
+
+// Shows a top-level panel. Optional `subtab` jumps to a subtab inside it
+// (e.g. showPanel('misc', 'history')). Every button with a matching
+// data-tab (side menu + header buttons) gets highlighted.
+export function showPanel(tabName, subtab) {
+  document.querySelectorAll('.tab-btn').forEach((b) => b.classList.toggle('active', b.dataset.tab === tabName));
+  document.querySelectorAll('.tab-panel').forEach((p) => p.classList.toggle('active', p.id === `tab-${tabName}`));
+  if (subtab) {
+    const subBtn = document.querySelector(`#tab-${tabName} .subtab-btn[data-subtab="${subtab}"]`);
+    if (subBtn) subBtn.click();
+  }
+  closeSideMenu();
 }
 
 export function setupTabs() {
@@ -174,7 +204,7 @@ export function setupHomeLinks() {
   document.querySelectorAll('.home-link').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      showPanel(link.dataset.tab);
+      showPanel(link.dataset.tab, link.dataset.subtab);
     });
   });
 }
