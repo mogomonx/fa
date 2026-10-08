@@ -1,10 +1,11 @@
 import { DATA_BASE, store, state } from './store.js';
-import { setupTabs, setupHomeLinks, setupSubtabs, setupToggle, setupCsvButtons, populateEventSelect } from './ui.js';
+import { setupTabs, setupSideMenu, setupHomeLinks, setupSubtabs, setupToggle, setupCsvButtons, populateEventSelect } from './ui.js';
 import { setupSettings, applyStoredSettings } from './settings.js';
 import { renderFaRecords, renderRecentActivity, setupProfileSearch } from './tabs/home.js';
 import { renderSor, renderKinch } from './tabs/overall.js';
 import { renderEventTable, renderIndividual, renderTop100, renderHistory } from './tabs/events.js';
 import { renderFarCounts, renderAge, renderStreaks, renderUpcoming, renderConsistency } from './tabs/misc.js';
+import { renderMembers } from './tabs/members.js';
 import { setupNameLinkDelegation } from './tabs/profile.js';
 import { populateCompareSelects, renderHeadToHead, renderNemesis } from './tabs/compare.js';
 import { setupImprovementDates, renderImprovement } from './tabs/improvement.js';
@@ -49,6 +50,8 @@ function renderAll() {
   renderStreaks();
   renderHeadToHead();
   renderNemesis();
+  renderMembers();
+}
 }
 
 // Passed to time travel so it can refresh the UI after swapping data.
@@ -112,6 +115,7 @@ async function loadData() {
 // ---------- Wiring ----------
 
 setupTabs();
+setupSideMenu();
 setupSettings();
 applyStoredSettings();
 setupTimeTravel(refreshAll);
