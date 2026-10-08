@@ -18,6 +18,8 @@ const OUTPUT_PATH = path.join(DATA_DIR, 'upcoming.json');
 // competition found in the window). 182 days = ~6 months.
 const SCAN_DAYS_AHEAD = 182;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function todayStr() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -28,33 +30,55 @@ function futureDateStr(days) {
   return d.toISOString().slice(0, 10);
 }
 
-async function fetchJson(url) {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`${url} returned ${res.status}`);
+// Retries on rate limiting (429) and server errors (5xx) with backoff.
+async function fetchJson(url, attempts = 4) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return await res.json();
+      if (res.status === 429 || res.status >= 500) {
+        lastError = new Error(`${url} returned ${res.status}`);
+      } else {
+        throw new Error(`${url} returned ${res.status}`);
+      }
+    } catch (err) {
+      // Non-retryable errors (e.g. 404) are rethrown straight away.
+      if (/returned (?!429|5)\d+/.test(err.message)) throw err;
+      lastError = err;
+    }
+    if (attempt < attempts) await sleep(1000 * attempt * attempt);
   }
-  return res.json();
+  throw lastError;
 }
 
 // Paginates through /api/v0/competitions for the given date window.
+// Stops only when a page is empty or adds no new competitions, so it does
+// not depend on the API's page size.
 async function listUpcomingCompetitionIds() {
   const start = todayStr();
   const end = futureDateStr(SCAN_DAYS_AHEAD);
-  const ids = [];
+  const ids = new Set();
   let page = 1;
   // Safety cap so a pagination bug can't loop forever.
-  while (page <= 40) {
+  while (page <= 100) {
     const url = `https://www.worldcubeassociation.org/api/v0/competitions?start=${start}&end=${end}&page=${page}`;
     const batch = await fetchJson(url);
-    if (!Array.isArray(batch) || batch.length === 0) break;
-    for (const c of batch) {
-      if (c.id) ids.push(c.id);
+    if (!Array.isArray(batch) || batch.length === 0) {
+      console.log(`  Page ${page}: empty, done.`);
+      break;
     }
-    if (batch.length < 25) break; // last page
+    const before = ids.size;
+    for (const c of batch) {
+      if (c.id) ids.add(c.id);
+    }
+    const added = ids.size - before;
+    console.log(`  Page ${page}: ${batch.length} competitions (${added} new)`);
+    if (added === 0) break; // API returned a page we've already seen
     page += 1;
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await sleep(200);
   }
-  return ids;
+  return [...ids];
 }
 
 async function fetchCompetition(competitionId, wcaIds, nameOverrides) {
@@ -75,7 +99,7 @@ async function fetchCompetition(competitionId, wcaIds, nameOverrides) {
     });
   }
 
-    return {
+  return {
     id: competitionId,
     name: info.name,
     date: info.start_date || null,
@@ -106,6 +130,7 @@ async function main() {
   const allIds = [...new Set([...scannedIds, ...manualIds])];
 
   const competitions = [];
+  const failed = [];
   for (let i = 0; i < allIds.length; i++) {
     const id = allIds[i];
     console.log(`Checking ${id} (${i + 1}/${allIds.length})...`);
@@ -113,11 +138,13 @@ async function main() {
       const comp = await fetchCompetition(id, wcaIds, nameOverrides);
       if (comp.attendees.length > 0) {
         competitions.push(comp);
+        console.log(`  -> ${comp.attendees.length} group attendee(s)`);
       }
     } catch (err) {
+      failed.push(id);
       console.error(`  Failed to check ${id}: ${err.message}`);
     }
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await sleep(200);
   }
 
   competitions.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
@@ -127,6 +154,8 @@ async function main() {
     OUTPUT_PATH,
     JSON.stringify({ generatedAt: new Date().toISOString(), competitions }, null, 2)
   );
+  console.log(`Checked ${allIds.length} competitions, ${failed.length} failed.`);
+  if (failed.length) console.log(`Failed IDs: ${failed.join(', ')}`);
   console.log(`Wrote ${OUTPUT_PATH} (${competitions.length} competitions with group attendees)`);
 }
 
