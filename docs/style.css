@@ -637,3 +637,62 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 @media (max-width: 640px) {
   .rp-month + .rp-month { display: none; }
 }
+
+/* ---- WCA login button + account slot ---- */
+[hidden] { display: none !important; }
+
+.wca-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.05s;
+}
+.wca-login-btn:hover { border-color: var(--accent); }
+.wca-login-btn:active { transform: translateY(1px); }
+.wca-login-btn img { width: 22px; height: 22px; object-fit: contain; }
+
+.menu-footer .wca-login-btn { width: 100%; justify-content: center; }
+
+.auth-user { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.auth-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.auth-logout {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--text-dim);
+  font: inherit;
+  cursor: pointer;
+}
+.auth-logout:hover { color: var(--text); border-color: var(--accent); }
+
+/* ---- Custom lists builder ---- */
+.list-form { max-width: 560px; }
+.list-form .field { display: block; margin-bottom: 1rem; }
+.list-form .field > span { display: block; margin-bottom: 0.3rem; font-weight: 600; }
+.list-form input[type="text"],
+.list-form select,
+.list-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+}
+.list-form textarea { font-family: ui-monospace, Menlo, Consolas, monospace; resize: vertical; }
+.list-form input[readonly] { opacity: 0.6; }
+.form-error { color: #e5484d; margin: 0.5rem 0; }
+.member-list { list-style: none; padding: 0; margin: 0 0 1rem; columns: 2 220px; }
+.member-list li { padding: 0.15rem 0; }
+.csv-btn.danger { border-color: #e5484d; color: #e5484d; }
