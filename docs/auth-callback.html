@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logging in…</title>
+  <style>
+    body { font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+    main { text-align: center; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <p id="status">Finishing login…</p>
+    <p id="back" hidden><a href="index.html">Back to the site</a></p>
+  </main>
+  <script type="module">
+    import { finishLogin } from "./js/auth.js";
+
+    const status = document.getElementById("status");
+    const back = document.getElementById("back");
+
+    try {
+      const result = await finishLogin();
+      if (result.ok) {
+        location.replace(result.returnTo);
+      } else {
+        status.textContent = result.message;
+        back.hidden = false;
+      }
+    } catch (err) {
+      console.error(err);
+      status.textContent = "Something went wrong finishing the login.";
+      back.hidden = false;
+    }
+  </script>
+</body>
+</html>
