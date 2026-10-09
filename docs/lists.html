@@ -15,11 +15,33 @@
   </header>
 
   <main class="container">
-    <div class="home-links" id="lists-directory">
-      <p class="empty-note">Loading…</p>
+    <div id="lists-browser">
+      <div class="panel-controls">
+        <div id="auth-slot"></div>
+      </div>
+
+      <h2>Built-in lists</h2>
+      <div class="home-links" id="lists-directory">
+        <p class="empty-note">Loading…</p>
+      </div>
+
+      <div id="custom-lists-section" hidden>
+        <div class="panel-controls" style="margin-top:2rem;">
+          <h2 style="margin:0;">My lists</h2>
+          <button type="button" class="csv-btn" id="new-list-btn" hidden>New list</button>
+        </div>
+        <p class="board-note" id="login-hint">Log in with WCA to create lists and see the ones you're on.</p>
+        <div class="home-links" id="my-lists"></div>
+
+        <h2 style="margin-top:2rem;">Public lists</h2>
+        <div class="home-links" id="public-lists"></div>
+      </div>
     </div>
+
+    <div id="list-panel" hidden></div>
   </main>
 
+  <!-- Built-in lists: no backend involved, so this always works. -->
   <script>
     fetch('data/lists-manifest.json', { cache: 'no-store' })
       .then((res) => res.json())
@@ -41,6 +63,13 @@
         document.getElementById('lists-directory').innerHTML =
           '<p class="empty-note">Could not load the list of lists.</p>';
       });
+  </script>
+
+  <!-- Custom lists: loaded separately so a backend/CDN problem can't break the above. -->
+  <script type="module">
+    import('./js/lists-page.js')
+      .then((m) => m.initLists())
+      .catch((err) => console.warn('Custom lists unavailable:', err));
   </script>
 </body>
 </html>
