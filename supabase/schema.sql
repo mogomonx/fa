@@ -1,0 +1,165 @@
+-- FA Records: custom lists, step 1 schema (Supabase / Postgres)
+-- Run in the Supabase SQL Editor. Safe to run once on a fresh project.
+
+-- ---------------------------------------------------------------
+-- Tables
+-- ---------------------------------------------------------------
+
+-- One row per logged-in person. Created by the WCA login Edge Function
+-- (using the service role), never directly by the browser.
+-- wca_id is nullable: a WCA account with no competitions has no WCA ID yet.
+create table public.profiles (
+  id           uuid primary key references auth.users(id) on delete cascade,
+  wca_user_id  integer not null unique,
+  wca_id       text unique check (wca_id ~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'),
+  name         text not null,
+  created_at   timestamptz not null default now()
+);
+
+create table public.lists (
+  id          uuid primary key default gen_random_uuid(),
+  slug        text not null unique check (slug ~ '^[a-z0-9-]{2,40}$'),
+  name        text not null check (char_length(name) between 1 and 80),
+  owner_id    uuid not null references public.profiles(id) on delete cascade,
+  -- public   = anyone can find and view
+  -- unlisted = anyone with the link can view, not discoverable
+  -- private  = owner and listed members only
+  visibility  text not null default 'private'
+              check (visibility in ('public', 'unlisted', 'private')),
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+
+-- Members are WCA IDs, not user accounts: people can be on a list
+-- before they ever log in. Logging in with a matching WCA ID is what
+-- makes the list show up under "My groups".
+create table public.list_members (
+  list_id       uuid not null references public.lists(id) on delete cascade,
+  wca_id        text not null check (wca_id ~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'),
+  display_name  text,  -- optional override, like the existing displayName
+  added_at      timestamptz not null default now(),
+  primary key (list_id, wca_id)
+);
+create index list_members_wca_id_idx on public.list_members (wca_id);
+
+-- ---------------------------------------------------------------
+-- Helper functions
+-- SECURITY DEFINER so policies on lists and list_members can consult
+-- each other without triggering infinite RLS recursion.
+-- ---------------------------------------------------------------
+
+create function public.current_wca_id() returns text
+language sql stable security definer set search_path = public as $$
+  select wca_id from profiles where id = auth.uid()
+$$;
+
+create function public.is_list_owner(p_list uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (select 1 from lists where id = p_list and owner_id = auth.uid())
+$$;
+
+create function public.can_view_list(p_list uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from lists l
+    where l.id = p_list
+      and (
+        l.visibility = 'public'
+        or l.owner_id = auth.uid()
+        or exists (
+          select 1 from list_members m
+          where m.list_id = l.id and m.wca_id = current_wca_id()
+        )
+      )
+  )
+$$;
+
+-- "My groups": every list I own or am a member of, any visibility.
+create function public.my_lists() returns setof public.lists
+language sql stable security definer set search_path = public as $$
+  select l.* from lists l
+  where l.owner_id = auth.uid()
+     or exists (
+       select 1 from list_members m
+       where m.list_id = l.id and m.wca_id = current_wca_id()
+     )
+$$;
+
+-- Look up one list by slug: public and unlisted are open to anyone
+-- holding the slug; private only if the caller can already view it.
+create function public.get_list_by_slug(p_slug text) returns setof public.lists
+language sql stable security definer set search_path = public as $$
+  select l.* from lists l
+  where l.slug = p_slug
+    and (l.visibility in ('public', 'unlisted') or can_view_list(l.id))
+$$;
+
+-- ---------------------------------------------------------------
+-- Row level security
+-- ---------------------------------------------------------------
+
+alter table public.profiles     enable row level security;
+alter table public.lists        enable row level security;
+alter table public.list_members enable row level security;
+
+-- profiles: you can read your own row. Writes only via the service role.
+create policy profiles_select_own on public.profiles
+  for select using (id = auth.uid());
+
+-- lists: table reads show only what you're allowed to see.
+-- (Unlisted lists are reached through get_list_by_slug, so they are
+-- never enumerable.)
+create policy lists_select on public.lists
+  for select using (public.can_view_list(id));
+create policy lists_insert on public.lists
+  for insert with check (owner_id = auth.uid());
+create policy lists_update on public.lists
+  for update using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+create policy lists_delete on public.lists
+  for delete using (owner_id = auth.uid());
+
+-- list_members: visible to anyone who can view the list; only the owner edits.
+create policy members_select on public.list_members
+  for select using (public.can_view_list(list_id));
+create policy members_insert on public.list_members
+  for insert with check (public.is_list_owner(list_id));
+create policy members_update on public.list_members
+  for update using (public.is_list_owner(list_id))
+  with check (public.is_list_owner(list_id));
+create policy members_delete on public.list_members
+  for delete using (public.is_list_owner(list_id));
+
+-- ---------------------------------------------------------------
+-- Limits (keeps weekly build time bounded)
+-- ---------------------------------------------------------------
+
+create function public.limit_members() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if (select count(*) from list_members where list_id = new.list_id) >= 100 then
+    raise exception 'A list can have at most 100 members';
+  end if;
+  return new;
+end $$;
+create trigger trg_limit_members before insert on public.list_members
+  for each row execute function public.limit_members();
+
+create function public.limit_lists() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if (select count(*) from lists where owner_id = new.owner_id) >= 20 then
+    raise exception 'You can own at most 20 lists';
+  end if;
+  return new;
+end $$;
+create trigger trg_limit_lists before insert on public.lists
+  for each row execute function public.limit_lists();
+
+create function public.touch_updated_at() returns trigger
+language plpgsql as $$
+begin
+  new.updated_at = now();
+  return new;
+end $$;
+create trigger trg_lists_touch before update on public.lists
+  for each row execute function public.touch_updated_at();
