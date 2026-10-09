@@ -124,6 +124,7 @@ setupSubtabs('overall-subtabs');
 setupSubtabs('misc-subtabs');
 setupSubtabs('compare-subtabs');
 setupCsvButtons();
+import('./auth.js').then((m) => m.setupAuth()).catch((err) => console.warn('Login unavailable:', err));
 
 // [toggle element id, data attribute, state key, render function]
 [
