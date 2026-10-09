@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T13:11:29.023Z",
+  "generatedAt": "2026-10-09T06:45:55.455Z",
   "windowDays": 14,
   "items": [
     {
@@ -309,48 +309,6 @@
       "date": "2026-10-03"
     },
     {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "333",
-      "eventName": "3x3x3 Cube",
-      "badges": [
-        "2nd place"
-      ],
-      "singleDisplay": "5.29",
-      "averageDisplay": "6.43",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Round 1",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "333",
-      "eventName": "3x3x3 Cube",
-      "badges": [
-        "2nd place"
-      ],
-      "singleDisplay": "5.67",
-      "averageDisplay": "6.27",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Round 2",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "333",
-      "eventName": "3x3x3 Cube",
-      "badges": [
-        "2nd place"
-      ],
-      "singleDisplay": "5.98",
-      "averageDisplay": "6.31",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Final",
-      "date": "2026-09-26"
-    },
-    {
       "wcaId": "2022TOLH01",
       "name": "Gemma Tolhurst",
       "eventId": "333",
@@ -365,34 +323,6 @@
       "date": "2026-09-26"
     },
     {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "badges": [
-        "3rd place"
-      ],
-      "singleDisplay": "1.13",
-      "averageDisplay": "2.00",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Round 1",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "222",
-      "eventName": "2x2x2 Cube",
-      "badges": [
-        "2nd place"
-      ],
-      "singleDisplay": "1.13",
-      "averageDisplay": "1.60",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Final",
-      "date": "2026-09-26"
-    },
-    {
       "wcaId": "2022TOLH01",
       "name": "Gemma Tolhurst",
       "eventId": "222",
@@ -404,63 +334,6 @@
       "averageDisplay": "2.36",
       "competitionName": "Puzzling Pakenham Saturday 2026",
       "round": "Round 1",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
-      "badges": [
-        "1st place"
-      ],
-      "singleDisplay": "25.30",
-      "averageDisplay": "26.63",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Combined Final",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "444",
-      "eventName": "4x4x4 Cube",
-      "badges": [
-        "1st place"
-      ],
-      "singleDisplay": "25.84",
-      "averageDisplay": "27.65",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Final",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "555",
-      "eventName": "5x5x5 Cube",
-      "badges": [
-        "2nd place"
-      ],
-      "singleDisplay": "49.79",
-      "averageDisplay": "53.78",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Final",
-      "date": "2026-09-26"
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "eventId": "666",
-      "eventName": "6x6x6 Cube",
-      "badges": [
-        "PR2 Average",
-        "3rd place"
-      ],
-      "singleDisplay": "1:32.36",
-      "averageDisplay": "1:36.97",
-      "competitionName": "Hancock County NxNs 2026",
-      "round": "Combined Final",
       "date": "2026-09-26"
     },
     {

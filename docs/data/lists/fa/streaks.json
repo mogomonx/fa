@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T13:11:28.934Z",
+  "generatedAt": "2026-10-09T06:45:55.379Z",
   "overall": [
     {
       "wcaId": "2022GART03",
@@ -293,19 +293,6 @@
         "bestRange": {
           "start": "Northside Duology Part 2 2022",
           "end": "Coffs Big Banana Bonanza 2024"
-        }
-      }
-    },
-    {
-      "wcaId": "2013JOHN10",
-      "name": "Brian Johnson",
-      "streak": {
-        "current": 0,
-        "currentRange": null,
-        "best": 32,
-        "bestRange": {
-          "start": "Cubetcha 2013",
-          "end": "Big Cheese 2019"
         }
       }
     }
@@ -635,19 +622,6 @@
               "end": "Queensland Open 2022 (1)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Cubetcha 2013 (1)",
-              "end": "Cubetcha 2013 (2)"
-            }
-          }
         }
       ],
       "average": [
@@ -898,19 +872,6 @@
             "bestRange": {
               "start": "Runaway Bay May Saturday 2023 (1)",
               "end": "Australian Nationals 2023 (1)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 3,
-            "bestRange": {
-              "start": "UIUC Fall 2013 (f)",
-              "end": "Dixon Spring 2014 (1)"
             }
           }
         }
@@ -1173,19 +1134,6 @@
               "end": "Queensland Open 2022 (2)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "UIUC Fall 2013 (1)",
-              "end": "UIUC Fall 2013 (2)"
-            }
-          }
         }
       ],
       "average": [
@@ -1436,19 +1384,6 @@
             "bestRange": {
               "start": "Northside Duology Part 2 2022 (1)",
               "end": "Brisbane Autumn 2022 (1)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 4,
-            "bestRange": {
-              "start": "UIUC Fall 2013 (1)",
-              "end": "Dixon Spring 2014 (1)"
             }
           }
         }
@@ -1729,19 +1664,6 @@
               "end": "Brisbane Summer 2024 (f)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 5,
-            "bestRange": {
-              "start": "Cubetcha 2013 (c)",
-              "end": "Dixon Summer 2014 (f)"
-            }
-          }
         }
       ],
       "average": [
@@ -2007,19 +1929,6 @@
             "bestRange": {
               "start": "Brisbane Autumn 2022 (d)",
               "end": "Brisbane Summer 2024 (f)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 4,
-            "bestRange": {
-              "start": "UIUC Fall 2013 (f)",
-              "end": "Dixon Summer 2014 (f)"
             }
           }
         }
@@ -2289,19 +2198,6 @@
             "bestRange": {
               "start": "Coffs Big Banana Bonanza 2025 (c)",
               "end": "Big Cube Time Brisbane 2026 (d)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 5,
-            "bestRange": {
-              "start": "Cubetcha 2013 (c)",
-              "end": "Indiana 2015 (c)"
             }
           }
         }
@@ -2574,19 +2470,6 @@
               "end": "Speedy Southport 2025 (f)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "UIUC Fall 2013 (f)",
-              "end": "Summit City Open 2015 (2)"
-            }
-          }
         }
       ]
     },
@@ -2848,19 +2731,6 @@
             "bestRange": {
               "start": "Brisbane Summer 2023 (c)",
               "end": "Brisbane Big n Blind 2023 (1)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 4,
-            "bestRange": {
-              "start": "Wiscube 2014 (c)",
-              "end": "Wiscube 2nd Edition 2015 (c)"
             }
           }
         }
@@ -3128,19 +2998,6 @@
             "bestRange": {
               "start": "Brisbane Summer 2023 (c)",
               "end": "Brisbane Big n Blind 2023 (1)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 4,
-            "bestRange": {
-              "start": "Wiscube 2014 (c)",
-              "end": "Wiscube 2nd Edition 2015 (c)"
             }
           }
         }
@@ -3427,19 +3284,6 @@
               "end": "Brisbane Big n Blind 2023 (1)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 9,
-            "bestRange": {
-              "start": "Michigan 2016 (c)",
-              "end": "CubingUSA Nationals 2018 (1)"
-            }
-          }
         }
       ],
       "average": [
@@ -3713,19 +3557,6 @@
               "end": "Current"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 5,
-            "bestRange": {
-              "start": "Michigan 2016 (c)",
-              "end": "Lions Cubing 2018 (c)"
-            }
-          }
         }
       ]
     },
@@ -3968,19 +3799,6 @@
             "best": 0,
             "bestRange": null
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 3,
-            "bestRange": {
-              "start": "Minnesota Slice 2023 (1)",
-              "end": "Please Be Quiet Evanston 2023 (1)"
-            }
-          }
         }
       ],
       "average": [
@@ -4206,16 +4024,6 @@
         {
           "wcaId": "2022ADAM01",
           "name": "L Adams-Romyn",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -4482,19 +4290,6 @@
             "best": 0,
             "bestRange": null
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Heartland Championships 2017 (f)",
-              "end": "Wiscube 2018 (f)"
-            }
-          }
         }
       ],
       "average": [
@@ -4755,19 +4550,6 @@
             "currentRange": null,
             "best": 0,
             "bestRange": null
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Ohio State Expo Open 2022 (f)",
-              "end": "CubingUSA Great Lakes Championship 2022 (f)"
-            }
           }
         }
       ]
@@ -5030,19 +4812,6 @@
             "bestRange": {
               "start": "Cube Against Cancer Brisbane 2026 (f)",
               "end": "Queensland Open 2026 (d)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Iowa Corn Lovers 2014 (c)",
-              "end": "Dixon Summer 2014 (c)"
             }
           }
         }
@@ -5309,19 +5078,6 @@
               "end": "Australian Nationals 2023 (2)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 6,
-            "bestRange": {
-              "start": "Cubetcha 2013 (f)",
-              "end": "Indiana 2015 (c)"
-            }
-          }
         }
       ]
     },
@@ -5577,19 +5333,6 @@
             "bestRange": {
               "start": "Eastside Side Events 2024 (d)",
               "end": "Eastside Side Events 2024 (2)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 3,
-            "bestRange": {
-              "start": "UIUC Fall 2013 (f)",
-              "end": "Mishawaka Spring 2015 (f)"
             }
           }
         }
@@ -5853,19 +5596,6 @@
               "end": "Eastside Side Events 2024 (2)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 3,
-            "bestRange": {
-              "start": "Dixon Summer 2014 (f)",
-              "end": "Mishawaka Spring 2015 (d)"
-            }
-          }
         }
       ]
     },
@@ -6120,19 +5850,6 @@
               "end": "Brisbane Summer 2024 (c)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 3,
-            "bestRange": {
-              "start": "Dixon Spring 2014 (c)",
-              "end": "Summit City Open 2015 (f)"
-            }
-          }
         }
       ],
       "average": [
@@ -6383,19 +6100,6 @@
             "bestRange": {
               "start": "Queensland Open 2022 (c)",
               "end": "Runaway Bay May Saturday 2023 (d)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Dixon Spring 2014 (c)",
-              "end": "Summit City Open 2015 (f)"
             }
           }
         }
@@ -6653,19 +6357,6 @@
             "bestRange": {
               "start": "Northside Duology Part 2 2022 (1)",
               "end": "Australian Nationals 2023 (1)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Mishawaka Fall 2014 (f)",
-              "end": "Mishawaka Spring 2015 (f)"
             }
           }
         }
@@ -6929,19 +6620,6 @@
               "end": "Brisbane Summer 2023 (2)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "CubingUSA Heartland Championship 2018 (f)",
-              "end": "CubingUSA Great Lakes Championship 2018 (d)"
-            }
-          }
         }
       ]
     },
@@ -7193,19 +6871,6 @@
               "end": "U Cube at UQ Sunday 2023 (2)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 1,
-            "bestRange": {
-              "start": "Dixon Summer 2014 (f)",
-              "end": "Dixon Summer 2014 (f)"
-            }
-          }
         }
       ],
       "average": [
@@ -7450,19 +7115,6 @@
             "bestRange": {
               "start": "Northside Duology Part 2 2022 (1)",
               "end": "U Cube at UQ Sunday 2023 (1)"
-            }
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 2,
-            "bestRange": {
-              "start": "Heartland Championships 2017 (d)",
-              "end": "Heartland Championships 2017 (f)"
             }
           }
         }
@@ -7734,19 +7386,6 @@
               "end": "U Cube at UQ Sunday 2023 (d)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 5,
-            "bestRange": {
-              "start": "Summit City Open 2015 (d)",
-              "end": "Dixon Winter 2016 (2)"
-            }
-          }
         }
       ],
       "average": [
@@ -8005,19 +7644,6 @@
               "end": "U Cube at UQ Sunday 2023 (f)"
             }
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 3,
-            "bestRange": {
-              "start": "Iowa Corn Lovers 2014 (c)",
-              "end": "Summit City Open 2015 (f)"
-            }
-          }
         }
       ]
     },
@@ -8248,16 +7874,6 @@
             "best": 0,
             "bestRange": null
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
         }
       ],
       "average": [
@@ -8450,16 +8066,6 @@
         {
           "wcaId": "2022ADAM01",
           "name": "L Adams-Romyn",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -8681,16 +8287,6 @@
             "best": 0,
             "bestRange": null
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
         }
       ],
       "average": [
@@ -8877,16 +8473,6 @@
         {
           "wcaId": "2022ADAM01",
           "name": "L Adams-Romyn",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
           "streak": {
             "current": 0,
             "currentRange": null,
@@ -9135,16 +8721,6 @@
             "best": 0,
             "bestRange": null
           }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
         }
       ],
       "average": [
@@ -9331,16 +8907,6 @@
         {
           "wcaId": "2022ADAM01",
           "name": "L Adams-Romyn",
-          "streak": {
-            "current": 0,
-            "currentRange": null,
-            "best": 0,
-            "bestRange": null
-          }
-        },
-        {
-          "wcaId": "2013JOHN10",
-          "name": "Brian Johnson",
           "streak": {
             "current": 0,
             "currentRange": null,
