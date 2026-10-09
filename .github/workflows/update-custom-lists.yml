@@ -1,0 +1,122 @@
+name: Update Custom Lists
+
+# Builds database-backed lists and uploads them to the private list-data bucket.
+#   every 15 min : new/edited lists (basic rankings first, then full history)
+#   daily        : personal bests for finished lists
+#   weekly       : full history for every list
+# Also pings Supabase regularly, which keeps the free project awake.
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+    - cron: '30 6 * * *'
+    - cron: '0 7 * * 0'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Which job to run
+        type: choice
+        options: [pending, bests, full]
+        default: pending
+
+permissions:
+  contents: read
+
+concurrency:
+  group: custom-lists
+  cancel-in-progress: false
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  LISTS_ROOT: build
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Work out mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+          else
+            case "${{ github.event.schedule }}" in
+              '*/15 * * * *') MODE=pending ;;
+              '30 6 * * *') MODE=bests ;;
+              *) MODE=full ;;
+            esac
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+
+      - name: Sync lists from the database
+        id: sync
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          case "$MODE" in
+            pending) node scripts/sync-lists.js --pending ;;
+            bests)   node scripts/sync-lists.js --built ;;
+            *)       node scripts/sync-lists.js --all ;;
+          esac
+
+      - name: Daily personal bests
+        if: steps.mode.outputs.mode == 'bests' && steps.sync.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+        run: |
+          for s in $SLUGS; do
+            node scripts/fetch.js "$s"
+            node scripts/build-rankings.js "$s"
+          done
+          node scripts/upload-lists.js --files=rankings.json $SLUGS
+
+      - name: Fast basic build for brand-new lists
+        if: steps.mode.outputs.mode == 'pending' && steps.sync.outputs.new_slugs != ''
+        env:
+          NEW_SLUGS: ${{ steps.sync.outputs.new_slugs }}
+        run: |
+          for s in $NEW_SLUGS; do
+            echo "=== basic: $s ==="
+            node scripts/fetch.js "$s"
+            node scripts/build-rankings.js "$s"
+            node scripts/make-empty-history.js "$s"
+            node scripts/build-individual-rankings.js "$s"
+            node scripts/build-historical-records.js "$s"
+            node scripts/build-streaks.js "$s"
+            node scripts/build-recent-activity.js "$s"
+            node scripts/build-rolling-averages.js "$s"
+          done
+          node scripts/upload-lists.js --level=basic $NEW_SLUGS
+          node scripts/mark-lists.js --level=basic $NEW_SLUGS
+
+      - name: Download WCA results export
+        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.slugs != ''
+        run: |
+          TSV_URL=$(node scripts/get-export-url.js)
+          curl -sL "$TSV_URL" -o /tmp/wca-export.zip
+          mkdir -p /tmp/wca-export
+          unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
+
+      - name: Full build
+        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+        run: |
+          for s in $SLUGS; do
+            echo "=== full: $s ==="
+            node scripts/fetch.js "$s"
+            node scripts/build-rankings.js "$s"
+            node scripts/parse-export.js /tmp/wca-export "$s"
+            node scripts/build-individual-rankings.js "$s"
+            node scripts/build-historical-records.js "$s"
+            node scripts/build-streaks.js "$s"
+            node scripts/build-recent-activity.js "$s"
+            node scripts/build-rolling-averages.js "$s"
+          done
+          node scripts/upload-lists.js --level=full $SLUGS
+          node scripts/mark-lists.js --level=full $SLUGS
