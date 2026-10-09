@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T07:03:23.699Z",
+  "generatedAt": "2026-10-09T14:23:49.789Z",
   "competitions": [
     {
       "id": "LegazpiMultiDays2026",
@@ -401,96 +401,6 @@
             "555",
             "666",
             "777"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "RunawayBayReturns2026",
-      "name": "Runaway Bay Returns 2026",
-      "date": "2026-11-21",
-      "endDate": "2026-11-22",
-      "city": "Gold Coast, Queensland",
-      "eventIds": [
-        "333",
-        "444",
-        "555",
-        "777",
-        "clock",
-        "minx",
-        "skewb",
-        "sq1"
-      ],
-      "url": "https://www.worldcubeassociation.org/competitions/RunawayBayReturns2026",
-      "attendees": [
-        {
-          "wcaId": "2022JONE11",
-          "name": "Kyle Jones",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2021RAVI01",
-          "name": "VJ Ravipati",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2019THEO03",
-          "name": "Connor Theodore",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2021LUAA01",
-          "name": "Aaron Lu",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
-          ]
-        },
-        {
-          "wcaId": "2022SHAR23",
-          "name": "Connor Sharpe",
-          "eventIds": [
-            "333",
-            "444",
-            "555",
-            "777",
-            "clock",
-            "minx",
-            "skewb",
-            "sq1"
           ]
         }
       ]
