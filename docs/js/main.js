@@ -1,4 +1,4 @@
-import { DATA_BASE, store, state } from './store.js';
+import { DATA_BASE, LIST_ID, store, state } from './store.js';
 import { setupTabs, setupSideMenu, setupHomeLinks, setupSubtabs, setupToggle, setupCsvButtons, populateEventSelect } from './ui.js';
 import { setupSettings, applyStoredSettings } from './settings.js';
 import { renderFaRecords, renderRecentActivity, setupProfileSearch } from './tabs/home.js';
@@ -12,14 +12,60 @@ import { setupImprovementDates, renderImprovement } from './tabs/improvement.js'
 import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
 import { setupTimeTravel, restoreTimeTravel } from './timetravel/index.js';
 
+function friendly(message) {
+  const e = new Error(message);
+  e.friendly = true;
+  return e;
+}
+
+// Where this list's JSON comes from:
+//  - 'static':  the committed docs/data/lists/<id>/ folder (built-in lists)
+//  - 'storage': the private Supabase bucket (database lists), looked up by slug.
+// Static is tried first, so retiring a built-in list is just deleting its folder.
+let source = null;
+
+async function resolveSource() {
+  try {
+    const res = await fetch(`${DATA_BASE}rankings.json`, { cache: 'no-store' });
+    if (res.ok) {
+      source = { kind: 'static', preloaded: { 'rankings.json': await res.json() } };
+      return;
+    }
+  } catch (e) {
+    // fall through to Supabase
+  }
+  let supabase;
+  try {
+    ({ supabase } = await import('./auth.js'));
+  } catch (e) {
+    throw friendly('Could not reach the lists service.');
+  }
+  const { data, error } = await supabase.rpc('get_list_by_slug', { p_slug: LIST_ID });
+  if (error || !data || data.length === 0) {
+    throw friendly('List not found. If it is private, log in with your WCA account (menu) and reload.');
+  }
+  source = { kind: 'storage', supabase, listId: data[0].id, list: data[0], preloaded: {} };
+}
+
 async function fetchJson(file, required) {
   try {
-    const res = await fetch(`${DATA_BASE}${file}`, { cache: 'no-store' });
-    if (res.ok) return await res.json();
+    if (source.preloaded[file]) return source.preloaded[file];
+    if (source.kind === 'static') {
+      const res = await fetch(`${DATA_BASE}${file}`, { cache: 'no-store' });
+      if (res.ok) return await res.json();
+    } else {
+      const { data, error } = await source.supabase.storage.from('list-data').download(`${source.listId}/${file}`);
+      if (!error && data) return JSON.parse(await data.text());
+    }
   } catch (e) {
     // fall through
   }
-  if (required) throw new Error(`Could not load ${file}`);
+  if (required) {
+    if (source.list && source.list.data_level === 'none') {
+      throw friendly('This list is still being built. Check back in a few minutes.');
+    }
+    throw new Error(`Could not load ${file}`);
+  }
   return null;
 }
 
@@ -60,7 +106,8 @@ function refreshAll() {
 }
 
 async function loadData() {
-  const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling] = await Promise.all([
+  await resolveSource();
+  const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
     fetchJson('rankings.json', true),
     fetchJson('individual-rankings.json', true),
     fetchJson('historical-records.json', true),
@@ -69,6 +116,7 @@ async function loadData() {
     fetchJson('streaks.json'),
     fetchJson('recent-activity.json'),
     fetchJson('rolling-averages.json'),
+    fetchJson('meta.json'),
   ]);
   Object.assign(store, {
     rankings,
@@ -89,9 +137,13 @@ async function loadData() {
     document.getElementById('page-title').textContent = rankings.listName;
     document.title = `${rankings.listName} Records`;
   }
-  document.getElementById('updated-at').textContent = rankings.dataFetchedAt
+  let updated = rankings.dataFetchedAt
     ? `Last updated ${new Date(rankings.generatedAt).toLocaleString()}`
     : 'No data yet — waiting on the first automatic update.';
+  if (meta && meta.level === 'basic') {
+    updated += ' · Full history is still being processed, so some tabs are empty for now.';
+  }
+  document.getElementById('updated-at').textContent = updated;
 
   populateSelects();
   setupImprovementDates();
@@ -151,5 +203,5 @@ import('./auth.js').then((m) => m.setupAuth()).catch((err) => console.warn('Logi
 
 loadData().catch((err) => {
   console.error(err);
-  document.getElementById('updated-at').textContent = 'Could not load data.';
+  document.getElementById('updated-at').textContent = err.friendly ? err.message : 'Could not load data.';
 });
