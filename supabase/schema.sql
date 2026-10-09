@@ -163,3 +163,125 @@ begin
 end $$;
 create trigger trg_lists_touch before update on public.lists
   for each row execute function public.touch_updated_at();
+
+-- Custom lists step 3: build tracking, private data storage, opt-out.
+
+-- ---------- Build tracking ----------
+alter table public.lists
+  add column dirty_at   timestamptz not null default now(),
+  add column built_at   timestamptz,
+  add column data_level text not null default 'none'
+             check (data_level in ('none', 'basic', 'full'));
+-- pending = built_at is null or built_at < dirty_at
+
+-- Owners may only change name and visibility directly; build columns are
+-- written by triggers / the build job only.
+revoke update on public.lists from authenticated, anon;
+grant update (name, visibility) on public.lists to authenticated;
+
+create function public.mark_list_dirty() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  update lists set dirty_at = now() where id = coalesce(new.list_id, old.list_id);
+  return null;
+end $$;
+create trigger trg_members_dirty
+  after insert or update or delete on public.list_members
+  for each row execute function public.mark_list_dirty();
+
+-- Called by the build job (service role) when a build finishes.
+-- 'basic': only moves none -> basic. 'full': only applies if the list hasn't
+-- been edited since the build read it (p_dirty must still match).
+create function public.mark_list_built(p_list uuid, p_dirty timestamptz, p_level text)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if p_level = 'basic' then
+    update lists set data_level = 'basic' where id = p_list and data_level = 'none';
+  elsif p_level = 'full' then
+    update lists set built_at = now(), data_level = 'full'
+    where id = p_list and dirty_at = p_dirty;
+  end if;
+end $$;
+revoke execute on function public.mark_list_built(uuid, timestamptz, text)
+  from public, anon, authenticated;
+
+-- ---------- Private data storage ----------
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('list-data', 'list-data', false, 52428800, array['application/json'])
+on conflict (id) do nothing;
+
+-- Same visibility rules as the lists table. Unlisted data is readable by
+-- anyone who knows the list's id (they get it via get_list_by_slug).
+create function public.can_read_list_data(p_folder text) returns boolean
+language plpgsql stable security definer set search_path = public as $$
+declare v_id uuid;
+begin
+  begin
+    v_id := p_folder::uuid;
+  exception when others then
+    return false;
+  end;
+  return exists (
+    select 1 from lists l
+    where l.id = v_id
+      and (l.visibility in ('public', 'unlisted') or can_view_list(l.id))
+  );
+end $$;
+
+create policy list_data_read on storage.objects for select
+  using (bucket_id = 'list-data'
+         and public.can_read_list_data((storage.foldername(name))[1]));
+-- No insert/update/delete policies: only the service role writes.
+
+-- ---------- Opt-out ----------
+create table public.list_opt_outs (
+  list_id     uuid not null references public.lists(id) on delete cascade,
+  wca_id      text not null check (wca_id ~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'),
+  created_at  timestamptz not null default now(),
+  primary key (list_id, wca_id)
+);
+alter table public.list_opt_outs enable row level security;  -- no policies: functions only
+
+create function public.block_opted_out() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if exists (select 1 from list_opt_outs where list_id = new.list_id and wca_id = new.wca_id) then
+    raise exception '% has opted out of this list and can''t be added again', new.wca_id;
+  end if;
+  return new;
+end $$;
+create trigger trg_block_opted_out before insert on public.list_members
+  for each row execute function public.block_opted_out();
+
+create function public.leave_list(p_list uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := current_wca_id();
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID to leave a list'; end if;
+  if not exists (select 1 from list_members where list_id = p_list and wca_id = v_wca) then
+    raise exception 'You are not on this list';
+  end if;
+  delete from list_members where list_id = p_list and wca_id = v_wca;
+  insert into list_opt_outs (list_id, wca_id) values (p_list, v_wca) on conflict do nothing;
+end $$;
+
+create function public.undo_opt_out(p_list uuid) returns void
+language sql security definer set search_path = public as $$
+  delete from list_opt_outs where list_id = p_list and wca_id = current_wca_id()
+$$;
+
+-- "Lists I'm in": membership only, any visibility (private included).
+create function public.lists_i_am_in() returns setof public.lists
+language sql stable security definer set search_path = public as $$
+  select l.* from lists l
+  join list_members m on m.list_id = l.id
+  where m.wca_id = current_wca_id()
+$$;
+
+create function public.my_opt_outs()
+returns table (list_id uuid, name text, created_at timestamptz)
+language sql stable security definer set search_path = public as $$
+  select o.list_id, l.name, o.created_at
+  from list_opt_outs o join lists l on l.id = o.list_id
+  where o.wca_id = current_wca_id()
+$$;
