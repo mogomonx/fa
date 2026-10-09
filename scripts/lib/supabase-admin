@@ -1,6 +1,8 @@
 // Minimal Supabase admin client for build scripts (service key, Node 18+ fetch).
 // Env: SUPABASE_URL (bare project URL), SUPABASE_SERVICE_KEY (secret key).
 
+const ATTEMPTS = 5;
+
 function config() {
   const base = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
   const key = process.env.SUPABASE_SERVICE_KEY;
@@ -16,26 +18,58 @@ function headers(key, extra = {}) {
   return h;
 }
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Keep error output to one short line (a Supabase 520 returns a whole HTML page).
+function oneLine(text) {
+  const t = String(text || '').trim();
+  if (t.startsWith('<')) return '(HTML error page)';
+  return t.replace(/\s+/g, ' ').slice(0, 200);
+}
+
+// Retries network errors, 429 and 5xx with backoff. Other 4xx fail at once.
+async function request(label, url, options) {
+  let lastError;
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+    let res;
+    let text;
+    try {
+      res = await fetch(url, options);
+      text = await res.text();
+    } catch (err) {
+      lastError = new Error(`${label} -> network error: ${err.message}`);
+    }
+    if (res) {
+      if (res.ok) return text;
+      lastError = new Error(`${label} -> ${res.status} ${oneLine(text)}`);
+      if (res.status !== 429 && res.status < 500) throw lastError;
+    }
+    if (attempt < ATTEMPTS) {
+      const wait = 3000 * 2 ** (attempt - 1);
+      console.warn(`${lastError.message} (attempt ${attempt}/${ATTEMPTS}, retrying in ${wait / 1000}s)`);
+      await sleep(wait);
+    }
+  }
+  throw lastError;
+}
+
 async function rest(method, pathAndQuery, body) {
   const { base, key } = config();
-  const res = await fetch(`${base}${pathAndQuery}`, {
+  const text = await request(`${method} ${pathAndQuery.split('?')[0]}`, `${base}${pathAndQuery}`, {
     method,
     headers: headers(key, { 'Content-Type': 'application/json' }),
     body: body === undefined ? undefined : JSON.stringify(body),
   });
-  const text = await res.text();
-  if (!res.ok) throw new Error(`${method} ${pathAndQuery.split('?')[0]} -> ${res.status} ${text}`);
   return text ? JSON.parse(text) : null;
 }
 
 async function uploadObject(objectPath, jsonString) {
   const { base, key } = config();
-  const res = await fetch(`${base}/storage/v1/object/list-data/${objectPath}`, {
+  await request(`Upload ${objectPath}`, `${base}/storage/v1/object/list-data/${objectPath}`, {
     method: 'POST',
     headers: headers(key, { 'Content-Type': 'application/json', 'x-upsert': 'true' }),
     body: jsonString,
   });
-  if (!res.ok) throw new Error(`Upload ${objectPath} -> ${res.status} ${await res.text()}`);
 }
 
 module.exports = { rest, uploadObject };
