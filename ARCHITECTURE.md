@@ -5,7 +5,7 @@ Website ranking a WCA group's official stats (single and average, every WCA even
 - Repo: `github.com/mogomonx/fa`
 - Hosting: GitHub Pages, served from `docs/` (`https://mogomonx.github.io/fa`)
 - Data: static JSON rebuilt by GitHub Actions (unchanged so far).
-- Backend (new): Supabase free tier — Postgres + auth + one Edge Function. Used **only** for accounts and custom-list storage. The rankings themselves are still static JSON.
+- Backend: Supabase free tier — Postgres + auth + one Edge Function. Used **only** for accounts and custom-list storage (names, visibility, members). The rankings themselves are still static JSON, and custom lists have no ranking data yet (custom-lists step 3).
 
 ---
 
@@ -25,6 +25,7 @@ WCA public WCIF ─────► update-upcoming.yml      (daily)
 Accounts (separate path):
 Browser ──► WCA /oauth/authorize ──► Supabase Edge Function `wca-auth` ──► auth-callback.html ──► Supabase session
 Browser ──► Supabase (publishable key, row level security) ──► profiles / lists / list_members
+            (used by lists.html via js/lists-page.js to create, edit, delete and browse custom lists)
 ```
 
 ### Data sources
@@ -52,10 +53,13 @@ Each loops over every list in `config/lists-manifest.json` (still file-based; mo
 docs/
   index.html        single-page, tab-based UI (side menu + slim header)
   style.css
-  lists.html        list picker; links to index.html?list=<id>
+  lists.html        list picker: built-in lists (file manifest) + custom lists (Supabase) + list builder
   auth-callback.html  finishes WCA login (calls auth.js finishLogin) then returns to the page you were on
+  img/
+    wca-logo.png    logo shown on the login button (added by hand; button falls back to text if missing)
   js/               ES modules (full tree in section 8)
   data/lists/<listId>/*.json    workflow-owned output
+  data/lists-manifest.json      workflow/build-owned copy of the manifest, read by lists.html
 scripts/
   *.js              Node build scripts; take optional listId CLI arg
   lib/list-context.js           resolves config/output paths per list
@@ -70,10 +74,11 @@ supabase/
 ```
 
 ### Lists
-- Multiple named WCA-ID lists, each with its own full build of the site data.
-- The page picks its list from `?list=<id>` (default `fa`).
-- Today, creating a list is config-file-only. User-created lists (stored in Supabase) are the next big project — section 9.
-- `displayName` override per person exists because some official WCA names don't match who the person is.
+- Two kinds:
+  - **Built-in lists**: defined by config files (`config/lists-manifest.json`), each with its own full site build. The page picks its list from `?list=<id>` (default `fa`).
+  - **Custom lists**: stored in Supabase (name, slug, visibility, members as WCA IDs). Created and edited from `lists.html`. They have **no ranking data yet** — nothing builds their JSON until custom-lists step 3, so `index.html?list=<slug>` does not work for them and their cards open a members-only detail page instead.
+- Custom list link names (slugs) are checked client-side against built-in list IDs so they can't collide (database does not enforce this).
+- `displayName` override per person exists because some official WCA names don't match who the person is. Custom lists have the same thing as `list_members.display_name`.
 
 ---
 
@@ -122,9 +127,19 @@ Settings-page date picker. Recomputes, entirely client-side from `full-results.j
 
 ### Login (client side)
 - `auth.js` exports `supabase` (the shared client), `startWcaLogin`, `finishLogin`, `logout`, `setupAuth`.
+- `setupAuth()` fills `#auth-slot` with the styled **Log in with WCA** button (`.wca-login-btn`: logo from `img/wca-logo.png` + label; the `<img>` removes itself on load error so the button degrades to text), or, when logged in, `.auth-user` (name + `.auth-logout` button). Styles live at the bottom of `style.css`.
 - `main.js` loads it with a **dynamic import** (`import('./auth.js').then(m => m.setupAuth())`) so a backend/CDN problem can never stop the rankings site from loading. Guests (not logged in) see the full site as before.
 - `supabase-config.js` holds three public values: project URL (bare, e.g. `https://<ref>.supabase.co` — **no** `/rest/v1/`, no trailing slash), publishable key, WCA application ID.
 - supabase-js is loaded from `https://esm.sh/@supabase/supabase-js@<pinned version>` in `auth.js`.
+
+### Custom lists UI (`lists.html` + `js/lists-page.js`)
+- `lists.html` has two independent scripts: a plain inline script that renders the built-in lists from `data/lists-manifest.json` (no backend, always works), and a module script that dynamically imports `lists-page.js` and calls `initLists()`. A Supabase/CDN failure only loses the custom section.
+- Sections: **My lists** (RPC `my_lists()` — owned or member of, any visibility; needs login) and **Public lists** (`lists` where `visibility = 'public'`, readable by guests). Unlisted lists are reachable only by slug (not enumerable).
+- Views (swap in place, no routing): browser → list detail (members, plus Edit/Delete for the owner) → editor (name, link name, visibility, members textarea).
+- Members input: one person per line, `WCAID` or `WCAID Display Name`; a line of only IDs (space/comma separated) adds each. IDs uppercased, format-checked (`^[0-9]{4}[A-Z]{4}[0-9]{2}$`), de-duplicated, max 100. IDs are **not** checked against the WCA API (a typo'd but well-formed ID is accepted).
+- Create: insert `lists` row, then insert members; if the member insert fails, the new list is deleted again (best-effort rollback).
+- Edit: only changes are sent — delete removed members, update changed display names, insert new ones. **No upsert on purpose**: the `limit_members` trigger fires on a conflicting insert too and would reject re-saving a list that already has 100 members. The link name (slug) is locked after creation so shared links don't break.
+- All user-typed text is rendered with `textContent` (never `innerHTML`) via a small `el()` helper.
 
 ### Browser storage keys
 - `fa-site-colours` (localStorage) — Settings colour overrides
@@ -154,12 +169,12 @@ Free tier, hosted. Chosen for: free, low maintenance, row-level security for pri
 
 ### Schema (`supabase/schema.sql`)
 - `profiles` — one row per logged-in person: `id` (= auth user id), `wca_user_id` (unique, not null), `wca_id` (nullable: WCA accounts with no competitions have none), `name`. Written only by the Edge Function (service role).
-- `lists` — `id`, `slug` (unique), `name`, `owner_id`, `visibility` (`public` | `unlisted` | `private`, default `private`), timestamps.
-- `list_members` — `(list_id, wca_id)` primary key, optional `display_name`. Members are **WCA IDs, not accounts**, so people can be on a list before they ever log in; logging in with a matching WCA ID is what puts a list in "My groups".
+- `lists` — `id`, `slug` (unique, `^[a-z0-9-]{2,40}$`), `name` (1–80 chars), `owner_id`, `visibility` (`public` | `unlisted` | `private`, default `private`), timestamps.
+- `list_members` — `(list_id, wca_id)` primary key, optional `display_name`, `added_at`. Members are **WCA IDs, not accounts**, so people can be on a list before they ever log in; logging in with a matching WCA ID is what puts a list in "My lists".
 - Helper functions (security definer, avoid RLS recursion): `current_wca_id()`, `is_list_owner()`, `can_view_list()`. RPCs: `my_lists()` (every list I own or belong to, any visibility), `get_list_by_slug()` (public/unlisted open to anyone holding the slug).
-- RLS on all three tables: lists/members readable only if `can_view_list`; only the owner inserts/updates/deletes. Unlisted lists are not enumerable through table reads.
+- RLS on all three tables: lists/members readable only if `can_view_list`; only the owner inserts/updates/deletes. Unlisted lists are not enumerable through table reads. Note: a member currently **cannot** remove themselves (only the owner can delete `list_members` rows) — relevant to the opt-out feature in section 9.
 - Limits (triggers): 20 lists per owner; 100 members per list (`limit_members`; raise later only if needed).
-- Not yet in the schema: guest-owned lists / edit tokens (custom-lists step 5).
+- Not yet in the schema: guest-owned lists / edit tokens (custom-lists step 5), any opt-out / leave mechanism.
 
 ### Login flow (Edge Function `wca-auth`)
 1. `auth.js startWcaLogin()` stores a random `state`, sends the browser to WCA `/oauth/authorize` with `redirect_uri = <SUPABASE_URL>/functions/v1/wca-auth`, scope `public`.
@@ -182,7 +197,7 @@ Free tier, hosted. Chosen for: free, low maintenance, row-level security for pri
 
 ## 7. Deploy rules
 
-- **Client-only change** (`docs/js/`, `index.html`, `style.css`, `auth-callback.html`): replace the touched files, commit, push. No workflow re-run needed.
+- **Client-only change** (`docs/js/`, `index.html`, `lists.html`, `style.css`, `auth-callback.html`, `docs/img/`): replace the touched files, commit, push. No workflow re-run needed.
 - **Build script or data-shape change:** replace `scripts/`, `config/`, `.github/` as needed, commit, push, then re-run the relevant workflow(s) from the Actions tab.
 - **Edge Function change:** the function is deployed from the Supabase dashboard editor (the repo is not connected to Supabase). `supabase/functions/wca-auth/index.ts` in the repo is a reference copy — edit in the dashboard, then update the repo copy so they match.
 - **Database change:** run SQL in the Supabase SQL Editor, then update `supabase/schema.sql` in the repo so it stays the source of truth.
@@ -205,7 +220,8 @@ docs/js/
   icons-data.js       generated eventId -> SVG map
   settings.js         colour customisation
   supabase-config.js  public project URL, publishable key, WCA application ID
-  auth.js             Supabase client + WCA login/logout + setupAuth (renders into #auth-slot)
+  auth.js             Supabase client + WCA login/logout + styled login button + setupAuth (renders into #auth-slot)
+  lists-page.js       custom-lists UI for lists.html: browse, create, edit, delete (exports initLists)
   tabs/
     home.js           FA Records, Recent Activity, profile search
     overall.js        Sum of Ranks, Kinch
@@ -228,6 +244,7 @@ Design decisions:
 3. `timetravel/compute.js` takes live events as an argument so it has no dependency on app state.
 4. `index.html` loads `<script type="module" src="js/main.js"></script>`.
 5. Local testing needs a server (`python -m http.server` inside `docs/`); modules won't load from `file://`. Note: login always redirects back to the production `SITE_URL`, so test login on the live site.
+6. Anything backend-related (`auth.js`, `lists-page.js`) is loaded by dynamic import inside a try/catch so the static rankings pages never depend on Supabase or the CDN.
 
 ---
 
@@ -238,16 +255,26 @@ Goal: users create their own lists, save them to a profile (log in with WCA; non
 
 Order of work (one conversation each):
 1. ✅ Supabase project, schema, WCA login (done — login works).
-2. **Next:** list storage UI — create/edit/delete a list from typed WCA IDs, set visibility, members cap handling, list picker reading from Supabase alongside the file-based lists.
-3. Move the build pipeline's list manifest from `config/` to the database; write per-list output to access-controlled storage instead of committing to the repo (private lists must not be public); fast basic rankings on creation, full history on the next heavy run.
-4. "My groups" view using `my_lists()` (includes private; decide how a member hides/leaves a list they were added to).
-5. Guests: unlisted-only lists with a local edit token, claimable on login (needs schema change: nullable owner + token hash, and RPCs for token-checked edits). Optional.
+2. ✅ List storage UI + styled login button (done, pushed; **not yet tested end to end** — testing waits for step 3 so there is data to look at). `lists.html` + `js/lists-page.js`: create / edit / delete, visibility, members cap, picker showing built-in lists alongside Supabase lists.
+3. **Next:** move the build pipeline's list manifest from `config/` to the database; write per-list output to access-controlled storage instead of committing to the repo (private lists must not be public); fast basic rankings on creation, full history on the next heavy run. Make custom list cards link into `index.html` once data exists.
+4. "Lists I'm in" view (see decisions below).
+5. Guests: unlisted-only lists with a local edit token, claimable on login (needs schema change: nullable owner + token hash, and RPCs for token-checked edits). Optional, only if not much hassle.
+
+**Decision (2026-10-09): FA should not stay built in.** Long-term, FA becomes an ordinary private/unlisted list: not in the public picker, visible only to people holding the link and people who are in it. The site as a whole should lean more private. Consequences to plan in step 3:
+- FA's data can't live in the public `docs/data/` once it's private — it must use the same access-controlled storage as other private lists.
+- The built-in/file-based list mechanism (`config/lists-manifest.json`, the built-in section of `lists.html`) is eventually retired; FA is migrated into the database as a list. Decide whether that migration happens in step 3 or straight after it.
+- Default `?list=` of `fa` in `store.js` will need to go (no default list for logged-out visitors).
+
+**Decision (2026-10-09): "Lists I'm in" with opt-out.** A section listing every list the logged-in user is in, **including private ones**, with an opt-out button inside each list. (`my_lists()` already returns these; "My lists" in `lists.html` is the starting point.) Open design questions for that step:
+- What does opting out mean? (a) just hide the list from my view but I'm still ranked in it, or (b) remove me from the list and stop the owner re-adding me.
+- (b) needs a schema change: a member can't currently delete their own `list_members` row (only the owner can), and the owner re-adding them must be blocked (e.g. an opt-out table checked by an insert trigger).
+- Members are WCA IDs, so "me" is matched through `profiles.wca_id`; logged-in users with no WCA ID can't be members of anything.
 
 Also needed:
 - Keep-alive: a scheduled job to ping Supabase (free projects pause after inactivity — verify current policy).
 - Periodic export/backup of list data (free tier backups are limited).
-- Style the WCA login button/icon (small session).
 - Per-list size limits tuned against build time and `full-results.json` size.
+- Optional: verify typed WCA IDs against the WCA API at save time (needs confirming the API allows browser requests; otherwise do it in the build step).
 
 ### Other
 - PB submission (non-official practice times) — needs auth + database; now possible on top of the new backend.
@@ -271,9 +298,12 @@ The static-JSON-rebuild model won't scale to all of WCA. Plan, as separate piece
 
 - Upcoming Competitions only shows a few of the announced comps that have group registrants (data side: `update-upcoming.yml` and its script). Deferred.
 - On This Date gaps listed in section 4.
-- No UI yet for creating a list.
+- Custom lists have no ranking data yet; their detail page says so. The list builder has not been tested end to end yet.
+- Typed WCA IDs are format-checked only, not verified to exist.
+- Custom list slugs are checked against built-in list IDs in the browser only, not in the database.
+- A list member can't remove themselves, and there is no "lists I'm in" opt-out yet (see section 9).
+- `docs/img/wca-logo.png` must be added by hand; without it the login button shows text only.
 - All event icons share one colour; no per-event colours.
-- Login button is unstyled.
 
 ---
 
@@ -285,4 +315,4 @@ The static-JSON-rebuild model won't scale to all of WCA. Plan, as separate piece
 - Browser used for testing: Opera.
 - Never paste secrets (Supabase secret key, WCA client secret) into a chat. If one leaks, rotate it.
 - Update this file when the architecture changes.
-- For the custom-lists step 2 conversation, paste: this file, `supabase/schema.sql`, `docs/js/auth.js`, `docs/lists.html`, `docs/index.html`, `docs/js/main.js`.
+- For the custom-lists step 3 conversation, paste: this file, `supabase/schema.sql`, `scripts/lib/list-context.js`, `config/lists-manifest.json`, one example `config/lists/<id>.json`, the three files in `.github/workflows/`, the build scripts in `scripts/` (all of them if they fit; otherwise start with the ones the workflows call first and say which you left out), `docs/js/store.js`, `docs/js/main.js`, `docs/js/lists-page.js`, `docs/lists.html`. Also say up front that FA is meant to become a private list (section 9), because that shapes where data is stored.
