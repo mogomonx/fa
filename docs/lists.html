@@ -20,14 +20,11 @@
         <div id="auth-slot"></div>
       </div>
 
-      <h2>Built-in lists</h2>
-      <div class="home-links" id="lists-directory">
-        <p class="empty-note">Loading…</p>
-      </div>
+      <p class="empty-note" id="lists-status">Loading…</p>
 
       <div id="custom-lists-section" hidden>
-        <div class="panel-controls" style="margin-top:2rem;">
-          <h2 style="margin:0;">My lists</h2>
+        <div class="panel-controls">
+          <h2 style="margin:0;">Your lists</h2>
           <button type="button" class="csv-btn" id="new-list-btn" hidden>New list</button>
         </div>
         <p class="board-note" id="login-hint">Log in with WCA to create lists and see the ones you're on.</p>
@@ -41,35 +38,16 @@
     <div id="list-panel" hidden></div>
   </main>
 
-  <!-- Built-in lists: no backend involved, so this always works. -->
-  <script>
-    fetch('data/lists-manifest.json', { cache: 'no-store' })
-      .then((res) => res.json())
-      .then((manifest) => {
-        const container = document.getElementById('lists-directory');
-        container.innerHTML = '';
-        (manifest.lists || []).forEach((list) => {
-          const a = document.createElement('a');
-          a.className = 'home-link';
-          a.href = `index.html?list=${encodeURIComponent(list.id)}`;
-          a.innerHTML = `<strong>${list.name}</strong><span>View this list's rankings</span>`;
-          container.appendChild(a);
-        });
-        if ((manifest.lists || []).length === 0) {
-          container.innerHTML = '<p class="empty-note">No lists configured yet.</p>';
-        }
-      })
-      .catch(() => {
-        document.getElementById('lists-directory').innerHTML =
-          '<p class="empty-note">Could not load the list of lists.</p>';
-      });
-  </script>
-
-  <!-- Custom lists: loaded separately so a backend/CDN problem can't break the above. -->
+  <!-- Loaded by dynamic import so a backend/CDN problem shows a message instead of a blank page. -->
   <script type="module">
+    const status = document.getElementById('lists-status');
     import('./js/lists-page.js')
       .then((m) => m.initLists())
-      .catch((err) => console.warn('Custom lists unavailable:', err));
+      .then(() => status.remove())
+      .catch((err) => {
+        console.warn('Lists unavailable:', err);
+        status.textContent = 'Could not load lists. Please try again later.';
+      });
   </script>
 </body>
 </html>
