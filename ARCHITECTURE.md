@@ -8,8 +8,9 @@ Website ranking a WCA group's official stats (single and average, every WCA even
   - **Built-in lists** (FA, for now): static JSON rebuilt by GitHub Actions and committed to `docs/data/lists/<id>/`.
   - **Database lists** (custom lists): built by a separate workflow and uploaded to a **private Supabase Storage bucket** (`list-data`). Never committed to the repo.
 - Backend: Supabase free tier — Postgres + auth + Storage + one Edge Function. Holds accounts, custom-list definitions (names, visibility, members), build status, opt-outs, and the built JSON for database lists.
+- Budget: **none**. Nothing that needs a paid plan (GitHub or Supabase) can be part of the design.
 
-**Status of step 3 (read this first):** the step 3 code (database changes, build pipeline, new `main.js` and `lists-page.js`) has been written and applied to the repo, but **none of it has been tested end to end**. Testing was deliberately deferred until after step 3b (see section 9). Treat the Storage access policy, the Supabase key headers in `supabase-admin.js`, and the first workflow run as the likeliest places for surprises.
+**Status of step 3 (read this first):** step 3 (3a) is now **tested and working**: FA built into Storage at the full level, a test list was created from the site, built (basic then full), and loaded logged out; the Storage access policy and the workflow behave as designed. Two things found along the way (both in section 10): the `lists_select` policy had to be changed to let list creation work, and uploads have no retry (a Supabase storage 520 killed one run; a rerun worked). **Not confirmed:** the opt-out test with a second WCA account (update this line when it's done). Next is **3b** (section 9): retire the built-in mechanism.
 
 ---
 
@@ -70,6 +71,8 @@ Browser ──► Supabase (publishable key, row level security) ──► profi
 - `mark_list_built(..., 'full')` only applies if `dirty_at` is unchanged since the build read the list, so an edit made mid-build leaves the list pending and it gets rebuilt next run.
 - The 15-minute run also acts as the Supabase keep-alive (free projects pause after inactivity).
 - Lists with no members are skipped.
+- GitHub's scheduled runs are often late or skipped; for testing, use the manual **Run workflow** button (mode `pending`).
+- A full FA-sized build takes a few minutes plus the 350MB export download.
 
 ---
 
@@ -100,7 +103,7 @@ config/
   lists/<id>-upcoming.json      manual competition-ID fallback
 supabase/
   functions/wca-auth/index.ts   Edge Function source (reference copy — see section 6)
-  schema.sql                    database schema + RLS (reference copy; steps 1 and 3 appended)
+  schema.sql                    database schema + RLS (reference copy; steps 1 and 3 appended — does NOT yet include the lists_select change, see section 10)
   migrations/002_list_data.sql  step 3 migration (build tracking, Storage, opt-out); also appended to schema.sql
 .github/workflows/              the four workflows above
 .gitignore                      contains `build/`
@@ -117,9 +120,10 @@ Not in the repo on purpose: `003_seed_fa.sql` (seeds FA into the database; its m
 - Two kinds:
   - **Built-in lists**: defined by config files, each with its own committed JSON. The page picks its list from `?list=<id>` (default `fa` — to be removed in step 3b).
   - **Database (custom) lists**: stored in Supabase (name, slug, visibility, members as WCA IDs). Created and edited from `lists.html`. A build job produces their JSON into private Storage, so `index.html?list=<slug>` works for them once built.
-- **FA is now also seeded as a database list** (slug `fa`, `unlisted`, owned by the site owner, 19 members) alongside the built-in version. Because `main.js` tries the static folder first, `?list=fa` still serves the built-in files while `docs/data/lists/fa/` exists. See step 3b.
+- **FA is also seeded as a database list** (slug `fa`, `unlisted`, owned by the site owner, 19 members) alongside the built-in version, and its Storage build is done (full). Because `main.js` tries the static folder first, `?list=fa` still serves the built-in files while `docs/data/lists/fa/` exists. See step 3b.
+- A small `test` list (4 members, created from the site) also exists in the database for testing; delete it from `lists.html` when no longer needed.
 - Custom list link names (slugs) are checked client-side against built-in list IDs so they can't collide (the database does not enforce this).
-- `displayName` override per person exists because some official WCA names don't match who the person is. Custom lists have the same thing as `list_members.display_name`.
+- `displayName` override per person exists because some official WCA names don't match who the person is. Custom lists have the same thing as `list_members.display_name`. **FA's overrides did not carry into the seeded database copy** (see section 10).
 
 ---
 
@@ -182,6 +186,7 @@ Settings-page date picker. Recomputes, entirely client-side from `full-results.j
 - `main.js` loads it with a **dynamic import** (`import('./auth.js').then(m => m.setupAuth())`) so a backend/CDN problem can never stop the rankings site from loading. Guests (not logged in) see the full site as before.
 - `supabase-config.js` holds three public values: project URL (bare, e.g. `https://<ref>.supabase.co` — **no** `/rest/v1/`, no trailing slash), publishable key, WCA application ID.
 - supabase-js is loaded from `https://esm.sh/@supabase/supabase-js@<pinned version>` in `auth.js`.
+- `profiles.name` is the official WCA name, refreshed on every login. It is unrelated to per-list `display_name`.
 
 ### Custom lists UI (`lists.html` + `js/lists-page.js`)
 - `lists.html` has two independent scripts: a plain inline script that renders the built-in lists from `data/lists-manifest.json` (no backend, always works), and a module script that dynamically imports `lists-page.js` and calls `initLists()`. A Supabase/CDN failure only loses the custom section.
@@ -190,7 +195,7 @@ Settings-page date picker. Recomputes, entirely client-side from `full-results.j
 - Views (swap in place, no routing): browser → list detail → editor (name, link name, visibility, members textarea).
 - Detail view: status note, **View rankings** link to `index.html?list=<slug>` (hidden while `data_level = 'none'`), Edit/Delete for the owner, and an **Opt out of this list** button when the logged-in user's WCA ID (read from `profiles.wca_id`) is a member. Opt-out confirms, then calls `leave_list`.
 - Members input: one person per line, `WCAID` or `WCAID Display Name`; a line of only IDs (space/comma separated) adds each. IDs uppercased, format-checked (`^[0-9]{4}[A-Z]{4}[0-9]{2}$`), de-duplicated, max 100. IDs are **not** checked against the WCA API (a typo'd but well-formed ID is accepted).
-- Create: insert `lists` row, then insert members; if the member insert fails, the new list is deleted again (best-effort rollback). A re-add of an opted-out WCA ID is rejected by the database and surfaces as the error text.
+- Create: insert `lists` row (and read it back with `.select()`), then insert members; if the member insert fails, the new list is deleted again (best-effort rollback). A re-add of an opted-out WCA ID is rejected by the database and surfaces as the error text.
 - Edit: only changes are sent — delete removed members, update changed display names, insert new ones. **No upsert on purpose**: the `limit_members` trigger fires on a conflicting insert too and would reject re-saving a list that already has 100 members. Only `name` and `visibility` are updatable on `lists` (column-level grant). After saving, the list is re-read so build-status columns are current. The link name (slug) is locked after creation so shared links don't break.
 - All user-typed text is rendered with `textContent` (never `innerHTML`) via a small `el()` helper.
 
@@ -228,7 +233,11 @@ Free tier, hosted. Chosen for: free, low maintenance, row-level security for pri
 - `list_opt_outs` — `(list_id, wca_id)` primary key, `created_at`. RLS enabled with **no policies**: only security-definer functions touch it.
 - Helper functions (security definer, avoid RLS recursion): `current_wca_id()`, `is_list_owner()`, `can_view_list()`, `can_read_list_data(folder text)`.
 - RPCs: `my_lists()` (every list I own or belong to), `lists_i_am_in()` (membership only, any visibility), `get_list_by_slug()` (public/unlisted open to anyone holding the slug), `leave_list(p_list)`, `undo_opt_out(p_list)`, `my_opt_outs()`. `mark_list_built(p_list, p_dirty, p_level)` is **service role only** (execute revoked from public/anon/authenticated).
-- RLS on lists/list_members: readable only if `can_view_list`; only the owner inserts/updates/deletes. Unlisted lists are not enumerable through table reads.
+- RLS policies, as live in the database:
+  - `lists_select` (SELECT): `owner_id = auth.uid() or visibility = 'public' or can_view_list(id)`. **The direct owner/public checks are required**: with only `can_view_list(id)`, creating a list failed with "new row violates row-level security policy for table lists", because the insert reads the new row straight back and the function can't see the row mid-statement. This change was made in the SQL Editor and is **not yet in `schema.sql`**.
+  - `lists_insert`: `owner_id = auth.uid()`. `lists_update` / `lists_delete`: `owner_id = auth.uid()`.
+  - `members_select`: `can_view_list(list_id)`. `members_insert` / `members_update` / `members_delete`: `is_list_owner(list_id)`.
+  - Unlisted lists are not enumerable through table reads.
 - Triggers/limits: 20 lists per owner (`limit_lists`); 100 members per list (`limit_members`); `touch_updated_at`; `mark_list_dirty` (after any insert/update/delete on `list_members`, sets `lists.dirty_at = now()`); `block_opted_out` (before insert on `list_members`, rejects a WCA ID that has an opt-out row for that list).
 - Not yet in the schema: guest-owned lists / edit tokens (custom-lists step 5); ownership transfer.
 
@@ -240,6 +249,7 @@ Option (b) was chosen: `leave_list` deletes the caller's `list_members` row (mat
 - Objects are at `<list uuid>/<file>.json`. Policy `list_data_read` (select only) allows read when `can_read_list_data(folder)`: public and unlisted lists are readable by anyone who knows the list uuid (they get it through `get_list_by_slug`), private lists only by the owner and members (`can_view_list`).
 - No insert/update/delete policies: only the service role (the build job) writes.
 - `upload-lists.js` minifies and refuses files over 45MB, so per-list size needs capping if a list gets very large.
+- Verified working: logged-out reads of an unlisted list's data succeed.
 
 ### Login flow (Edge Function `wca-auth`)
 1. `auth.js startWcaLogin()` stores a random `state`, sends the browser to WCA `/oauth/authorize` with `redirect_uri = <SUPABASE_URL>/functions/v1/wca-auth`, scope `public`.
@@ -256,7 +266,7 @@ Option (b) was chosen: `leave_list` deletes the caller's `list_members` row (mat
 
 ### Security rules
 - The **publishable** key and WCA application ID are public and live in `supabase-config.js`. The **secret/service-role** key and the **WCA client secret** never go in the repo, `docs/`, or a chat. The service key lives only in the Supabase dashboard and GitHub Actions secrets.
-- `supabase-admin.js` sends the key in the `apikey` header, and also as `Authorization: Bearer` only when it starts with `eyJ` (legacy JWT-style keys). The newer `sb_secret_...` keys are not JWTs.
+- `supabase-admin.js` sends the key in the `apikey` header, and also as `Authorization: Bearer` only when it starts with `eyJ` (legacy JWT-style keys). The newer `sb_secret_...` keys are not JWTs. (Works with the project's current key: uploads succeeded.)
 - Private list data must never be written to `docs/data/` (public repo). Database lists satisfy this: builds write to git-ignored `build/` (the workflow has no commit permission) and upload to private Storage. Built-in lists (FA until 3b) are still public files.
 - All permission checks are in database RLS/functions/Storage policy, not client code.
 
@@ -311,7 +321,7 @@ Design decisions:
 2. `renderAll()` lives in `main.js`; time travel receives it as a callback to avoid circular imports.
 3. `timetravel/compute.js` takes live events as an argument so it has no dependency on app state.
 4. `index.html` loads `<script type="module" src="js/main.js"></script>`.
-5. Local testing needs a server (`python -m http.server` inside `docs/`); modules won't load from `file://`. Note: login always redirects back to the production `SITE_URL`, so test login on the live site.
+5. Local testing needs a server (`python -m http.server` inside `docs/`); modules won't load from `file://`. Note: login always redirects back to the production `SITE_URL`, so test login on the live site. (The owner has no terminal, so testing is done on the live site.)
 6. Anything backend-related (`auth.js`, `lists-page.js`) is loaded by dynamic import inside a try/catch so the static rankings pages never depend on Supabase or the CDN.
 7. The same client code serves built-in and database lists (static first, Storage second), so retiring built-in lists means deleting folders, not rewriting code.
 
@@ -324,23 +334,27 @@ Goal: users create their own lists, save them to a profile (log in with WCA; non
 
 Order of work (one conversation each):
 1. ✅ Supabase project, schema, WCA login (done — login works).
-2. ✅ List storage UI + styled login button (done, pushed).
-3. ✅ **Step 3 ("3a") written and applied, NOT yet tested:** build tracking, private Storage, `update-custom-lists.yml` (basic then full builds, daily bests, weekly full, keep-alive), `main.js` Storage loading, "Lists I'm in" + opt-out + "Lists I've left", View rankings link. FA seed has been run (FA exists as an unlisted database list, owner = site owner). **Testing of 3a is deliberately deferred until after 3b.**
-   - Test plan when ready: create a small test list (3–4 members) on `lists.html`; run **Update Custom Lists** with mode `pending`; check `list-data/<uuid>/` has files in the Supabase Storage dashboard; open `index.html?list=<slug>` in a private window logged out (unlisted should load, private should refuse); then as a logged-in member; test opt-out with a second WCA account and confirm the owner's re-add is rejected.
+2. ✅ List storage UI + styled login button (done, pushed; list creation needed the `lists_select` fix during testing, now working).
+3. ✅ **Step 3 ("3a") written, applied and tested:** build tracking, private Storage, `update-custom-lists.yml` (basic then full builds, daily bests, weekly full, keep-alive), `main.js` Storage loading, "Lists I'm in" + opt-out + "Lists I've left", View rankings link. FA is seeded and built to Storage; a test list was created, built and viewed logged out. **Still unconfirmed:** the opt-out test with a second WCA account (private list visible to a member, opt-out removes them, owner re-add rejected, "Allow re-adding" works) — update this line when done.
 3b. **Next conversation:**
-   - Confirm the secrets and workflow are in place, and check the seeded FA actually built into Storage. Note: while `docs/data/lists/fa/` exists, `?list=fa` serves the static files, so verify the database copy by looking at the Storage files, or by temporarily removing/renaming the static folder.
-   - Retire the built-in mechanism: delete `docs/data/lists/fa/`, `config/lists/fa.json` (and `-upcoming`), `config/lists-manifest.json`, the three older workflows, `scripts/publish-manifest.js`, `docs/data/lists-manifest.json`, and the built-in section of `lists.html`; update `list-context.js` accordingly.
+   - Retire the built-in mechanism: delete `docs/data/lists/fa/`, `config/lists/fa.json` (and `-upcoming`), `config/lists-manifest.json`, the three older workflows, `scripts/publish-manifest.js`, `docs/data/lists-manifest.json`, and the built-in section of `lists.html`; update `list-context.js` accordingly (remove built-in mode). Deleting is reversible through git history if FA breaks.
    - Remove the default `?list=fa` in `store.js`; redirect bare `index.html` (no `?list=`) to `lists.html`.
-   - Fix the keep-alive / scheduled-workflow problem before the built-in daily commits stop (GitHub's 60-day inactivity rule), e.g. a different keep-alive mechanism.
-   - Decide about FA's git history: deleting the files stops serving them but the public repo's history keeps FA's membership and results (public WCA data; what becomes visible is that the group exists and who is in it). Making the repo private would hide that, but GitHub Pages from a private repo needs a paid plan. Flag this decision before deleting.
+   - Remove the built-in-ID slug check from `lists-page.js` (`loadBuiltinIds`, `builtinIds`) since `data/lists-manifest.json` goes away.
+   - **Ship the keep-alive fix in the same push as the deletions** (GitHub's 60-day inactivity rule): the daily built-in commits are what currently keep scheduled workflows alive. E.g. a small scheduled workflow that re-enables the other workflows through the GitHub API, or another keep-alive mechanism.
+   - Add retry with backoff to `upload-lists.js` / `supabase-admin.js`, and trim error output to one line (a Supabase storage 520 once failed a whole run and dumped an HTML error page into the log).
+   - Find out why FA's `displayName` overrides didn't carry into the database copy (look at `config/lists/fa.json`, `003_seed_fa.sql`, `sync-lists.js`) and restore them.
+   - Add the `lists_select` policy change to `supabase/schema.sql`.
+   - Decide about FA's git history: deleting the files stops serving them but the public repo's history keeps FA's membership and results (public WCA data; what becomes visible is that the group exists and who is in it). Making the repo private would hide it, but GitHub Pages from a private repo needs a paid plan, and there is no budget. Flag this decision before deleting.
    - Rename the "My lists" heading in `lists.html` (it now holds sub-sections).
-   - Rewrite this file for the final data flow once testing confirms the design.
+   - Rewrite this file for the final data flow once 3b is done.
 4. "Lists I'm in" view is built in step 3 (section 4); step 4 only needs follow-up polish if testing finds problems.
 5. Guests: unlisted-only lists with a local edit token, claimable on login (needs schema change: nullable owner + token hash, and RPCs for token-checked edits). Optional, only if not much hassle.
 
 **Decision (2026-10-09): FA should not stay built in.** FA becomes an ordinary private/unlisted list: not in the public picker, visible only to people holding the link and people in it. The site as a whole should lean more private. FA is already seeded as `unlisted`; the site owner may later switch it to `private` if wanted (members then see it only through "Lists I'm in").
 
 **Decision (2026-10-09): "Lists I'm in" with opt-out.** Built (option b: leaving removes you and blocks re-adding, reversible from "Lists I've left").
+
+**Decision (2026-10-09): no budget.** Nothing requiring a paid plan. The owner would rather people can create groups at all than have every privacy guarantee. (To be elaborated by the owner in later sessions.)
 
 Also needed:
 - Periodic export/backup of list data (free tier backups are limited).
@@ -370,7 +384,10 @@ The static-JSON-rebuild model won't scale to all of WCA. Plan, as separate piece
 
 ## 10. Known issues / gaps
 
-- **Step 3 is untested** (see section 9). Unverified assumptions: the Storage `list_data_read` policy creates and behaves as intended; the `apikey`/`Authorization` header handling in `supabase-admin.js` works with the project's secret key; the first workflow run completes.
+- **Opt-out with a second account is untested** (see section 9).
+- **`upload-lists.js` has no retry.** A transient Supabase storage 520 failed one full run (the build itself was fine); rerunning the workflow worked. Fix planned in 3b.
+- **FA's display-name overrides** did not carry into its database copy. Lists created from the website lack them too unless typed as `WCAID Display Name`. To investigate in 3b.
+- **`schema.sql` is behind the live database:** it lacks the new `lists_select` policy (section 6).
 - Upcoming Competitions only shows a few of the announced comps that have group registrants (data side: `update-upcoming.yml` and its script). Deferred. Database lists have no upcoming data at all yet.
 - On This Date gaps listed in section 4.
 - Typed WCA IDs are format-checked only, not verified to exist.
@@ -387,9 +404,9 @@ The static-JSON-rebuild model won't scale to all of WCA. Plan, as separate piece
 ## 11. Working conventions (for AI-assisted sessions)
 
 - One task per conversation. Open with this file plus only the file(s) the task touches.
+- The owner has **no terminal** and makes all repo changes through the GitHub website (not GitHub Desktop): give full-file replacements or very small edits they can paste in the web editor, and explain SQL steps via the Supabase SQL Editor.
 - Ask for full-file replacements for modules under ~300 lines. Multi-part find-and-replace patches left stray lines and caused syntax errors. Use patches only for one-line changes, and give them as before/after blocks.
-- Before pushing, a JS file can be syntax-checked with `node --check file.js`.
 - Browser used for testing: Opera.
 - Never paste secrets (Supabase secret key, WCA client secret) into a chat. If one leaks, rotate it.
 - Update this file when the architecture changes.
-- For the step 3b conversation, paste: this file, `docs/lists.html`, `docs/js/store.js`, `docs/js/auth.js`, `docs/js/main.js`, `scripts/lib/list-context.js`, `scripts/publish-manifest.js`, `config/lists-manifest.json`, the four files in `.github/workflows/`. Also say up front that step 3a testing has not been done yet (it happens after 3b), and whether the FA seed's build shows up in Storage.
+- For the step 3b conversation, paste: this file plus `docs/lists.html`, `docs/js/store.js`, `docs/js/main.js`, `docs/js/auth.js`, `docs/js/lists-page.js`, `scripts/lib/list-context.js`, `scripts/lib/supabase-admin.js`, `scripts/upload-lists.js`, `scripts/sync-lists.js`, `scripts/publish-manifest.js`, `config/lists-manifest.json`, `config/lists/fa.json`, `003_seed_fa.sql`, and the four files in `.github/workflows/`. Say up front: 3a testing is done (except the second-account opt-out test, if not yet run); FA is built in Storage; the keep-alive must ship with the deletions; and FA's display names are missing from the database copy.
