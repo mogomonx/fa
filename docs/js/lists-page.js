@@ -1,4 +1,4 @@
-// Custom lists: browse, create, edit, delete.
+// Custom lists: browse, create, edit, delete, leave.
 // Loaded by lists.html with a dynamic import so a backend problem never
 // breaks the built-in list picker.
 
@@ -14,6 +14,7 @@ const VISIBILITY = {
 };
 
 let userId = null;
+let myWcaId = null;
 let builtinIds = new Set();
 let current = null; // { list, members } while a list is open
 
@@ -74,6 +75,23 @@ function friendlyError(err) {
   return err?.message || "Something went wrong. Please try again.";
 }
 
+// ---------- Build status ----------
+
+const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
+
+function statusText(l) {
+  if (l.data_level === "none") return "Building rankings…";
+  if (l.data_level === "basic" || isPending(l)) return "Updating…";
+  return null;
+}
+
+function statusNote(l) {
+  if (l.data_level === "none") return "Rankings are being built. This usually takes a few minutes; refresh to check.";
+  if (l.data_level === "basic") return "Basic rankings are ready. Full history is still being processed.";
+  if (isPending(l)) return "Your latest changes are being applied to the rankings.";
+  return null;
+}
+
 // ---------- Data ----------
 
 async function loadBuiltinIds() {
@@ -85,13 +103,15 @@ async function loadBuiltinIds() {
 }
 
 async function loadLists() {
-  const [mine, pub] = await Promise.all([
-    userId ? supabase.rpc("my_lists") : { data: [], error: null },
+  const none = { data: [], error: null };
+  const [mine, inList, left, pub] = await Promise.all([
+    userId ? supabase.rpc("my_lists") : none,
+    userId ? supabase.rpc("lists_i_am_in") : none,
+    userId ? supabase.rpc("my_opt_outs") : none,
     supabase.from("lists").select("*").eq("visibility", "public").order("name"),
   ]);
-  if (mine.error) throw mine.error;
-  if (pub.error) throw pub.error;
-  return { mine: mine.data, pub: pub.data };
+  for (const r of [mine, inList, left, pub]) if (r.error) throw r.error;
+  return { mine: mine.data, inList: inList.data, left: left.data, pub: pub.data };
 }
 
 async function createList({ name, slug, visibility }, members) {
@@ -140,14 +160,19 @@ async function updateList(list, oldMembers, fields, members) {
     const { error: e } = await supabase.from("list_members").insert(added);
     if (e) throw e;
   }
-  return saved;
+  // Re-read so build-status columns (bumped by the member triggers) are current.
+  const { data: fresh } = await supabase.from("lists").select("*").eq("id", list.id).single();
+  return fresh || saved;
 }
 
 // ---------- Browser view ----------
 
 function listCard(list) {
-  const sub = [VISIBILITY[list.visibility].label, list.owner_id === userId ? "Yours" : null]
-    .filter(Boolean).join(" · ");
+  const sub = [
+    VISIBILITY[list.visibility].label,
+    list.owner_id === userId ? "Yours" : null,
+    statusText(list),
+  ].filter(Boolean).join(" · ");
   return el("a", {
     class: "home-link",
     href: "#",
@@ -155,13 +180,26 @@ function listCard(list) {
   }, el("strong", { text: list.name }), el("span", { text: sub }));
 }
 
-function fill(box, lists, emptyText) {
-  box.replaceChildren();
-  if (!lists.length) {
-    box.append(el("p", { class: "empty-note", text: emptyText }));
-    return;
-  }
-  for (const l of lists) box.append(listCard(l));
+function leftCard(item) {
+  return el("div", { class: "home-link" },
+    el("strong", { text: item.name }),
+    el("span", { text: "You've left this list" }),
+    el("button", {
+      class: "csv-btn",
+      type: "button",
+      text: "Allow re-adding",
+      onclick: async () => {
+        const { error } = await supabase.rpc("undo_opt_out", { p_list: item.list_id });
+        if (error) { alert(friendlyError(error)); return; }
+        await renderBrowser();
+      },
+    }));
+}
+
+function cardsOrEmpty(lists, emptyText) {
+  return lists.length
+    ? lists.map(listCard)
+    : [el("p", { class: "empty-note", text: emptyText })];
 }
 
 async function renderBrowser() {
@@ -180,9 +218,24 @@ async function renderBrowser() {
     }
     return;
   }
-  const mineIds = new Set(data.mine.map((l) => l.id));
-  fill(mineBox, data.mine, userId ? "You haven't made or joined any lists yet." : "Log in to see your lists.");
-  fill(pubBox, data.pub.filter((l) => !mineIds.has(l.id)), "No public lists yet.");
+
+  if (!userId) {
+    mineBox.replaceChildren(el("p", { class: "empty-note", text: "Log in to see your lists." }));
+  } else {
+    const owned = data.mine.filter((l) => l.owner_id === userId);
+    const parts = [
+      el("h3", { text: "Lists I'm in" }),
+      ...cardsOrEmpty(data.inList, "You're not on any lists yet."),
+      el("h3", { text: "Lists I manage" }),
+      ...cardsOrEmpty(owned, "You haven't made any lists yet."),
+    ];
+    if (data.left.length) parts.push(el("h3", { text: "Lists I've left" }), ...data.left.map(leftCard));
+    mineBox.replaceChildren(...parts);
+  }
+
+  const mineIds = new Set(data.mine.concat(data.inList).map((l) => l.id));
+  const pubOnly = data.pub.filter((l) => !mineIds.has(l.id));
+  pubBox.replaceChildren(...cardsOrEmpty(pubOnly, "No public lists yet."));
 }
 
 function showPanel(node) {
@@ -218,26 +271,53 @@ async function openList(list) {
 function renderDetail() {
   const { list, members } = current;
   const vis = VISIBILITY[list.visibility];
+  const note = statusNote(list);
+  const amMember = Boolean(myWcaId) && members.some((m) => m.wca_id === myWcaId);
+
   const node = el("div", { class: "list-detail" },
     el("button", { class: "back-link", onclick: showBrowser, text: "← All lists" }),
     el("h2", { text: list.name }),
-    el("p", { class: "board-note", text: `${vis.label}: ${vis.help}` }),
-    el("p", { class: "board-note", text: "Rankings for custom lists aren't built yet. For now this stores the list and its members." }),
+    el("p", { class: "board-note", text: `${vis.label}: ${vis.help}` }));
+  if (note) node.append(el("p", { class: "board-note", text: note }));
+
+  const actions = el("div", { class: "panel-controls" });
+  if (list.data_level !== "none") {
+    actions.append(el("a", {
+      class: "csv-btn",
+      href: `index.html?list=${encodeURIComponent(list.slug)}`,
+      text: "View rankings",
+    }));
+  }
+  if (list.owner_id === userId) {
+    actions.append(
+      el("button", { class: "csv-btn", type: "button", onclick: () => renderEditor(list, members), text: "Edit" }),
+      el("button", { class: "csv-btn danger", type: "button", onclick: () => removeList(list), text: "Delete" }));
+  }
+  if (amMember) {
+    actions.append(el("button", { class: "csv-btn danger", type: "button", onclick: () => leave(list), text: "Opt out of this list" }));
+  }
+  if (actions.childNodes.length) node.append(actions);
+
+  node.append(
     el("h3", { text: `Members (${members.length})` }),
     el("ul", { class: "member-list" },
       ...members.map((m) => el("li", {}, el("code", { text: m.wca_id }), m.display_name ? ` — ${m.display_name}` : ""))));
-
-  if (list.owner_id === userId) {
-    node.append(el("div", { class: "panel-controls" },
-      el("button", { class: "csv-btn", type: "button", onclick: () => renderEditor(list, members), text: "Edit" }),
-      el("button", { class: "csv-btn danger", type: "button", onclick: () => removeList(list), text: "Delete" })));
-  }
   showPanel(node);
 }
 
 async function removeList(list) {
   if (!confirm(`Delete "${list.name}"? This can't be undone.`)) return;
   const { error } = await supabase.from("lists").delete().eq("id", list.id);
+  if (error) { alert(friendlyError(error)); return; }
+  await showBrowser();
+}
+
+async function leave(list) {
+  const ok = confirm(
+    `Opt out of "${list.name}"? You'll be removed from its rankings, and the owner won't be able ` +
+    `to add you again unless you allow it from "Lists I've left".`);
+  if (!ok) return;
+  const { error } = await supabase.rpc("leave_list", { p_list: list.id });
   if (error) { alert(friendlyError(error)); return; }
   await showBrowser();
 }
@@ -334,6 +414,10 @@ export async function initLists() {
   await setupAuth();
   const { data: { session } } = await supabase.auth.getSession();
   userId = session?.user?.id ?? null;
+  if (userId) {
+    const { data } = await supabase.from("profiles").select("wca_id").eq("id", userId).maybeSingle();
+    myWcaId = data?.wca_id ?? null;
+  }
 
   $("custom-lists-section").hidden = false;
   $("new-list-btn").hidden = !userId;
