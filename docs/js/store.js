@@ -1,7 +1,9 @@
-// Which list this page shows -- ?list=<id> in the URL, defaulting to the
-// site's primary list. The picker page (lists.html) links here with that
-// query param set.
-export const LIST_ID = new URLSearchParams(window.location.search).get('list') || 'fa';
+// Which list this page shows -- ?list=<slug> in the URL. With no list given,
+// send the visitor to the picker.
+export const LIST_ID = new URLSearchParams(window.location.search).get('list');
+if (!LIST_ID) {
+  window.location.replace('lists.html');
+}
 export const DATA_BASE = `data/lists/${LIST_ID}/`;
 
 // All loaded JSON lives here. Modules read/write store.X (ES modules can't
