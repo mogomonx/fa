@@ -1,0 +1,41 @@
+// Minimal Supabase admin client for build scripts (service key, Node 18+ fetch).
+// Env: SUPABASE_URL (bare project URL), SUPABASE_SERVICE_KEY (secret key).
+
+function config() {
+  const base = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
+  const key = process.env.SUPABASE_SERVICE_KEY;
+  if (!base || !key) throw new Error('SUPABASE_URL and SUPABASE_SERVICE_KEY must be set.');
+  return { base, key };
+}
+
+function headers(key, extra = {}) {
+  const h = { apikey: key, ...extra };
+  // Legacy service_role keys are JWTs and go in Authorization too; the newer
+  // sb_secret_... keys are not JWTs and use the apikey header only.
+  if (key.startsWith('eyJ')) h.Authorization = `Bearer ${key}`;
+  return h;
+}
+
+async function rest(method, pathAndQuery, body) {
+  const { base, key } = config();
+  const res = await fetch(`${base}${pathAndQuery}`, {
+    method,
+    headers: headers(key, { 'Content-Type': 'application/json' }),
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${method} ${pathAndQuery.split('?')[0]} -> ${res.status} ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+async function uploadObject(objectPath, jsonString) {
+  const { base, key } = config();
+  const res = await fetch(`${base}/storage/v1/object/list-data/${objectPath}`, {
+    method: 'POST',
+    headers: headers(key, { 'Content-Type': 'application/json', 'x-upsert': 'true' }),
+    body: jsonString,
+  });
+  if (!res.ok) throw new Error(`Upload ${objectPath} -> ${res.status} ${await res.text()}`);
+}
+
+module.exports = { rest, uploadObject };
