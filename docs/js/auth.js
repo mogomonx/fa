@@ -10,6 +10,8 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 const REDIRECT_URI = `${SUPABASE_URL}/functions/v1/wca-auth`;
 const STATE_KEY = "wca-oauth-state";
 const RETURN_KEY = "wca-return-to";
+// Relative to the page (index.html / lists.html both live in docs/).
+const WCA_LOGO = "img/wca-logo.png";
 
 /** Send the browser to WCA to approve the login. */
 export function startWcaLogin() {
@@ -69,6 +71,27 @@ export async function logout() {
   location.reload();
 }
 
+function loginButton() {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "wca-login-btn";
+
+  const img = document.createElement("img");
+  img.src = WCA_LOGO;
+  img.alt = "";
+  img.width = 22;
+  img.height = 22;
+  // No logo file yet (or it failed to load): fall back to text only.
+  img.addEventListener("error", () => img.remove());
+
+  const label = document.createElement("span");
+  label.textContent = "Log in with WCA";
+
+  btn.append(img, label);
+  btn.addEventListener("click", startWcaLogin);
+  return btn;
+}
+
 /**
  * Fills <div id="auth-slot"></div> with a login button, or the user's name
  * and a log out button. Safe to call on every page load; does nothing if the
@@ -82,11 +105,7 @@ export async function setupAuth() {
   const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.textContent = "Log in with WCA";
-    btn.addEventListener("click", startWcaLogin);
-    slot.appendChild(btn);
+    slot.appendChild(loginButton());
     return;
   }
 
@@ -95,14 +114,20 @@ export async function setupAuth() {
     .select("name, wca_id")
     .maybeSingle();
 
+  const wrap = document.createElement("div");
+  wrap.className = "auth-user";
+
   const label = document.createElement("span");
+  label.className = "auth-name";
   label.textContent = profile?.name ?? "Logged in";
   label.title = profile?.wca_id ?? "";
 
   const out = document.createElement("button");
   out.type = "button";
+  out.className = "auth-logout";
   out.textContent = "Log out";
   out.addEventListener("click", logout);
 
-  slot.append(label, " ", out);
+  wrap.append(label, out);
+  slot.appendChild(wrap);
 }
