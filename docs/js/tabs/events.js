@@ -4,6 +4,7 @@ import { nameLink, renderTable, renderDetailedTable, addPositionColumn } from '.
 
 const solvesText = (solves) => solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
 const compText = (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ');
+const prOrderCell = (n) => (n ? `<span class="pr-order-${n <= 3 ? n : 'x'}">${n === 1 ? 'PR' : `PR${n}`}</span>` : '—');
 
 function setAverageButton(toggleId, enabled) {
   const btn = document.getElementById(toggleId).querySelector('[data-type="average"]');
@@ -68,7 +69,7 @@ export function renderIndividual() {
   const columns = [
     { key: 'rank', label: '#', value: (r) => r.rank },
     { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-    { key: 'pr', label: 'PR order', value: (r) => (r.prRank ? `PR${r.prRank}` : '—') },
+    { key: 'pr', label: 'PR order', value: (r) => prOrderCell(r.prRank) },
   ];
   if (effectiveType === 'average') {
     columns.push({
