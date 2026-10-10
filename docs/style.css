@@ -696,3 +696,11 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 .member-list { list-style: none; padding: 0; margin: 0 0 1rem; columns: 2 220px; }
 .member-list li { padding: 0.15rem 0; }
 .csv-btn.danger { border-color: #e5484d; color: #e5484d; }
+
+/* ---- Lists page cards ---- */
+#my-lists, #public-lists { display: block; }
+.list-section { margin-top: 1.5rem; }
+.list-section h3 { margin: 0 0 0.75rem; }
+.list-card { gap: 0.6rem; }
+.card-main { display: flex; flex-direction: column; gap: 0.35rem; color: inherit; text-decoration: none; }
+.list-card .csv-btn { align-self: flex-start; }
