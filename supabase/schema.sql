@@ -285,3 +285,9 @@ language sql stable security definer set search_path = public as $$
   from list_opt_outs o join lists l on l.id = o.list_id
   where o.wca_id = current_wca_id()
 $$;
+
+-- Live fix from step 3 testing: creating a list reads the new row straight
+-- back, which can_view_list() can't see mid-statement.
+drop policy if exists lists_select on lists;
+create policy lists_select on lists for select
+  using (owner_id = auth.uid() or visibility = 'public' or can_view_list(id));
