@@ -194,7 +194,7 @@ export function computeRankingsSnapshot(events, listName, peopleSnapshot, cutoff
 const entryKey = (e) => `${e.wcaId}|${e.competitionId}|${e.round}|${e.attemptIndex ?? 'r'}`;
 
 function poolItem(e, value, attemptIndex, extra = {}) {
-  return { wcaId: e.wcaId, name: e.name, competitionId: e.competitionId, competitionName: e.competitionName, round: e.round, date: e.date, value, attemptIndex, ...extra };
+    return { wcaId: e.wcaId, name: e.name, competitionId: e.competitionId, competitionName: e.competitionName, round: e.round, roundName: e.roundName, date: e.date, value, attemptIndex, ...extra };
 }
 
 function buildSinglePool(entries, eventId) {
@@ -257,7 +257,7 @@ function rankPool(pool, eventDef, type) {
       display: formatResultLike(e.value, eventDef, type === 'average'),
       solves: type === 'average' ? attemptDisplays(e.attempts, eventDef) : null,
       competitionName: e.competitionName,
-      round: roundLabelFallback(e.round),
+      round: e.roundName || roundLabelFallback(e.round),
       date: e.date,
     });
   });
@@ -292,7 +292,7 @@ function findBreakdown(entries, wcaId, eventId, value, type, eventDef) {
   if (!hasResult(value)) return null;
   const match = entries.find((e) => e.wcaId === wcaId && e.eventId === eventId && e[type] === value);
   if (!match) return null;
-  const result = { competitionName: match.competitionName, round: roundLabelFallback(match.round), date: match.date };
+ const result = { competitionName: match.competitionName, round: match.roundName || roundLabelFallback(match.round), date: match.date };
   if (type === 'average' && match.attempts) result.solves = attemptDisplays(match.attempts, eventDef);
   return result;
 }
