@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Choose a list</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  try {
+    var saved = JSON.parse(localStorage.getItem('fa-site-colours') || '{}');
+    for (var k in saved) document.documentElement.style.setProperty(k, saved[k]);
+  } catch (e) {}
+</script>
 </head>
 <body>
   <header class="site-header">
