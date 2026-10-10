@@ -65,8 +65,9 @@ function main() {
       const podium = e.pos && e.pos <= 3;
 
       const badges = [];
-      if (singleRank && singleRank <= 3) badges.push(`PR${singleRank} Single`);
-      if (averageRank && averageRank <= 3) badges.push(`PR${averageRank} Average`);
+      const prLabel = (n) => (n === 1 ? 'PR' : `PR${n}`);
+      if (singleRank && singleRank <= 3) badges.push(`${prLabel(singleRank)} Single`);
+      if (averageRank && averageRank <= 3) badges.push(`${prLabel(averageRank)} Average`);
       if (podium) badges.push(`${e.pos === 1 ? '1st' : e.pos === 2 ? '2nd' : '3rd'} place`);
 
       if (badges.length === 0) continue;
