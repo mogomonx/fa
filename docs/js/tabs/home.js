@@ -4,6 +4,21 @@ import { nameLink, renderTable } from '../ui.js';
 import { eventIcon } from '../icons.js';
 import { showProfile } from './profile.js';
 
+const esc = (s) =>
+  String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// Where each holder set the record, e.g. "Comp A – Final". Ties list each distinct place.
+function achievedAt(holders, eventId, type) {
+  const places = [];
+  for (const h of holders) {
+    const b = store.individual.breakdowns?.[h.wcaId]?.[eventId]?.[type];
+    if (!b) continue;
+    const text = [b.competitionName, b.round].filter(Boolean).join(' \u2013 ');
+    if (text && !places.includes(text)) places.push(text);
+  }
+  return places.length ? `<span class="solves-cell">${places.map(esc).join('<br>')}</span>` : '—';
+}
+
 export function renderFaRecords() {
   const container = document.getElementById('fa-records-table');
   const table = document.createElement('table');
@@ -11,8 +26,10 @@ export function renderFaRecords() {
     <th>Event</th>
     <th>Single record</th>
     <th>Held by</th>
+    <th>Achieved at</th>
     <th>Average record</th>
     <th>Held by</th>
+    <th>Achieved at</th>
   </tr></thead>`;
   const tbody = document.createElement('tbody');
 
@@ -25,8 +42,10 @@ export function renderFaRecords() {
       <td>${eventIcon(event.id, event.name)}</td>
       <td>${singleHolders[0] ? singleHolders[0].display : '—'}</td>
       <td>${singleHolders.map((h) => nameLink(h.wcaId, h.name)).join(', ') || '—'}</td>
+      <td>${achievedAt(singleHolders, event.id, 'single')}</td>
       <td>${event.hasAverage ? (averageHolders[0] ? averageHolders[0].display : '—') : 'N/A'}</td>
       <td>${event.hasAverage ? (averageHolders.map((h) => nameLink(h.wcaId, h.name)).join(', ') || '—') : 'N/A'}</td>
+      <td>${event.hasAverage ? achievedAt(averageHolders, event.id, 'average') : 'N/A'}</td>
     `;
     tbody.appendChild(tr);
   }
@@ -35,16 +54,22 @@ export function renderFaRecords() {
   container.appendChild(table);
 }
 
+// Older data says "PR1 Single"; it now shows as a bold "PR Single". PR2/PR3 stay.
+function badgeHtml(b) {
+  const text = String(b).replace(/^PR1\b/, 'PR');
+  return text.startsWith('PR') ? `<strong class="pr-badge">${esc(text)}</strong>` : esc(text);
+}
+
 export function renderRecentActivity() {
   const container = document.getElementById('recent-activity-table');
   const note = document.getElementById('recent-activity-note');
   const data = store.recentActivity;
   if (!data) {
-    container.innerHTML = '<p class="empty-note">No data yet (needs the Update Full Result History workflow to have run).</p>';
+    container.innerHTML = '<p class="empty-note">No data yet (needs the full build to have run).</p>';
     return;
   }
   const items = data.items || [];
-  note.textContent = `PR1/PR2/PR3 and podium finishes in the last ${data.windowDays || 14} days.`;
+  note.textContent = `PRs (including PR2 and PR3) and podium finishes in the last ${data.windowDays || 14} days.`;
   if (items.length === 0) {
     container.innerHTML = '<p class="empty-note">Nothing in the last two weeks.</p>';
     return;
@@ -60,8 +85,8 @@ export function renderRecentActivity() {
         return eventIcon(ev?.id, r.eventName);
       },
     },
-    { key: 'badges', label: 'Achievement', value: (r) => r.badges.join(', ') },
-    { key: 'comp', label: 'Competition', value: (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ') },
+    { key: 'badges', label: 'Achievement', value: (r) => r.badges.map(badgeHtml).join(', ') },
+    { key: 'comp', label: 'Competition', value: (r) => esc([r.competitionName, r.round].filter(Boolean).join(' \u2013 ')) },
   ]);
 }
 
