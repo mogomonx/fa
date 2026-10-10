@@ -44,7 +44,7 @@ function computeHistory(entries, event, type) {
         value: e[type],
         display: formatResult(e[type], event, type === 'average'),
         competitionName: e.competitionName,
-        round: roundLabel(e.round),
+        round: e.roundName || roundLabel(e.round),
         date: e.date,
       });
     }
