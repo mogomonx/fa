@@ -95,7 +95,7 @@ function computeOverallCompetitionStreak(entries, wcaId) {
     let isPr = false;
     for (const [key, value] of byEventType) {
       const prev = bestSoFar.has(key) ? bestSoFar.get(key) : null;
-      if (prev === null || value < prev) {
+      if (prev === null || value <= prev) {
         isPr = true;
         bestSoFar.set(key, value);
       }
@@ -117,7 +117,7 @@ function computeRoundStreak(entries, wcaId, eventId, type) {
 
   let bestSoFar = null;
   const walkPoints = points.map((e) => {
-    const isPr = bestSoFar === null || e[type] < bestSoFar;
+    const isPr = bestSoFar === null || e[type] <= bestSoFar;
     if (isPr) bestSoFar = e[type];
     return { isPr, name: `${e.competitionName || e.competitionId} (${e.round || '?'})` };
   });
