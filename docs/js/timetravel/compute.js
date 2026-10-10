@@ -178,7 +178,7 @@ export function computeRankingsSnapshot(events, listName, peopleSnapshot, cutoff
   return {
     generatedAt: new Date().toISOString(),
     dataFetchedAt: 'snapshot',
-    listName: `${listName || 'FA'} (as of ${formatDate(cutoffDate)})`,
+    listName: `${listName || 'Group'} (as of ${formatDate(cutoffDate)})`,
     people: peopleSnapshot.map((p) => ({ wcaId: p.wcaId, name: p.name, countryIso2: p.countryIso2 })),
     events: eventsOut,
     sumOfRanks: {
@@ -360,7 +360,7 @@ function computeHistory(entries, eventDef, type) {
         value: e[type],
         display: formatResultLike(e[type], eventDef, type === 'average'),
         competitionName: e.competitionName,
-        round: roundLabelFallback(e.round),
+        round: e.roundName || roundLabelFallback(e.round),
         date: e.date,
       });
     }
