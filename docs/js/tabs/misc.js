@@ -202,4 +202,123 @@ let prCache = { entries: null, byEvent: new Map() };
 function computePrCounting(eventId) {
   const entries = store.fullResults?.entries;
   if (!entries) return [];
-  if (prCache.entries !== entries) prCache = {
+  if (prCache.entries !== entries) prCache = { entries, byEvent: new Map() };
+  if (prCache.byEvent.has(eventId)) return prCache.byEvent.get(eventId);
+
+  const sortKey = (v) => (v === -1 ? Infinity : v);
+  const best = new Map();
+  for (const e of entries) {
+    if (e.eventId !== eventId || !e.attempts || e.attempts.length !== 5) continue;
+    if (e.attempts.some((v) => v === 0 || v === -2)) continue; // not a completed round
+    const idx = e.attempts.map((_, i) => i).sort((a, b) => sortKey(e.attempts[a]) - sortKey(e.attempts[b]));
+    const value = e.attempts[idx[1]];
+    if (!(value > 0)) continue;
+    const cur = best.get(e.wcaId);
+    if (!cur || value < cur.value || (value === cur.value && (e.date || '') < (cur.entry.date || ''))) {
+      best.set(e.wcaId, { wcaId: e.wcaId, name: e.name, value, entry: e, dropped: new Set([idx[0], idx[4]]) });
+    }
+  }
+
+  const rows = Array.from(best.values()).sort((a, b) => a.value - b.value);
+  let place = 0;
+  let last = null;
+  rows.forEach((r, i) => {
+    if (r.value !== last) {
+      place = i + 1;
+      last = r.value;
+    }
+    r.rank = place;
+  });
+  prCache.byEvent.set(eventId, rows);
+  return rows;
+}
+
+export function renderPrCounting() {
+  const container = document.getElementById('prcount-table');
+  if (!container || !state.prCountEventId) return;
+  const eventDef = store.rankings.events.find((e) => e.id === state.prCountEventId);
+  if (!eventDef) return;
+  const rows = computePrCounting(eventDef.id);
+
+  renderTable(container, rows, [
+    { key: 'rank', label: '#', value: (r) => r.rank },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    {
+      key: 'solves',
+      label: 'Solves',
+      value: (r) =>
+        `<span class="solves-cell">${r.entry.attempts
+          .map((v, i) => {
+            const t = formatResultLike(v, eventDef, false);
+            return r.dropped.has(i) ? `(${t})` : t;
+          })
+          .join(', ')}</span>`,
+    },
+    {
+      key: 'achievedAt',
+      label: 'Achieved at',
+      value: (r) =>
+        `<span class="solves-cell">${esc([r.entry.competitionName || r.entry.competitionId, r.entry.roundName || roundLabelFallback(r.entry.round)].filter(Boolean).join(' \u2013 '))}</span>`,
+    },
+    { key: 'result', label: 'PR counting', value: (r) => formatResultLike(r.value, eventDef, false) },
+  ]);
+}
+
+// ---------- Upcoming competitions ----------
+
+export function renderUpcoming() {
+  const note = document.getElementById('upcoming-note');
+  const container = document.getElementById('upcoming-table');
+  const competitions = store.upcoming?.competitions || [];
+
+  if (competitions.length === 0) {
+    note.textContent = 'Upcoming competitions are not available yet. This tab is being rebuilt.';
+    container.innerHTML = '';
+    return;
+  }
+  note.textContent = 'Every upcoming competition (next ~6 months) your group is attending.';
+
+  const table = document.createElement('table');
+  table.innerHTML = '<thead><tr><th>Date</th><th>Competition</th><th>Attending</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  competitions.forEach((c) => {
+    const tr = document.createElement('tr');
+    const attendeeNames = (c.attendees || []).map((a) => nameLink(a.wcaId, a.name)).join(', ') || '—';
+    tr.innerHTML = `<td>${formatDate(c.date)}</td><td><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a></td><td>${attendeeNames}</td>`;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  container.innerHTML = '';
+  container.appendChild(table);
+}
+
+// ---------- Consistency ----------
+
+export function renderConsistency() {
+  const container = document.getElementById('consistency-table');
+  if (!container || !state.consistencyEventId) return;
+  const eventDef = store.rankings.events.find((e) => e.id === state.consistencyEventId);
+  const type = state.consistencyType;
+
+  const byPerson = new Map();
+  for (const e of store.fullResults.entries || []) {
+    if (e.eventId !== state.consistencyEventId) continue;
+    const v = e[type];
+    if (typeof v !== 'number' || v <= 0) continue;
+    if (!byPerson.has(e.wcaId)) byPerson.set(e.wcaId, { name: e.name, values: [] });
+    byPerson.get(e.wcaId).values.push(v);
+  }
+
+  const rows = Array.from(byPerson.entries())
+    .filter(([, d]) => d.values.length >= 3) // need a few data points for std dev to mean anything
+    .map(([wcaId, d]) => ({ wcaId, name: d.name, count: d.values.length, stdDev: standardDeviation(d.values) }))
+    .sort((a, b) => a.stdDev - b.stdDev);
+
+  renderTable(container, rows, [
+    { key: 'rank', label: '#', value: () => '' },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
+    { key: 'count', label: 'Results counted', value: (r) => r.count },
+    { key: 'stdDev', label: 'Std. deviation', value: (r) => formatResultLike(Math.round(r.stdDev), eventDef, type === 'average') },
+  ]);
+  addPositionColumn('consistency-table');
+}
