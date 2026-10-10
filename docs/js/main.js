@@ -4,7 +4,7 @@ import { setupSettings, applyStoredSettings } from './settings.js';
 import { renderFaRecords, renderRecentActivity, setupProfileSearch } from './tabs/home.js';
 import { renderSor, renderKinch } from './tabs/overall.js';
 import { renderEventTable, renderIndividual, renderTop100, renderHistory } from './tabs/events.js';
-import { renderFarCounts, renderAge, renderStreaks, renderUpcoming, renderConsistency } from './tabs/misc.js';
+import { renderFarCounts, renderAge, renderStreaks, renderUpcoming, renderConsistency, renderPrCounting, prCountEvents } from './tabs/misc.js';
 import { renderMembers } from './tabs/members.js';
 import { setupNameLinkDelegation } from './tabs/profile.js';
 import { populateCompareSelects, renderHeadToHead, renderNemesis } from './tabs/compare.js';
@@ -79,6 +79,7 @@ function populateSelects() {
   if (store.streaks) populateEventSelect('streaks-event-select', store.streaks.events, 'streaksEventId', renderStreaks);
   populateEventSelect('improvement-event-select', r.events, 'improvementEventId', renderImprovement);
   populateEventSelect('consistency-event-select', r.events, 'consistencyEventId', renderConsistency);
+  populateEventSelect('prcount-event-select', prCountEvents(), 'prCountEventId', renderPrCounting);
   populateCompareSelects();
 }
 
@@ -94,6 +95,7 @@ function renderAll() {
   renderFarCounts();
   renderAge();
   renderStreaks();
+  renderPrCounting();
   renderHeadToHead();
   renderNemesis();
   renderMembers();
@@ -192,6 +194,7 @@ import('./auth.js').then((m) => m.setupAuth()).catch((err) => console.warn('Logi
   ['far-view-toggle', 'view', 'farView', renderFarCounts],
   ['age-mode-toggle', 'mode', 'ageMode', renderAge],
   ['streaks-mode-toggle', 'mode', 'streaksMode', renderStreaks],
+  ['streaks-event-mode-toggle', 'mode', 'streaksEventMode', renderStreaks],
   ['streaks-type-toggle', 'type', 'streaksType', renderStreaks],
   ['improvement-type-toggle', 'type', 'improvementType', renderImprovement],
   ['consistency-type-toggle', 'type', 'consistencyType', renderConsistency],
