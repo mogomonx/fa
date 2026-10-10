@@ -1,12 +1,17 @@
 // Custom lists: browse, create, edit, delete, leave.
 // Loaded by lists.html with a dynamic import so a backend problem never
 // breaks the built-in list picker.
+//
+// Guests (not logged in) can make ONE list. Its edit token is kept in this
+// browser (localStorage) and is claimed onto the account at the next login.
 
 import { supabase, setupAuth } from "./auth.js";
 
 const ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
 const SLUG_RE = /^[a-z0-9-]{2,40}$/;
 const MAX_MEMBERS = 100;
+const GUEST_MAX_MEMBERS = 30;
+const GUEST_KEY = "fa-guest-list";
 const VISIBILITY = {
   public: { label: "Public", help: "Listed for everyone to find and view." },
   unlisted: { label: "Unlisted", help: "Anyone with the link can view it; it isn't listed anywhere." },
@@ -15,7 +20,9 @@ const VISIBILITY = {
 
 let userId = null;
 let myWcaId = null;
-let current = null; // { list, members } while a list is open
+let guest = null;      // { slug, token } saved in this browser, or null
+let guestList = null;  // the guest list's row from the server, when loaded
+let current = null;    // { list, members, guest } while a list is open
 
 const $ = (id) => document.getElementById(id);
 
@@ -43,6 +50,32 @@ function slugify(name) {
 }
 
 const rankingsUrl = (list) => `index.html?list=${encodeURIComponent(list.slug)}`;
+
+// ---------- Guest storage ----------
+
+function getGuest() {
+  try {
+    const g = JSON.parse(localStorage.getItem(GUEST_KEY) || "null");
+    return g && g.slug && g.token ? g : null;
+  } catch { return null; }
+}
+function setGuest(g) {
+  guest = g;
+  try { localStorage.setItem(GUEST_KEY, JSON.stringify(g)); } catch { /* storage blocked */ }
+}
+function clearGuest() {
+  guest = null;
+  guestList = null;
+  try { localStorage.removeItem(GUEST_KEY); } catch { /* ignore */ }
+}
+function newToken() {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+const isGuestList = (list) => !userId && Boolean(guest) && guest.slug === list.slug;
+const ownsList = (list) => (userId ? list.owner_id === userId : isGuestList(list));
+const maxFor = (guestMode) => (guestMode ? GUEST_MAX_MEMBERS : MAX_MEMBERS);
 
 // One person per line: "WCAID" or "WCAID Display Name".
 // A line made only of IDs (space/comma separated) adds each of them.
@@ -107,6 +140,27 @@ async function loadLists() {
   return { mine: mine.data, inList: inList.data, left: left.data, pub: pub.data };
 }
 
+// Loads the guest's list (if this browser has one). Forgets it if it no longer exists.
+async function loadGuestList() {
+  guestList = null;
+  if (userId || !guest) return;
+  const { data, error } = await supabase.rpc("get_guest_list", { p_slug: guest.slug, p_token: guest.token });
+  if (error) {
+    if (/not found/i.test(error.message || "")) clearGuest();
+    else console.warn(error);
+    return;
+  }
+  guestList = data.list;
+}
+
+// After login: move this browser's guest list onto the account.
+async function claimGuest() {
+  const { error } = await supabase.rpc("claim_guest_list", { p_slug: guest.slug, p_token: guest.token });
+  if (!error || /not found/i.test(error.message || "")) { clearGuest(); return; }
+  console.warn(error);
+  alert(`Couldn't move your guest list onto your account: ${friendlyError(error)}`);
+}
+
 async function createList({ name, slug, visibility }, members) {
   const { data: list, error } = await supabase
     .from("lists")
@@ -122,6 +176,24 @@ async function createList({ name, slug, visibility }, members) {
     throw memberError;
   }
   return list;
+}
+
+async function createGuestList(name, slug, members) {
+  const token = newToken();
+  const { data, error } = await supabase.rpc("create_guest_list", {
+    p_name: name, p_slug: slug, p_members: members, p_token: token,
+  });
+  if (error) throw error;
+  setGuest({ slug: data.slug, token });
+  return data;
+}
+
+async function updateGuestList(list, name, members) {
+  const { data, error } = await supabase.rpc("update_guest_list", {
+    p_slug: list.slug, p_token: guest.token, p_name: name, p_members: members,
+  });
+  if (error) throw error;
+  return data;
 }
 
 // Only touches what changed: delete removed, rename changed, insert new.
@@ -164,7 +236,7 @@ async function updateList(list, oldMembers, fields, members) {
 // the list is still being built). "Manage" opens the detail view.
 function listCard(list, memberIds) {
   const roles = [];
-  if (list.owner_id === userId) roles.push("Yours");
+  if (ownsList(list)) roles.push("Yours");
   if (memberIds.has(list.id)) roles.push("You're on it");
   const sub = [VISIBILITY[list.visibility].label, ...roles, statusText(list)]
     .filter(Boolean).join(" · ");
@@ -181,7 +253,7 @@ function listCard(list, memberIds) {
     el("button", {
       class: "csv-btn",
       type: "button",
-      text: list.owner_id === userId ? "Manage" : "Details",
+      text: ownsList(list) ? "Manage" : "Details",
       onclick: () => openList(list),
     }));
 }
@@ -217,6 +289,7 @@ async function renderBrowser() {
   let data;
   try {
     data = await loadLists();
+    await loadGuestList();
   } catch (err) {
     console.warn(err);
     for (const box of [mineBox, pubBox]) {
@@ -225,6 +298,9 @@ async function renderBrowser() {
     return;
   }
 
+  // Logged-in users can always make lists; guests only while they have none.
+  $("new-list-btn").hidden = userId ? false : Boolean(guest);
+
   // Every list I own or am on, once each.
   const memberIds = new Set(data.inList.map((l) => l.id));
   const mineById = new Map();
@@ -232,7 +308,15 @@ async function renderBrowser() {
   const mine = [...mineById.values()].sort((a, b) => a.name.localeCompare(b.name));
 
   if (!userId) {
-    mineBox.replaceChildren(el("p", { class: "empty-note", text: "Log in to see your lists." }));
+    if (guestList) {
+      mineBox.replaceChildren(
+        cardGrid([listCard(guestList, memberIds)], ""),
+        el("p", { class: "board-note", text: "This list is saved in this browser. Log in with WCA to keep it on your account." }));
+    } else if (guest) {
+      mineBox.replaceChildren(el("p", { class: "empty-note", text: "Could not load your guest list. Refresh to try again." }));
+    } else {
+      mineBox.replaceChildren(el("p", { class: "empty-note", text: "You haven't made a list yet." }));
+    }
   } else {
     const parts = [cardGrid(mine.map((l) => listCard(l, memberIds)), "You're not on any lists yet.")];
     if (data.left.length) {
@@ -265,15 +349,27 @@ async function showBrowser() {
 
 async function openList(list) {
   showPanel(el("p", { class: "empty-note", text: "Loading…" }));
-  const { data, error } = await supabase
-    .from("list_members").select("wca_id, display_name").eq("list_id", list.id).order("added_at");
+  const asGuest = isGuestList(list);
+  let members;
+  let error;
+  if (asGuest) {
+    // Guest lists aren't readable through the tables; the token unlocks them.
+    const r = await supabase.rpc("get_guest_list", { p_slug: list.slug, p_token: guest.token });
+    error = r.error;
+    if (r.data) { members = r.data.members; list = r.data.list; }
+  } else {
+    const r = await supabase
+      .from("list_members").select("wca_id, display_name").eq("list_id", list.id).order("added_at");
+    error = r.error;
+    members = r.data;
+  }
   if (error) {
     showPanel(el("div", {},
       el("button", { class: "back-link", onclick: showBrowser, text: "← All lists" }),
       el("p", { class: "form-error", text: friendlyError(error) })));
     return;
   }
-  current = { list, members: data };
+  current = { list, members, guest: asGuest };
   renderDetail();
 }
 
@@ -288,6 +384,9 @@ function renderDetail() {
     el("h2", { text: list.name }),
     el("p", { class: "board-note", text: `${vis.label}: ${vis.help}` }));
   if (note) node.append(el("p", { class: "board-note", text: note }));
+  if (current.guest) {
+    node.append(el("p", { class: "board-note", text: "Guest list: saved in this browser only. Log in with WCA to keep it on your account." }));
+  }
 
   const actions = el("div", { class: "panel-controls" });
   if (list.data_level !== "none") {
@@ -297,9 +396,9 @@ function renderDetail() {
       text: "View rankings",
     }));
   }
-  if (list.owner_id === userId) {
+  if (ownsList(list)) {
     actions.append(
-      el("button", { class: "csv-btn", type: "button", onclick: () => renderEditor(list, members), text: "Edit" }),
+      el("button", { class: "csv-btn", type: "button", onclick: () => renderEditor(list, members, current.guest), text: "Edit" }),
       el("button", { class: "csv-btn danger", type: "button", onclick: () => removeList(list), text: "Delete" }));
   }
   if (amMember) {
@@ -316,8 +415,14 @@ function renderDetail() {
 
 async function removeList(list) {
   if (!confirm(`Delete "${list.name}"? This can't be undone.`)) return;
-  const { error } = await supabase.from("lists").delete().eq("id", list.id);
-  if (error) { alert(friendlyError(error)); return; }
+  if (isGuestList(list)) {
+    const { error } = await supabase.rpc("delete_guest_list", { p_slug: list.slug, p_token: guest.token });
+    if (error) { alert(friendlyError(error)); return; }
+    clearGuest();
+  } else {
+    const { error } = await supabase.from("lists").delete().eq("id", list.id);
+    if (error) { alert(friendlyError(error)); return; }
+  }
   await showBrowser();
 }
 
@@ -333,8 +438,9 @@ async function leave(list) {
 
 // ---------- Editor ----------
 
-function renderEditor(list, members) {
+function renderEditor(list, members, guestMode = false) {
   const editing = Boolean(list);
+  const max = maxFor(guestMode);
   let slugTouched = editing;
 
   const name = el("input", { type: "text", maxlength: "80", placeholder: "e.g. Perth Cubers" });
@@ -346,7 +452,7 @@ function renderEditor(list, members) {
 
   const vis = el("select", {},
     ...Object.entries(VISIBILITY).map(([value, v]) => el("option", { value, text: v.label })));
-  vis.value = list?.visibility ?? "private";
+  vis.value = guestMode ? "unlisted" : (list?.visibility ?? "private");
   const visHelp = el("p", { class: "board-note" });
   const syncHelp = () => { visHelp.textContent = VISIBILITY[vis.value].help; };
 
@@ -357,7 +463,7 @@ function renderEditor(list, members) {
   text.value = membersToText(members || []);
   const count = el("p", { class: "board-note" });
   const syncCount = () => {
-    count.textContent = `${parseMembers(text.value).members.length} / ${MAX_MEMBERS} members`;
+    count.textContent = `${parseMembers(text.value).members.length} / ${max} members`;
   };
 
   const error = el("p", { class: "form-error" });
@@ -385,13 +491,20 @@ function renderEditor(list, members) {
     }
     if (parsed.bad.length) return fail(`These lines don't start with a valid WCA ID: ${parsed.bad.slice(0, 5).join(" | ")}`);
     if (!parsed.members.length) return fail("Add at least one WCA ID.");
-    if (parsed.members.length > MAX_MEMBERS) return fail(`A list can have at most ${MAX_MEMBERS} members (you have ${parsed.members.length}).`);
+    if (parsed.members.length > max) return fail(`A list can have at most ${max} members (you have ${parsed.members.length}).`);
 
     saveBtn.disabled = true;
     try {
-      const saved = editing
-        ? await updateList(list, members, { name: listName, visibility: vis.value }, parsed.members)
-        : await createList({ name: listName, slug: listSlug, visibility: vis.value }, parsed.members);
+      let saved;
+      if (guestMode) {
+        saved = editing
+          ? await updateGuestList(list, listName, parsed.members)
+          : await createGuestList(listName, listSlug, parsed.members);
+      } else {
+        saved = editing
+          ? await updateList(list, members, { name: listName, visibility: vis.value }, parsed.members)
+          : await createList({ name: listName, slug: listSlug, visibility: vis.value }, parsed.members);
+      }
       // Edited lists that already have rankings: go straight to them.
       // New (or never-built) lists: show the status page while they build.
       if (editing && saved.data_level !== "none") {
@@ -406,7 +519,7 @@ function renderEditor(list, members) {
 
   const field = (label, input, ...extra) => el("label", { class: "field" }, el("span", { text: label }), input, ...extra);
 
-  showPanel(el("div", { class: "list-form" },
+  const form = el("div", { class: "list-form" },
     el("button", {
       class: "back-link",
       onclick: () => (editing ? renderDetail() : showBrowser()),
@@ -414,11 +527,19 @@ function renderEditor(list, members) {
     }),
     el("h2", { text: editing ? "Edit list" : "New list" }),
     field("Name", name),
-    field(editing ? "Link name (can't change)" : "Link name (used in the link)", slug),
-    field("Who can see it", vis, visHelp),
+    field(editing ? "Link name (can't change)" : "Link name (used in the link)", slug));
+  if (guestMode) {
+    form.append(el("p", { class: "board-note", text:
+      "Guest lists are unlisted (anyone with the link can view them) and saved in this browser. " +
+      "You can have one. Log in with WCA to make more or change who can see it." }));
+  } else {
+    form.append(field("Who can see it", vis, visHelp));
+  }
+  form.append(
     field("Members (WCA IDs)", text, count),
     error,
-    el("div", { class: "panel-controls" }, saveBtn)));
+    el("div", { class: "panel-controls" }, saveBtn));
+  showPanel(form);
 }
 
 // ---------- Entry point ----------
@@ -432,10 +553,16 @@ export async function initLists() {
     myWcaId = data?.wca_id ?? null;
   }
 
+  guest = getGuest();
+  if (userId && guest) await claimGuest();
+
   $("custom-lists-section").hidden = false;
-  $("new-list-btn").hidden = !userId;
   $("login-hint").hidden = Boolean(userId);
-  $("new-list-btn").addEventListener("click", () => renderEditor(null, []));
+  if (!userId) {
+    $("login-hint").textContent =
+      "You can make one list without logging in. Log in with WCA to make more and see the lists you're on.";
+  }
+  $("new-list-btn").addEventListener("click", () => renderEditor(null, [], !userId));
 
   await renderBrowser();
 }
