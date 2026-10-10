@@ -291,3 +291,159 @@ $$;
 drop policy if exists lists_select on lists;
 create policy lists_select on lists for select
   using (owner_id = auth.uid() or visibility = 'public' or can_view_list(id));
+
+-- Custom lists step 5: guest lists (one per browser, claimable on login)
+
+-- Guest lists have no owner; they must be unlisted.
+alter table public.lists alter column owner_id drop not null;
+alter table public.lists
+  add constraint guest_lists_unlisted check (owner_id is not null or visibility = 'unlisted');
+
+-- Edit-token hashes live in their own table so they are never returned with a list row.
+create table public.guest_edit_tokens (
+  list_id     uuid primary key references public.lists(id) on delete cascade,
+  token_hash  text not null,
+  edited_at   timestamptz not null default now()
+);
+alter table public.guest_edit_tokens enable row level security;  -- no policies: functions only
+
+create function public.guest_hash(p_token text) returns text
+language sql immutable as $$
+  select encode(sha256(convert_to(p_token, 'UTF8')), 'hex')
+$$;
+
+-- Validates and de-duplicates a members array: [{wca_id, display_name}, ...]
+create function public.guest_clean_members(p_members jsonb)
+returns table (wca_id text, display_name text)
+language plpgsql stable set search_path = public as $$
+begin
+  if p_members is null or jsonb_typeof(p_members) <> 'array' then
+    raise exception 'Members must be a list';
+  end if;
+  if exists (
+    select 1 from jsonb_array_elements(p_members) e
+    where upper(coalesce(e->>'wca_id', '')) !~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'
+  ) then
+    raise exception 'One or more WCA IDs are not valid';
+  end if;
+  return query
+    select distinct on (upper(e->>'wca_id'))
+           upper(e->>'wca_id'),
+           nullif(left(trim(coalesce(e->>'display_name', '')), 60), '')
+    from jsonb_array_elements(p_members) e
+    order by upper(e->>'wca_id');
+end $$;
+
+-- Finds the guest list for slug + token, or raises.
+create function public.guest_list_id(p_slug text, p_token text) returns uuid
+language plpgsql stable security definer set search_path = public as $$
+declare v_id uuid;
+begin
+  select l.id into v_id
+  from lists l join guest_edit_tokens t on t.list_id = l.id
+  where l.slug = p_slug and l.owner_id is null and t.token_hash = guest_hash(p_token);
+  if v_id is null then raise exception 'Guest list not found or not yours'; end if;
+  return v_id;
+end $$;
+
+create function public.create_guest_list(p_name text, p_slug text, p_members jsonb, p_token text)
+returns public.lists language plpgsql security definer set search_path = public as $$
+declare v_list lists; v_n int;
+begin
+  if p_token is null or char_length(p_token) < 32 then raise exception 'Invalid edit token'; end if;
+  if p_name is null or char_length(trim(p_name)) not between 1 and 80 then
+    raise exception 'Give the list a name (up to 80 characters)';
+  end if;
+  if p_slug is null or p_slug !~ '^[a-z0-9-]{2,40}$' then raise exception 'Invalid link name'; end if;
+  select count(*) into v_n from guest_clean_members(p_members);
+  if v_n < 1 or v_n > 30 then raise exception 'A guest list needs 1 to 30 members'; end if;
+
+  -- Purge guest lists nobody has edited for 90 days, then enforce the global cap.
+  delete from lists where owner_id is null and id in
+    (select list_id from guest_edit_tokens where edited_at < now() - interval '90 days');
+  if (select count(*) from lists where owner_id is null) >= 200 then
+    raise exception 'Guest lists are full right now. Log in with WCA to create a list.';
+  end if;
+
+  insert into lists (slug, name, owner_id, visibility)
+  values (p_slug, trim(p_name), null, 'unlisted') returning * into v_list;
+  insert into guest_edit_tokens (list_id, token_hash) values (v_list.id, guest_hash(p_token));
+  insert into list_members (list_id, wca_id, display_name)
+    select v_list.id, c.wca_id, c.display_name from guest_clean_members(p_members) c;
+
+  select * into v_list from lists where id = v_list.id;
+  return v_list;
+end $$;
+
+create function public.get_guest_list(p_slug text, p_token text) returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare v_id uuid := guest_list_id(p_slug, p_token);
+begin
+  return jsonb_build_object(
+    'list', (select to_jsonb(l) from lists l where l.id = v_id),
+    'members', coalesce((
+      select jsonb_agg(jsonb_build_object('wca_id', m.wca_id, 'display_name', m.display_name)
+                       order by m.added_at)
+      from list_members m where m.list_id = v_id), '[]'::jsonb));
+end $$;
+
+create function public.update_guest_list(p_slug text, p_token text, p_name text, p_members jsonb)
+returns public.lists language plpgsql security definer set search_path = public as $$
+declare v_id uuid := guest_list_id(p_slug, p_token); v_n int; v_list lists;
+begin
+  if p_name is null or char_length(trim(p_name)) not between 1 and 80 then
+    raise exception 'Give the list a name (up to 80 characters)';
+  end if;
+  select count(*) into v_n from guest_clean_members(p_members);
+  if v_n < 1 or v_n > 30 then raise exception 'A guest list needs 1 to 30 members'; end if;
+
+  update lists set name = trim(p_name) where id = v_id;
+  delete from list_members
+    where list_id = v_id
+      and wca_id not in (select c.wca_id from guest_clean_members(p_members) c);
+  insert into list_members (list_id, wca_id, display_name)
+    select v_id, c.wca_id, c.display_name from guest_clean_members(p_members) c
+  on conflict (list_id, wca_id) do update set display_name = excluded.display_name;
+  update guest_edit_tokens set edited_at = now() where list_id = v_id;
+
+  select * into v_list from lists where id = v_id;
+  return v_list;
+end $$;
+
+create function public.delete_guest_list(p_slug text, p_token text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  delete from lists where id = guest_list_id(p_slug, p_token);
+end $$;
+
+-- Moves a guest list onto the logged-in account and retires the token.
+create function public.claim_guest_list(p_slug text, p_token text)
+returns public.lists language plpgsql security definer set search_path = public as $$
+declare v_id uuid := guest_list_id(p_slug, p_token); v_list lists;
+begin
+  if auth.uid() is null then raise exception 'Log in to claim a list'; end if;
+  if not exists (select 1 from profiles where id = auth.uid()) then
+    raise exception 'No profile for this account';
+  end if;
+  if (select count(*) from lists where owner_id = auth.uid()) >= 20 then
+    raise exception 'You can own at most 20 lists';
+  end if;
+  update lists set owner_id = auth.uid() where id = v_id;
+  delete from guest_edit_tokens where list_id = v_id;
+  select * into v_list from lists where id = v_id;
+  return v_list;
+end $$;
+
+-- Permissions: helpers are internal; guests (anon) may call the guest functions.
+revoke execute on function public.guest_clean_members(jsonb) from public, anon, authenticated;
+revoke execute on function public.guest_list_id(text, text) from public, anon, authenticated;
+revoke execute on function public.create_guest_list(text, text, jsonb, text) from public;
+revoke execute on function public.get_guest_list(text, text) from public;
+revoke execute on function public.update_guest_list(text, text, text, jsonb) from public;
+revoke execute on function public.delete_guest_list(text, text) from public;
+revoke execute on function public.claim_guest_list(text, text) from public, anon;
+grant execute on function public.create_guest_list(text, text, jsonb, text) to anon, authenticated;
+grant execute on function public.get_guest_list(text, text) to anon, authenticated;
+grant execute on function public.update_guest_list(text, text, text, jsonb) to anon, authenticated;
+grant execute on function public.delete_guest_list(text, text) to anon, authenticated;
+grant execute on function public.claim_guest_list(text, text) to authenticated;
