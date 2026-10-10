@@ -704,3 +704,14 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 .list-card { gap: 0.6rem; }
 .card-main { display: flex; flex-direction: column; gap: 0.35rem; color: inherit; text-decoration: none; }
 .list-card .csv-btn { align-self: flex-start; }
+
+/* ---- Profile records table ---- */
+.records-table th, .records-table td { text-align: center; padding: 0.5rem 0.45rem; }
+.records-table th.event-name-cell, .records-table td.event-name-cell { text-align: left; padding-right: 0.8rem; }
+.records-table .icon-cell { width: 2.5rem; padding-right: 0.2rem; }
+.records-table td.dim { color: var(--text-dim); }
+.records-table .result-cell { font-weight: 600; }
+.records-table .grp { border-bottom: 1px solid var(--panel-border); }
+.records-table .grp-avg { border-left: 1px solid var(--panel-border); }
+.records-table .split-l { border-left: 1px solid var(--panel-border); }
+.records-table .split-r { border-right: 1px solid var(--panel-border); }
