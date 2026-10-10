@@ -42,6 +42,8 @@ function slugify(name) {
     .replace(/-+$/, "");
 }
 
+const rankingsUrl = (list) => `index.html?list=${encodeURIComponent(list.slug)}`;
+
 // One person per line: "WCAID" or "WCAID Display Name".
 // A line made only of IDs (space/comma separated) adds each of them.
 function parseMembers(text) {
@@ -158,21 +160,34 @@ async function updateList(list, oldMembers, fields, members) {
 
 // ---------- Browser view ----------
 
-function listCard(list) {
-  const sub = [
-    VISIBILITY[list.visibility].label,
-    list.owner_id === userId ? "Yours" : null,
-    statusText(list),
-  ].filter(Boolean).join(" · ");
-  return el("a", {
-    class: "home-link",
-    href: "#",
-    onclick: (e) => { e.preventDefault(); openList(list); },
+// Clicking the name goes straight to the rankings (or to the status page while
+// the list is still being built). "Manage" opens the detail view.
+function listCard(list, memberIds) {
+  const roles = [];
+  if (list.owner_id === userId) roles.push("Yours");
+  if (memberIds.has(list.id)) roles.push("You're on it");
+  const sub = [VISIBILITY[list.visibility].label, ...roles, statusText(list)]
+    .filter(Boolean).join(" · ");
+
+  const ready = list.data_level !== "none";
+  const main = el("a", {
+    class: "card-main",
+    href: ready ? rankingsUrl(list) : "#",
   }, el("strong", { text: list.name }), el("span", { text: sub }));
+  if (!ready) main.addEventListener("click", (e) => { e.preventDefault(); openList(list); });
+
+  return el("div", { class: "home-link list-card" },
+    main,
+    el("button", {
+      class: "csv-btn",
+      type: "button",
+      text: list.owner_id === userId ? "Manage" : "Details",
+      onclick: () => openList(list),
+    }));
 }
 
 function leftCard(item) {
-  return el("div", { class: "home-link" },
+  return el("div", { class: "home-link list-card" },
     el("strong", { text: item.name }),
     el("span", { text: "You've left this list" }),
     el("button", {
@@ -187,10 +202,10 @@ function leftCard(item) {
     }));
 }
 
-function cardsOrEmpty(lists, emptyText) {
-  return lists.length
-    ? lists.map(listCard)
-    : [el("p", { class: "empty-note", text: emptyText })];
+function cardGrid(cards, emptyText) {
+  return cards.length
+    ? el("div", { class: "home-links" }, ...cards)
+    : el("p", { class: "empty-note", text: emptyText });
 }
 
 async function renderBrowser() {
@@ -210,23 +225,26 @@ async function renderBrowser() {
     return;
   }
 
+  // Every list I own or am on, once each.
+  const memberIds = new Set(data.inList.map((l) => l.id));
+  const mineById = new Map();
+  for (const l of [...data.mine, ...data.inList]) mineById.set(l.id, l);
+  const mine = [...mineById.values()].sort((a, b) => a.name.localeCompare(b.name));
+
   if (!userId) {
     mineBox.replaceChildren(el("p", { class: "empty-note", text: "Log in to see your lists." }));
   } else {
-    const owned = data.mine.filter((l) => l.owner_id === userId);
-    const parts = [
-      el("h3", { text: "Lists I'm in" }),
-      ...cardsOrEmpty(data.inList, "You're not on any lists yet."),
-      el("h3", { text: "Lists I manage" }),
-      ...cardsOrEmpty(owned, "You haven't made any lists yet."),
-    ];
-    if (data.left.length) parts.push(el("h3", { text: "Lists I've left" }), ...data.left.map(leftCard));
+    const parts = [cardGrid(mine.map((l) => listCard(l, memberIds)), "You're not on any lists yet.")];
+    if (data.left.length) {
+      parts.push(el("div", { class: "list-section" },
+        el("h3", { text: "Lists I've left" }),
+        el("div", { class: "home-links" }, ...data.left.map(leftCard))));
+    }
     mineBox.replaceChildren(...parts);
   }
 
-  const mineIds = new Set(data.mine.concat(data.inList).map((l) => l.id));
-  const pubOnly = data.pub.filter((l) => !mineIds.has(l.id));
-  pubBox.replaceChildren(...cardsOrEmpty(pubOnly, "No public lists yet."));
+  const pubOnly = data.pub.filter((l) => !mineById.has(l.id));
+  pubBox.replaceChildren(cardGrid(pubOnly.map((l) => listCard(l, memberIds)), "No public lists yet."));
 }
 
 function showPanel(node) {
@@ -275,7 +293,7 @@ function renderDetail() {
   if (list.data_level !== "none") {
     actions.append(el("a", {
       class: "csv-btn",
-      href: `index.html?list=${encodeURIComponent(list.slug)}`,
+      href: rankingsUrl(list),
       text: "View rankings",
     }));
   }
@@ -374,6 +392,12 @@ function renderEditor(list, members) {
       const saved = editing
         ? await updateList(list, members, { name: listName, visibility: vis.value }, parsed.members)
         : await createList({ name: listName, slug: listSlug, visibility: vis.value }, parsed.members);
+      // Edited lists that already have rankings: go straight to them.
+      // New (or never-built) lists: show the status page while they build.
+      if (editing && saved.data_level !== "none") {
+        window.location.href = rankingsUrl(saved);
+        return;
+      }
       await openList(saved);
     } catch (err) {
       fail(friendlyError(err));
