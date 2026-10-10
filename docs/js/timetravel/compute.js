@@ -453,7 +453,7 @@ function overallCompetitionStreak(entries, wcaId) {
     let isPr = false;
     for (const [key, value] of byEventType) {
       const prev = bestSoFar.has(key) ? bestSoFar.get(key) : null;
-      if (prev === null || value < prev) {
+      if (prev === null || value <= prev) {
         isPr = true;
         bestSoFar.set(key, value);
       }
