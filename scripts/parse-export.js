@@ -1,6 +1,6 @@
 // Reads the extracted WCA results export (results.tsv + result_attempts.tsv
-// + competitions.tsv) and filters it down to just one list's WCA IDs,
-// writing docs/data/lists/<listId>/full-results.json in the shape the rest
+// + competitions.tsv + round_types.tsv) and filters it down to just one
+// list's WCA IDs, writing <data dir>/full-results.json in the shape the rest
 // of the site expects (one entry per person+competition+event+round).
 //
 // This is the only public source for a person's full competition history --
@@ -73,6 +73,24 @@ async function loadCompetitionNames(exportDir, neededIds) {
       : null;
     map.set(id, { name: row.name || id, date });
   });
+  return map;
+}
+
+// The export's own round_types table is the authority on what each round
+// code means (and the order rounds happen in), so we read it instead of
+// hardcoding a mapping.
+async function loadRoundTypes(exportDir) {
+  const map = new Map();
+  const file = findFile(exportDir, [/^round_types\.tsv$/i, /wca_export.*round_?types\.tsv$/i]);
+  if (!file) {
+    console.log('  (no round_types.tsv found -- round names will use the built-in fallback labels)');
+    return map;
+  }
+  await parseTsv(file, (row) => {
+    const name = row.cell_name || row.cellName || row.name || null;
+    map.set(row.id, { name, rank: toNum(row.rank) });
+  });
+  console.log(`  Loaded ${map.size} round types from ${path.basename(file)}`);
   return map;
 }
 
@@ -149,6 +167,7 @@ async function main() {
   }
 
   const competitionNames = await loadCompetitionNames(exportDir, new Set(resultsList.map((r) => r.competitionId)));
+  const roundTypes = await loadRoundTypes(exportDir);
 
   const entries = resultsList.map((r) => ({
     wcaId: r.wcaId,
@@ -160,6 +179,10 @@ async function main() {
     competitionName: competitionNames.get(r.competitionId)?.name || r.competitionId,
     date: competitionNames.get(r.competitionId)?.date || null,
     round: r.round,
+    // Official round name and order straight from the export's round_types
+    // table (null if that file wasn't found).
+    roundName: roundTypes.get(r.round)?.name || null,
+    roundRank: roundTypes.get(r.round)?.rank ?? null,
     pos: r.pos,
     single: r.single,
     average: r.average,
