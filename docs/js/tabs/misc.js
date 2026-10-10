@@ -3,7 +3,13 @@ import { formatDate, daysAgo, formatResultLike, standardDeviation } from '../for
 import { nameLink, renderTable, renderDetailedTable, addPositionColumn } from '../ui.js';
 import { eventIcon } from '../icons.js';
 
-// ---------- FARs set ----------
+const esc = (s) =>
+  String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// The group's name, without the " (as of ...)" suffix that On This Date adds.
+const listLabel = () => (store.rankings?.listName || 'Group').replace(/ \(as of .*\)$/, '');
+
+// ---------- Records set ----------
 
 export function renderFarCounts() {
   document.getElementById('far-leaderboard-view').style.display = state.farView === 'leaderboard' ? '' : 'none';
@@ -14,7 +20,7 @@ export function renderFarCounts() {
     renderTable(document.getElementById('far-table'), rows, [
       { key: 'rank', label: '#', value: () => '' },
       { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-      { key: 'total', label: 'FARs set', value: (r) => r.total },
+      { key: 'total', label: 'Records set', value: (r) => r.total },
     ]);
     addPositionColumn('far-table');
   } else {
@@ -31,19 +37,100 @@ export function renderFarCounts() {
 
 // ---------- Record age ----------
 
+// Each person's longest-standing PR per event+type, ever. A PR stands from the
+// date it was set until a strictly faster result replaces it (or until today).
+let longestCache = { entries: null, rows: [] };
+
+function longestStandingPrs() {
+  const entries = store.fullResults?.entries;
+  if (!entries) return [];
+  if (longestCache.entries === entries) return longestCache.rows;
+
+  const groups = new Map();
+  for (const e of entries) {
+    if (!e.date) continue;
+    for (const type of ['single', 'average']) {
+      const v = e[type];
+      if (typeof v !== 'number' || v <= 0) continue;
+      const key = `${e.wcaId}|${e.eventId}|${type}`;
+      if (!groups.has(key)) groups.set(key, { wcaId: e.wcaId, name: e.name, eventId: e.eventId, type, items: [] });
+      groups.get(key).items.push({ date: e.date, value: v });
+    }
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const dayDiff = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+  const rows = [];
+  for (const g of groups.values()) {
+    g.items.sort((a, b) => a.date.localeCompare(b.date));
+    const prs = [];
+    let best = null;
+    for (const it of g.items) {
+      if (best === null || it.value < best) {
+        best = it.value;
+        prs.push(it);
+      }
+    }
+    let top = null;
+    prs.forEach((pr, i) => {
+      const next = prs[i + 1];
+      const end = next ? next.date : today;
+      const days = dayDiff(pr.date, end);
+      if (!top || days > top.days) top = { wcaId: g.wcaId, name: g.name, eventId: g.eventId, type: g.type, value: pr.value, start: pr.date, end, days, ongoing: !next };
+    });
+    if (top) rows.push(top);
+  }
+  rows.sort((a, b) => b.days - a.days);
+  longestCache = { entries, rows };
+  return rows;
+}
+
 export function renderAge() {
   const note = document.getElementById('age-note');
+  const container = document.getElementById('age-table');
+
+  if (state.ageMode === 'alltime') {
+    note.textContent = "Each person's longest-standing PR per event and type, ever (a PR stands until a faster result replaces it). Top 100.";
+    let rows = longestStandingPrs();
+    if (state.ageEventId) rows = rows.filter((r) => r.eventId === state.ageEventId);
+    rows = rows.slice(0, 100);
+    renderTable(container, rows, [
+      {
+        key: 'event',
+        label: 'Event',
+        value: (r) => {
+          const ev = store.rankings.events.find((e) => e.id === r.eventId);
+          return eventIcon(r.eventId, ev ? ev.name : r.eventId);
+        },
+      },
+      { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
+      { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
+      {
+        key: 'result',
+        label: 'Result',
+        value: (r) => {
+          const ev = store.rankings.events.find((e) => e.id === r.eventId);
+          return ev ? formatResultLike(r.value, ev, r.type === 'average') : r.value;
+        },
+      },
+      { key: 'from', label: 'Set on', value: (r) => formatDate(r.start) },
+      { key: 'until', label: 'Broken on', value: (r) => (r.ongoing ? 'Still standing' : formatDate(r.end)) },
+      { key: 'days', label: 'Days', value: (r) => r.days },
+    ]);
+    return;
+  }
+
   let rows;
   if (state.ageMode === 'far') {
     rows = store.historical.currentRecordsByAge || [];
-    note.textContent = 'Current FA Records, oldest first.';
+    note.textContent = `Current ${listLabel()} Records, oldest first.`;
   } else {
     rows = store.individual.prAges || [];
     note.textContent = "Everyone's current personal bests, oldest first.";
   }
   if (state.ageEventId) rows = rows.filter((r) => r.eventId === state.ageEventId);
 
-  renderTable(document.getElementById('age-table'), rows, [
+  renderTable(container, rows, [
     { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, r.eventName) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
@@ -56,6 +143,7 @@ export function renderAge() {
 
 function renderStreakList(containerId, rows) {
   const container = document.getElementById(containerId);
+  if (!container) return;
   if (!rows || rows.length === 0) {
     container.innerHTML = '<p class="empty-note">No results yet.</p>';
     return;
@@ -73,7 +161,7 @@ function renderStreakList(containerId, rows) {
           (s) => `
           <div>
             <span class="streak-count">${s.count}</span>
-            ${s.range ? `<span class="streak-range">${s.range.start} \u2013 ${s.range.end}</span>` : ''}
+            ${s.range ? `<span class="streak-range">${esc(s.range.start)} \u2013 ${esc(s.range.end)}</span>` : ''}
           </div>`
         )
         .join('');
@@ -100,11 +188,35 @@ const toStreakRow = (r) => ({
   },
 });
 
+// The Current / Best ever toggle exists on both streak tabs; keep them in sync.
+let streakTogglesBound = false;
+function bindStreakModeToggles() {
+  if (streakTogglesBound) return;
+  streakTogglesBound = true;
+  const ids = ['streaks-mode-toggle', 'streaks-event-mode-toggle'];
+  ids.forEach((id) => {
+    const toggle = document.getElementById(id);
+    if (!toggle) return;
+    toggle.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('.toggle-btn');
+      if (!btn || !btn.dataset.mode) return;
+      state.streaksMode = btn.dataset.mode;
+      ids.forEach((otherId) =>
+        document
+          .querySelectorAll(`#${otherId} .toggle-btn`)
+          .forEach((b) => b.classList.toggle('active', b.dataset.mode === state.streaksMode))
+      );
+      renderStreaks();
+    });
+  });
+}
+
 export function renderStreaks() {
   if (!store.streaks) return;
-  // Primary: one cross-event streak per person.
+  bindStreakModeToggles();
+  // Tab 1: one cross-event streak per person.
   renderStreakList('streaks-list', store.streaks.overall.map(toStreakRow));
-  // Secondary "fun stat": per-event, round-level.
+  // Tab 2: per-event, round-level.
   if (state.streaksEventId) {
     const eventRows = (store.streaks.byEvent[state.streaksEventId] || {})[state.streaksType] || [];
     renderStreakList('streaks-side-list', eventRows.map(toStreakRow));
@@ -119,7 +231,7 @@ export function renderUpcoming() {
   const competitions = store.upcoming?.competitions || [];
 
   if (competitions.length === 0) {
-    note.textContent = 'Add competition IDs to config/upcoming-competitions.json to populate this, or wait for the automatic scan to find one.';
+    note.textContent = 'Upcoming competitions are not available yet. This tab is being rebuilt.';
     container.innerHTML = '';
     return;
   }
@@ -131,7 +243,7 @@ export function renderUpcoming() {
   competitions.forEach((c) => {
     const tr = document.createElement('tr');
     const attendeeNames = (c.attendees || []).map((a) => nameLink(a.wcaId, a.name)).join(', ') || '—';
-    tr.innerHTML = `<td>${formatDate(c.date)}</td><td><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a></td><td>${attendeeNames}</td>`;
+    tr.innerHTML = `<td>${formatDate(c.date)}</td><td><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a></td><td>${attendeeNames}</td>`;
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
