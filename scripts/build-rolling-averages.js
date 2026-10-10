@@ -7,14 +7,15 @@
 //
 // For each person+event+format, finds their BEST-EVER rolling window and
 // ranks people by it (like Event Rankings, but for this unofficial stat).
-// Each contributing solve is labelled with which round/competition it came
-// from, since a window can span more than one.
+// Each row carries a rangeLabel (first solve -> last solve of the window)
+// and per-solve labels (used by the profile page).
 //
 // Caveats (inherent to the data available):
 //  - Only solves with recorded per-attempt data count -- older results
 //    without that in the export are skipped entirely.
-//  - Solve order across different rounds on the same date is approximate
-//    (competition dates have no time-of-day), ordered by round type only.
+//  - Solve order across different rounds on the same date uses the round
+//    order from the export's round_types table (roundRank) when available,
+//    falling back to a rough guess by round code.
 //  - Multi-Blind is excluded -- "rolling average of solves" doesn't apply
 //    to it the way it does to timed/move-count events.
 //
@@ -40,9 +41,13 @@ const FORMATS = {
   ao100: { windowSize: 100, dropExtremes: true, label: 'Ao100' },
 };
 
-// Roughly orders rounds within the same date -- exact time-of-day isn't
-// available, so this is the best ordering the data supports.
+// Fallback ordering of rounds within the same date, used only when the
+// export's own round order (roundRank) isn't available on an entry.
 const ROUND_ORDER = { 1: 1, 2: 2, 3: 3, 4: 4, c: 1, g: 1, e: 5, d: 6, f: 6, b: 6 };
+
+function roundSortKey(e) {
+  return e.roundRank ?? ROUND_ORDER[e.round] ?? 0;
+}
 
 function buildSolveSequence(entries, wcaId, eventId) {
   const rounds = entries.filter(
@@ -51,7 +56,7 @@ function buildSolveSequence(entries, wcaId, eventId) {
   rounds.sort((a, b) => {
     const dateCmp = (a.date || '9999').localeCompare(b.date || '9999');
     if (dateCmp !== 0) return dateCmp;
-    return (ROUND_ORDER[a.round] || 0) - (ROUND_ORDER[b.round] || 0);
+    return roundSortKey(a) - roundSortKey(b);
   });
 
   const solves = [];
@@ -62,6 +67,7 @@ function buildSolveSequence(entries, wcaId, eventId) {
         value: v,
         competitionName: r.competitionName || r.competitionId,
         round: r.round,
+        roundName: r.roundName || null,
         attemptIndex: i + 1,
       });
     });
@@ -100,6 +106,10 @@ function computeBestRolling(solves, format, event) {
   return best;
 }
 
+function solveLabel(s) {
+  return `Solve ${s.attemptIndex} \u2013 ${s.competitionName} (${s.roundName || roundLabel(s.round)})`;
+}
+
 function buildRankedTable(people, entries, event, formatKey) {
   const format = FORMATS[formatKey];
   const rows = [];
@@ -107,15 +117,20 @@ function buildRankedTable(people, entries, event, formatKey) {
     const solves = buildSolveSequence(entries, p.wcaId, event.id);
     const result = computeBestRolling(solves, format, event);
     if (!result) continue;
+    const first = result.solves[0];
+    const last = result.solves[result.solves.length - 1];
     rows.push({
       wcaId: p.wcaId,
       name: p.name,
       value: result.value,
       display: formatResult(result.value, event, true),
+      // Just the window's first and last solve (chronological).
+      rangeLabel: `${solveLabel(first)} \u2192 ${solveLabel(last)}`,
+      // Per-solve labels kept so the profile page keeps working.
       solves: result.solves.map((s) => ({
         display: formatResult(s.value, event, false),
         dropped: s.dropped,
-        label: `Solve ${s.attemptIndex} \u2013 ${s.competitionName} (${roundLabel(s.round)})`,
+        label: solveLabel(s),
       })),
     });
   }
