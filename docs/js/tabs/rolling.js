@@ -1,9 +1,25 @@
 import { store, state } from '../store.js';
 import { nameLink, renderTable, populateEventSelect } from '../ui.js';
 
+// Events whose official format is mean of 3; everything else defaults to ao5.
+// (Multi-Blind is excluded from rolling averages entirely.)
+const MO3_EVENTS = new Set(['666', '777', '333fm', '444bf', '555bf']);
+let formatChosenByUser = false;
+
+function applyDefaultFormat() {
+  // Once someone picks a format themselves, stop overriding it.
+  if (formatChosenByUser) return;
+  const formatSelect = document.getElementById('rolling-format-select');
+  state.rollingFormat = MO3_EVENTS.has(state.rollingEventId) ? 'mo3' : 'ao5';
+  formatSelect.value = state.rollingFormat;
+}
+
 export function populateRollingSelects() {
   if (!store.rolling) return;
-  populateEventSelect('rolling-event-select', store.rolling.events, 'rollingEventId', renderRolling);
+  populateEventSelect('rolling-event-select', store.rolling.events, 'rollingEventId', () => {
+    applyDefaultFormat();
+    renderRolling();
+  });
 
   const formatSelect = document.getElementById('rolling-format-select');
   formatSelect.innerHTML = '';
@@ -13,8 +29,9 @@ export function populateRollingSelects() {
     opt.textContent = f.label;
     formatSelect.appendChild(opt);
   });
-  state.rollingFormat = formatSelect.value;
+  applyDefaultFormat();
   formatSelect.onchange = () => {
+    formatChosenByUser = true;
     state.rollingFormat = formatSelect.value;
     renderRolling();
   };
@@ -42,9 +59,11 @@ export function renderRolling() {
       key: 'sources',
       label: 'Sources',
       value: (r) => {
+        if (r.rangeLabel) return `<span class="solves-cell">${r.rangeLabel}</span>`;
+        // Fallback for data built before rangeLabel existed.
         const first = r.solves[0]?.label;
         const last = r.solves[r.solves.length - 1]?.label;
-        return `<span class="solves-cell">${first === last ? first : `${first} \u2013 ${last}`}</span>`;
+        return `<span class="solves-cell">${first === last ? first : `${first} \u2192 ${last}`}</span>`;
       },
     },
     { key: 'result', label: 'Result', value: (r) => r.display },
