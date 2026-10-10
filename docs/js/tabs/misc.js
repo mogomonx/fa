@@ -65,17 +65,24 @@ function renderStreakList(containerId, rows) {
     .sort((a, b) => b.streak.count - a.streak.count);
 
   container.innerHTML = sorted
-    .map(
-      (r) => `
+    .map((r) => {
+      // "Best ever" can hold several streaks (highest first); current is one.
+      const lines = r.streak.all && r.streak.all.length > 0 ? r.streak.all.slice().reverse() : [r.streak];
+      const linesHtml = lines
+        .map(
+          (s) => `
+          <div>
+            <span class="streak-count">${s.count}</span>
+            ${s.range ? `<span class="streak-range">${s.range.start} \u2013 ${s.range.end}</span>` : ''}
+          </div>`
+        )
+        .join('');
+      return `
       <div class="streak-row">
         <span>${nameLink(r.wcaId, r.name)}</span>
-        <span style="text-align:right;">
-          <span class="streak-count">${r.streak.count}</span>
-          ${r.streak.range ? `<span class="streak-range">${r.streak.range.start} \u2013 ${r.streak.range.end}</span>` : ''}
-        </span>
-      </div>
-    `
-    )
+        <span style="text-align:right;">${linesHtml}</span>
+      </div>`;
+    })
     .join('');
 }
 
@@ -84,7 +91,12 @@ const toStreakRow = (r) => ({
   name: r.name,
   streak: {
     current: { count: r.streak.current, range: r.streak.currentRange },
-    best: { count: r.streak.best, range: r.streak.bestRange },
+    best: {
+      count: r.streak.best,
+      range: r.streak.bestRange,
+      // Older JSON without `bests` falls back to the single best.
+      all: r.streak.bests || (r.streak.best > 0 ? [{ count: r.streak.best, range: r.streak.bestRange }] : []),
+    },
   },
 });
 
