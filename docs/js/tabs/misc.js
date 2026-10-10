@@ -1,5 +1,5 @@
 import { store, state } from '../store.js';
-import { formatDate, daysAgo, formatResultLike, standardDeviation } from '../format.js';
+import { formatDate, daysAgo, formatResultLike, standardDeviation, roundLabelFallback } from '../format.js';
 import { nameLink, renderTable, renderDetailedTable, addPositionColumn } from '../ui.js';
 import { eventIcon } from '../icons.js';
 
@@ -94,25 +94,12 @@ export function renderAge() {
     let rows = longestStandingPrs();
     if (state.ageEventId) rows = rows.filter((r) => r.eventId === state.ageEventId);
     rows = rows.slice(0, 100);
+    const evOf = (id) => store.rankings.events.find((e) => e.id === id);
     renderTable(container, rows, [
-      {
-        key: 'event',
-        label: 'Event',
-        value: (r) => {
-          const ev = store.rankings.events.find((e) => e.id === r.eventId);
-          return eventIcon(r.eventId, ev ? ev.name : r.eventId);
-        },
-      },
+      { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, evOf(r.eventId)?.name || r.eventId) },
       { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
       { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
-      {
-        key: 'result',
-        label: 'Result',
-        value: (r) => {
-          const ev = store.rankings.events.find((e) => e.id === r.eventId);
-          return ev ? formatResultLike(r.value, ev, r.type === 'average') : r.value;
-        },
-      },
+      { key: 'result', label: 'Result', value: (r) => (evOf(r.eventId) ? formatResultLike(r.value, evOf(r.eventId), r.type === 'average') : r.value) },
       { key: 'from', label: 'Set on', value: (r) => formatDate(r.start) },
       { key: 'until', label: 'Broken on', value: (r) => (r.ongoing ? 'Still standing' : formatDate(r.end)) },
       { key: 'days', label: 'Days', value: (r) => r.days },
@@ -139,9 +126,9 @@ export function renderAge() {
   ]);
 }
 
-// ---------- PR Streaks ----------
+// ---------- PR Streaks (two tabs) ----------
 
-function renderStreakList(containerId, rows) {
+function renderStreakList(containerId, rows, mode) {
   const container = document.getElementById(containerId);
   if (!container) return;
   if (!rows || rows.length === 0) {
@@ -149,7 +136,7 @@ function renderStreakList(containerId, rows) {
     return;
   }
   const sorted = rows
-    .map((r) => ({ ...r, streak: r.streak[state.streaksMode] }))
+    .map((r) => ({ ...r, streak: r.streak[mode] }))
     .sort((a, b) => b.streak.count - a.streak.count);
 
   container.innerHTML = sorted
@@ -188,96 +175,31 @@ const toStreakRow = (r) => ({
   },
 });
 
-// The Current / Best ever toggle exists on both streak tabs; keep them in sync.
-let streakTogglesBound = false;
-function bindStreakModeToggles() {
-  if (streakTogglesBound) return;
-  streakTogglesBound = true;
-  const ids = ['streaks-mode-toggle', 'streaks-event-mode-toggle'];
-  ids.forEach((id) => {
-    const toggle = document.getElementById(id);
-    if (!toggle) return;
-    toggle.addEventListener('click', (ev) => {
-      const btn = ev.target.closest('.toggle-btn');
-      if (!btn || !btn.dataset.mode) return;
-      state.streaksMode = btn.dataset.mode;
-      ids.forEach((otherId) =>
-        document
-          .querySelectorAll(`#${otherId} .toggle-btn`)
-          .forEach((b) => b.classList.toggle('active', b.dataset.mode === state.streaksMode))
-      );
-      renderStreaks();
-    });
-  });
-}
-
 export function renderStreaks() {
   if (!store.streaks) return;
-  bindStreakModeToggles();
   // Tab 1: one cross-event streak per person.
-  renderStreakList('streaks-list', store.streaks.overall.map(toStreakRow));
+  renderStreakList('streaks-list', store.streaks.overall.map(toStreakRow), state.streaksMode);
   // Tab 2: per-event, round-level.
   if (state.streaksEventId) {
     const eventRows = (store.streaks.byEvent[state.streaksEventId] || {})[state.streaksType] || [];
-    renderStreakList('streaks-side-list', eventRows.map(toStreakRow));
+    renderStreakList('streaks-side-list', eventRows.map(toStreakRow), state.streaksEventMode);
   }
 }
 
-// ---------- Upcoming competitions ----------
+// ---------- PR counting ----------
 
-export function renderUpcoming() {
-  const note = document.getElementById('upcoming-note');
-  const container = document.getElementById('upcoming-table');
-  const competitions = store.upcoming?.competitions || [];
+// Events without a five-attempt average (mean-of-3 and best-of-3 formats).
+const NO_PR_COUNTING = new Set(['333mbf', '333bf', '444bf', '555bf', '666', '777', '333fm']);
 
-  if (competitions.length === 0) {
-    note.textContent = 'Upcoming competitions are not available yet. This tab is being rebuilt.';
-    container.innerHTML = '';
-    return;
-  }
-  note.textContent = 'Every upcoming competition (next ~6 months) your group is attending.';
-
-  const table = document.createElement('table');
-  table.innerHTML = '<thead><tr><th>Date</th><th>Competition</th><th>Attending</th></tr></thead>';
-  const tbody = document.createElement('tbody');
-  competitions.forEach((c) => {
-    const tr = document.createElement('tr');
-    const attendeeNames = (c.attendees || []).map((a) => nameLink(a.wcaId, a.name)).join(', ') || '—';
-    tr.innerHTML = `<td>${formatDate(c.date)}</td><td><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a></td><td>${attendeeNames}</td>`;
-    tbody.appendChild(tr);
-  });
-  table.appendChild(tbody);
-  container.innerHTML = '';
-  container.appendChild(table);
+export function prCountEvents() {
+  return (store.rankings?.events || []).filter((e) => !NO_PR_COUNTING.has(e.id));
 }
 
-// ---------- Consistency ----------
+let prCache = { entries: null, byEvent: new Map() };
 
-export function renderConsistency() {
-  const container = document.getElementById('consistency-table');
-  if (!container || !state.consistencyEventId) return;
-  const eventDef = store.rankings.events.find((e) => e.id === state.consistencyEventId);
-  const type = state.consistencyType;
-
-  const byPerson = new Map();
-  for (const e of store.fullResults.entries || []) {
-    if (e.eventId !== state.consistencyEventId) continue;
-    const v = e[type];
-    if (typeof v !== 'number' || v <= 0) continue;
-    if (!byPerson.has(e.wcaId)) byPerson.set(e.wcaId, { name: e.name, values: [] });
-    byPerson.get(e.wcaId).values.push(v);
-  }
-
-  const rows = Array.from(byPerson.entries())
-    .filter(([, d]) => d.values.length >= 3) // need a few data points for std dev to mean anything
-    .map(([wcaId, d]) => ({ wcaId, name: d.name, count: d.values.length, stdDev: standardDeviation(d.values) }))
-    .sort((a, b) => a.stdDev - b.stdDev);
-
-  renderTable(container, rows, [
-    { key: 'rank', label: '#', value: () => '' },
-    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, r.name) },
-    { key: 'count', label: 'Results counted', value: (r) => r.count },
-    { key: 'stdDev', label: 'Std. deviation', value: (r) => formatResultLike(Math.round(r.stdDev), eventDef, type === 'average') },
-  ]);
-  addPositionColumn('consistency-table');
-}
+// Best "counting" solve per person: in every five-attempt round the best and
+// worst are dropped, so the best counting solve is that round's second-fastest.
+function computePrCounting(eventId) {
+  const entries = store.fullResults?.entries;
+  if (!entries) return [];
+  if (prCache.entries !== entries) prCache = {
