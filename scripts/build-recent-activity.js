@@ -80,7 +80,7 @@ function main() {
         singleDisplay: hasResult(e.single) ? formatResult(e.single, event, false) : null,
         averageDisplay: hasResult(e.average) ? formatResult(e.average, event, true) : null,
         competitionName: e.competitionName,
-        round: roundLabel(e.round),
+        round: e.roundName || roundLabel(e.round),
         date: e.date,
       });
     }
