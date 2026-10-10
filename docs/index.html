@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FA Records</title>
+<title>Rankings</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <button type="button" class="header-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="side-menu">
       <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <h1 id="page-title">FA</h1>
+    <h1 id="page-title"></h1>
     <div class="header-actions">
       <button type="button" class="header-btn tab-btn" data-tab="home" aria-label="Home" title="Home">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -47,29 +47,30 @@
       </div>
       <div id="profile-search-results" class="search-results"></div>
 
-      <div class="board" style="margin-bottom:1.5rem;">
-        <h2>Recent activity</h2>
-        <p class="board-note" id="recent-activity-note">PR1/PR2/PR3 and podium finishes in the last 2 weeks.</p>
-        <div id="recent-activity-table"></div>
-      </div>
-
-      <p class="board-note">A directory of what's here. (More will land on this page later.)</p>
-      <div class="home-links" id="home-links">
+      <p class="board-note">A directory of what's here.</p>
+      <div class="home-links" id="home-links" style="margin-bottom:1.5rem;">
         <a href="#" class="home-link" data-tab="records"><strong>Records</strong><span>The group's current best single/average per event, and who holds it.</span></a>
         <a href="#" class="home-link" data-tab="events"><strong>Rankings</strong><span>Single and average rankings for every event.</span></a>
         <a href="#" class="home-link" data-tab="individual"><strong>Results</strong><span>Every result anyone's ever recorded, not just personal bests.</span></a>
         <a href="#" class="home-link" data-tab="overall"><strong>All-Rounding (SoR &amp; Kinch)</strong><span>The two combined ranking systems.</span></a>
         <a href="#" class="home-link" data-tab="compare"><strong>Compare</strong><span>Head-to-head between two people, or find your nemesis.</span></a>
         <a href="#" class="home-link" data-tab="rolling"><strong>Rolling</strong><span>Unofficial rolling mo3/ao5/ao12/ao25/ao50/ao100 rankings.</span></a>
-        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, FARs set per person, streaks, and other odds and ends.</span></a>
-        <a href="#" class="home-link" data-tab="misc" data-subtab="history"><strong>Historical Records</strong><span>Every FA Record ever set, in order, by event.</span></a>
+        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, records set per person, streaks, and other odds and ends.</span></a>
+        <a href="#" class="home-link" data-tab="misc" data-subtab="prcount"><strong>PR Counting</strong><span>Each person's best counting result, from solves that weren't dropped.</span></a>
+        <a href="#" class="home-link" data-tab="misc" data-subtab="history"><strong>Historical Records</strong><span>Every group record ever set, in order, by event.</span></a>
         <a href="#" class="home-link" data-tab="misc" data-subtab="improvement"><strong>Improvement</strong><span>See how much someone's improved between two dates.</span></a>
         <a href="#" class="home-link" data-tab="settings"><strong>Settings</strong><span>Customise the site's colours and view it as of a past date.</span></a>
+      </div>
+
+      <div class="board" style="margin-bottom:1.5rem;">
+        <h2>Recent activity</h2>
+        <p class="board-note" id="recent-activity-note">PRs and podium finishes in the last 2 weeks.</p>
+        <div id="recent-activity-table"></div>
       </div>
     </section>
 
     <section id="tab-records" class="tab-panel">
-      <p class="board-note">The best single and average currently held within FA for each event.</p>
+      <p class="board-note">The best single and average currently held within the group for each event.</p>
       <div id="fa-records-table"></div>
     </section>
 
@@ -86,7 +87,7 @@
     </section>
 
     <section id="tab-individual" class="tab-panel">
-      <p class="board-note">Every recorded result (not just personal bests) ranked within the group. "PRn" shows which of that person's own results this is (PR1 = their current best).</p>
+      <p class="board-note">Every recorded result (not just personal bests) ranked within the group. "PR order" shows which of that person's own results this is: PR is their best, PR2 their second best, and so on.</p>
       <div class="panel-controls">
         <div class="event-picker" id="individual-event-select"></div>
         <div class="toggle" id="individual-type-toggle">
@@ -116,7 +117,7 @@
           </div>
           <button class="csv-btn" data-container="sum-of-ranks-table" data-filename="sum-of-ranks.csv">Export CSV</button>
         </div>
-        <p class="board-note">Lower total is better. All 17 events count; an event nobody has a result for ties everyone at 1 (shown in red in the detailed table). Gold/silver/bronze = 1st/2nd/3rd.</p>
+        <p class="board-note">Lower total is better. All events count; anyone without a result in an event ties just behind the last ranked person (shown in red in the detailed table). Gold/silver/bronze = 1st/2nd/3rd.</p>
         <div id="sor-leaderboard-view">
           <div id="sum-of-ranks-table"></div>
         </div>
@@ -175,9 +176,11 @@
     <section id="tab-misc" class="tab-panel">
       <div class="subtabs" id="misc-subtabs">
         <button class="subtab-btn active" data-subtab="top100">Top 100</button>
-        <button class="subtab-btn" data-subtab="farcounts">FARs Set</button>
+        <button class="subtab-btn" data-subtab="farcounts">Records Set</button>
         <button class="subtab-btn" data-subtab="age">Record Age</button>
         <button class="subtab-btn" data-subtab="streaks">PR Streaks</button>
+        <button class="subtab-btn" data-subtab="streaks-event">Event Streaks</button>
+        <button class="subtab-btn" data-subtab="prcount">PR Counting</button>
         <button class="subtab-btn" data-subtab="upcoming">Upcoming Competitions</button>
         <button class="subtab-btn" data-subtab="consistency">Consistency</button>
         <button class="subtab-btn" data-subtab="history">Historical Records</button>
@@ -222,8 +225,9 @@
       <div id="subtab-age" class="subtab-panel">
         <div class="panel-controls">
           <div class="toggle" id="age-mode-toggle">
-            <button class="toggle-btn active" data-mode="far">FARs only</button>
+            <button class="toggle-btn active" data-mode="far">Records only</button>
             <button class="toggle-btn" data-mode="allpr">All PRs</button>
+            <button class="toggle-btn" data-mode="alltime">Longest ever</button>
           </div>
           <div class="event-picker" id="age-event-select" data-all="true"></div>
         </div>
@@ -238,23 +242,36 @@
             <button class="toggle-btn" data-mode="best">Best ever</button>
           </div>
         </div>
-        <div class="streaks-layout">
-          <div class="board streaks-main">
-            <p class="board-note">Consecutive competitions in a row with a PR in ANY event — doesn't have to be the same event each time.</p>
-            <div id="streaks-list"></div>
+        <div class="board">
+          <p class="board-note">Consecutive competitions in a row with a PR in any event. A tie with your previous best counts.</p>
+          <div id="streaks-list"></div>
+        </div>
+      </div>
+
+      <div id="subtab-streaks-event" class="subtab-panel">
+        <div class="panel-controls">
+          <div class="toggle" id="streaks-event-mode-toggle">
+            <button class="toggle-btn active" data-mode="current">Current</button>
+            <button class="toggle-btn" data-mode="best">Best ever</button>
           </div>
-          <div class="board streaks-side">
-            <p class="board-note">Fun stat: the same idea, but scoped to one specific event and counted by round instead of competition.</p>
-            <div class="panel-controls">
-              <div class="event-picker" id="streaks-event-select"></div>
-              <div class="toggle" id="streaks-type-toggle">
-                <button class="toggle-btn active" data-type="single">Single</button>
-                <button class="toggle-btn" data-type="average">Average</button>
-              </div>
-            </div>
-            <div id="streaks-side-list"></div>
+          <div class="event-picker" id="streaks-event-select"></div>
+          <div class="toggle" id="streaks-type-toggle">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
           </div>
         </div>
+        <div class="board">
+          <p class="board-note">The same idea for one event, counted by round instead of competition.</p>
+          <div id="streaks-side-list"></div>
+        </div>
+      </div>
+
+      <div id="subtab-prcount" class="subtab-panel">
+        <div class="panel-controls">
+          <div class="event-picker" id="prcount-event-select"></div>
+        </div>
+        <p class="board-note">Each person's best counting result: the fastest solve that was not dropped from an average of 5. Only events with a 5-solve average.</p>
+        <div id="prcount-table"></div>
       </div>
 
       <div id="subtab-upcoming" class="subtab-panel">
@@ -278,12 +295,12 @@
         <div class="panel-controls">
           <div class="event-picker" id="history-event-select"></div>
         </div>
-        <p class="board-note">Every FA Record ever set for this event, most recent first.</p>
+        <p class="board-note">Every group record ever set for this event, most recent first.</p>
         <div id="historical-records-table"></div>
       </div>
 
       <div id="subtab-improvement" class="subtab-panel">
-        <p class="board-note">Compares each person's best result as of two dates. Needs the Update Full Result History workflow to have run.</p>
+        <p class="board-note">Compares each person's best result as of two dates, and shows the competition each was achieved at.</p>
         <div class="panel-controls">
           <div class="event-picker" id="improvement-event-select"></div>
           <div class="toggle" id="improvement-type-toggle">
@@ -319,7 +336,7 @@
       <button class="back-link" id="settings-reset" style="margin-top:1rem;">Reset to default</button>
 
       <h2 style="margin:2rem 0 0.5rem;">On This Date</h2>
-      <p class="board-note">View the whole site as it stood on a past date — FA Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Historical Records, Record Age, Streaks, Compare, and profiles all recompute from that date. Recent Activity, Upcoming Competitions, Rolling Averages, and Consistency stay live regardless, since they don't have a meaningful "as of a past date" version (or aren't supported yet). Saved in your browser, so it stays set until you clear it.</p>
+      <p class="board-note">View the whole site as it stood on a past date — Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Historical Records, Record Age, Streaks, Compare, and profiles all recompute from that date. Recent Activity, Upcoming Competitions, Rolling Averages, PR Counting, and Consistency stay live regardless. Saved in your browser, so it stays set until you clear it.</p>
       <div class="panel-controls">
         <input type="date" id="time-travel-date">
         <button class="csv-btn" id="time-travel-apply">View this date</button>
