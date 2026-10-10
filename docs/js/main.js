@@ -106,6 +106,7 @@ function refreshAll() {
 }
 
 async function loadData() {
+  if (!LIST_ID) return; // store.js is redirecting to lists.html
   await resolveSource();
   const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
     fetchJson('rankings.json', true),
