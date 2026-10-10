@@ -35,8 +35,11 @@ export function renderTable(container, rows, columns) {
   });
   table.appendChild(tbody);
 
+  const wrap = document.createElement('div');
+  wrap.className = 'scroll-table';
+  wrap.appendChild(table);
   container.innerHTML = '';
-  container.appendChild(table);
+  container.appendChild(wrap);
 }
 
 export function addPositionColumn(containerId) {
