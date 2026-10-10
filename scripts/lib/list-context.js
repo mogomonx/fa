@@ -1,12 +1,10 @@
 // Every script that needs config/data paths calls getListContext() instead
 // of hardcoding them.
 //
-// Two modes:
-//  - Built-in lists (default): config/lists-manifest.json + config/lists/<id>.json,
-//    output to docs/data/lists/<id>/.
-//  - Database lists: when LISTS_ROOT is set (e.g. "build"), the manifest and
-//    member files come from scripts/sync-lists.js, and output goes to
-//    <LISTS_ROOT>/data/<id>/ (never inside docs/, so nothing private is committed).
+// All lists are database lists: scripts/sync-lists.js writes the manifest and
+// member files into the build folder, and output goes to <build>/data/<slug>/.
+// The build folder is git-ignored, so nothing private is ever committed.
+// LISTS_ROOT overrides the folder name (default "build").
 //
 // Usage: node scripts/whatever.js [listId]
 // If no listId is given, LIST_ID env var is checked, then the manifest's first entry.
@@ -15,14 +13,12 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..', '..');
-const BUILD_ROOT = process.env.LISTS_ROOT ? path.resolve(ROOT, process.env.LISTS_ROOT) : null;
-const MANIFEST_PATH = BUILD_ROOT
-  ? path.join(BUILD_ROOT, 'lists-manifest.json')
-  : path.join(ROOT, 'config', 'lists-manifest.json');
+const BUILD_ROOT = path.resolve(ROOT, process.env.LISTS_ROOT || 'build');
+const MANIFEST_PATH = path.join(BUILD_ROOT, 'lists-manifest.json');
 
 function readManifest() {
   if (!fs.existsSync(MANIFEST_PATH)) {
-    throw new Error(`Missing ${MANIFEST_PATH} -- every list needs an entry here.`);
+    throw new Error(`Missing ${MANIFEST_PATH} -- run scripts/sync-lists.js first.`);
   }
   return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 }
@@ -37,23 +33,13 @@ function getListContext(explicitListId) {
   if (!entry) {
     throw new Error(`List "${listId}" isn't in ${MANIFEST_PATH}.`);
   }
-
-  if (BUILD_ROOT) {
-    return {
-      listId,
-      uuid: entry.uuid,
-      listName: entry.name,
-      membersPath: path.join(BUILD_ROOT, 'lists', `${listId}.json`),
-      upcomingConfigPath: path.join(BUILD_ROOT, 'lists', `${listId}-upcoming.json`),
-      dataDir: path.join(BUILD_ROOT, 'data', listId),
-    };
-  }
   return {
     listId,
+    uuid: entry.uuid,
     listName: entry.name,
-    membersPath: path.join(ROOT, 'config', 'lists', `${listId}.json`),
-    upcomingConfigPath: path.join(ROOT, 'config', 'lists', `${listId}-upcoming.json`),
-    dataDir: path.join(ROOT, 'docs', 'data', 'lists', listId),
+    membersPath: path.join(BUILD_ROOT, 'lists', `${listId}.json`),
+    upcomingConfigPath: path.join(BUILD_ROOT, 'lists', `${listId}-upcoming.json`),
+    dataDir: path.join(BUILD_ROOT, 'data', listId),
   };
 }
 
