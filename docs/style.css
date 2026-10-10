@@ -1,3 +1,7 @@
+/* =====================================================================
+   Theme
+   ===================================================================== */
+
 :root {
   --bg: #17181c;
   --panel: #1f2126;
@@ -11,14 +15,19 @@
   --bronze: #c98a52;
   --link: #7fb3f5;
   --event-icon-colour: #e9eaec;
-  --header-h: 3rem;
-}
 
-a {
-  color: var(--link);
+  --header-h: 3rem;
+  --page-max: 1400px;       /* overall content width */
+  --rank-col-w: 3rem;       /* frozen "#" column in detailed tables */
+  --icon-col-w: 2.5rem;     /* frozen icon column in the profile records table */
+  --thead-row-h: 2.25rem;   /* height of one header row (two-row headers) */
 }
 
 * { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+a { color: var(--link); }
 
 body {
   margin: 0;
@@ -28,7 +37,21 @@ body {
   line-height: 1.5;
 }
 
-/* ---------- Header ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =====================================================================
+   Header
+   ===================================================================== */
 
 .site-header {
   position: sticky;
@@ -88,7 +111,7 @@ body {
   stroke-linejoin: round;
 }
 
-.header-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+.header-btn:hover,
 .header-btn.active { color: var(--accent); border-color: var(--accent-dim); }
 
 .updated-at {
@@ -97,7 +120,9 @@ body {
   font-size: 0.85rem;
 }
 
-/* ---------- Side menu ---------- */
+/* =====================================================================
+   Side menu
+   ===================================================================== */
 
 .menu-backdrop {
   position: fixed;
@@ -170,13 +195,25 @@ body.menu-open .side-menu {
   .side-menu, .menu-backdrop { transition: none; }
 }
 
-/* ---------- Layout ---------- */
+/* =====================================================================
+   Page layout
+   ===================================================================== */
 
 .container {
-  max-width: 960px;
+  max-width: var(--page-max);
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
 }
+
+.site-footer {
+  max-width: var(--page-max);
+  margin: 1rem auto 3rem;
+  padding: 0 1rem;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.site-footer p { margin: 0 0 0.25rem; }
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
@@ -188,6 +225,52 @@ body.menu-open .side-menu {
   gap: 1rem;
   margin-bottom: 1.25rem;
   flex-wrap: wrap;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .board-grid { grid-template-columns: 1fr; }
+}
+
+.board h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+}
+
+.board-note {
+  margin: 0 0 0.75rem;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+.empty-note {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.detailed-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* =====================================================================
+   Form controls, toggles, subtabs
+   ===================================================================== */
+
+select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
 }
 
 .toggle {
@@ -211,35 +294,48 @@ body.menu-open .side-menu {
   color: var(--text);
 }
 
-select {
+.subtabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.subtab-btn {
   background: var(--panel);
-  color: var(--text);
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
-}
-
-.board-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-@media (max-width: 700px) {
-  .board-grid { grid-template-columns: 1fr; }
-}
-
-.board h2 {
-  margin: 0 0 0.25rem;
-  font-size: 1.15rem;
-}
-
-.board-note {
-  margin: 0 0 0.75rem;
   color: var(--text-dim);
-  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
 }
+
+.subtab-btn.active {
+  color: var(--text);
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+}
+
+.subtab-panel { display: none; }
+.subtab-panel.active { display: block; }
+
+.csv-btn {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: var(--text-dim);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.csv-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+.csv-btn.danger { border-color: #e5484d; color: #e5484d; }
+
+/* =====================================================================
+   Tables (plain)
+   ===================================================================== */
 
 table {
   width: 100%;
@@ -273,55 +369,99 @@ tr.rank-1 td.rank-cell { color: var(--gold); font-weight: 700; }
 tr.rank-2 td.rank-cell { color: var(--silver); font-weight: 700; }
 tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 
-.detailed-view {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+.rank-gold { color: var(--gold); font-weight: 700; }
+.rank-silver { color: var(--silver); font-weight: 700; }
+.rank-bronze { color: var(--bronze); font-weight: 700; }
+.rank-none { color: #e05a5a; }
+
+.pr-badge { font-weight: 700; color: var(--accent); }
+.pr-order-1 { font-weight: 700; color: var(--gold); }
+.pr-order-2 { font-weight: 700; color: var(--silver); }
+.pr-order-3 { font-weight: 700; color: var(--bronze); }
+
+.solves-cell {
+  font-size: 0.78rem;
+  color: var(--text-dim);
 }
+
+/* =====================================================================
+   Scrollable tables: frozen top row + frozen left column(s)
+
+   Anything wrapped in .scroll-table scrolls inside its own box (both
+   directions), keeps its header row pinned to the top and its first
+   column(s) pinned to the left.
+   ===================================================================== */
 
 .scroll-table {
-  overflow-x: auto;
-}
-
-.scroll-table table {
+  overflow: auto;
+  max-height: calc(100vh - var(--header-h) - 1.5rem);
+  border: 1px solid var(--panel-border);
   border-radius: 10px;
+  background: var(--panel);
 }
 
-.scroll-table th, .scroll-table td {
-  white-space: nowrap;
+/* Sticky needs separate borders; the border now lives on the wrapper. */
+.scroll-table table {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.scroll-table td.name-cell, .scroll-table th.name-header {
+.scroll-table th,
+.scroll-table td { white-space: nowrap; }
+
+/* A scroll-table nested inside another becomes a plain wrapper, so the
+   outer one does the scrolling and the sticky cells still work. */
+.scroll-table .scroll-table {
+  overflow: visible;
+  max-height: none;
+  border: none;
+  border-radius: 0;
+}
+
+/* --- frozen header row --- */
+.scroll-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--panel);
+}
+
+/* --- frozen left columns in detailed tables: "#" then Name --- */
+.scroll-table td.rank-cell,
+.scroll-table th:has(+ th.name-header) {
   position: sticky;
   left: 0;
+  z-index: 1;
+  width: var(--rank-col-w);
+  min-width: var(--rank-col-w);
+  max-width: var(--rank-col-w);
   background: var(--panel);
 }
 
-.subtabs {
-  display: flex;
-  gap: 0.4rem;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
-}
-
-.subtab-btn {
+.scroll-table td.name-cell,
+.scroll-table th.name-header {
+  position: sticky;
+  left: var(--rank-col-w);
+  z-index: 1;
   background: var(--panel);
-  border: 1px solid var(--panel-border);
-  color: var(--text-dim);
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.85rem;
+  border-right: 1px solid var(--panel-border);
 }
 
-.subtab-btn.active {
-  color: var(--text);
-  background: var(--accent-dim);
-  border-color: var(--accent-dim);
-}
+/* Name column alone (tables with no "#" column in front of it). */
+.scroll-table th.name-header:first-child,
+.scroll-table td.name-cell:first-child { left: 0; }
 
-.subtab-panel { display: none; }
-.subtab-panel.active { display: block; }
+/* Corner cells sit above both the frozen row and the frozen columns. */
+.scroll-table thead th:has(+ th.name-header),
+.scroll-table thead th.name-header { z-index: 4; }
+
+/* =====================================================================
+   Streaks, profile search, name links
+   ===================================================================== */
 
 .streaks-layout {
   display: grid;
@@ -344,9 +484,7 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 
 .streak-row:last-child { border-bottom: none; }
 
-.streak-row .streak-count {
-  font-weight: 700;
-}
+.streak-row .streak-count { font-weight: 700; }
 
 .streak-row .streak-range {
   color: var(--text-dim);
@@ -384,20 +522,51 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 }
 
 .search-result-item:hover { color: var(--accent); }
-.search-result-item:first-child { border-top: 1px solid var(--panel-border); border-radius: 0 0 0 0; }
+.search-result-item:first-child { border-top: 1px solid var(--panel-border); }
 .search-result-item:last-child { border-radius: 0 0 8px 8px; }
 
-.csv-btn {
-  background: var(--panel);
-  border: 1px solid var(--panel-border);
-  color: var(--text-dim);
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
+.name-link {
+  color: var(--text);
+  text-decoration: none;
   cursor: pointer;
-  font-size: 0.8rem;
 }
 
-.csv-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+.name-link:hover { color: var(--accent); }
+
+.kinch-source {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-left: 2px;
+}
+
+/* =====================================================================
+   Home + settings
+   ===================================================================== */
+
+.home-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.home-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.home-link:hover { border-color: var(--accent-dim); }
+
+.home-link span {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
 
 .settings-grid {
   display: grid;
@@ -423,42 +592,9 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   cursor: pointer;
 }
 
-.home-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.home-link {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  background: var(--panel);
-  border: 1px solid var(--panel-border);
-  border-radius: 10px;
-  padding: 1rem;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.home-link:hover {
-  border-color: var(--accent-dim);
-}
-
-.home-link span {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-}
-
-.name-link {
-  color: var(--text);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.name-link:hover {
-  color: var(--accent);
-}
+/* =====================================================================
+   Profile
+   ===================================================================== */
 
 .back-link {
   background: none;
@@ -470,9 +606,7 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   margin-bottom: 1rem;
 }
 
-.back-link:hover {
-  color: var(--accent);
-}
+.back-link:hover { color: var(--accent); }
 
 .profile-stats {
   display: grid;
@@ -500,53 +634,120 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   letter-spacing: 0.03em;
 }
 
-.kinch-source {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  margin-left: 2px;
+/* Records table (WCA-style, symmetric around the results) */
+.records-table th,
+.records-table td {
+  text-align: center;
+  padding: 0.5rem 0.45rem;
 }
 
-.rank-gold { color: var(--gold); font-weight: 700; }
-.rank-silver { color: var(--silver); font-weight: 700; }
-.rank-bronze { color: var(--bronze); font-weight: 700; }
-.rank-none { color: #e05a5a; }
-
-.solves-cell {
-  font-size: 0.78rem;
-  color: var(--text-dim);
+.records-table th.event-name-cell,
+.records-table td.event-name-cell {
+  text-align: left;
+  padding-right: 0.8rem;
 }
 
-.empty-note {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  padding: 1rem 0;
+.records-table .icon-cell { width: var(--icon-col-w); padding-right: 0.2rem; }
+.records-table td.dim { color: var(--text-dim); }
+.records-table .result-cell { font-weight: 600; }
+.records-table .grp { border-bottom: 1px solid var(--panel-border); }
+.records-table .grp-avg { border-left: 1px solid var(--panel-border); }
+.records-table .split-l { border-left: 1px solid var(--panel-border); }
+.records-table .split-r { border-right: 1px solid var(--panel-border); }
+
+/* Two header rows: pin the second one directly under the first. */
+.records-table thead tr:nth-child(2) th { top: var(--thead-row-h); }
+
+/* Frozen left columns: icon, then event name. */
+.scroll-table .records-table td.icon-cell,
+.scroll-table .records-table th.icon-cell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: var(--icon-col-w);
+  min-width: var(--icon-col-w);
+  max-width: var(--icon-col-w);
+  background: var(--panel);
 }
 
-.site-footer {
-  max-width: 960px;
-  margin: 1rem auto 3rem;
-  padding: 0 1.5rem;
-  color: var(--text-dim);
-  font-size: 0.8rem;
+.scroll-table .records-table td.event-name-cell,
+.scroll-table .records-table th.event-name-cell {
+  position: sticky;
+  left: var(--icon-col-w);
+  z-index: 1;
+  background: var(--panel);
+  border-right: 1px solid var(--panel-border);
 }
 
-.site-footer p { margin: 0 0 0.25rem; }
+.scroll-table .records-table thead th.icon-cell,
+.scroll-table .records-table thead th.event-name-cell { z-index: 4; }
 
-.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-.event-icon { display: inline-flex; vertical-align: middle; color: var(--event-icon-colour); }
-.event-icon svg { width: 1.5em; height: 1.5em; fill: currentColor; }
-.event-picker { display: flex; flex-wrap: wrap; gap: 0.35rem; flex: 1 1 100%; }
-.event-btn { display: inline-flex; align-items: center; background: var(--panel); border: 1px solid var(--panel-border); border-radius: 8px; padding: 0.3rem 0.5rem; cursor: pointer; color: var(--text-dim); font-size: 0.85rem; }
+/* The top-left blank header spans both frozen columns. */
+.scroll-table .records-table thead tr:first-child th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+}
+
+/* =====================================================================
+   Event icons + picker
+   ===================================================================== */
+
+.event-icon {
+  display: inline-flex;
+  vertical-align: middle;
+  color: var(--event-icon-colour);
+}
+
+.event-icon svg {
+  width: 1.5em;
+  height: 1.5em;
+  fill: currentColor;
+}
+
+.event-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  flex: 1 1 100%;
+}
+
+.event-btn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
 .event-btn:hover { border-color: var(--accent-dim); }
-.event-btn.active { background: var(--accent-dim); border-color: var(--accent-dim); color: var(--text); }
-.event-btn .event-icon svg { width: 1.6rem; height: 1.6rem; }
 
-/* ---------- Members ---------- */
+.event-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+  color: var(--text);
+}
+
+.event-btn .event-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* =====================================================================
+   Members
+   ===================================================================== */
 
 .member-row { cursor: pointer; }
-.member-row:hover td, .member-row:focus-visible td { background: var(--bg); }
+.member-row:hover td,
+.member-row:focus-visible td { background: var(--bg); }
 .member-row:focus-visible { outline: 2px solid var(--accent-dim); outline-offset: -2px; }
+
 .avatar-cell { width: 3.25rem; }
+
 .avatar {
   display: inline-flex;
   align-items: center;
@@ -562,10 +763,23 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   font-size: 0.75rem;
   font-weight: 600;
 }
-.avatar-img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.country-code { margin-left: 0.35rem; color: var(--text-dim); font-size: 0.78rem; }
 
-/* ---------- Date range picker ---------- */
+.avatar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.country-code {
+  margin-left: 0.35rem;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+/* =====================================================================
+   Date range picker
+   ===================================================================== */
 
 .date-input {
   width: 8.5rem;
@@ -577,7 +791,9 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   font-size: 0.9rem;
   cursor: pointer;
 }
-.date-input:hover, .date-input:focus { border-color: var(--accent-dim); outline: none; }
+
+.date-input:hover,
+.date-input:focus { border-color: var(--accent-dim); outline: none; }
 
 .range-picker {
   position: absolute;
@@ -588,11 +804,19 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   border-radius: 12px;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
 }
+
 .range-picker[hidden] { display: none; }
 
-.rp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.rp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
 .rp-status { color: var(--text-dim); font-size: 0.82rem; }
 .rp-navs { display: flex; gap: 0.35rem; }
+
 .rp-nav {
   width: 2rem;
   height: 2rem;
@@ -605,6 +829,7 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   line-height: 1;
   cursor: pointer;
 }
+
 .rp-nav:hover:not(:disabled) { color: var(--accent); border-color: var(--accent-dim); }
 .rp-nav:disabled { opacity: 0.3; cursor: default; }
 
@@ -625,11 +850,13 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   font-size: 0.85rem;
   cursor: pointer;
 }
+
 .rp-day:hover:not(:disabled) { background: var(--bg); }
 .rp-day:disabled { opacity: 0.3; cursor: default; }
 .rp-day.rp-today { box-shadow: inset 0 0 0 1px var(--accent-dim); }
 .rp-day.rp-in { background: var(--accent-dim); }
-.rp-day.rp-start, .rp-day.rp-end { background: var(--accent); color: var(--bg); font-weight: 700; }
+.rp-day.rp-start,
+.rp-day.rp-end { background: var(--accent); color: var(--bg); font-weight: 700; }
 .rp-day.rp-start { border-radius: 50% 0 0 50%; }
 .rp-day.rp-end { border-radius: 0 50% 50% 0; }
 .rp-day.rp-start.rp-end { border-radius: 50%; }
@@ -638,8 +865,9 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   .rp-month + .rp-month { display: none; }
 }
 
-/* ---- WCA login button + account slot ---- */
-[hidden] { display: none !important; }
+/* =====================================================================
+   WCA login button + account slot
+   ===================================================================== */
 
 .wca-login-btn {
   display: inline-flex;
@@ -655,14 +883,32 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   cursor: pointer;
   transition: border-color 0.15s, transform 0.05s;
 }
+
 .wca-login-btn:hover { border-color: var(--accent); }
 .wca-login-btn:active { transform: translateY(1px); }
-.wca-login-btn img { width: 22px; height: 22px; object-fit: contain; }
+
+.wca-login-btn img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
 
 .menu-footer .wca-login-btn { width: 100%; justify-content: center; }
 
-.auth-user { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-.auth-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.auth-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.auth-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .auth-logout {
   padding: 0.3rem 0.7rem;
   border-radius: 6px;
@@ -672,17 +918,21 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   font: inherit;
   cursor: pointer;
 }
+
 .auth-logout:hover { color: var(--text); border-color: var(--accent); }
 
-/* ---- Custom lists builder ---- */
+/* =====================================================================
+   Custom lists: builder + lists page
+   ===================================================================== */
+
 .list-form { max-width: 560px; }
 .list-form .field { display: block; margin-bottom: 1rem; }
 .list-form .field > span { display: block; margin-bottom: 0.3rem; font-weight: 600; }
+
 .list-form input[type="text"],
 .list-form select,
 .list-form textarea {
   width: 100%;
-  box-sizing: border-box;
   padding: 0.5rem 0.6rem;
   border-radius: 6px;
   border: 1px solid var(--panel-border);
@@ -690,33 +940,39 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
   color: var(--text);
   font: inherit;
 }
-.list-form textarea { font-family: ui-monospace, Menlo, Consolas, monospace; resize: vertical; }
-.list-form input[readonly] { opacity: 0.6; }
-.form-error { color: #e5484d; margin: 0.5rem 0; }
-.member-list { list-style: none; padding: 0; margin: 0 0 1rem; columns: 2 220px; }
-.member-list li { padding: 0.15rem 0; }
-.csv-btn.danger { border-color: #e5484d; color: #e5484d; }
 
-/* ---- Lists page cards ---- */
-#my-lists, #public-lists { display: block; }
+.list-form textarea {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  resize: vertical;
+}
+
+.list-form input[readonly] { opacity: 0.6; }
+
+.form-error { color: #e5484d; margin: 0.5rem 0; }
+
+.member-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  columns: 2 220px;
+}
+
+.member-list li { padding: 0.15rem 0; }
+
+#my-lists,
+#public-lists { display: block; }
+
 .list-section { margin-top: 1.5rem; }
 .list-section h3 { margin: 0 0 0.75rem; }
+
 .list-card { gap: 0.6rem; }
-.card-main { display: flex; flex-direction: column; gap: 0.35rem; color: inherit; text-decoration: none; }
+
+.card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: inherit;
+  text-decoration: none;
+}
+
 .list-card .csv-btn { align-self: flex-start; }
-
-/* ---- Profile records table ---- */
-.records-table th, .records-table td { text-align: center; padding: 0.5rem 0.45rem; }
-.records-table th.event-name-cell, .records-table td.event-name-cell { text-align: left; padding-right: 0.8rem; }
-.records-table .icon-cell { width: 2.5rem; padding-right: 0.2rem; }
-.records-table td.dim { color: var(--text-dim); }
-.records-table .result-cell { font-weight: 600; }
-.records-table .grp { border-bottom: 1px solid var(--panel-border); }
-.records-table .grp-avg { border-left: 1px solid var(--panel-border); }
-.records-table .split-l { border-left: 1px solid var(--panel-border); }
-.records-table .split-r { border-right: 1px solid var(--panel-border); }
-
-.pr-badge { font-weight: 700; color: var(--accent); }
-.pr-order-1 { font-weight: 700; color: var(--gold); }
-.pr-order-2 { font-weight: 700; color: var(--silver); }
-.pr-order-3 { font-weight: 700; color: var(--bronze); }
