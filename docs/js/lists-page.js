@@ -15,7 +15,6 @@ const VISIBILITY = {
 
 let userId = null;
 let myWcaId = null;
-let builtinIds = new Set();
 let current = null; // { list, members } while a list is open
 
 const $ = (id) => document.getElementById(id);
@@ -93,14 +92,6 @@ function statusNote(l) {
 }
 
 // ---------- Data ----------
-
-async function loadBuiltinIds() {
-  try {
-    const res = await fetch("data/lists-manifest.json", { cache: "no-store" });
-    const manifest = await res.json();
-    builtinIds = new Set((manifest.lists || []).map((l) => l.id));
-  } catch (_) { /* reserved-name check just gets weaker */ }
-}
 
 async function loadLists() {
   const none = { data: [], error: null };
@@ -373,7 +364,6 @@ function renderEditor(list, members) {
     if (!listName) return fail("Give the list a name.");
     if (!editing) {
       if (!SLUG_RE.test(listSlug)) return fail("The link name must be 2–40 characters: lowercase letters, numbers and dashes.");
-      if (builtinIds.has(listSlug)) return fail("That link name belongs to a built-in list. Pick another.");
     }
     if (parsed.bad.length) return fail(`These lines don't start with a valid WCA ID: ${parsed.bad.slice(0, 5).join(" | ")}`);
     if (!parsed.members.length) return fail("Add at least one WCA ID.");
@@ -410,7 +400,6 @@ function renderEditor(list, members) {
 // ---------- Entry point ----------
 
 export async function initLists() {
-  await loadBuiltinIds();
   await setupAuth();
   const { data: { session } } = await supabase.auth.getSession();
   userId = session?.user?.id ?? null;
