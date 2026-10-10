@@ -29,33 +29,43 @@ const OUTPUT_PATH = path.join(DATA_DIR, 'streaks.json');
 // Shared streak-walking logic over an already-sorted (ascending by date)
 // list of { isPr, name } points (one per competition, or one per round).
 function walkStreak(points) {
-  let best = 0;
-  let running = 0;
-  let runningStartName = null;
-  let bestStartName = null;
-  let bestEndName = null;
+  // Collect every streak (a run of consecutive PR points) in order.
+  const streaks = [];
+  let run = 0;
+  let startName = null;
+  let endName = null;
 
   for (const point of points) {
     if (point.isPr) {
-      if (running === 0) runningStartName = point.name;
-      running += 1;
-      if (running > best) {
-        best = running;
-        bestStartName = runningStartName;
-        bestEndName = point.name;
-      }
+      if (run === 0) startName = point.name;
+      run += 1;
+      endName = point.name;
     } else {
-      running = 0;
-      runningStartName = null;
+      if (run > 0) streaks.push({ count: run, start: startName, end: endName, ongoing: false });
+      run = 0;
+      startName = null;
+      endName = null;
     }
   }
+  if (run > 0) streaks.push({ count: run, start: startName, end: 'Current', ongoing: true });
 
-  const bestIsOngoing = best > 0 && best === running;
+  // "Best ever" list: every streak that beat the previous best, oldest first.
+  const bests = [];
+  let max = 0;
+  for (const s of streaks) {
+    if (s.count > max) {
+      max = s.count;
+      bests.push({ count: s.count, range: { start: s.start, end: s.ongoing ? 'Current' : s.end } });
+    }
+  }
+  const top = bests.length > 0 ? bests[bests.length - 1] : null;
+
   return {
-    current: running,
-    currentRange: running > 0 ? { start: runningStartName, end: 'Current' } : null,
-    best,
-    bestRange: best > 0 ? { start: bestStartName, end: bestIsOngoing ? 'Current' : bestEndName } : null,
+    current: run,
+    currentRange: run > 0 ? { start: startName, end: 'Current' } : null,
+    best: top ? top.count : 0,
+    bestRange: top ? top.range : null,
+    bests,
   };
 }
 
