@@ -41,6 +41,8 @@ export const state = {
   streaksMode: 'current',
   streaksType: 'single',
   streaksEventId: null,
+  streaksEventMode: 'current',
+  prCountEventId: null,
   improvementEventId: null,
   improvementType: 'single',
   consistencyEventId: null,
