@@ -715,3 +715,8 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 .records-table .grp-avg { border-left: 1px solid var(--panel-border); }
 .records-table .split-l { border-left: 1px solid var(--panel-border); }
 .records-table .split-r { border-right: 1px solid var(--panel-border); }
+
+.pr-badge { font-weight: 700; color: var(--accent); }
+.pr-order-1 { font-weight: 700; color: var(--gold); }
+.pr-order-2 { font-weight: 700; color: var(--silver); }
+.pr-order-3 { font-weight: 700; color: var(--bronze); }
