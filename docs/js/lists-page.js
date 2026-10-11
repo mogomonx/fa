@@ -8,29 +8,21 @@
 // lists.html?edit=<slug> opens that list straight in the editor (used by the
 // "Edit this list" link in the rankings side menu).
 //
-// Logged-in users with a WCA ID also get a "Your profile" box: a private
-// personal stats page (a hidden one-person list, kind = 'personal') and their
-// display-name settings.
+// The small "My profile" button (top right) lives in profile-button.js and is
+// loaded separately, so a problem there can never break this page.
 
 import { supabase, setupAuth } from "./auth.js";
-import { setupProfileButton } from "./profile-button.js";
 
 const ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
 const SLUG_RE = /^[a-z0-9-]{2,40}$/;
 const MAX_MEMBERS = 100;
 const GUEST_MAX_MEMBERS = 30;
 const GUEST_KEY = "fa-guest-list";
-const AVATAR_KEY = "fa-my-avatar";
 const VISIBILITY = {
   public: { label: "Public", help: "Listed for everyone to find and view." },
   unlisted: { label: "Unlisted", help: "Anyone with the link can view it; it isn't listed anywhere." },
   private: { label: "Private", help: "Only you and the people on the list can see it." },
 };
-const NAME_VISIBILITY = [
-  ["me", "Only me", "Shown only in your own browser. Everyone else sees your official WCA name."],
-  ["lists", "Only on lists I choose", "Shown on the lists you tick below. Other lists show your official name."],
-  ["everywhere", "Everywhere", "Shown on every list you're on."],
-];
 
 let userId = null;
 let myWcaId = null;
@@ -177,10 +169,10 @@ async function claimGuest() {
   alert(`Couldn't move your guest list onto your account: ${friendlyError(error)}`);
 }
 
-async function createList({ name, slug, visibility, official_names_only }, members) {
+async function createList(fields, members) {
   const { data: list, error } = await supabase
     .from("lists")
-    .insert({ name, slug, visibility, official_names_only, owner_id: userId })
+    .insert({ ...fields, owner_id: userId })
     .select()
     .single();
   if (error) throw error;
@@ -244,170 +236,6 @@ async function updateList(list, oldMembers, fields, members) {
   // Re-read so build-status columns (bumped by the member triggers) are current.
   const { data: fresh } = await supabase.from("lists").select("*").eq("id", list.id).single();
   return fresh || saved;
-}
-
-// ---------- Your profile box ----------
-
-// WCA profile picture, cached for a week. Falls back to initials.
-async function loadAvatar(node) {
-  const initials = (myName || "?").split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
-  node.textContent = initials;
-
-  let url = null;
-  try {
-    const c = JSON.parse(localStorage.getItem(AVATAR_KEY) || "null");
-    if (c && c.wcaId === myWcaId && Date.now() - c.at < 7 * 24 * 3600 * 1000) url = c.url;
-  } catch { /* ignore */ }
-
-  if (!url) {
-    try {
-      const res = await fetch(`https://www.worldcubeassociation.org/api/v0/persons/${myWcaId}`);
-      if (res.ok) {
-        const d = await res.json();
-        url = d?.person?.avatar?.thumb_url || d?.person?.avatar?.url || null;
-        try { localStorage.setItem(AVATAR_KEY, JSON.stringify({ wcaId: myWcaId, url, at: Date.now() })); } catch { /* ignore */ }
-      }
-    } catch { /* offline or blocked: keep initials */ }
-  }
-  if (url) {
-    const img = el("img", { src: url, alt: "", class: "profile-avatar-img" });
-    img.addEventListener("error", () => { node.textContent = initials; });
-    node.replaceChildren(img);
-  }
-}
-
-async function renderProfileBox() {
-  $("profile-box")?.remove();
-  if (!userId || !myWcaId) return;
-
-  const box = el("div", { id: "profile-box", class: "profile-box" },
-    el("p", { class: "empty-note", text: "Loading your profile…" }));
-  $("custom-lists-section").prepend(box);
-
-  let prefs;
-  let personal;
-  let groups;
-  let chosen;
-  try {
-    const [p, mine, inList, names] = await Promise.all([
-      supabase.from("profiles").select("preferred_name, name_visibility").eq("id", userId).maybeSingle(),
-      supabase.rpc("my_lists"),
-      supabase.rpc("lists_i_am_in"),
-      supabase.rpc("my_name_lists"),
-    ]);
-    for (const r of [p, mine, inList, names]) if (r.error) throw r.error;
-    prefs = p.data || {};
-    personal = (mine.data || []).find(isPersonal) || null;
-    groups = (inList.data || []).filter((l) => !isPersonal(l)).sort((a, b) => a.name.localeCompare(b.name));
-    chosen = new Set((names.data || []).map((x) => (typeof x === "string" ? x : Object.values(x)[0])));
-  } catch (err) {
-    console.warn(err);
-    box.replaceChildren(el("p", { class: "empty-note", text: "Could not load your profile settings." }));
-    return;
-  }
-
-  // --- personal profile actions ---
-  const actions = el("div", { class: "panel-controls" });
-  const status = el("p", { class: "board-note" });
-  if (!personal) {
-    actions.append(el("button", {
-      class: "csv-btn",
-      type: "button",
-      text: "Create my profile",
-      onclick: async (e) => {
-        e.target.disabled = true;
-        const { error } = await supabase.rpc("create_my_profile");
-        if (error) { alert(friendlyError(error)); e.target.disabled = false; return; }
-        await renderProfileBox();
-      },
-    }));
-  } else {
-    if (personal.data_level === "none") {
-      status.textContent = "Building your profile. This usually takes a few minutes; refresh to check.";
-    } else {
-      actions.append(el("a", { class: "csv-btn", href: rankingsUrl(personal), text: "Open my profile" }));
-      if (statusText(personal)) status.textContent = "Your profile is being updated.";
-    }
-    actions.append(el("button", {
-      class: "csv-btn danger",
-      type: "button",
-      text: "Remove my profile",
-      onclick: async () => {
-        if (!confirm("Remove your personal profile? You can create it again later.")) return;
-        const { error } = await supabase.from("lists").delete().eq("id", personal.id);
-        if (error) { alert(friendlyError(error)); return; }
-        await renderProfileBox();
-      },
-    }));
-  }
-
-  // --- name settings ---
-  const nameInput = el("input", { type: "text", maxlength: "40", placeholder: "Leave blank to use your official WCA name" });
-  nameInput.value = prefs.preferred_name ?? "";
-
-  const startVis = prefs.name_visibility || "me";
-  const radios = NAME_VISIBILITY.map(([value, label, help]) => {
-    const input = el("input", { type: "radio", name: "name-visibility", value });
-    input.checked = value === startVis;
-    return { input, node: el("label", { class: "check-row" }, input, el("span", {}, el("strong", { text: label }), ` — ${help}`)) };
-  });
-
-  const listBoxes = el("div", { class: "name-lists" });
-  if (groups.length) {
-    for (const g of groups) {
-      const cb = el("input", { type: "checkbox", value: g.id });
-      cb.checked = chosen.has(g.id);
-      listBoxes.append(el("label", { class: "check-row" }, cb, el("span", { text: g.name })));
-    }
-  } else {
-    listBoxes.append(el("p", { class: "board-note", text: "You're not on any lists yet." }));
-  }
-  const syncLists = () => { listBoxes.hidden = !radios.find((r) => r.input.checked && r.input.value === "lists"); };
-  radios.forEach((r) => r.input.addEventListener("change", syncLists));
-  syncLists();
-
-  const nameStatus = el("p", { class: "board-note" });
-  const saveBtn = el("button", { class: "csv-btn", type: "button", text: "Save name settings" });
-  saveBtn.addEventListener("click", async () => {
-    saveBtn.disabled = true;
-    nameStatus.className = "board-note";
-    nameStatus.textContent = "Saving…";
-    const vis = radios.find((r) => r.input.checked)?.input.value || "me";
-    const picked = [...listBoxes.querySelectorAll("input[type=checkbox]")].filter((c) => c.checked).map((c) => c.value);
-    const { error } = await supabase.rpc("set_name_settings", {
-      p_name: nameInput.value, p_visibility: vis, p_lists: picked,
-    });
-    saveBtn.disabled = false;
-    if (error) {
-      nameStatus.className = "form-error";
-      nameStatus.textContent = friendlyError(error);
-      return;
-    }
-    nameStatus.textContent = vis === "me"
-      ? "Saved. Only you will see this name, in your own browser."
-      : "Saved. Lists you're on will show it after their next update (usually a few minutes).";
-  });
-
-  const avatar = el("div", { class: "profile-avatar", title: myName || "" });
-  loadAvatar(avatar);
-
-  box.replaceChildren(
-    el("div", { class: "profile-box-head" },
-      el("div", {},
-        el("h3", { text: "Your profile" }),
-        el("p", { class: "board-note", text: "Your own stats page: personal bests, full results and rolling averages. Only you can see it." }),
-        actions,
-        status),
-      avatar),
-    el("div", { class: "list-form name-settings" },
-      el("h3", { text: "Your display name" }),
-      el("p", { class: "board-note", text:
-        "The name you go by. A list owner can still set a different name for you on their own list, or choose to show official names only." }),
-      el("label", { class: "field" }, el("span", { text: "Name" }), nameInput),
-      ...radios.map((r) => r.node),
-      listBoxes,
-      el("div", { class: "panel-controls" }, saveBtn),
-      nameStatus));
 }
 
 // ---------- Browser view ----------
@@ -481,8 +309,8 @@ async function renderBrowser() {
   // Logged-in users can always make lists; guests only while they have none.
   $("new-list-btn").hidden = userId ? false : Boolean(guest);
 
-  // Every list I own or am on, once each (personal profile lists live in the
-  // "Your profile" box, not here).
+  // Every list I own or am on, once each (personal profile lists are opened
+  // from the "My profile" button, not shown here).
   const memberIds = new Set(data.inList.map((l) => l.id));
   const mineById = new Map();
   for (const l of [...data.mine, ...data.inList]) if (!isPersonal(l)) mineById.set(l.id, l);
@@ -699,10 +527,15 @@ function renderEditor(list, members, guestMode = false) {
           ? await updateGuestList(list, listName, parsed.members)
           : await createGuestList(listName, listSlug, parsed.members);
       } else {
-        const official = officialOnly.checked;
+        const fields = { name: listName, visibility: vis.value };
+        // Only send the "official names only" setting when it's in use, so a
+        // database that doesn't have the column yet still works.
+        if (officialOnly.checked || (list && "official_names_only" in list)) {
+          fields.official_names_only = officialOnly.checked;
+        }
         saved = editing
-          ? await updateList(list, members, { name: listName, visibility: vis.value, official_names_only: official }, parsed.members)
-          : await createList({ name: listName, slug: listSlug, visibility: vis.value, official_names_only: official }, parsed.members);
+          ? await updateList(list, members, fields, parsed.members)
+          : await createList({ ...fields, slug: listSlug }, parsed.members);
       }
       // Edited lists that already have rankings: go straight to them.
       // New (or never-built) lists: show the status page while they build.
@@ -782,7 +615,14 @@ export async function initLists() {
   }
   $("new-list-btn").addEventListener("click", () => renderEditor(null, [], !userId));
 
-  setupProfileButton({ wcaId: myWcaId, name: myName });
+  // The "My profile" button is optional: if its file is missing or broken, the
+  // lists page still works.
+  if (userId && myWcaId) {
+    import("./profile-button.js")
+      .then((m) => m.setupProfileButton({ wcaId: myWcaId, name: myName }))
+      .catch((err) => console.warn("My profile button unavailable:", err));
+  }
+
   await renderBrowser();
   await openEditFromUrl();
 }
