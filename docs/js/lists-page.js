@@ -13,6 +13,7 @@
 // display-name settings.
 
 import { supabase, setupAuth } from "./auth.js";
+import { setupProfileButton } from "./profile-button.js";
 
 const ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
 const SLUG_RE = /^[a-z0-9-]{2,40}$/;
@@ -781,7 +782,7 @@ export async function initLists() {
   }
   $("new-list-btn").addEventListener("click", () => renderEditor(null, [], !userId));
 
-  renderProfileBox();   // not awaited: the lists below load in parallel
+  setupProfileButton({ wcaId: myWcaId, name: myName });
   await renderBrowser();
   await openEditFromUrl();
 }
