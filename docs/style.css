@@ -459,6 +459,23 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 .scroll-table thead th:has(+ th.name-header),
 .scroll-table thead th.name-header { z-index: 4; }
 
+/* Plain table wrapper: same look as .scroll-table but no inner scrolling,
+   no frozen row/columns. Scrolls sideways only if the screen is too narrow. */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.table-wrap table {
+  border: none;
+  border-radius: 0;
+}
+
+.table-wrap th,
+.table-wrap td { white-space: nowrap; }
+
 /* =====================================================================
    Streaks, profile search, name links
    ===================================================================== */
