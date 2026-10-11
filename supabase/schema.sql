@@ -447,3 +447,29 @@ grant execute on function public.get_guest_list(text, text) to anon, authenticat
 grant execute on function public.update_guest_list(text, text, text, jsonb) to anon, authenticated;
 grant execute on function public.delete_guest_list(text, text) to anon, authenticated;
 grant execute on function public.claim_guest_list(text, text) to authenticated;
+
+
+-- Global display names (5c)
+alter table public.profiles
+  add column preferred_name text
+  check (preferred_name is null or char_length(preferred_name) between 1 and 60);
+
+-- A logged-in person sets (or clears) their own preferred name. Also marks every
+-- list they're on as needing a rebuild so the new name shows up.
+create function public.set_preferred_name(p_name text) returns void
+language plpgsql security definer set search_path = public as $$
+declare
+  v_wca  text := current_wca_id();
+  v_name text := nullif(trim(coalesce(p_name, '')), '');
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID to set a display name'; end if;
+  if v_name is not null and char_length(v_name) > 60 then
+    raise exception 'Display names can be up to 60 characters';
+  end if;
+  update profiles set preferred_name = v_name where id = auth.uid();
+  update lists set dirty_at = now()
+    where id in (select list_id from list_members where wca_id = v_wca);
+end $$;
+
+revoke execute on function public.set_preferred_name(text) from public, anon;
+grant execute on function public.set_preferred_name(text) to authenticated;
