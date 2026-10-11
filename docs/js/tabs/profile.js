@@ -2,6 +2,7 @@ import { store, state } from '../store.js';
 import { formatDate, daysAgo, flagEmoji, kinchColor, formatResultLike, roundLabelFallback, placementSuffix } from '../format.js';
 import { showPanel, populateEventSelect } from '../ui.js';
 import { eventIcon } from '../icons.js';
+import { renderNameSettings } from '../name-settings.js';
 
 export function showProfile(wcaId) {
   const activeTab = document.querySelector('.tab-btn.active');
@@ -47,7 +48,8 @@ const num = (v) => (v == null ? '—' : v);
 
 // Records table laid out like the WCA profile, symmetric around the results:
 // NR | CR | WR | group rank | SINGLE || AVERAGE | group rank | WR | CR | NR
-function recordsTableHtml(wcaId) {
+// A personal profile has no group, so the "group rank" columns are left out.
+function recordsTableHtml(wcaId, personal) {
   const rows = store.rankings.events
     .map((event) => {
       const s = (event.single || []).find((r) => r.wcaId === wcaId);
@@ -67,10 +69,10 @@ function recordsTableHtml(wcaId) {
         <td class="dim">${num(sr.country)}</td>
         <td class="dim">${num(sr.continent)}</td>
         <td class="dim">${num(sr.world)}</td>
-        <td>${s ? `#${s.rank}` : '—'}</td>
+        ${personal ? '' : `<td>${s ? `#${s.rank}` : '—'}</td>`}
         <td class="result-cell split-l">${s ? s.display : '—'}</td>
         <td class="result-cell split-r">${event.hasAverage ? (a ? a.display : '—') : 'N/A'}</td>
-        <td>${a ? `#${a.rank}` : '—'}</td>
+        ${personal ? '' : `<td>${a ? `#${a.rank}` : '—'}</td>`}
         <td class="dim">${num(ar.world)}</td>
         <td class="dim">${num(ar.continent)}</td>
         <td class="dim">${num(ar.country)}</td>
@@ -78,52 +80,71 @@ function recordsTableHtml(wcaId) {
     })
     .join('');
 
+  const span = personal ? 4 : 5;
+  const cols = personal ? 10 : 12;
   return `
     <div class="table-wrap">
       <table class="records-table">
         <thead>
-          <tr><th colspan="2"></th><th class="grp" colspan="5">Single</th><th class="grp grp-avg" colspan="5">Average</th></tr>
+          <tr><th colspan="2"></th><th class="grp" colspan="${span}">Single</th><th class="grp grp-avg" colspan="${span}">Average</th></tr>
           <tr>
             <th class="icon-cell"></th><th class="event-name-cell">Event</th>
-            <th>NR</th><th>CR</th><th>WR</th><th>Group</th><th class="split-l">Result</th>
-            <th class="split-r">Result</th><th>Group</th><th>WR</th><th>CR</th><th>NR</th>
+            <th>NR</th><th>CR</th><th>WR</th>${personal ? '' : '<th>Group</th>'}<th class="split-l">Result</th>
+            <th class="split-r">Result</th>${personal ? '' : '<th>Group</th>'}<th>WR</th><th>CR</th><th>NR</th>
           </tr>
         </thead>
-        <tbody>${body || '<tr><td colspan="12" class="empty-note">No results yet.</td></tr>'}</tbody>
+        <tbody>${body || `<tr><td colspan="${cols}" class="empty-note">No results yet.</td></tr>`}</tbody>
       </table>
     </div>`;
 }
 
+// Stat boxes for a personal profile (nothing group-related).
+function personalStats(wcaId) {
+  const mine = (store.fullResults.entries || []).filter((e) => e.wcaId === wcaId);
+  if (!mine.length) return [];
+  return [
+    statBox('Competitions', new Set(mine.map((e) => e.competitionId)).size),
+    statBox('Events', new Set(mine.map((e) => e.eventId)).size),
+    statBox('Rounds', mine.length),
+  ];
+}
+
 function renderProfile(wcaId) {
   const { rankings, individual, historical, fullResults } = store;
+  const personal = Boolean(store.personal);
   const person = store.people.get(wcaId);
   const name = person ? person.name : wcaId;
   const flag = person ? flagEmoji(person.countryIso2) : '';
   const listName = rankings.listName || 'Group';
   const container = document.getElementById('profile-content');
 
-  const find = (list) => list.find((r) => r.wcaId === wcaId);
-  const sorSingleRow = find(rankings.sumOfRanks.single);
-  const sorAverageRow = find(rankings.sumOfRanks.average);
-  const kinchRow = find(rankings.kinch.overall);
-  const top100SingleRow = find(individual.top100.single);
-  const top100AverageRow = find(individual.top100.average);
-  const farSingleRow = find(historical.farCounts.single);
-  const farAverageRow = find(historical.farCounts.average);
-
-  const stats = [
-    statBox('Kinch score', kinchRow ? `<span style="color:${kinchColor(kinchRow.score)}">${kinchRow.score.toFixed(2)}</span> (#${findPosition(rankings.kinch.overall, wcaId)})` : '—'),
-    statBox('Sum of Ranks (Single)', sorSingleRow ? `${sorSingleRow.total} (#${findPosition(rankings.sumOfRanks.single, wcaId)})` : '—'),
-    statBox('Sum of Ranks (Average)', sorAverageRow ? `${sorAverageRow.total} (#${findPosition(rankings.sumOfRanks.average, wcaId)})` : '—'),
-    statBox('Top-100 spots (Single)', top100SingleRow ? `${top100SingleRow.total} (#${findPosition(individual.top100.single, wcaId)})` : '0'),
-    statBox('Top-100 spots (Average)', top100AverageRow ? `${top100AverageRow.total} (#${findPosition(individual.top100.average, wcaId)})` : '0'),
-    statBox(`${esc(listName)} Records set`, `${(farSingleRow?.total || 0) + (farAverageRow?.total || 0)}`),
-  ];
-
+  let stats;
   const currentRecords = [];
-  for (const event of rankings.events) {
-    if ((event.single || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${eventIcon(event.id, event.name)} (Single)`);
-    if (event.hasAverage && (event.average || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${eventIcon(event.id, event.name)} (Average)`);
+  if (personal) {
+    stats = personalStats(wcaId);
+  } else {
+    const find = (list) => list.find((r) => r.wcaId === wcaId);
+    const sorSingleRow = find(rankings.sumOfRanks.single);
+    const sorAverageRow = find(rankings.sumOfRanks.average);
+    const kinchRow = find(rankings.kinch.overall);
+    const top100SingleRow = find(individual.top100.single);
+    const top100AverageRow = find(individual.top100.average);
+    const farSingleRow = find(historical.farCounts.single);
+    const farAverageRow = find(historical.farCounts.average);
+
+    stats = [
+      statBox('Kinch score', kinchRow ? `<span style="color:${kinchColor(kinchRow.score)}">${kinchRow.score.toFixed(2)}</span> (#${findPosition(rankings.kinch.overall, wcaId)})` : '—'),
+      statBox('Sum of Ranks (Single)', sorSingleRow ? `${sorSingleRow.total} (#${findPosition(rankings.sumOfRanks.single, wcaId)})` : '—'),
+      statBox('Sum of Ranks (Average)', sorAverageRow ? `${sorAverageRow.total} (#${findPosition(rankings.sumOfRanks.average, wcaId)})` : '—'),
+      statBox('Top-100 spots (Single)', top100SingleRow ? `${top100SingleRow.total} (#${findPosition(individual.top100.single, wcaId)})` : '0'),
+      statBox('Top-100 spots (Average)', top100AverageRow ? `${top100AverageRow.total} (#${findPosition(individual.top100.average, wcaId)})` : '0'),
+      statBox(`${esc(listName)} Records set`, `${(farSingleRow?.total || 0) + (farAverageRow?.total || 0)}`),
+    ];
+
+    for (const event of rankings.events) {
+      if ((event.single || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${eventIcon(event.id, event.name)} (Single)`);
+      if (event.hasAverage && (event.average || []).some((r) => r.wcaId === wcaId && r.rank === 1)) currentRecords.push(`${eventIcon(event.id, event.name)} (Average)`);
+    }
   }
 
   // Full results tab: selectable per event, grouped by competition.
@@ -143,7 +164,7 @@ function renderProfile(wcaId) {
     <p class="board-note"><a href="https://www.worldcubeassociation.org/persons/${wcaId}" target="_blank" rel="noopener">${wcaId} on the WCA site</a></p>
     <div class="profile-stats">${stats.join('')}</div>
     ${currentRecords.length ? `<p class="board-note">Currently holds the ${esc(listName)} Record in: ${currentRecords.join(', ')}.</p>` : ''}
-    ${recordsTableHtml(wcaId)}
+    ${recordsTableHtml(wcaId, personal)}
 
     <div class="subtabs" id="profile-tabs" style="margin-top:1.5rem;">
       <button type="button" class="subtab-btn active" data-ptab="results">Full results</button>
@@ -205,6 +226,9 @@ function renderProfile(wcaId) {
     );
     renderProfileResultsForEvent(wcaId, state.profileResultsEventId);
   }
+
+  // Personal profiles end with the display-name settings (and "Remove my profile").
+  if (personal) renderNameSettings(container, store.personalListId);
 }
 
 // Finds the result a PR came from: same person, event and date, and the
