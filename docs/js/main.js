@@ -2,6 +2,7 @@ import { DATA_BASE, LIST_ID, store, state } from './store.js';
 import { setupTabs, setupSideMenu, setupHomeLinks, setupSubtabs, setupToggle, setupCsvButtons, populateEventSelect } from './ui.js';
 import { setupSettings, applyStoredSettings } from './settings.js';
 import { renderFaRecords, renderRecentActivity, setupProfileSearch } from './tabs/home.js';
+import { renderHomeMembers } from './tabs/home-members.js';
 import { renderSor, renderKinch } from './tabs/overall.js';
 import { renderEventTable, renderIndividual, renderTop100, renderHistory } from './tabs/events.js';
 import { renderFarCounts, renderAge, renderStreaks, renderUpcoming, renderConsistency, renderPrCounting, prCountEvents } from './tabs/misc.js';
@@ -47,6 +48,30 @@ async function resolveSource() {
   source = { kind: 'storage', supabase, listId: data[0].id, list: data[0], preloaded: {} };
 }
 
+// Shows "Edit this list" in the side menu for the list's owner, or for the
+// guest who made a guest list in this browser. Never blocks the page.
+async function setupEditLink(list) {
+  const link = document.getElementById('edit-list-link');
+  if (!link || !list) return;
+  let canEdit = false;
+  try {
+    if (!list.owner_id) {
+      const g = JSON.parse(localStorage.getItem('fa-guest-list') || 'null');
+      canEdit = Boolean(g && g.slug === list.slug);
+    } else {
+      const { supabase } = await import('./auth.js');
+      const { data: { session } } = await supabase.auth.getSession();
+      canEdit = session?.user?.id === list.owner_id;
+    }
+  } catch (e) {
+    canEdit = false;
+  }
+  if (canEdit) {
+    link.href = `lists.html?edit=${encodeURIComponent(list.slug)}`;
+    link.hidden = false;
+  }
+}
+
 async function fetchJson(file, required) {
   try {
     if (source.preloaded[file]) return source.preloaded[file];
@@ -86,6 +111,7 @@ function populateSelects() {
 // Everything that depends on the (possibly time-travelled) data.
 function renderAll() {
   renderFaRecords();
+  renderHomeMembers();
   renderSor();
   renderKinch();
   renderEventTable();
@@ -110,6 +136,7 @@ function refreshAll() {
 async function loadData() {
   if (!LIST_ID) return; // store.js is redirecting to lists.html
   await resolveSource();
+  setupEditLink(source.list); // not awaited: never holds up loading the data
   const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
     fetchJson('rankings.json', true),
     fetchJson('individual-rankings.json', true),
