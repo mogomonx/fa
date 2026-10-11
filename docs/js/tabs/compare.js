@@ -1,19 +1,40 @@
 import { store } from '../store.js';
 import { formatResultLike } from '../format.js';
-import { nameLink, renderTable } from '../ui.js';
+import { nameLink, renderTable, setupToggle } from '../ui.js';
 import { eventIcon } from '../icons.js';
 
-const SELECT_IDS = ['h2h-person-a', 'h2h-person-b', 'nemesis-person-select'];
+const H2H_IDS = ['h2h-person-1', 'h2h-person-2', 'h2h-person-3', 'h2h-person-4', 'h2h-person-5'];
+const OPTIONAL_IDS = new Set(['h2h-person-3', 'h2h-person-4', 'h2h-person-5']);
+const NEMESIS_ID = 'nemesis-person-select';
+const CHASING_ID = 'chasing-person-select';
+const ALL_IDS = [...H2H_IDS, NEMESIS_ID, CHASING_ID];
+
+let h2hView = 'single';
+let wired = false;
+let defaultChecked = false;
+let userChanged = false;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) =>
+  String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const findRankEntry = (list, wcaId) => (list || []).find((r) => r.wcaId === wcaId) || null;
+const personName = (wcaId) => store.people.get(wcaId)?.name || wcaId;
 
 // Fills the person dropdowns. Safe to call repeatedly (time travel): uses
 // onchange (no stacked listeners) and keeps the current selection.
 export function populateCompareSelects() {
   const people = store.rankings.people || [];
-  const previous = SELECT_IDS.map((id) => document.getElementById(id).value);
+  const previous = ALL_IDS.map((id) => $(id).value);
 
-  SELECT_IDS.forEach((id, i) => {
-    const select = document.getElementById(id);
+  ALL_IDS.forEach((id, i) => {
+    const select = $(id);
     select.innerHTML = '';
+    if (OPTIONAL_IDS.has(id)) {
+      const blank = document.createElement('option');
+      blank.value = '';
+      blank.textContent = '(nobody)';
+      select.appendChild(blank);
+    }
     people.forEach((p) => {
       const opt = document.createElement('option');
       opt.value = p.wcaId;
@@ -22,82 +43,158 @@ export function populateCompareSelects() {
     });
     if (previous[i] && people.some((p) => p.wcaId === previous[i])) select.value = previous[i];
   });
-  if (!previous[1] && people.length > 1) document.getElementById('h2h-person-b').selectedIndex = 1;
+  if (!previous[1] && people.length > 1) $('h2h-person-2').value = people[1].wcaId;
 
-  document.getElementById('h2h-person-a').onchange = renderHeadToHead;
-  document.getElementById('h2h-person-b').onchange = renderHeadToHead;
-  document.getElementById('nemesis-person-select').onchange = renderNemesis;
+  if (!wired) {
+    wired = true;
+    setupToggle('h2h-view-toggle', 'view', (v) => {
+      h2hView = v;
+      renderHeadToHead();
+    });
+  }
+  H2H_IDS.forEach((id) => {
+    $(id).onchange = () => {
+      userChanged = true;
+      renderHeadToHead();
+    };
+  });
+  $(NEMESIS_ID).onchange = () => {
+    userChanged = true;
+    renderTrueNemesis();
+  };
+  $(CHASING_ID).onchange = () => {
+    userChanged = true;
+    renderChasing();
+  };
+
+  applyLoggedInDefault();
 }
 
-const findRankEntry = (list, wcaId) => (list || []).find((r) => r.wcaId === wcaId) || null;
+// Once per page load: if the visitor is logged in and on this list, start
+// the first Head-to-Head box, Nemesis and Chasing on them.
+async function applyLoggedInDefault() {
+  if (defaultChecked) return;
+  defaultChecked = true;
+  try {
+    const { supabase } = await import('../auth.js');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+    const { data } = await supabase.from('profiles').select('wca_id').eq('id', session.user.id).maybeSingle();
+    const me = data?.wca_id;
+    const people = store.rankings.people || [];
+    if (!me || userChanged || !people.some((p) => p.wcaId === me)) return;
 
-// ---------- Head-to-Head ----------
+    $('h2h-person-1').value = me;
+    if ($('h2h-person-2').value === me) {
+      const other = people.find((p) => p.wcaId !== me);
+      if (other) $('h2h-person-2').value = other.wcaId;
+    }
+    $(NEMESIS_ID).value = me;
+    $(CHASING_ID).value = me;
+    renderHeadToHead();
+    renderNemesis();
+  } catch (err) {
+    console.warn('Could not default Compare to the logged-in user:', err);
+  }
+}
+
+// ---------- Head-to-Head (2 to 5 people) ----------
 
 export function renderHeadToHead() {
-  const wcaIdA = document.getElementById('h2h-person-a').value;
-  const wcaIdB = document.getElementById('h2h-person-b').value;
-  const container = document.getElementById('h2h-table');
-  if (!wcaIdA || !wcaIdB) return;
+  const container = $('h2h-table');
+  const ids = [...new Set(H2H_IDS.map((id) => $(id).value).filter(Boolean))];
+  if (ids.length < 2) {
+    container.innerHTML = '<p class="empty-note">Pick at least two different people.</p>';
+    return;
+  }
 
-  const nameA = store.people.get(wcaIdA)?.name || wcaIdA;
-  const nameB = store.people.get(wcaIdB)?.name || wcaIdB;
-  const kinchA = store.rankings.kinch.overall.find((r) => r.wcaId === wcaIdA);
-  const kinchB = store.rankings.kinch.overall.find((r) => r.wcaId === wcaIdB);
+  const kinchRows = store.rankings.kinch?.overall || [];
+  const rows = [];
+  for (const event of store.rankings.events) {
+    // Only events where everyone selected has a result.
+    if (!ids.every((id) => findRankEntry(event.single, id))) continue;
+    if (h2hView === 'average' && !event.hasAverage) continue;
 
-  const rows = store.rankings.events
-    .map((event) => ({
-      event,
-      sA: findRankEntry(event.single, wcaIdA),
-      sB: findRankEntry(event.single, wcaIdB),
-      aA: event.hasAverage ? findRankEntry(event.average, wcaIdA) : null,
-      aB: event.hasAverage ? findRankEntry(event.average, wcaIdB) : null,
-      kA: kinchA?.components?.[event.id],
-      kB: kinchB?.components?.[event.id],
-    }))
-    .filter(({ sA, sB, aA, aB }) => sA || sB || aA || aB);
+    // One comparable number per person (or null), plus how to show it.
+    const cells = {};
+    const nums = {};
+    for (const id of ids) {
+      if (h2hView === 'kinch') {
+        const k = kinchRows.find((r) => r.wcaId === id)?.components?.[event.id];
+        nums[id] = k ? k.score : null;
+        cells[id] = k ? k.score.toFixed(2) : '—';
+      } else {
+        const entry = findRankEntry(h2hView === 'average' ? event.average : event.single, id);
+        nums[id] = entry ? entry.value : null;
+        cells[id] = entry ? `${entry.display} (#${entry.rank})` : '—';
+      }
+    }
+    const present = Object.values(nums).filter((v) => v != null);
+    const best = present.length ? (h2hView === 'kinch' ? Math.max(...present) : Math.min(...present)) : null;
+    for (const id of ids) {
+      if (nums[id] != null && nums[id] === best && present.length > 1) {
+        cells[id] = `<span class="rank-gold">${cells[id]}</span>`;
+      }
+    }
+    rows.push({ event, cells });
+  }
 
-  const cell = (entry, otherEntry) => {
-    if (!entry) return '<span class="empty-note">—</span>';
-    const better = otherEntry && entry.value < otherEntry.value;
-    return `<span${better ? ' class="rank-gold"' : ''}>${entry.display} (#${entry.rank})</span>`;
-  };
-  const kinchCell = (k, otherK) => {
-    if (!k) return '—';
-    const better = otherK && k.score > otherK.score;
-    return `<span${better ? ' style="color:var(--gold); font-weight:700;"' : ''}>${k.score.toFixed(2)}</span>`;
-  };
-
-  container.innerHTML = rows.length
-    ? `
-    <table>
-      <thead><tr>
-        <th>Event</th><th>${nameA} Single</th><th>${nameB} Single</th>
-        <th>${nameA} Average</th><th>${nameB} Average</th>
-        <th>${nameA} Kinch</th><th>${nameB} Kinch</th>
-      </tr></thead>
-      <tbody>
-        ${rows
-          .map(
-            ({ event, sA, sB, aA, aB, kA, kB }) => `
-          <tr>
-            <td>${eventIcon(event.id, event.name)}</td>
-            <td>${cell(sA, sB)}</td><td>${cell(sB, sA)}</td>
-            <td>${event.hasAverage ? cell(aA, aB) : 'N/A'}</td><td>${event.hasAverage ? cell(aB, aA) : 'N/A'}</td>
-            <td>${kinchCell(kA, kB)}</td><td>${kinchCell(kB, kA)}</td>
-          </tr>
-        `
-          )
-          .join('')}
-      </tbody>
-    </table>`
-    : '<p class="empty-note">No overlapping results yet.</p>';
+  if (!rows.length) {
+    container.innerHTML = '<p class="empty-note">No events where everyone selected has a result.</p>';
+    return;
+  }
+  renderTable(container, rows, [
+    { key: 'event', label: 'Event', value: (r) => eventIcon(r.event.id, r.event.name) },
+    ...ids.map((id) => ({ key: id, label: esc(personName(id)), value: (r) => r.cells[id] })),
+  ]);
 }
 
-// ---------- Nemesis ----------
+// ---------- Nemesis (true nemesis) ----------
 
-export function renderNemesis() {
-  const wcaId = document.getElementById('nemesis-person-select').value;
-  const container = document.getElementById('nemesis-table');
+// Does person B beat person A in every result A has, in both formats?
+// A result A has that B lacks means no. Events A has nothing in are ignored.
+function nemesizes(bId, aId) {
+  let compared = 0;
+  for (const event of store.rankings.events) {
+    for (const type of ['single', 'average']) {
+      if (type === 'average' && !event.hasAverage) continue;
+      const list = event[type] || [];
+      const a = findRankEntry(list, aId);
+      if (!a) continue;
+      const b = findRankEntry(list, bId);
+      if (!b || !(b.value < a.value)) return false;
+      compared += 1;
+    }
+  }
+  return compared > 0;
+}
+
+const nameList = (people) =>
+  `<ul class="member-list">${people.map((p) => `<li>${nameLink(p.wcaId, esc(p.name))}</li>`).join('')}</ul>`;
+
+export function renderTrueNemesis() {
+  const wcaId = $(NEMESIS_ID).value;
+  const container = $('nemesis-table');
+  if (!wcaId) return;
+
+  const others = (store.rankings.people || []).filter((p) => p.wcaId !== wcaId);
+  const nemeses = others.filter((p) => nemesizes(p.wcaId, wcaId));
+  const victims = others.filter((p) => nemesizes(wcaId, p.wcaId));
+  const name = esc(personName(wcaId));
+  const count = (n) => `${n} nemes${n === 1 ? 'is' : 'es'}`;
+
+  container.innerHTML = `
+    <p><strong>${name} has ${count(nemeses.length)}.</strong></p>
+    ${nemeses.length ? nameList(nemeses) : '<p class="board-note">Nobody beats them in every single and average.</p>'}
+    <p style="margin-top:1.25rem;"><strong>${name} is the nemesis of ${victims.length} ${victims.length === 1 ? 'person' : 'people'}.</strong></p>
+    ${victims.length ? nameList(victims) : ''}`;
+}
+
+// ---------- Chasing (whoever is ranked directly above you) ----------
+
+export function renderChasing() {
+  const wcaId = $(CHASING_ID).value;
+  const container = $('chasing-table');
   if (!wcaId) return;
 
   const rows = [];
@@ -109,10 +206,10 @@ export function renderNemesis() {
       if (idx === -1) continue;
       const me = list[idx];
       if (idx === 0) {
-        rows.push({ eventId: event.id, event: event.name, type, nemesis: null, gap: null, me });
+        rows.push({ eventId: event.id, event: event.name, type, ahead: null, gap: null, me });
       } else {
-        const nemesis = list[idx - 1];
-        rows.push({ eventId: event.id, event: event.name, type, nemesis, gap: me.value - nemesis.value, me });
+        const ahead = list[idx - 1];
+        rows.push({ eventId: event.id, event: event.name, type, ahead, gap: me.value - ahead.value, me });
       }
     }
   }
@@ -120,8 +217,14 @@ export function renderNemesis() {
   renderTable(container, rows, [
     { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, r.event) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
-    { key: 'nemesis', label: 'Nemesis', value: (r) => (r.nemesis ? nameLink(r.nemesis.wcaId, r.nemesis.name) : "You're #1!") },
-    { key: 'their', label: 'Their result', value: (r) => (r.nemesis ? r.nemesis.display : '—') },
+    { key: 'ahead', label: 'Ahead of you', value: (r) => (r.ahead ? nameLink(r.ahead.wcaId, esc(r.ahead.name)) : "You're #1!") },
+    { key: 'their', label: 'Their result', value: (r) => (r.ahead ? r.ahead.display : '—') },
     { key: 'gap', label: 'Gap to catch them', value: (r) => (r.gap != null ? formatResultLike(r.gap, store.rankings.events.find((e) => e.id === r.eventId), r.type === 'average') : '—') },
   ]);
+}
+
+// main.js calls this one; it refreshes both views.
+export function renderNemesis() {
+  renderTrueNemesis();
+  renderChasing();
 }
