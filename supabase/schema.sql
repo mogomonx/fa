@@ -473,3 +473,124 @@ end $$;
 
 revoke execute on function public.set_preferred_name(text) from public, anon;
 grant execute on function public.set_preferred_name(text) to authenticated;
+
+
+-- 5c: name privacy, owner veto, personal profile
+
+-- Replaces the earlier set_preferred_name (no longer used)
+drop function if exists public.set_preferred_name(text);
+
+-- Who may see a person's preferred name: 'me' = only in their own browser
+alter table public.profiles
+  add column name_visibility text not null default 'me'
+  check (name_visibility in ('me', 'lists', 'everywhere'));
+
+-- Lists a person chose to show their preferred name on
+create table public.preferred_name_lists (
+  list_id  uuid not null references public.lists(id) on delete cascade,
+  wca_id   text not null check (wca_id ~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'),
+  primary key (list_id, wca_id)
+);
+alter table public.preferred_name_lists enable row level security;  -- no policies: functions only
+
+-- Owner veto + list kind ('personal' = someone's own profile list)
+alter table public.lists
+  add column official_names_only boolean not null default false,
+  add column kind text not null default 'group' check (kind in ('group', 'personal'));
+grant update (official_names_only) on public.lists to authenticated;
+
+-- Changing the veto rebuilds the list
+create function public.mark_list_dirty_on_names() returns trigger
+language plpgsql as $$
+begin
+  new.dirty_at = now();
+  return new;
+end $$;
+create trigger trg_lists_names_dirty before update on public.lists
+  for each row when (old.official_names_only is distinct from new.official_names_only)
+  execute function public.mark_list_dirty_on_names();
+
+-- Browser clients can never create a 'personal' list directly (only create_my_profile can).
+-- Named trg_a_ so it runs before the list-limit trigger.
+create function public.force_group_kind() returns trigger
+language plpgsql as $$
+begin
+  if current_user in ('authenticated', 'anon') then new.kind := 'group'; end if;
+  return new;
+end $$;
+create trigger trg_a_lists_kind before insert on public.lists
+  for each row execute function public.force_group_kind();
+
+-- The 20-list limit now counts group lists only
+create or replace function public.limit_lists() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.kind = 'group'
+     and (select count(*) from lists where owner_id = new.owner_id and kind = 'group') >= 20 then
+    raise exception 'You can own at most 20 lists';
+  end if;
+  return new;
+end $$;
+
+-- Save name + visibility + chosen lists in one go. Light validation only.
+create function public.set_name_settings(p_name text, p_visibility text, p_lists uuid[] default '{}')
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  v_wca  text := current_wca_id();
+  v_name text := nullif(regexp_replace(trim(coalesce(p_name, '')), '\s+', ' ', 'g'), '');
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID to set a display name'; end if;
+  if p_visibility not in ('me', 'lists', 'everywhere') then raise exception 'Invalid visibility'; end if;
+  if v_name is not null then
+    if char_length(v_name) > 40 then raise exception 'Display names can be up to 40 characters'; end if;
+    if v_name ~ '[[:cntrl:]]' then raise exception 'That name has invalid characters'; end if;
+    if v_name ~* '(https?:|www\.|@|\.(com|net|org|io|gg)($|\s))' then
+      raise exception 'Names can''t contain links or @';
+    end if;
+  end if;
+
+  update profiles set preferred_name = v_name, name_visibility = p_visibility where id = auth.uid();
+
+  delete from preferred_name_lists where wca_id = v_wca;
+  if v_name is not null and p_visibility = 'lists' then
+    insert into preferred_name_lists (list_id, wca_id)
+      select m.list_id, v_wca from list_members m
+      where m.wca_id = v_wca and m.list_id = any (coalesce(p_lists, '{}'));
+  end if;
+
+  -- every list they're on needs a rebuild to pick the change up
+  update lists set dirty_at = now()
+    where id in (select list_id from list_members where wca_id = v_wca);
+end $$;
+
+create function public.my_name_lists() returns setof uuid
+language sql stable security definer set search_path = public as $$
+  select list_id from preferred_name_lists where wca_id = current_wca_id()
+$$;
+
+-- "Create my profile": a private one-person list, built like any other list
+create function public.create_my_profile() returns public.lists
+language plpgsql security definer set search_path = public as $$
+declare
+  v_wca  text := current_wca_id();
+  v_list lists;
+  v_name text;
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID to create your profile'; end if;
+  select * into v_list from lists where owner_id = auth.uid() and kind = 'personal';
+  if found then return v_list; end if;
+  select name into v_name from profiles where id = auth.uid();
+  insert into lists (slug, name, owner_id, visibility, kind)
+    values ('me-' || lower(v_wca), left(coalesce(v_name, 'My profile'), 80), auth.uid(), 'private', 'personal')
+    returning * into v_list;
+  insert into list_members (list_id, wca_id) values (v_list.id, v_wca);
+  select * into v_list from lists where id = v_list.id;
+  return v_list;
+end $$;
+
+revoke execute on function public.set_name_settings(text, text, uuid[]) from public, anon;
+revoke execute on function public.my_name_lists() from public, anon;
+revoke execute on function public.create_my_profile() from public, anon;
+grant execute on function public.set_name_settings(text, text, uuid[]) to authenticated;
+grant execute on function public.my_name_lists() to authenticated;
+grant execute on function public.create_my_profile() to authenticated;
