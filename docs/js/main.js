@@ -52,7 +52,7 @@ async function resolveSource() {
 // guest who made a guest list in this browser. Never blocks the page.
 async function setupEditLink(list) {
   const link = document.getElementById('edit-list-link');
-  if (!link || !list) return;
+  if (!link || !list || list.kind === 'personal') return;
   let canEdit = false;
   try {
     if (!list.owner_id) {
@@ -69,6 +69,47 @@ async function setupEditLink(list) {
   if (canEdit) {
     link.href = `lists.html?edit=${encodeURIComponent(list.slug)}`;
     link.hidden = false;
+  }
+}
+
+// Walks loaded data and swaps in a name wherever an object has this wcaId.
+function renameEverywhere(root, wcaId, name) {
+  const seen = new Set();
+  const walk = (node) => {
+    if (!node || typeof node !== 'object' || seen.has(node)) return;
+    seen.add(node);
+    if (Array.isArray(node)) {
+      for (const item of node) walk(item);
+      return;
+    }
+    if (node.wcaId === wcaId && typeof node.name === 'string') node.name = name;
+    for (const value of Object.values(node)) walk(value);
+  };
+  walk(root);
+}
+
+// People who chose "only me" for their preferred name see it in their own
+// browser only; everyone else keeps seeing the official name. (Other choices
+// are baked into the build by sync-lists.js.) Skipped on lists whose owner
+// chose official names only. A name the owner typed for them on this list is
+// also replaced here, in their own view.
+async function applyOwnName(datasets) {
+  if (!source || source.kind !== 'storage') return;
+  const list = source.list;
+  if (!list || list.official_names_only || list.kind === 'personal') return;
+  try {
+    const { data: { session } } = await source.supabase.auth.getSession();
+    if (!session) return;
+    const { data } = await source.supabase
+      .from('profiles')
+      .select('wca_id, preferred_name, name_visibility')
+      .eq('id', session.user.id)
+      .maybeSingle();
+    if (data?.wca_id && data.preferred_name && data.name_visibility === 'me') {
+      renameEverywhere(datasets, data.wca_id, data.preferred_name);
+    }
+  } catch (e) {
+    // names are cosmetic: never block the page
   }
 }
 
@@ -133,6 +174,31 @@ function refreshAll() {
   renderAll();
 }
 
+// A personal profile list (one person, private): hide the group menu and open
+// that person's profile page straight away.
+async function enterPersonalMode() {
+  document.body.classList.add('personal-mode');
+  const wcaId = (store.rankings.people || [])[0]?.wcaId;
+  if (!wcaId) return;
+  try {
+    const m = await import('./tabs/profile.js');
+    if (typeof m.showProfile === 'function') {
+      m.showProfile(wcaId);
+      return;
+    }
+  } catch (e) {
+    // fall back to a synthetic name-link click below
+  }
+  const a = document.createElement('a');
+  a.className = 'name-link';
+  a.dataset.wcaid = wcaId;
+  a.href = '#';
+  a.hidden = true;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
 async function loadData() {
   if (!LIST_ID) return; // store.js is redirecting to lists.html
   await resolveSource();
@@ -148,6 +214,9 @@ async function loadData() {
     fetchJson('rolling-averages.json'),
     fetchJson('meta.json'),
   ]);
+
+  await applyOwnName({ rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling });
+
   Object.assign(store, {
     rankings,
     individual,
@@ -191,6 +260,8 @@ async function loadData() {
   // apply any previously-saved "on this date" setting.
   store.live = { rankings, individual, historical, streaks };
   restoreTimeTravel(refreshAll);
+
+  if (source.list?.kind === 'personal') enterPersonalMode();
 }
 
 // ---------- Wiring ----------
