@@ -69,8 +69,9 @@ jobs:
         env:
           SLUGS: ${{ steps.sync.outputs.slugs }}
         run: |
+          # Each distinct person is fetched once for all lists
+          node scripts/fetch.js $SLUGS
           for s in $SLUGS; do
-            node scripts/fetch.js "$s"
             node scripts/build-rankings.js "$s"
           done
           node scripts/upload-lists.js --files=rankings.json $SLUGS
@@ -80,9 +81,9 @@ jobs:
         env:
           NEW_SLUGS: ${{ steps.sync.outputs.new_slugs }}
         run: |
+          node scripts/fetch.js $NEW_SLUGS
           for s in $NEW_SLUGS; do
             echo "=== basic: $s ==="
-            node scripts/fetch.js "$s"
             node scripts/build-rankings.js "$s"
             node scripts/make-empty-history.js "$s"
             node scripts/build-individual-rankings.js "$s"
@@ -107,10 +108,11 @@ jobs:
         env:
           SLUGS: ${{ steps.sync.outputs.slugs }}
         run: |
-          # Part 1: per-list steps that don't need the export
+          # Part 1: personal bests (each person fetched once, reusing anything
+          # already fetched earlier in this run), then the rankings
+          node scripts/fetch.js $SLUGS
           for s in $SLUGS; do
             echo "=== full (1/2): $s ==="
-            node scripts/fetch.js "$s"
             node scripts/build-rankings.js "$s"
           done
 
