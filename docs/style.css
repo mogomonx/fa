@@ -993,3 +993,23 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 }
 
 .list-card .csv-btn { align-self: flex-start; }
+
+/* =====================================================================
+   Home: members directory
+   ===================================================================== */
+
+.member-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.member-chip {
+  padding: 0.3rem 0.7rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  font-size: 0.88rem;
+}
+
+.member-chip:hover { border-color: var(--accent-dim); }
