@@ -4,6 +4,9 @@
 //
 // Guests (not logged in) can make ONE list. Its edit token is kept in this
 // browser (localStorage) and is claimed onto the account at the next login.
+//
+// lists.html?edit=<slug> opens that list straight in the editor (used by the
+// "Edit this list" link in the rankings side menu).
 
 import { supabase, setupAuth } from "./auth.js";
 
@@ -20,7 +23,6 @@ const VISIBILITY = {
 
 let userId = null;
 let myWcaId = null;
-let myPreferredName = null; // the logged-in person's own display name, or null
 let guest = null;      // { slug, token } saved in this browser, or null
 let guestList = null;  // the guest list's row from the server, when loaded
 let current = null;    // { list, members, guest } while a list is open
@@ -231,53 +233,6 @@ async function updateList(list, oldMembers, fields, members) {
   return fresh || saved;
 }
 
-// ---------- Your display name (global) ----------
-
-// A box at the top of the lists section: the name this person goes by on every
-// list they're on (a list owner's own override for them still wins on that list).
-function renderNameBox() {
-  const section = $("custom-lists-section");
-  $("display-name-box")?.remove();
-  if (!userId || !myWcaId) return;
-
-  const input = el("input", {
-    type: "text",
-    maxlength: "60",
-    placeholder: "Leave blank to use your official WCA name",
-  });
-  input.value = myPreferredName ?? "";
-
-  const status = el("p", { class: "board-note" });
-  const saveBtn = el("button", { class: "csv-btn", type: "button", text: "Save name" });
-
-  saveBtn.addEventListener("click", async () => {
-    saveBtn.disabled = true;
-    status.className = "board-note";
-    status.textContent = "Saving…";
-    const wanted = input.value.trim();
-    const { error } = await supabase.rpc("set_preferred_name", { p_name: wanted });
-    saveBtn.disabled = false;
-    if (error) {
-      status.className = "form-error";
-      status.textContent = friendlyError(error);
-      return;
-    }
-    myPreferredName = wanted || null;
-    input.value = wanted;
-    status.textContent = wanted
-      ? "Saved. Your lists will show this name after their next update (usually a few minutes)."
-      : "Cleared. Your official WCA name will be used after the next update.";
-  });
-
-  section.prepend(el("div", { id: "display-name-box", class: "list-form list-section" },
-    el("h3", { text: "Your display name" }),
-    el("p", { class: "board-note", text:
-      "The name you go by, on every list you're on. A list owner can still set a different name for you on their own list." }),
-    el("label", { class: "field" }, el("span", { text: "Name" }), input),
-    el("div", { class: "panel-controls" }, saveBtn),
-    status));
-}
-
 // ---------- Browser view ----------
 
 // Clicking the name goes straight to the rankings (or to the status page while
@@ -353,7 +308,8 @@ async function renderBrowser() {
   const memberIds = new Set(data.inList.map((l) => l.id));
   const mineById = new Map();
   for (const l of [...data.mine, ...data.inList]) mineById.set(l.id, l);
-  const mine = [...mineById.values()].sort((a, b) => a.name.localeCompare(b.name));
+  const byName = (a, b) => a.name.localeCompare(b.name);
+  const all = [...mineById.values()];
 
   if (!userId) {
     if (guestList) {
@@ -366,7 +322,17 @@ async function renderBrowser() {
       mineBox.replaceChildren(el("p", { class: "empty-note", text: "You haven't made a list yet." }));
     }
   } else {
-    const parts = [cardGrid(mine.map((l) => listCard(l, memberIds)), "You're not on any lists yet.")];
+    // Lists I own first; lists I'm only a member of second (each list once).
+    const owned = all.filter((l) => l.owner_id === userId).sort(byName);
+    const memberOnly = all.filter((l) => l.owner_id !== userId).sort(byName);
+    const parts = [
+      el("div", { class: "list-section" },
+        el("h3", { text: "Lists I own" }),
+        cardGrid(owned.map((l) => listCard(l, memberIds)), "You haven't made any lists yet.")),
+      el("div", { class: "list-section" },
+        el("h3", { text: "Lists I'm in" }),
+        cardGrid(memberOnly.map((l) => listCard(l, memberIds)), "You're not on anyone else's list yet.")),
+    ];
     if (data.left.length) {
       parts.push(el("div", { class: "list-section" },
         el("h3", { text: "Lists I've left" }),
@@ -590,6 +556,21 @@ function renderEditor(list, members, guestMode = false) {
   showPanel(form);
 }
 
+// ---------- ?edit=<slug>: open a list straight in the editor ----------
+
+async function openEditFromUrl() {
+  const slug = new URLSearchParams(window.location.search).get("edit");
+  if (!slug) return;
+  let list = guestList && guestList.slug === slug ? guestList : null;
+  if (!list) {
+    const { data } = await supabase.from("lists").select("*").eq("slug", slug).maybeSingle();
+    list = data;
+  }
+  if (!list || !ownsList(list)) return;
+  await openList(list);
+  if (current) renderEditor(current.list, current.members, current.guest);
+}
+
 // ---------- Entry point ----------
 
 export async function initLists() {
@@ -597,10 +578,8 @@ export async function initLists() {
   const { data: { session } } = await supabase.auth.getSession();
   userId = session?.user?.id ?? null;
   if (userId) {
-    const { data } = await supabase
-      .from("profiles").select("wca_id, preferred_name").eq("id", userId).maybeSingle();
+    const { data } = await supabase.from("profiles").select("wca_id").eq("id", userId).maybeSingle();
     myWcaId = data?.wca_id ?? null;
-    myPreferredName = data?.preferred_name ?? null;
   }
 
   guest = getGuest();
@@ -614,6 +593,6 @@ export async function initLists() {
   }
   $("new-list-btn").addEventListener("click", () => renderEditor(null, [], !userId));
 
-  renderNameBox();
   await renderBrowser();
+  await openEditFromUrl();
 }
