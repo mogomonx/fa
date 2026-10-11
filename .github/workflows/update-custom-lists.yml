@@ -107,11 +107,19 @@ jobs:
         env:
           SLUGS: ${{ steps.sync.outputs.slugs }}
         run: |
+          # Part 1: per-list steps that don't need the export
           for s in $SLUGS; do
-            echo "=== full: $s ==="
+            echo "=== full (1/2): $s ==="
             node scripts/fetch.js "$s"
             node scripts/build-rankings.js "$s"
-            node scripts/parse-export.js /tmp/wca-export "$s"
+          done
+
+          # The export is read ONCE for every list
+          node scripts/parse-export.js /tmp/wca-export $SLUGS
+
+          # Part 2: everything built from each list's full-results.json
+          for s in $SLUGS; do
+            echo "=== full (2/2): $s ==="
             node scripts/build-individual-rankings.js "$s"
             node scripts/build-historical-records.js "$s"
             node scripts/build-streaks.js "$s"
