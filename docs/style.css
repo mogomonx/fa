@@ -1013,3 +1013,70 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 }
 
 .member-chip:hover { border-color: var(--accent-dim); }
+
+
+/* =====================================================================
+   Your profile box + name settings (lists page)
+   ===================================================================== */
+
+.profile-box {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.1rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+}
+
+.profile-box h3 { margin: 0 0 0.25rem; }
+
+.profile-box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.profile-avatar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-dim);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.profile-avatar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.name-settings {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--panel-border);
+}
+
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.3rem 0;
+  cursor: pointer;
+}
+
+.check-row input { margin-top: 0.3rem; }
+.name-lists { margin: 0.5rem 0 0.75rem 1.6rem; }
+
+/* Personal profile pages: only the profile, no group navigation. */
+body.personal-mode .side-menu .menu-item[data-tab],
+body.personal-mode .header-actions .tab-btn[data-tab="home"],
+body.personal-mode #profile-back { display: none; }
