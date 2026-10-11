@@ -79,7 +79,7 @@ function recordsTableHtml(wcaId) {
     .join('');
 
   return `
-    <div class="scroll-table">
+    <div class="table-wrap">
       <table class="records-table">
         <thead>
           <tr><th colspan="2"></th><th class="grp" colspan="5">Single</th><th class="grp grp-avg" colspan="5">Average</th></tr>
