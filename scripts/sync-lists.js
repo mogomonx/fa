@@ -7,9 +7,12 @@
 //
 // Lists with no members are skipped (e.g. caught mid-creation).
 //
-// A member's displayName is the first of: the list's own override for them,
-// the name they chose for themselves (profiles.preferred_name), or null (the
-// build scripts then fall back to the official WCA name).
+// A member's displayName, in order:
+//   1. the name the list owner typed for them on this list
+//   2. (skipped when the list is "official names only")
+//   3. their own preferred name, if they chose "everywhere", or "lists" and
+//      picked this list (personal profile lists always use it)
+//   4. null -> the build scripts fall back to the official WCA name
 
 const fs = require('fs');
 const path = require('path');
@@ -19,20 +22,33 @@ const OUT = path.join(__dirname, '..', 'build');
 
 const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
 
-// wca_id -> the person's own preferred name. Never fails the build: if the
-// column doesn't exist yet (SQL not run) or the call errors, no one has one.
-async function loadPreferredNames() {
-  const map = new Map();
+// wca_id -> { name, visibility, lists:Set(list uuid) }. Never fails the build:
+// if the tables/columns aren't there yet, nobody has a preferred name.
+async function loadNamePrefs() {
+  const prefs = new Map();
   try {
-    const rows = await rest('GET',
-      '/rest/v1/profiles?select=wca_id,preferred_name&preferred_name=not.is.null&wca_id=not.is.null&limit=1000');
-    for (const r of rows || []) {
-      if (r.wca_id && r.preferred_name) map.set(r.wca_id, r.preferred_name);
+    const profiles = await rest('GET',
+      '/rest/v1/profiles?select=wca_id,preferred_name,name_visibility&preferred_name=not.is.null&wca_id=not.is.null&limit=1000');
+    for (const p of profiles || []) {
+      prefs.set(p.wca_id, { name: p.preferred_name, visibility: p.name_visibility, lists: new Set() });
     }
+    const chosen = await rest('GET', '/rest/v1/preferred_name_lists?select=list_id,wca_id&limit=10000');
+    for (const c of chosen || []) prefs.get(c.wca_id)?.lists.add(c.list_id);
   } catch (err) {
     console.warn(`Could not load preferred names (continuing without them): ${err.message}`);
   }
-  return map;
+  return prefs;
+}
+
+function pickDisplayName(list, member, prefs) {
+  if (member.display_name) return member.display_name;   // the owner's own name wins
+  if (list.official_names_only) return null;
+  const p = prefs.get(member.wca_id);
+  if (!p) return null;
+  if (list.kind === 'personal') return p.name;           // private to them
+  if (p.visibility === 'everywhere') return p.name;
+  if (p.visibility === 'lists' && p.lists.has(list.id)) return p.name;
+  return null;
 }
 
 async function main() {
@@ -40,8 +56,8 @@ async function main() {
     : process.argv.includes('--built') ? 'built' : 'all';
 
   const rows = await rest('GET',
-    '/rest/v1/lists?select=id,slug,name,dirty_at,built_at,data_level,list_members(wca_id,display_name)&limit=1000');
-  const preferred = await loadPreferredNames();
+    '/rest/v1/lists?select=id,slug,name,kind,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&limit=1000');
+  const prefs = await loadNamePrefs();
 
   const chosen = rows
     .filter((l) => l.list_members.length > 0)
@@ -57,7 +73,7 @@ async function main() {
     fs.writeFileSync(path.join(OUT, 'lists', `${l.slug}.json`), JSON.stringify({
       people: l.list_members.map((m) => ({
         wcaId: m.wca_id,
-        displayName: m.display_name || preferred.get(m.wca_id) || null,
+        displayName: pickDisplayName(l, m, prefs),
       })),
     }));
     state[l.slug] = { uuid: l.id, dirty_at: l.dirty_at, data_level: l.data_level };
