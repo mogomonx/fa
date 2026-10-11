@@ -216,6 +216,8 @@ async function loadData() {
   ]);
 
   await applyOwnName({ rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling });
+  store.personal = source.list?.kind === 'personal';
+  store.personalListId = source.listId;
 
   Object.assign(store, {
     rankings,
