@@ -1080,3 +1080,37 @@ tr.rank-3 td.rank-cell { color: var(--bronze); font-weight: 700; }
 body.personal-mode .side-menu .menu-item[data-tab],
 body.personal-mode .header-actions .tab-btn[data-tab="home"],
 body.personal-mode #profile-back { display: none; }
+
+/* =====================================================================
+   "My profile" button (lists page) + personal profile name settings
+   ===================================================================== */
+
+.profile-btn {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.8rem 0.25rem 0.3rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-btn:hover { border-color: var(--accent); }
+.profile-btn:disabled { opacity: 0.6; cursor: default; }
+
+.profile-avatar.small {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.75rem;
+}
+
+.profile-box.name-settings { margin-top: 1.5rem; }
