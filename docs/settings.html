@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+<link rel="stylesheet" href="style.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-btn menu-toggle" href="home.html" aria-label="Home" title="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <h1>Settings</h1>
+    <span></span>
+  </header>
+
+  <main class="container">
+    <button class="back-link" id="settings-back">&larr; Back</button>
+
+    <h2 style="margin:0 0 0.5rem;">Colours</h2>
+    <p class="board-note">Colours are saved in your browser, so they're personal to this device.</p>
+    <div class="settings-grid" id="settings-grid">
+      <label>Background <input type="color" id="setting-bg" data-var="--bg"></label>
+      <label>Panel <input type="color" id="setting-panel" data-var="--panel"></label>
+      <label>Panel border <input type="color" id="setting-panel-border" data-var="--panel-border"></label>
+      <label>Text <input type="color" id="setting-text" data-var="--text"></label>
+      <label>Dim text <input type="color" id="setting-text-dim" data-var="--text-dim"></label>
+      <label>Accent <input type="color" id="setting-accent" data-var="--accent"></label>
+      <label>Link colour <input type="color" id="setting-link" data-var="--link"></label>
+      <label>Gold <input type="color" id="setting-gold" data-var="--gold"></label>
+      <label>Silver <input type="color" id="setting-silver" data-var="--silver"></label>
+      <label>Bronze <input type="color" id="setting-bronze" data-var="--bronze"></label>
+      <label>Event icons <input type="color" id="setting-event-icon" data-var="--event-icon-colour"></label>
+    </div>
+    <button class="back-link" id="settings-reset" style="margin-top:1rem;">Reset to default</button>
+
+    <h2 style="margin:2rem 0 0.5rem;">On This Date</h2>
+    <p class="board-note">View any list as it stood on a past date: Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Historical Records, Record Age, Streaks, Compare and profiles all recompute from that date. Recent Activity, Upcoming Competitions, Rolling Averages, PR Counting and Consistency stay live regardless. Saved in your browser and applied to every list you open until you clear it.</p>
+    <div class="panel-controls" style="justify-content:flex-start;">
+      <input type="date" id="time-travel-date">
+      <button class="csv-btn" id="time-travel-apply">Save date</button>
+      <button class="csv-btn" id="time-travel-clear">Back to live</button>
+    </div>
+    <p class="board-note" id="time-travel-status"></p>
+
+    <h2 style="margin:2rem 0 0.5rem;">Time frame</h2>
+    <p class="board-note">Only count results from competitions inside a start and end date, for example just 2026. Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Compare and profiles use only results from inside the frame. PR Streaks and Historical Records judge PRs and records against everything before the end date, but only show the ones set inside the frame. Set a start, an end, or both; if On This Date is also set, the earlier end date wins. Recent Activity, Upcoming Competitions, Rolling Averages, PR Counting and Consistency stay live. Saved in your browser.</p>
+    <div class="panel-controls" style="justify-content:flex-start;">
+      <label>From <input type="text" class="date-input" id="time-frame-start" readonly></label>
+      <label>To <input type="text" class="date-input" id="time-frame-end" readonly></label>
+    </div>
+    <div class="panel-controls" style="justify-content:flex-start;">
+      <button class="csv-btn" id="time-frame-apply">Save time frame</button>
+      <button class="csv-btn" id="time-frame-clear-start">Clear start</button>
+      <button class="csv-btn" id="time-frame-clear-end">Clear end</button>
+      <button class="csv-btn" id="time-frame-reset">Remove time frame</button>
+    </div>
+    <p class="board-note" id="time-frame-status"></p>
+  </main>
+
+  <script type="module">
+    import { initSettings } from './js/settings-page.js';
+    initSettings();
+  </script>
+</body>
+</html>
