@@ -194,7 +194,7 @@ export function computeRankingsSnapshot(events, listName, peopleSnapshot, cutoff
 const entryKey = (e) => `${e.wcaId}|${e.competitionId}|${e.round}|${e.attemptIndex ?? 'r'}`;
 
 function poolItem(e, value, attemptIndex, extra = {}) {
-    return { wcaId: e.wcaId, name: e.name, competitionId: e.competitionId, competitionName: e.competitionName, round: e.round, roundName: e.roundName, date: e.date, value, attemptIndex, ...extra };
+  return { wcaId: e.wcaId, name: e.name, competitionId: e.competitionId, competitionName: e.competitionName, round: e.round, roundName: e.roundName, date: e.date, value, attemptIndex, ...extra };
 }
 
 function buildSinglePool(entries, eventId) {
@@ -292,7 +292,7 @@ function findBreakdown(entries, wcaId, eventId, value, type, eventDef) {
   if (!hasResult(value)) return null;
   const match = entries.find((e) => e.wcaId === wcaId && e.eventId === eventId && e[type] === value);
   if (!match) return null;
- const result = { competitionName: match.competitionName, round: match.roundName || roundLabelFallback(match.round), date: match.date };
+  const result = { competitionName: match.competitionName, round: match.roundName || roundLabelFallback(match.round), date: match.date };
   if (type === 'average' && match.attempts) result.solves = attemptDisplays(match.attempts, eventDef);
   return result;
 }
@@ -341,7 +341,10 @@ export function computeIndividualSnapshot(events, entries, peopleSnapshot) {
 
 // ---------- Historical records ----------
 
-function computeHistory(entries, eventDef, type) {
+// `entries` should hold everything up to the end date. When `startDate` is
+// given, records are still judged against everything before it, but only the
+// ones set on or after `startDate` are listed (time frame).
+function computeHistory(entries, eventDef, type, startDate) {
   const relevant = entries
     .filter((e) => e.eventId === eventDef.id && hasResult(e[type]))
     .slice()
@@ -351,6 +354,7 @@ function computeHistory(entries, eventDef, type) {
   for (const e of relevant) {
     if (bestSoFar === null || e[type] < bestSoFar) {
       bestSoFar = e[type];
+      if (startDate && !(e.date && e.date >= startDate)) continue;
       history.push({
         eventId: eventDef.id,
         eventName: eventDef.name,
@@ -368,11 +372,11 @@ function computeHistory(entries, eventDef, type) {
   return history;
 }
 
-export function computeHistoricalSnapshot(events, entries, peopleSnapshot) {
+export function computeHistoricalSnapshot(events, entries, peopleSnapshot, startDate = null) {
   const allRecords = [];
   for (const eventDef of events) {
-    allRecords.push(...computeHistory(entries, eventDef, 'single'));
-    allRecords.push(...computeHistory(entries, eventDef, 'average'));
+    allRecords.push(...computeHistory(entries, eventDef, 'single', startDate));
+    allRecords.push(...computeHistory(entries, eventDef, 'average', startDate));
   }
   const currentRecords = [];
   for (const eventDef of events) {
@@ -444,7 +448,10 @@ function walkStreak(points) {
   };
 }
 
-function overallCompetitionStreak(entries, wcaId) {
+// `entries` should hold everything up to the end date. With `startDate`, PRs
+// are still judged against everything before it, but only competitions on or
+// after `startDate` take part in the streak (time frame).
+function overallCompetitionStreak(entries, wcaId, startDate) {
   const own = entries.filter((e) => e.wcaId === wcaId);
   const compInfo = new Map();
   for (const e of own) {
@@ -470,15 +477,17 @@ function overallCompetitionStreak(entries, wcaId) {
         bestSoFar.set(key, value);
       }
     }
-    points.push({ isPr, name: compInfo.get(compId).name });
+    const info = compInfo.get(compId);
+    if (startDate && !(info.date && info.date >= startDate)) continue;
+    points.push({ isPr, name: info.name });
   }
   return walkStreak(points);
 }
 
-export function computeStreaksSnapshot(events, entries, peopleSnapshot) {
+export function computeStreaksSnapshot(events, entries, peopleSnapshot, startDate = null) {
   return {
     generatedAt: new Date().toISOString(),
-    overall: peopleSnapshot.map((p) => ({ wcaId: p.wcaId, name: p.name, streak: overallCompetitionStreak(entries, p.wcaId) })),
+    overall: peopleSnapshot.map((p) => ({ wcaId: p.wcaId, name: p.name, streak: overallCompetitionStreak(entries, p.wcaId, startDate) })),
     events: events.map((e) => ({ id: e.id, name: e.name })),
     byEvent: {}, // round-level side panel isn't covered by time travel (known gap)
   };
