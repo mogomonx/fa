@@ -1114,3 +1114,9 @@ body.personal-mode #profile-back { display: none; }
 }
 
 .profile-box.name-settings { margin-top: 1.5rem; }
+
+/* Upcoming competitions: let long cells wrap instead of scrolling sideways */
+.scroll-table.upcoming-list th,
+.scroll-table.upcoming-list td { white-space: normal; }
+
+.scroll-table.upcoming-list td:nth-child(4) { min-width: 9rem; }
