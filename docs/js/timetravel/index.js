@@ -5,6 +5,10 @@
 // Profiles, Compare and the Home members directory pick it up automatically
 // since they read `store`.
 //
+// The controls now live on settings.html (site-wide) and only save to
+// localStorage (timetravel/storage.js). This module restores the saved view
+// when a list loads and drives the "date view active" banner.
+//
 // On This Date = an end date only. Time frame = optional start and end.
 // If both are set, the earlier end date wins.
 //
@@ -13,8 +17,6 @@
 // streak panel.
 
 import { store } from '../store.js';
-import { formatDate } from '../format.js';
-import { setupRangePicker } from '../datepicker.js';
 import {
   buildPeopleSnapshot,
   computeRankingsSnapshot,
@@ -22,59 +24,37 @@ import {
   computeHistoricalSnapshot,
   computeStreaksSnapshot,
 } from './compute.js';
+import {
+  TIME_TRAVEL_STORAGE_KEY,
+  TIME_FRAME_STORAGE_KEY,
+  loadTravel,
+  saveTravel,
+  loadFrame,
+  saveFrame,
+  cleanDate,
+  effectiveEnd,
+  rangeProblem,
+  prettyDate,
+} from './storage.js';
 
-export const TIME_TRAVEL_STORAGE_KEY = 'fa-time-travel-date';
-export const TIME_FRAME_STORAGE_KEY = 'fa-time-frame';
-
-const ISO = /^\d{4}-\d{2}-\d{2}$/;
-const cleanDate = (v) => (typeof v === 'string' && ISO.test(v) ? v : null);
-
-function loadFrame() {
-  try {
-    const raw = localStorage.getItem(TIME_FRAME_STORAGE_KEY);
-    if (!raw) return null;
-    const o = JSON.parse(raw);
-    const start = cleanDate(o.start);
-    const end = cleanDate(o.end);
-    return start || end ? { start, end } : null;
-  } catch (e) {
-    return null;
-  }
-}
-
-function saveFrame(frame) {
-  try {
-    if (frame) localStorage.setItem(TIME_FRAME_STORAGE_KEY, JSON.stringify(frame));
-    else localStorage.removeItem(TIME_FRAME_STORAGE_KEY);
-  } catch (e) {
-    // storage unavailable: the frame just won't be remembered
-  }
-}
-
-function setStatus(text) {
-  for (const id of ['time-travel-status', 'time-frame-status']) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text;
-  }
-}
+export { TIME_TRAVEL_STORAGE_KEY, TIME_FRAME_STORAGE_KEY };
 
 function viewLabel(start, end) {
-  if (start && end) return `from ${formatDate(start)} to ${formatDate(end)}`;
-  if (start) return `from ${formatDate(start)}`;
-  return `as of ${formatDate(end)}`;
+  if (start && end) return `from ${prettyDate(start)} to ${prettyDate(end)}`;
+  if (start) return `from ${prettyDate(start)}`;
+  return `as of ${prettyDate(end)}`;
 }
 
-// The earlier of On This Date and the frame's end date (or null).
-function effectiveEnd(travel, frameEnd) {
-  return [travel, frameEnd].filter(Boolean).sort()[0] || null;
-}
-
-function rangeProblem(travel, start, frameEnd) {
-  const end = effectiveEnd(travel, frameEnd);
-  if (start && end && start > end) {
-    return 'The start date is after the end date (the earlier of On This Date and the time frame end). Nothing was changed.';
+function updateBanner(start, end) {
+  const banner = document.getElementById('date-banner');
+  const text = document.getElementById('date-banner-text');
+  if (!banner) return;
+  if (!start && !end) {
+    banner.hidden = true;
+    return;
   }
-  return null;
+  if (text) text.textContent = `Showing the site ${viewLabel(start, end)}.`;
+  banner.hidden = false;
 }
 
 function recompute(refreshAll) {
@@ -89,7 +69,6 @@ function recompute(refreshAll) {
     store.individual = live.individual;
     store.historical = live.historical;
     store.streaks = live.streaks;
-    setStatus('Showing live data.');
   } else {
     const label = viewLabel(start, end);
     const events = live.rankings.events;
@@ -108,10 +87,9 @@ function recompute(refreshAll) {
 
     store.people.clear();
     for (const row of store.rankings.people) store.people.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
-
-    setStatus(`Showing the site ${label}.`);
   }
 
+  updateBanner(start, end);
   refreshAll();
 
   const pageTitle = document.getElementById('page-title');
@@ -140,77 +118,24 @@ export function applyTimeFrame(start, end, refreshAll) {
   recompute(refreshAll);
 }
 
-// Wires the Settings-page controls. Called once at startup.
-export function setupTimeTravel(refreshAll) {
-  // ----- On This Date -----
-  const input = document.getElementById('time-travel-date');
-  const applyBtn = document.getElementById('time-travel-apply');
-  const clearBtn = document.getElementById('time-travel-clear');
-  const stored = cleanDate(localStorage.getItem(TIME_TRAVEL_STORAGE_KEY));
-  if (input && stored) input.value = stored;
-
-  // ----- Time frame -----
-  store.timeFrame = loadFrame();
-  const startInput = document.getElementById('time-frame-start');
-  const endInput = document.getElementById('time-frame-end');
-  if (startInput) startInput.value = store.timeFrame?.start || '';
-  if (endInput) endInput.value = store.timeFrame?.end || '';
-  setupRangePicker(startInput, endInput);
-
-  if (applyBtn && input) {
-    applyBtn.addEventListener('click', () => {
-      if (!input.value) return;
-      const problem = rangeProblem(input.value, store.timeFrame?.start, store.timeFrame?.end);
-      if (problem) {
-        setStatus(problem);
-        return;
-      }
-      localStorage.setItem(TIME_TRAVEL_STORAGE_KEY, input.value);
-      applyTimeTravel(input.value, refreshAll);
-    });
-  }
-  if (clearBtn && input) {
-    clearBtn.addEventListener('click', () => {
-      localStorage.removeItem(TIME_TRAVEL_STORAGE_KEY);
-      input.value = '';
-      applyTimeTravel(null, refreshAll);
-    });
-  }
-
-  const frameApply = document.getElementById('time-frame-apply');
-  const clearStart = document.getElementById('time-frame-clear-start');
-  const clearEnd = document.getElementById('time-frame-clear-end');
-  const frameReset = document.getElementById('time-frame-reset');
-
-  if (frameApply && startInput && endInput) {
-    frameApply.addEventListener('click', () => {
-      const s = cleanDate(startInput.value);
-      const e = cleanDate(endInput.value);
-      const problem = rangeProblem(store.timeTravelDate, s, e);
-      if (problem) {
-        setStatus(problem);
-        return;
-      }
-      saveFrame(s || e ? { start: s, end: e } : null);
-      applyTimeFrame(s, e, refreshAll);
-    });
-  }
-  if (clearStart && startInput) clearStart.addEventListener('click', () => { startInput.value = ''; });
-  if (clearEnd && endInput) clearEnd.addEventListener('click', () => { endInput.value = ''; });
-  if (frameReset && startInput && endInput) {
-    frameReset.addEventListener('click', () => {
-      startInput.value = '';
-      endInput.value = '';
-      saveFrame(null);
-      applyTimeFrame(null, null, refreshAll);
-    });
-  }
+// Wires the banner's "Back to live" button. Called once at startup.
+export function setupDateBanner(refreshAll) {
+  const btn = document.getElementById('date-banner-live');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    saveTravel(null);
+    saveFrame(null);
+    store.timeTravelDate = null;
+    store.timeFrame = null;
+    recompute(refreshAll);
+  });
 }
 
-// Called after data has loaded: re-applies previously saved settings.
+// Called after data has loaded: re-applies the saved settings.
 export function restoreTimeTravel(refreshAll) {
-  store.timeTravelDate = cleanDate(localStorage.getItem(TIME_TRAVEL_STORAGE_KEY));
-  const frame = store.timeFrame || null;
-  if (frame && rangeProblem(store.timeTravelDate, frame.start, frame.end)) store.timeFrame = null;
+  store.timeTravelDate = loadTravel();
+  let frame = loadFrame();
+  if (frame && rangeProblem(store.timeTravelDate, frame.start, frame.end)) frame = null;
+  store.timeFrame = frame;
   if (store.timeTravelDate || store.timeFrame) recompute(refreshAll);
 }
