@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rankings</title>
 <link rel="stylesheet" href="style.css">
+<script src="js/theme.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -16,11 +17,17 @@
       <button type="button" class="header-btn tab-btn" data-tab="home" aria-label="Home" title="Home">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </button>
-      <button type="button" class="header-btn tab-btn" data-tab="settings" aria-label="Settings" title="Settings">
+      <a class="header-btn" href="settings.html" aria-label="Settings" title="Settings">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
+      </a>
     </div>
   </header>
+
+  <div class="date-banner" id="date-banner" hidden>
+    <span id="date-banner-text"></span>
+    <a href="settings.html">Change</a>
+    <button type="button" class="csv-btn" id="date-banner-live">Back to live</button>
+  </div>
 
   <div class="menu-backdrop" id="menu-backdrop"></div>
   <nav class="side-menu" id="side-menu" aria-label="Main menu">
@@ -34,7 +41,8 @@
     <button type="button" class="menu-item tab-btn" data-tab="misc">Misc</button>
     <div class="menu-footer">
       <div id="auth-slot"></div>
-      <a href="lists.html" class="menu-item" id="edit-list-link" hidden>Edit this list</a> 
+      <a href="lists.html" class="menu-item" id="edit-list-link" hidden>Edit this list</a>
+      <a href="home.html" class="menu-item">Site home</a>
       <a href="lists.html" class="menu-item">Switch list</a>
     </div>
   </nav>
@@ -54,13 +62,13 @@
         <a href="#" class="home-link" data-tab="events"><strong>Rankings</strong><span>Single and average rankings for every event.</span></a>
         <a href="#" class="home-link" data-tab="individual"><strong>Results</strong><span>Every result anyone's ever recorded, not just personal bests.</span></a>
         <a href="#" class="home-link" data-tab="overall"><strong>All-Rounding (SoR &amp; Kinch)</strong><span>The two combined ranking systems.</span></a>
-        <a href="#" class="home-link" data-tab="compare"><strong>Compare</strong><span>Head-to-head between two people, or find your nemesis.</span></a>
+        <a href="#" class="home-link" data-tab="compare"><strong>Compare</strong><span>Head-to-head between people, or find your nemesis.</span></a>
         <a href="#" class="home-link" data-tab="rolling"><strong>Rolling</strong><span>Unofficial rolling mo3/ao5/ao12/ao25/ao50/ao100 rankings.</span></a>
-        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>Top 100 tally, records set per person, streaks, and other odds and ends.</span></a>
+        <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>A growing list of statistics: Top 100 tally, streaks, records set and more. There's a random one too.</span></a>
         <a href="#" class="home-link" data-tab="misc" data-subtab="prcount"><strong>PR Counting</strong><span>Each person's best counting result, from solves that weren't dropped.</span></a>
         <a href="#" class="home-link" data-tab="misc" data-subtab="history"><strong>Historical Records</strong><span>Every group record ever set, in order, by event.</span></a>
         <a href="#" class="home-link" data-tab="misc" data-subtab="improvement"><strong>Improvement</strong><span>See how much someone's improved between two dates.</span></a>
-        <a href="#" class="home-link" data-tab="settings"><strong>Settings</strong><span>Customise the site's colours and view it as of a past date.</span></a>
+        <a href="settings.html" class="home-link"><strong>Settings</strong><span>Customise the site's colours and view it as of a past date.</span></a>
       </div>
       <div class="board" id="home-members" style="margin-bottom:1.5rem;"></div>
 
@@ -195,20 +203,14 @@
     </section>
 
     <section id="tab-misc" class="tab-panel">
-      <div class="subtabs" id="misc-subtabs">
-        <button class="subtab-btn active" data-subtab="top100">Top 100</button>
-        <button class="subtab-btn" data-subtab="farcounts">Records Set</button>
-        <button class="subtab-btn" data-subtab="age">Record Age</button>
-        <button class="subtab-btn" data-subtab="streaks">PR Streaks</button>
-        <button class="subtab-btn" data-subtab="streaks-event">Event Streaks</button>
-        <button class="subtab-btn" data-subtab="prcount">PR Counting</button>
-        <button class="subtab-btn" data-subtab="upcoming">Upcoming Competitions</button>
-        <button class="subtab-btn" data-subtab="consistency">Consistency</button>
-        <button class="subtab-btn" data-subtab="history">Historical Records</button>
-        <button class="subtab-btn" data-subtab="improvement">Improvement</button>
+      <!-- Misc is a list of statistics. To add one: add a subtab-panel below with data-title and data-desc. -->
+      <div class="stat-toolbar">
+        <button type="button" class="back-link" id="stat-back" hidden>&larr; All statistics</button>
+        <button type="button" class="csv-btn" id="stat-random">Random statistic</button>
       </div>
+      <div class="stat-list" id="misc-subtabs"></div>
 
-      <div id="subtab-top100" class="subtab-panel active">
+      <div id="subtab-top100" class="subtab-panel" data-title="Top 100" data-desc="How many of the group's top-100 results per event belong to each person.">
         <div class="panel-controls">
           <div class="toggle" id="top100-type-toggle">
             <button class="toggle-btn active" data-type="single">Single</button>
@@ -226,7 +228,7 @@
         <div id="top100-detailed-view" class="scroll-table" style="display:none;"></div>
       </div>
 
-      <div id="subtab-farcounts" class="subtab-panel">
+      <div id="subtab-farcounts" class="subtab-panel" data-title="Records Set" data-desc="Who has set the most group records, overall and per event.">
         <div class="panel-controls">
           <div class="toggle" id="far-type-toggle">
             <button class="toggle-btn active" data-type="single">Single</button>
@@ -243,7 +245,7 @@
         <div id="far-detailed-view" class="scroll-table" style="display:none;"></div>
       </div>
 
-      <div id="subtab-age" class="subtab-panel">
+      <div id="subtab-age" class="subtab-panel" data-title="Record Age" data-desc="How long records and personal bests have been standing, or the longest-standing ever.">
         <div class="panel-controls">
           <div class="toggle" id="age-mode-toggle">
             <button class="toggle-btn active" data-mode="far">Records only</button>
@@ -256,7 +258,7 @@
         <div id="age-table"></div>
       </div>
 
-      <div id="subtab-streaks" class="subtab-panel">
+      <div id="subtab-streaks" class="subtab-panel" data-title="PR Streaks" data-desc="Consecutive competitions in a row with a PR in any event.">
         <div class="panel-controls">
           <div class="toggle" id="streaks-mode-toggle">
             <button class="toggle-btn active" data-mode="current">Current</button>
@@ -269,7 +271,7 @@
         </div>
       </div>
 
-      <div id="subtab-streaks-event" class="subtab-panel">
+      <div id="subtab-streaks-event" class="subtab-panel" data-title="Event Streaks" data-desc="PR streaks within a single event, counted by round.">
         <div class="panel-controls">
           <div class="toggle" id="streaks-event-mode-toggle">
             <button class="toggle-btn active" data-mode="current">Current</button>
@@ -287,7 +289,7 @@
         </div>
       </div>
 
-      <div id="subtab-prcount" class="subtab-panel">
+      <div id="subtab-prcount" class="subtab-panel" data-title="PR Counting" data-desc="Each person's best counting result, from solves that weren't dropped.">
         <div class="panel-controls">
           <div class="event-picker" id="prcount-event-select"></div>
         </div>
@@ -295,12 +297,12 @@
         <div id="prcount-table"></div>
       </div>
 
-      <div id="subtab-upcoming" class="subtab-panel">
+      <div id="subtab-upcoming" class="subtab-panel" data-title="Upcoming Competitions" data-desc="Competitions group members are registered for, with psych sheets.">
         <p class="board-note" id="upcoming-note"></p>
         <div id="upcoming-table"></div>
       </div>
 
-      <div id="subtab-consistency" class="subtab-panel">
+      <div id="subtab-consistency" class="subtab-panel" data-title="Consistency" data-desc="Who has the most consistent results (lowest standard deviation).">
         <div class="panel-controls">
           <div class="event-picker" id="consistency-event-select"></div>
           <div class="toggle" id="consistency-type-toggle">
@@ -312,7 +314,7 @@
         <div id="consistency-table"></div>
       </div>
 
-      <div id="subtab-history" class="subtab-panel">
+      <div id="subtab-history" class="subtab-panel" data-title="Historical Records" data-desc="Every group record ever set, in order, by event.">
         <div class="panel-controls">
           <div class="event-picker" id="history-event-select"></div>
         </div>
@@ -320,7 +322,7 @@
         <div id="historical-records-table"></div>
       </div>
 
-      <div id="subtab-improvement" class="subtab-panel">
+      <div id="subtab-improvement" class="subtab-panel" data-title="Improvement" data-desc="How much each person improved between two dates.">
         <p class="board-note">Compares each person's best result as of two dates, and shows the competition each was achieved at.</p>
         <div class="panel-controls">
           <div class="event-picker" id="improvement-event-select"></div>
@@ -337,47 +339,6 @@
         <p class="board-note">Sorted most-improved first.</p>
         <div id="improvement-table"></div>
       </div>
-    </section>
-
-    <section id="tab-settings" class="tab-panel">
-      <p class="board-note">Colours are saved in your browser, so they're personal to this device.</p>
-      <div class="settings-grid" id="settings-grid">
-        <label>Background <input type="color" id="setting-bg" data-var="--bg"></label>
-        <label>Panel <input type="color" id="setting-panel" data-var="--panel"></label>
-        <label>Panel border <input type="color" id="setting-panel-border" data-var="--panel-border"></label>
-        <label>Text <input type="color" id="setting-text" data-var="--text"></label>
-        <label>Dim text <input type="color" id="setting-text-dim" data-var="--text-dim"></label>
-        <label>Accent <input type="color" id="setting-accent" data-var="--accent"></label>
-        <label>Link colour <input type="color" id="setting-link" data-var="--link"></label>
-        <label>Gold <input type="color" id="setting-gold" data-var="--gold"></label>
-        <label>Silver <input type="color" id="setting-silver" data-var="--silver"></label>
-        <label>Bronze <input type="color" id="setting-bronze" data-var="--bronze"></label>
-        <label>Event icons <input type="color" id="setting-event-icon" data-var="--event-icon-colour"></label>
-      </div>
-      <button class="back-link" id="settings-reset" style="margin-top:1rem;">Reset to default</button>
-
-      <h2 style="margin:2rem 0 0.5rem;">On This Date</h2>
-      <p class="board-note">View the whole site as it stood on a past date — Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Historical Records, Record Age, Streaks, Compare, and profiles all recompute from that date. Recent Activity, Upcoming Competitions, Rolling Averages, PR Counting, and Consistency stay live regardless. Saved in your browser, so it stays set until you clear it.</p>
-      <div class="panel-controls">
-        <input type="date" id="time-travel-date">
-        <button class="csv-btn" id="time-travel-apply">View this date</button>
-        <button class="csv-btn" id="time-travel-clear">Back to live</button>
-      </div>
-      <p class="board-note" id="time-travel-status"></p>
-      
-      <h2 style="margin:2rem 0 0.5rem;">Time frame</h2>
-      <p class="board-note">Only count results from competitions inside a start and end date, for example just 2026. Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Compare and profiles use only results from inside the frame. PR Streaks and Historical Records judge PRs and records against everything before the end date, but only show the ones set inside the frame. Set a start, an end, or both; if On This Date is also set, the earlier end date wins. Recent Activity, Upcoming Competitions, Rolling Averages, PR Counting and Consistency stay live. Saved in your browser.</p>
-      <div class="panel-controls" style="justify-content:flex-start;">
-        <label>From <input type="text" class="date-input" id="time-frame-start" readonly></label>
-        <label>To <input type="text" class="date-input" id="time-frame-end" readonly></label>
-      </div>
-      <div class="panel-controls" style="justify-content:flex-start;">
-        <button class="csv-btn" id="time-frame-apply">Apply time frame</button>
-        <button class="csv-btn" id="time-frame-clear-start">Clear start</button>
-        <button class="csv-btn" id="time-frame-clear-end">Clear end</button>
-        <button class="csv-btn" id="time-frame-reset">Remove time frame</button>
-      </div>
-      <p class="board-note" id="time-frame-status"></p>
     </section>
 
     <section id="tab-members" class="tab-panel">
