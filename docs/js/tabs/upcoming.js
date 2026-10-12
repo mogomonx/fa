@@ -27,14 +27,22 @@ function sortedEventIds(ids) {
 
 function iconsHtml(ids) {
   const byId = new Map(eventList().map((e) => [e.id, e]));
-  return sortedEventIds(ids).map((id) => eventIcon(id, byId.get(id)?.name || id)).join(' ');
+  return sortedEventIds(ids)
+    .map((id) => eventIcon(id, byId.get(id)?.name || id))
+    .join(' ');
 }
 
 function attendeeLinks(attendees) {
   return attendees.map((a) => nameLink(a.wcaId, esc(nameOf(a)))).join(', ');
 }
 
+// The list tables are plain tables (they wrap long cells instead of
+// scrolling sideways); the wrapper only scrolls if the screen is very narrow.
+const WRAP_STYLE = 'overflow-x:auto;';
+
 let openId = null; // competition shown in the psych sheet view
+
+// ---------- Misc > Upcoming Competitions ----------
 
 export function renderUpcoming() {
   const note = document.getElementById('upcoming-note');
@@ -61,14 +69,15 @@ export function renderUpcoming() {
   }
 
   if (comps.length === 0) {
-    note.textContent = 'No upcoming competitions in the next ~6 months have anyone from this list registered (only accepted registrations are visible).';
+    note.textContent =
+      'No upcoming competitions in the next ~6 months have anyone from this list registered (only accepted registrations are visible).';
     container.innerHTML = '';
     return;
   }
   note.textContent = 'Upcoming competitions (next ~6 months) with people from this list registered. Click a competition for its psych sheet.';
 
   container.innerHTML = `
-    <div class="scroll-table">
+    <div style="${WRAP_STYLE}">
       <table>
         <thead><tr><th>Date</th><th>Competition</th><th>Where</th><th>Events</th><th>Attending</th></tr></thead>
         <tbody>
@@ -76,10 +85,10 @@ export function renderUpcoming() {
             .map(
               (c) => `
             <tr>
-              <td>${dateText(c)}</td>
+              <td style="white-space:nowrap;">${dateText(c)}</td>
               <td><a href="#" class="upcoming-open" data-comp="${esc(c.id)}">${esc(c.name)}</a></td>
               <td>${esc(placeText(c))}</td>
-              <td>${iconsHtml(c.eventIds || [])}</td>
+              <td style="min-width:9rem;">${iconsHtml(c.eventIds || [])}</td>
               <td>${(c.attendees || []).length}: ${attendeeLinks(c.attendees || [])}</td>
             </tr>`
             )
@@ -96,6 +105,8 @@ export function renderUpcoming() {
     })
   );
 }
+
+// ---------- Psych sheet for one competition ----------
 
 function renderDetail(note, container, comp) {
   note.textContent = 'Registered group members only, ranked by their result within the group. NR/CR/WR are their official WCA ranks.';
@@ -134,6 +145,7 @@ function psychTable(ev, attendees) {
     s: (ev.single || []).find((r) => r.wcaId === a.wcaId),
     av: ev.hasAverage ? (ev.average || []).find((r) => r.wcaId === a.wcaId) : null,
   }));
+  // Average events sort by group average rank first, then single; others by single.
   rows.sort(
     (x, y) =>
       (ev.hasAverage ? (x.av ? x.av.rank : big) - (y.av ? y.av.rank : big) : 0) ||
@@ -171,7 +183,8 @@ function psychTable(ev, attendees) {
     </div>`;
 }
 
-// HTML for the profile's "Upcoming competitions" tab.
+// ---------- Profile > Upcoming competitions tab ----------
+
 export function upcomingProfileHtml(wcaId, personal) {
   const up = store.upcoming;
   if (!up) return '<p class="empty-note">Upcoming competitions haven\'t been built for this list yet.</p>';
@@ -181,7 +194,7 @@ export function upcomingProfileHtml(wcaId, personal) {
   if (mine.length === 0) return '<p class="empty-note">Not registered for any upcoming competitions.</p>';
 
   return `
-    <div class="scroll-table">
+    <div style="${WRAP_STYLE}">
       <table>
         <thead><tr><th>Date</th><th>Competition</th><th>Where</th><th>Their events</th>${personal ? '' : '<th>Also going</th>'}</tr></thead>
         <tbody>
@@ -191,10 +204,10 @@ export function upcomingProfileHtml(wcaId, personal) {
               const others = c.attendees.filter((a) => a.wcaId !== wcaId);
               return `
             <tr>
-              <td>${dateText(c)}</td>
+              <td style="white-space:nowrap;">${dateText(c)}</td>
               <td><a href="${wcaUrl(c.id)}" target="_blank" rel="noopener">${esc(c.name)}</a></td>
               <td>${esc(placeText(c))}</td>
-              <td>${iconsHtml(me.eventIds || [])}</td>
+              <td style="min-width:9rem;">${iconsHtml(me.eventIds || [])}</td>
               ${personal ? '' : `<td>${others.length ? attendeeLinks(others) : '—'}</td>`}
             </tr>`;
             })
