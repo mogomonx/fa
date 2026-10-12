@@ -2,7 +2,7 @@
 // send the visitor to the picker.
 export const LIST_ID = new URLSearchParams(window.location.search).get('list');
 if (!LIST_ID) {
-  window.location.replace('lists.html');
+  window.location.replace('home.html');
 }
 export const DATA_BASE = `data/lists/${LIST_ID}/`;
 
