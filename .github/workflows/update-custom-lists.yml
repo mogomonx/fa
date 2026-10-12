@@ -130,3 +130,14 @@ jobs:
           done
           node scripts/upload-lists.js --level=full $SLUGS
           node scripts/mark-lists.js --level=full $SLUGS
+
+          
+      - name: Upcoming competitions
+        if: steps.mode.outputs.mode != 'pending' && steps.sync.outputs.slugs != ''
+        continue-on-error: true
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+        run: |
+          # One shared scan for every list, then upload just upcoming.json
+          node scripts/fetch-upcoming.js $SLUGS
+          node scripts/upload-lists.js --files=upcoming.json $SLUGS
