@@ -204,7 +204,7 @@ export function setupSubtabs(containerId) {
 }
 
 export function setupHomeLinks() {
-  document.querySelectorAll('.home-link').forEach((link) => {
+  document.querySelectorAll('.home-link[data-tab]').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       showPanel(link.dataset.tab, link.dataset.subtab);
