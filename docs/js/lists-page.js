@@ -615,14 +615,6 @@ export async function initLists() {
   }
   $("new-list-btn").addEventListener("click", () => renderEditor(null, [], !userId));
 
-  // The "My profile" button is optional: if its file is missing or broken, the
-  // lists page still works.
-  if (userId && myWcaId) {
-    import("./profile-button.js")
-      .then((m) => m.setupProfileButton({ wcaId: myWcaId, name: myName }))
-      .catch((err) => console.warn("My profile button unavailable:", err));
-  }
-
   await renderBrowser();
   await openEditFromUrl();
 }
