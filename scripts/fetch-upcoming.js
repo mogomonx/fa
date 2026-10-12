@@ -1,162 +1,181 @@
-// Automatically scans every upcoming WCA competition (within a window) for
-// our group's WCA IDs among the registrants, using each competition's
-// public WCIF. This replaces needing to manually list competition IDs --
-// though config/upcoming-competitions.json is still checked too, as a
-// fallback for competitions that don't use the WCA's internal registration
-// system (which can't be found by scanning, per the WCA's own docs).
+// Shared scan of upcoming WCA competitions. One pass over every competition
+// in the window serves every list: each competition's public WCIF is fetched
+// once and its registrants are matched against all lists' members.
 //
-// Run with: node scripts/fetch-upcoming.js
+//   node scripts/fetch-upcoming.js slug [slug ...]
+//
+// Writes build/data/<slug>/upcoming.json for each list. Lists with more than
+// MAX_MEMBERS members get a "skipped" file instead. If any competition can't
+// be fetched after the retries, NOTHING is written and the step exits 1, so
+// the previous upcoming.json in Storage is left alone.
 
 const fs = require('fs');
 const path = require('path');
-const { getListContext } = require('./lib/list-context');
+const { getListContext, readManifest } = require('./lib/list-context');
 
-const { membersPath: MEMBERS_PATH, upcomingConfigPath: UPCOMING_CONFIG_PATH, dataDir: DATA_DIR } = getListContext();
-const OUTPUT_PATH = path.join(DATA_DIR, 'upcoming.json');
-
-// How far ahead to scan. Wider = more API calls (one WCIF fetch per
-// competition found in the window). 182 days = ~6 months.
-const SCAN_DAYS_AHEAD = 182;
+const SCAN_DAYS_AHEAD = 182; // ~6 months
+const MAX_MEMBERS = 50;      // bigger lists are skipped
+const PAUSE_MS = 250;
+const API = 'https://www.worldcubeassociation.org/api/v0';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function todayStr() {
-  return new Date().toISOString().slice(0, 10);
+class HttpError extends Error {
+  constructor(status, url) {
+    super(`${url} returned ${status}`);
+    this.status = status;
+  }
 }
 
-function futureDateStr(days) {
-  const d = new Date();
-  d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
-}
+const retryable = (err) => !(err instanceof HttpError) || err.status === 429 || err.status >= 500;
 
-// Retries on rate limiting (429) and server errors (5xx) with backoff.
-async function fetchJson(url, attempts = 4) {
-  let lastError;
-  for (let attempt = 1; attempt <= attempts; attempt++) {
+// Retries 429, 5xx and network errors (waits honour Retry-After, otherwise
+// 5s doubling to 60s). Other statuses (e.g. 404) are thrown straight away.
+async function fetchJson(url, attempts = 8) {
+  let last;
+  for (let i = 1; i <= attempts; i++) {
+    let wait = Math.min(5000 * 2 ** (i - 1), 60000);
     try {
       const res = await fetch(url);
       if (res.ok) return await res.json();
-      if (res.status === 429 || res.status >= 500) {
-        lastError = new Error(`${url} returned ${res.status}`);
-      } else {
-        throw new Error(`${url} returned ${res.status}`);
-      }
+      last = new HttpError(res.status, url);
+      const retryAfter = Number(res.headers.get('retry-after'));
+      if (retryAfter > 0) wait = retryAfter * 1000;
     } catch (err) {
-      // Non-retryable errors (e.g. 404) are rethrown straight away.
-      if (/returned (?!429|5)\d+/.test(err.message)) throw err;
-      lastError = err;
+      last = err;
     }
-    if (attempt < attempts) await sleep(1000 * attempt * attempt);
+    if (!retryable(last)) throw last;
+    if (i < attempts) await sleep(wait);
   }
-  throw lastError;
+  throw last;
 }
 
-// Paginates through /api/v0/competitions for the given date window.
-// Stops only when a page is empty or adds no new competitions, so it does
-// not depend on the API's page size.
-async function listUpcomingCompetitionIds() {
-  const start = todayStr();
-  const end = futureDateStr(SCAN_DAYS_AHEAD);
-  const ids = new Set();
-  let page = 1;
-  // Safety cap so a pagination bug can't loop forever.
-  while (page <= 100) {
-    const url = `https://www.worldcubeassociation.org/api/v0/competitions?start=${start}&end=${end}&page=${page}`;
-    const batch = await fetchJson(url);
-    if (!Array.isArray(batch) || batch.length === 0) {
-      console.log(`  Page ${page}: empty, done.`);
-      break;
-    }
-    const before = ids.size;
-    for (const c of batch) {
-      if (c.id) ids.add(c.id);
-    }
-    const added = ids.size - before;
-    console.log(`  Page ${page}: ${batch.length} competitions (${added} new)`);
-    if (added === 0) break; // API returned a page we've already seen
-    page += 1;
-    await sleep(200);
+const dateStr = (offsetDays) => {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return d.toISOString().slice(0, 10);
+};
+
+// Every competition starting in the window (paginated).
+async function listCompetitions() {
+  const start = dateStr(0);
+  const end = dateStr(SCAN_DAYS_AHEAD);
+  const byId = new Map();
+  for (let page = 1; page <= 200; page++) {
+    const batch = await fetchJson(`${API}/competitions?start=${start}&end=${end}&page=${page}`);
+    if (!Array.isArray(batch) || batch.length === 0) break;
+    const before = byId.size;
+    for (const c of batch) if (c.id) byId.set(c.id, c);
+    console.log(`  Page ${page}: ${batch.length} competitions (${byId.size - before} new)`);
+    if (byId.size === before) break; // a page we've already seen
+    await sleep(PAUSE_MS);
   }
-  return [...ids];
-}
-
-async function fetchCompetition(competitionId, wcaIds, nameOverrides) {
-  const info = await fetchJson(`https://www.worldcubeassociation.org/api/v0/competitions/${competitionId}`);
-  const wcif = await fetchJson(`https://www.worldcubeassociation.org/api/v0/competitions/${competitionId}/wcif/public`);
-
-  const persons = wcif.persons || [];
-  const attendees = [];
-  for (const person of persons) {
-    if (person.registrantId == null) continue;
-    const wcaId = person.wcaId || person.wcaUserId;
-    if (!wcaIds.has(wcaId)) continue;
-    const eventIds = person.registration?.eventIds || [];
-    attendees.push({
-      wcaId,
-      name: nameOverrides.get(wcaId) || person.name || wcaId,
-      eventIds,
-    });
-  }
-
-  return {
-    id: competitionId,
-    name: info.name,
-    date: info.start_date || null,
-    endDate: info.end_date || null,
-    city: info.city || null,
-    eventIds: info.event_ids || [],
-    url: `https://www.worldcubeassociation.org/competitions/${competitionId}`,
-    attendees,
-  };
+  return [...byId.values()];
 }
 
 async function main() {
-  const { people: members } = JSON.parse(fs.readFileSync(MEMBERS_PATH, 'utf8'));
-  const wcaIds = new Set(members.map((m) => m.wcaId));
-  const nameOverrides = new Map(members.map((m) => [m.wcaId, m.displayName]));
+  const slugs = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+  const useSlugs = slugs.length ? slugs : readManifest().lists.map((l) => l.id);
 
-  console.log(`Scanning upcoming competitions in the next ${SCAN_DAYS_AHEAD} days...`);
-  const scannedIds = await listUpcomingCompetitionIds();
-  console.log(`Found ${scannedIds.length} upcoming competitions to check.`);
+  const lists = useSlugs.map((slug) => {
+    const ctx = getListContext(slug);
+    const { people } = JSON.parse(fs.readFileSync(ctx.membersPath, 'utf8'));
+    return { slug, ctx, people, eligible: people.length <= MAX_MEMBERS, found: [] };
+  });
 
-  let manualIds = [];
-  try {
-    manualIds = JSON.parse(fs.readFileSync(UPCOMING_CONFIG_PATH, 'utf8')).competitionIds || [];
-  } catch (e) {
-    // no manual list -- fine, the scan covers the normal case
-  }
-
-  const allIds = [...new Set([...scannedIds, ...manualIds])];
-
-  const competitions = [];
-  const failed = [];
-  for (let i = 0; i < allIds.length; i++) {
-    const id = allIds[i];
-    console.log(`Checking ${id} (${i + 1}/${allIds.length})...`);
-    try {
-      const comp = await fetchCompetition(id, wcaIds, nameOverrides);
-      if (comp.attendees.length > 0) {
-        competitions.push(comp);
-        console.log(`  -> ${comp.attendees.length} group attendee(s)`);
-      }
-    } catch (err) {
-      failed.push(id);
-      console.error(`  Failed to check ${id}: ${err.message}`);
+  // wcaId -> eligible lists they are on
+  const listsByPerson = new Map();
+  const nameFor = new Map(); // `${slug}|${wcaId}` -> displayName
+  for (const l of lists) {
+    if (!l.eligible) continue;
+    for (const p of l.people) {
+      if (!listsByPerson.has(p.wcaId)) listsByPerson.set(p.wcaId, []);
+      listsByPerson.get(p.wcaId).push(l);
+      if (p.displayName) nameFor.set(`${l.slug}|${p.wcaId}`, p.displayName);
     }
-    await sleep(200);
   }
 
-  competitions.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+  const failed = [];
+  let scanned = 0;
 
-  fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
-  fs.writeFileSync(
-    OUTPUT_PATH,
-    JSON.stringify({ generatedAt: new Date().toISOString(), competitions }, null, 2)
-  );
-  console.log(`Checked ${allIds.length} competitions, ${failed.length} failed.`);
-  if (failed.length) console.log(`Failed IDs: ${failed.join(', ')}`);
-  console.log(`Wrote ${OUTPUT_PATH} (${competitions.length} competitions with group attendees)`);
+  if (listsByPerson.size > 0) {
+    console.log(`Scanning upcoming competitions (next ${SCAN_DAYS_AHEAD} days)...`);
+    const comps = await listCompetitions();
+    console.log(`Found ${comps.length} competitions.`);
+    const now = Date.now();
+
+    for (let i = 0; i < comps.length; i++) {
+      const c = comps[i];
+      // Nobody can be registered before registration opens.
+      const opens = c.registration_open ? Date.parse(c.registration_open) : NaN;
+      if (!Number.isNaN(opens) && opens > now) continue;
+
+      scanned++;
+      let wcif;
+      try {
+        wcif = await fetchJson(`${API}/competitions/${encodeURIComponent(c.id)}/wcif/public`);
+      } catch (err) {
+        if (err instanceof HttpError && err.status === 404) {
+          // No public WCIF (e.g. not using WCA registration): nothing to find.
+          await sleep(PAUSE_MS);
+          continue;
+        }
+        failed.push(c.id);
+        console.error(`  Failed ${c.id}: ${err.message}`);
+        await sleep(PAUSE_MS);
+        continue;
+      }
+
+      const perList = new Map(); // slug -> attendees
+      for (const person of wcif.persons || []) {
+        if (!person.wcaId || !listsByPerson.has(person.wcaId)) continue;
+        const status = person.registration?.status;
+        if (status && status !== 'accepted') continue;
+        const eventIds = person.registration?.eventIds || [];
+        for (const l of listsByPerson.get(person.wcaId)) {
+          if (!perList.has(l.slug)) perList.set(l.slug, []);
+          perList.get(l.slug).push({
+            wcaId: person.wcaId,
+            name: nameFor.get(`${l.slug}|${person.wcaId}`) || person.name || person.wcaId,
+            eventIds,
+          });
+        }
+      }
+
+      for (const [slug, attendees] of perList) {
+        lists.find((l) => l.slug === slug).found.push({
+          id: c.id,
+          name: c.name,
+          date: c.start_date || null,
+          endDate: c.end_date || null,
+          city: c.city || null,
+          country: c.country_iso2 || null,
+          eventIds: c.event_ids || (wcif.events || []).map((e) => e.id),
+          url: `https://www.worldcubeassociation.org/competitions/${c.id}`,
+          attendees,
+        });
+        console.log(`  ${c.id}: ${attendees.length} from ${slug}`);
+      }
+      if ((i + 1) % 100 === 0) console.log(`  ...${i + 1}/${comps.length} checked`);
+      await sleep(PAUSE_MS);
+    }
+  }
+
+  if (failed.length) {
+    console.error(`${failed.length} competition(s) could not be fetched: ${failed.join(', ')}`);
+    console.error('Nothing written; the previous upcoming.json stays in place. The next run retries.');
+    process.exit(1);
+  }
+
+  const generatedAt = new Date().toISOString();
+  for (const l of lists) {
+    fs.mkdirSync(l.ctx.dataDir, { recursive: true });
+    const body = l.eligible
+      ? { generatedAt, scanned, competitions: l.found.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999')) }
+      : { generatedAt, skipped: true, maxMembers: MAX_MEMBERS, competitions: [] };
+    fs.writeFileSync(path.join(l.ctx.dataDir, 'upcoming.json'), JSON.stringify(body));
+    console.log(`${l.slug}: ${l.eligible ? `${l.found.length} competition(s)` : 'skipped (too many members)'}`);
+  }
 }
 
 main().catch((err) => {
