@@ -364,6 +364,20 @@
         <button class="csv-btn" id="time-travel-clear">Back to live</button>
       </div>
       <p class="board-note" id="time-travel-status"></p>
+      
+      <h2 style="margin:2rem 0 0.5rem;">Time frame</h2>
+      <p class="board-note">Only count results from competitions inside a start and end date, for example just 2026. Records, Event Rankings, Sum of Ranks/Kinch, Individual Results, Top 100, Compare and profiles use only results from inside the frame. PR Streaks and Historical Records judge PRs and records against everything before the end date, but only show the ones set inside the frame. Set a start, an end, or both; if On This Date is also set, the earlier end date wins. Recent Activity, Upcoming Competitions, Rolling Averages, PR Counting and Consistency stay live. Saved in your browser.</p>
+      <div class="panel-controls" style="justify-content:flex-start;">
+        <label>From <input type="text" class="date-input" id="time-frame-start" readonly></label>
+        <label>To <input type="text" class="date-input" id="time-frame-end" readonly></label>
+      </div>
+      <div class="panel-controls" style="justify-content:flex-start;">
+        <button class="csv-btn" id="time-frame-apply">Apply time frame</button>
+        <button class="csv-btn" id="time-frame-clear-start">Clear start</button>
+        <button class="csv-btn" id="time-frame-clear-end">Clear end</button>
+        <button class="csv-btn" id="time-frame-reset">Remove time frame</button>
+      </div>
+      <p class="board-note" id="time-frame-status"></p>
     </section>
 
     <section id="tab-members" class="tab-panel">
