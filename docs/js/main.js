@@ -1,17 +1,17 @@
-import { DATA_BASE, LIST_ID, store, state } from './store.js';
+import { LIST_ID, store, state } from './store.js';
 import { setupTabs, setupSideMenu, setupHomeLinks, setupSubtabs, setupToggle, setupCsvButtons, populateEventSelect } from './ui.js';
-import { setupSettings, applyStoredSettings } from './settings.js';
 import { renderFaRecords, renderRecentActivity, setupProfileSearch } from './tabs/home.js';
 import { renderHomeMembers } from './tabs/home-members.js';
 import { renderSor, renderKinch } from './tabs/overall.js';
 import { renderEventTable, renderIndividual, renderTop100, renderHistory } from './tabs/events.js';
 import { renderFarCounts, renderAge, renderStreaks, renderUpcoming, renderConsistency, renderPrCounting, prCountEvents } from './tabs/misc.js';
+import { setupStatsList } from './tabs/stats-list.js';
 import { renderMembers } from './tabs/members.js';
 import { setupNameLinkDelegation } from './tabs/profile.js';
 import { populateCompareSelects, renderHeadToHead, renderNemesis } from './tabs/compare.js';
 import { setupImprovementDates, renderImprovement } from './tabs/improvement.js';
 import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
-import { setupTimeTravel, restoreTimeTravel } from './timetravel/index.js';
+import { setupDateBanner, restoreTimeTravel } from './timetravel/index.js';
 
 function friendly(message) {
   const e = new Error(message);
@@ -19,22 +19,10 @@ function friendly(message) {
   return e;
 }
 
-// Where this list's JSON comes from:
-//  - 'static':  the committed docs/data/lists/<id>/ folder (built-in lists)
-//  - 'storage': the private Supabase bucket (database lists), looked up by slug.
-// Static is tried first, so retiring a built-in list is just deleting its folder.
+// Where this list's JSON comes from: the private Supabase bucket, looked up by slug.
 let source = null;
 
 async function resolveSource() {
-  try {
-    const res = await fetch(`${DATA_BASE}rankings.json`, { cache: 'no-store' });
-    if (res.ok) {
-      source = { kind: 'static', preloaded: { 'rankings.json': await res.json() } };
-      return;
-    }
-  } catch (e) {
-    // fall through to Supabase
-  }
   let supabase;
   try {
     ({ supabase } = await import('./auth.js'));
@@ -45,7 +33,7 @@ async function resolveSource() {
   if (error || !data || data.length === 0) {
     throw friendly('List not found. If it is private, log in with your WCA account (menu) and reload.');
   }
-  source = { kind: 'storage', supabase, listId: data[0].id, list: data[0], preloaded: {} };
+  source = { supabase, listId: data[0].id, list: data[0] };
 }
 
 // Shows "Edit this list" in the side menu for the list's owner, or for the
@@ -94,7 +82,7 @@ function renameEverywhere(root, wcaId, name) {
 // chose official names only. A name the owner typed for them on this list
 // wins, so the overlay is skipped in that case too.
 async function applyOwnName(datasets) {
-  if (!source || source.kind !== 'storage') return;
+  if (!source) return;
   const list = source.list;
   if (!list || list.official_names_only || list.kind === 'personal') return;
   try {
@@ -122,14 +110,8 @@ async function applyOwnName(datasets) {
 
 async function fetchJson(file, required) {
   try {
-    if (source.preloaded[file]) return source.preloaded[file];
-    if (source.kind === 'static') {
-      const res = await fetch(`${DATA_BASE}${file}`, { cache: 'no-store' });
-      if (res.ok) return await res.json();
-    } else {
-      const { data, error } = await source.supabase.storage.from('list-data').download(`${source.listId}/${file}`);
-      if (!error && data) return JSON.parse(await data.text());
-    }
+    const { data, error } = await source.supabase.storage.from('list-data').download(`${source.listId}/${file}`);
+    if (!error && data) return JSON.parse(await data.text());
   } catch (e) {
     // fall through
   }
@@ -207,7 +189,7 @@ async function enterPersonalMode() {
 }
 
 async function loadData() {
-  if (!LIST_ID) return; // store.js is redirecting to lists.html
+  if (!LIST_ID) return; // store.js is redirecting to home.html
   await resolveSource();
   setupEditLink(source.list); // not awaited: never holds up loading the data
   const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
@@ -266,7 +248,7 @@ async function loadData() {
   renderRolling();
 
   // Cache the live (present-day) data so time travel can restore it, then
-  // apply any previously-saved "on this date" setting.
+  // apply any saved On This Date / Time frame from the site settings.
   store.live = { rankings, individual, historical, streaks };
   restoreTimeTravel(refreshAll);
 
@@ -277,12 +259,11 @@ async function loadData() {
 
 setupTabs();
 setupSideMenu();
-setupSettings();
-applyStoredSettings();
-setupTimeTravel(refreshAll);
+setupDateBanner(refreshAll);
 setupHomeLinks();
 setupNameLinkDelegation();
 setupSubtabs('overall-subtabs');
+setupStatsList(); // builds the Misc list; must run before setupSubtabs('misc-subtabs')
 setupSubtabs('misc-subtabs');
 setupSubtabs('compare-subtabs');
 setupCsvButtons();
