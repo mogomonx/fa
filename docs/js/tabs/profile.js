@@ -3,6 +3,7 @@ import { formatDate, daysAgo, flagEmoji, kinchColor, formatResultLike, roundLabe
 import { showPanel, populateEventSelect } from '../ui.js';
 import { eventIcon } from '../icons.js';
 import { renderNameSettings } from '../name-settings.js';
+import { upcomingProfileHtml } from './upcoming.js';
 
 export function showProfile(wcaId) {
   const activeTab = document.querySelector('.tab-btn.active');
@@ -170,6 +171,7 @@ function renderProfile(wcaId) {
       <button type="button" class="subtab-btn active" data-ptab="results">Full results</button>
       <button type="button" class="subtab-btn" data-ptab="ages">PR age</button>
       <button type="button" class="subtab-btn" data-ptab="rolling">Rolling averages</button>
+      <button type="button" class="subtab-btn" data-ptab="upcoming">Upcoming competitions</button>
     </div>
 
     <div class="profile-pane" id="profile-pane-results">${resultsPaneHtml}</div>
@@ -190,6 +192,10 @@ function renderProfile(wcaId) {
         <select id="profile-rolling-format-select"></select>
       </div>
       <div id="profile-rolling-content"></div>
+    </div>
+
+    <div class="profile-pane" id="profile-pane-upcoming" hidden>
+      ${upcomingProfileHtml(wcaId, personal)}
     </div>
   `;
 
