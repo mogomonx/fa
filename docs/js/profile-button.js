@@ -1,8 +1,8 @@
-// The small "My profile" button in the top right of the lists page.
-// First click creates the personal profile (a private one-person list);
-// after it's built, the button opens it.
+// The "My profile" card on the site home page.
+// Logged out: starts the WCA login. Logged in: first click creates the personal
+// profile (a private one-person list); once built, the card opens it.
 
-import { supabase } from './auth.js';
+import { supabase, startWcaLogin } from './auth.js';
 
 const AVATAR_KEY = 'fa-my-avatar';
 const rankingsUrl = (list) => `index.html?list=${encodeURIComponent(list.slug)}`;
@@ -38,26 +38,28 @@ async function loadAvatar(node, wcaId, name) {
   }
 }
 
-export function setupProfileButton({ wcaId, name }) {
-  document.getElementById('profile-btn')?.remove();
-  if (!wcaId) return; // logged out, or a WCA account with no WCA ID
+// `card` is the <a id="my-profile-card"> on home.html (has .profile-avatar and .card-desc inside).
+export function setupProfileCard(card, { wcaId, name, loggedIn }) {
+  if (!card) return;
+  const avatar = card.querySelector('.profile-avatar');
+  const desc = card.querySelector('.card-desc');
 
-  const avatar = document.createElement('span');
-  avatar.className = 'profile-avatar small';
-  loadAvatar(avatar, wcaId, name);
+  if (loggedIn && wcaId) {
+    if (avatar) { avatar.hidden = false; loadAvatar(avatar, wcaId, name); }
+    desc.textContent = 'Your personal stats page: records, results, rolling averages and name settings.';
+  } else if (loggedIn) {
+    desc.textContent = "Your WCA account has no WCA ID yet, so there's no profile to build.";
+  } else {
+    desc.textContent = 'Log in with WCA to open your personal stats page.';
+  }
 
-  const label = document.createElement('span');
-  label.textContent = 'My profile';
-
-  const btn = document.createElement('button');
-  btn.id = 'profile-btn';
-  btn.type = 'button';
-  btn.className = 'profile-btn';
-  btn.title = 'Your personal profile';
-  btn.append(avatar, label);
-
-  btn.addEventListener('click', async () => {
-    btn.disabled = true;
+  let busy = false;
+  card.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    if (!loggedIn) { startWcaLogin(); return; }
+    if (!wcaId) return;
+    busy = true;
     try {
       const { data, error } = await supabase.rpc('my_lists');
       if (error) throw error;
@@ -67,7 +69,7 @@ export function setupProfileButton({ wcaId, name }) {
         if (!confirm('Create your personal profile page? It takes a few minutes to build the first time.')) return;
         const created = await supabase.rpc('create_my_profile');
         if (created.error) throw created.error;
-        alert('Your profile is being built. Check back in a few minutes; this button will open it.');
+        alert('Your profile is being built. Check back in a few minutes; this card will open it.');
       } else if (personal.data_level === 'none') {
         alert('Your profile is still being built. Check back in a few minutes.');
       } else {
@@ -76,9 +78,7 @@ export function setupProfileButton({ wcaId, name }) {
     } catch (err) {
       alert(err?.message || 'Something went wrong. Please try again.');
     } finally {
-      btn.disabled = false;
+      busy = false;
     }
   });
-
-  document.body.appendChild(btn);
 }
