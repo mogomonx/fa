@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+<link rel="stylesheet" href="style.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <span></span>
+    <h1>Home</h1>
+    <span></span>
+  </header>
+
+  <main class="container">
+    <div class="panel-controls" style="justify-content:flex-start;">
+      <div id="auth-slot"></div>
+    </div>
+
+    <div class="home-links">
+      <a href="#" class="home-link" id="my-profile-card">
+        <span class="profile-avatar small" hidden></span>
+        <strong>My profile</strong>
+        <span class="card-desc">Loading…</span>
+      </a>
+      <a href="lists.html" class="home-link">
+        <strong>Lists</strong>
+        <span>Open a group's rankings, or create and edit your own lists.</span>
+      </a>
+      <a href="settings.html" class="home-link">
+        <strong>Settings</strong>
+        <span>Site colours, and view the site as of a past date or inside a time frame.</span>
+      </a>
+    </div>
+  </main>
+
+  <script type="module">
+    import('./js/home-page.js')
+      .then((m) => m.initHome())
+      .catch((err) => {
+        console.warn('Home unavailable:', err);
+        const d = document.querySelector('#my-profile-card .card-desc');
+        if (d) d.textContent = 'Not available right now.';
+      });
+  </script>
+</body>
+</html>
