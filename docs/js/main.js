@@ -91,8 +91,8 @@ function renameEverywhere(root, wcaId, name) {
 // People who chose "only me" for their preferred name see it in their own
 // browser only; everyone else keeps seeing the official name. (Other choices
 // are baked into the build by sync-lists.js.) Skipped on lists whose owner
-// chose official names only. A name the owner typed for them on this list is
-// also replaced here, in their own view.
+// chose official names only. A name the owner typed for them on this list
+// wins, so the overlay is skipped in that case too.
 async function applyOwnName(datasets) {
   if (!source || source.kind !== 'storage') return;
   const list = source.list;
@@ -106,7 +106,14 @@ async function applyOwnName(datasets) {
       .eq('id', session.user.id)
       .maybeSingle();
     if (data?.wca_id && data.preferred_name && data.name_visibility === 'me') {
-      renameEverywhere(datasets, data.wca_id, data.preferred_name);
+      // A name the list owner typed for this person on this list wins.
+      const { data: member } = await source.supabase
+        .from('list_members')
+        .select('display_name')
+        .eq('list_id', source.listId)
+        .eq('wca_id', data.wca_id)
+        .maybeSingle();
+      if (!member?.display_name) renameEverywhere(datasets, data.wca_id, data.preferred_name);
     }
   } catch (e) {
     // names are cosmetic: never block the page
