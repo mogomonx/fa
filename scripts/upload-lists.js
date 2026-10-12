@@ -12,6 +12,7 @@ const { uploadObject } = require('./lib/supabase-admin');
 const FILES = [
   'rankings.json', 'individual-rankings.json', 'historical-records.json',
   'full-results.json', 'streaks.json', 'recent-activity.json', 'rolling-averages.json',
+  'upcoming.json',
 ];
 const LIMIT = 45 * 1024 * 1024;
 
