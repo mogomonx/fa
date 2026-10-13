@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State rankings</title>
+<link rel="stylesheet" href="style.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-btn menu-toggle" href="home.html" aria-label="Home" title="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <h1>State rankings</h1>
+    <span></span>
+  </header>
+
+  <main class="container">
+    <div class="panel-controls" style="justify-content:flex-start;">
+      <div id="auth-slot"></div>
+    </div>
+
+    <p class="board-note">Pick a state or territory to see its rankings, Sum of Ranks, Kinch and records.</p>
+    <div class="state-map" id="state-map"></div>
+    <div class="state-buttons" id="state-buttons"></div>
+
+    <div class="profile-box" id="my-state" hidden></div>
+  </main>
+
+  <script type="module">
+    import { initStates } from './js/states-page.js';
+    initStates();
+  </script>
+</body>
+</html>
