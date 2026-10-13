@@ -13,6 +13,7 @@ const FILES = [
   'rankings.json', 'individual-rankings.json', 'historical-records.json',
   'full-results.json', 'streaks.json', 'recent-activity.json', 'rolling-averages.json',
   'upcoming.json',
+  'state-assignments.json', // state lists only (written by build-states.js)
 ];
 const LIMIT = 45 * 1024 * 1024;
 
