@@ -162,7 +162,7 @@ async function main() {
   console.log(`Building ${input.lists.length} state list(s) for ${countries.join(', ')}; ${overrides.size} override(s).`);
 
   // countries.tsv (optional): id/name -> ISO2
-  const countriesFile = findFile(exportDir, /^countries\.tsv$/i);
+  const countriesFile = findFile(exportDir, /(^|_)countries\.tsv$/i);
   if (countriesFile) {
     await scanTsv(countriesFile, { id: ['id'], name: ['name'], iso2: ['iso2'] }, ['id', 'iso2'], (row) => {
       const iso = String(row.iso2 || '').toUpperCase();
@@ -176,7 +176,7 @@ async function main() {
 
   // People: current row only (sub_id 1); keep people of the wanted countries + override people
   const persons = new Map();
-  await scanTsv(need(exportDir, /^persons\.tsv$/i, 'persons.tsv'),
+  await scanTsv(need(exportDir, /(^|_)persons\.tsv$/i, 'persons.tsv'),
     { id: ['wca_id', 'id', 'wcaId'], sub: ['sub_id', 'subid', 'subId'], name: ['name'], country: ['country_id', 'countryId', 'country'] },
     ['id', 'name', 'country'], (row) => {
       if (row.sub !== undefined && row.sub !== '1') return;
@@ -191,7 +191,7 @@ async function main() {
   const comps = new Map();
   const unmapped = [];
   let countryComps = 0;
-  await scanTsv(need(exportDir, /^competitions\.tsv$/i, 'competitions.tsv'),
+  await scanTsv(need(exportDir, /(^|_)competitions\.tsv$/i, 'competitions.tsv'),
     { id: ['id'], name: ['name'], city: ['city_name', 'cityName'], country: ['country_id', 'countryId'], year: ['year'], month: ['month'], day: ['day'] },
     ['id', 'city', 'country'], (row) => {
       const iso = toIso(row.country);
@@ -211,7 +211,7 @@ async function main() {
 
   // Which mapped competitions each person attended (one pass over the big file)
   const compsByPerson = new Map();
-  await scanTsv(need(exportDir, /^results\.tsv$/i, 'results.tsv'),
+  await scanTsv(need(exportDir, /(^|_)results\.tsv$/i, 'results.tsv'),
     { person: ['person_id', 'personId', 'wca_id'], comp: ['competition_id', 'competitionId'] },
     ['person', 'comp'], (row) => {
       if (!persons.has(row.person)) return;
@@ -271,8 +271,8 @@ async function main() {
         ev[`${type}Ranks`] = { world: toNum(row.world), continent: toNum(row.continent), country: toNum(row.country) };
       });
   }
-  await loadRanks(need(exportDir, /^ranks_single\.tsv$/i, 'ranks_single.tsv'), 'single');
-  await loadRanks(need(exportDir, /^ranks_average\.tsv$/i, 'ranks_average.tsv'), 'average');
+  await loadRanks(need(exportDir, /(^|_)ranks_single\.tsv$/i, 'ranks_single.tsv'), 'single');
+  await loadRanks(need(exportDir, /(^|_)ranks_average\.tsv$/i, 'ranks_average.tsv'), 'average');
 
   const byList = new Map(input.lists.map((l) => [`${l.country}/${l.region}`, []]));
   let noResults = 0;
