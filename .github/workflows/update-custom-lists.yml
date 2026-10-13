@@ -1,9 +1,10 @@
 name: Update Custom Lists
 
 # Builds database-backed lists and uploads them to the private list-data bucket.
-#   every 15 min : new/edited lists (basic rankings first, then full history)
+#   every 15 min : new/edited lists (basic rankings first, then full history);
+#                  state lists too when someone changed their state
 #   daily        : personal bests for finished lists
-#   weekly       : full history for every list
+#   weekly       : full history for every list, plus every state list
 # Also pings Supabase regularly, which keeps the free project awake.
 on:
   schedule:
@@ -96,7 +97,7 @@ jobs:
           node scripts/mark-lists.js --level=basic $NEW_SLUGS
 
       - name: Download WCA results export
-        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.slugs != ''
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         run: |
           TSV_URL=$(node scripts/get-export-url.js)
           curl -sL "$TSV_URL" -o /tmp/wca-export.zip
@@ -131,7 +132,29 @@ jobs:
           node scripts/upload-lists.js --level=full $SLUGS
           node scripts/mark-lists.js --level=full $SLUGS
 
-          
+      - name: State rankings
+        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.state_slugs != ''
+        env:
+          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
+          STATE_COUNTRIES: ${{ steps.sync.outputs.state_countries }}
+        run: |
+          # Assigns people to states and writes results.json for every state list...
+          node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
+          # ...then the usual scripts turn that into the rankings page data
+          # (history files stay empty for now)
+          for s in $STATE_SLUGS; do
+            echo "=== state: $s ==="
+            node scripts/build-rankings.js "$s"
+            node scripts/make-empty-history.js "$s"
+            node scripts/build-individual-rankings.js "$s"
+            node scripts/build-historical-records.js "$s"
+            node scripts/build-streaks.js "$s"
+            node scripts/build-recent-activity.js "$s"
+            node scripts/build-rolling-averages.js "$s"
+          done
+          node scripts/upload-lists.js --level=full $STATE_SLUGS
+          node scripts/mark-lists.js --level=full $STATE_SLUGS
+
       - name: Upcoming competitions
         if: steps.mode.outputs.mode != 'pending' && steps.sync.outputs.slugs != ''
         continue-on-error: true
