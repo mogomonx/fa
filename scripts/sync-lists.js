@@ -7,6 +7,13 @@
 //
 // Lists with no members are skipped (e.g. caught mid-creation).
 //
+// State lists (kind 'state', session 10) have no members: they are built from
+// the WCA export by build-states.js. They are reported separately as
+// `state_slugs` / `state_countries`: every state list of a country is rebuilt
+// together, when any of them is pending (--pending) or always (--all). The
+// daily --built mode leaves them alone. build/states-input.json carries what
+// build-states.js needs (the state lists, region overrides, "everywhere" names).
+//
 // A member's displayName, in order:
 //   1. the name the list owner typed for them on this list
 //   2. (skipped when the list is "official names only")
@@ -21,6 +28,18 @@ const { rest } = require('./lib/supabase-admin');
 const OUT = path.join(__dirname, '..', 'build');
 
 const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
+
+// Reads every row of a REST query, 1000 at a time (give the query an order=).
+async function restAll(base) {
+  const all = [];
+  for (let offset = 0; ; offset += 1000) {
+    const sep = base.includes('?') ? '&' : '?';
+    const page = await rest('GET', `${base}${sep}limit=1000&offset=${offset}`);
+    all.push(...(page || []));
+    if (!page || page.length < 1000) break;
+  }
+  return all;
+}
 
 // wca_id -> { name, visibility, lists:Set(list uuid) }. Never fails the build:
 // if the tables/columns aren't there yet, nobody has a preferred name.
@@ -56,14 +75,25 @@ async function main() {
     : process.argv.includes('--built') ? 'built' : 'all';
 
   const rows = await rest('GET',
-    '/rest/v1/lists?select=id,slug,name,kind,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&limit=1000');
+    '/rest/v1/lists?select=id,slug,name,kind,country,region,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&limit=1000');
   const prefs = await loadNamePrefs();
 
-  const chosen = rows
+  const groupRows = rows.filter((l) => l.kind !== 'state');
+  const stateRows = rows.filter((l) => l.kind === 'state');
+
+  const chosen = groupRows
     .filter((l) => l.list_members.length > 0)
     .filter((l) => mode === 'all'
       || (mode === 'pending' && isPending(l))
       || (mode === 'built' && l.built_at && !isPending(l)));
+
+  let stateChosen = [];
+  if (mode === 'all') {
+    stateChosen = stateRows;
+  } else if (mode === 'pending') {
+    const countries = new Set(stateRows.filter(isPending).map((l) => l.country));
+    stateChosen = stateRows.filter((l) => countries.has(l.country));
+  }
 
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(path.join(OUT, 'lists'), { recursive: true });
@@ -78,16 +108,34 @@ async function main() {
     }));
     state[l.slug] = { uuid: l.id, dirty_at: l.dirty_at, data_level: l.data_level };
   }
+  for (const l of stateChosen) {
+    state[l.slug] = { uuid: l.id, dirty_at: l.dirty_at, data_level: l.data_level };
+  }
   fs.writeFileSync(path.join(OUT, 'lists-manifest.json'), JSON.stringify({
-    lists: chosen.map((l) => ({ id: l.slug, uuid: l.id, name: l.name })),
+    lists: [...chosen, ...stateChosen].map((l) => ({ id: l.slug, uuid: l.id, name: l.name })),
   }));
   fs.writeFileSync(path.join(OUT, 'state.json'), JSON.stringify(state));
 
+  if (stateChosen.length) {
+    const overrides = await restAll('/rest/v1/person_regions?select=wca_id,country,region,hidden&order=wca_id');
+    const names = {};
+    for (const [wcaId, p] of prefs) if (p.visibility === 'everywhere') names[wcaId] = p.name;
+    fs.writeFileSync(path.join(OUT, 'states-input.json'), JSON.stringify({
+      lists: stateChosen.map((l) => ({ slug: l.slug, country: l.country, region: l.region })),
+      overrides,
+      names,
+    }));
+  }
+
   const slugs = chosen.map((l) => l.slug).join(' ');
   const newSlugs = chosen.filter((l) => l.data_level === 'none').map((l) => l.slug).join(' ');
+  const stateSlugs = stateChosen.map((l) => l.slug).join(' ');
+  const stateCountries = [...new Set(stateChosen.map((l) => l.country))].join(' ');
   console.log(`Mode ${mode}: ${chosen.length} list(s): ${slugs || '(none)'}`);
+  console.log(`State lists: ${stateChosen.length}${stateSlugs ? `: ${stateSlugs}` : ''}`);
   if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `slugs=${slugs}\nnew_slugs=${newSlugs}\n`);
+    fs.appendFileSync(process.env.GITHUB_OUTPUT,
+      `slugs=${slugs}\nnew_slugs=${newSlugs}\nstate_slugs=${stateSlugs}\nstate_countries=${stateCountries}\n`);
   }
 }
 
