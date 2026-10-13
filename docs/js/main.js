@@ -40,7 +40,7 @@ async function resolveSource() {
 // guest who made a guest list in this browser. Never blocks the page.
 async function setupEditLink(list) {
   const link = document.getElementById('edit-list-link');
-  if (!link || !list || list.kind === 'personal') return;
+  if (!link || !list || list.kind === 'personal' || list.kind === 'state') return;
   let canEdit = false;
   try {
     if (!list.owner_id) {
@@ -141,7 +141,8 @@ function populateSelects() {
 // Everything that depends on the (possibly time-travelled) data.
 function renderAll() {
   renderFaRecords();
-  renderHomeMembers();
+  // State lists can have thousands of people: skip the member chips (hidden there anyway).
+  if (store.listKind !== 'state') renderHomeMembers();
   renderSor();
   renderKinch();
   renderEventTable();
@@ -191,6 +192,17 @@ async function enterPersonalMode() {
 async function loadData() {
   if (!LIST_ID) return; // store.js is redirecting to home.html
   await resolveSource();
+
+  // State lists (built from the WCA export) have no history data: switch the
+  // page into state mode (hides the empty parts, shows "All states").
+  const isState = source.list?.kind === 'state';
+  store.listKind = source.list?.kind || 'group';
+  if (isState) {
+    document.body.classList.add('state-mode');
+    const statesLink = document.getElementById('states-link');
+    if (statesLink) statesLink.hidden = false;
+  }
+
   setupEditLink(source.list); // not awaited: never holds up loading the data
   const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
     fetchJson('rankings.json', true),
@@ -249,8 +261,9 @@ async function loadData() {
 
   // Cache the live (present-day) data so time travel can restore it, then
   // apply any saved On This Date / Time frame from the site settings.
+  // State lists have no full-results.json, so a saved date view is ignored there.
   store.live = { rankings, individual, historical, streaks };
-  restoreTimeTravel(refreshAll);
+  if (!isState) restoreTimeTravel(refreshAll);
 
   if (source.list?.kind === 'personal') enterPersonalMode();
 }
