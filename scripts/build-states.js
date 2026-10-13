@@ -7,7 +7,10 @@
 // build/data/<slug>/results.json for every state list, in exactly the shape
 // scripts/fetch.js writes for a normal list. The workflow then runs the usual
 // build-rankings.js etc. on each state slug, so state lists reuse the whole
-// rankings page.
+// rankings page. It also writes state-assignments.json into every state
+// list's folder: { country, auto: { wcaId: region } } with each person's
+// DETECTED region (ignoring overrides; people who chose to be hidden are
+// left out), so the states page can show "detected state".
 //
 // Who is in a state list, in order:
 //   1. An override row for the person (their own choice or an admin's):
@@ -227,9 +230,27 @@ async function main() {
   cut.setFullYear(cut.getFullYear() - RECENT_YEARS);
   const cutoff = cut.toISOString().slice(0, 10);
   const final = new Map(); // wcaId -> {country, region}
+  const auto = new Map();  // wcaId -> {country, region}: detected region, ignoring overrides
   const stats = { override: 0, autoRecent: 0, autoAll: 0, hidden: 0, noRegionWithComps: 0, noRegionNoComps: 0 };
   for (const [wcaId, p] of persons) {
     const o = overrides.get(wcaId);
+
+    // Detected region (only for people whose WCA country we build)
+    let detected = null;
+    let how = '';
+    let hadComps = false;
+    if (wanted.has(p.iso)) {
+      const entries = [...(compsByPerson.get(wcaId)?.values() || [])].filter((c) => c.country === p.iso);
+      hadComps = entries.length > 0;
+      detected = pickRegion(entries.filter((c) => c.date >= cutoff));
+      if (detected) how = 'recent';
+      else {
+        detected = pickRegion(entries);
+        if (detected) how = 'all';
+      }
+      if (detected && !(o && o.hidden)) auto.set(wcaId, { country: p.iso, region: detected });
+    }
+
     if (o) {
       if (o.hidden) { stats.hidden += 1; continue; }
       if (o.region) {
@@ -241,13 +262,10 @@ async function main() {
       }
     }
     if (!wanted.has(p.iso)) continue;
-    const entries = [...(compsByPerson.get(wcaId)?.values() || [])].filter((c) => c.country === p.iso);
-    const recent = entries.filter((c) => c.date >= cutoff);
-    let region = pickRegion(recent);
-    if (region) stats.autoRecent += 1;
-    else { region = pickRegion(entries); if (region) stats.autoAll += 1; }
-    if (region) final.set(wcaId, { country: p.iso, region });
-    else if (entries.length) stats.noRegionWithComps += 1;
+    if (detected) {
+      final.set(wcaId, { country: p.iso, region: detected });
+      if (how === 'recent') stats.autoRecent += 1; else stats.autoAll += 1;
+    } else if (hadComps) stats.noRegionWithComps += 1;
     else stats.noRegionNoComps += 1;
   }
   console.log(`Assigned ${final.size}: ${stats.override} by override, ${stats.autoRecent} auto (last ${RECENT_YEARS} years), ${stats.autoAll} auto (all time). ` +
@@ -285,12 +303,20 @@ async function main() {
   console.log(`Left out ${noResults} people with no official result.`);
 
   let total = 0;
+  const generatedAt = new Date().toISOString();
   for (const l of input.lists) {
     if (!wanted.has(l.country)) continue;
     const people = byList.get(`${l.country}/${l.region}`).sort((a, b) => a.name.localeCompare(b.name));
     const ctx = getListContext(l.slug);
     fs.mkdirSync(ctx.dataDir, { recursive: true });
-    fs.writeFileSync(path.join(ctx.dataDir, 'results.json'), JSON.stringify({ fetchedAt: new Date().toISOString(), people }));
+    fs.writeFileSync(path.join(ctx.dataDir, 'results.json'), JSON.stringify({ fetchedAt: generatedAt, people }));
+
+    // Detected regions for this country, shared by every state list of the country.
+    const autoForCountry = {};
+    for (const [id, a] of auto) if (a.country === l.country) autoForCountry[id] = a.region;
+    fs.writeFileSync(path.join(ctx.dataDir, 'state-assignments.json'),
+      JSON.stringify({ generatedAt, country: l.country, auto: autoForCountry }));
+
     console.log(`  ${l.slug}: ${people.length} people`);
     total += people.length;
   }
