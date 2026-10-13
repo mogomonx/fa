@@ -594,3 +594,248 @@ revoke execute on function public.create_my_profile() from public, anon;
 grant execute on function public.set_name_settings(text, text, uuid[]) to authenticated;
 grant execute on function public.my_name_lists() to authenticated;
 grant execute on function public.create_my_profile() to authenticated;
+
+
+-- Session 10a: state (region) rankings + admins.
+-- Run this whole file in the Supabase SQL Editor, BEFORE pushing the new scripts.
+-- Safe to run more than once (everything is "if not exists" / "or replace").
+-- Afterwards paste the same SQL at the bottom of supabase/schema.sql.
+
+-- ---------------------------------------------------------------
+-- 1. A new list kind 'state', with a country and a region
+-- ---------------------------------------------------------------
+
+-- Drop the old check on lists.kind (whatever it is called), then re-add it with 'state'.
+do $$
+declare c text;
+begin
+  for c in
+    select conname from pg_constraint
+    where conrelid = 'public.lists'::regclass and contype = 'c'
+      and pg_get_constraintdef(oid) like '%kind%'
+  loop
+    execute format('alter table public.lists drop constraint %I', c);
+  end loop;
+end $$;
+
+alter table public.lists
+  add constraint lists_kind_check check (kind in ('group', 'personal', 'state')),
+  add column if not exists country text check (country is null or country ~ '^[A-Z]{2}$'),
+  add column if not exists region  text check (region  is null or region  ~ '^[A-Z0-9]{2,6}$');
+
+-- A state list always has a country + region and no owner; one per country/region.
+alter table public.lists
+  add constraint lists_state_fields
+  check (kind <> 'state' or (country is not null and region is not null and owner_id is null));
+create unique index if not exists lists_state_unique on public.lists (country, region) where kind = 'state';
+
+-- State lists are 'unlisted': reachable by link (index.html?list=state-au-nsw), never
+-- shown on the lists page. Nobody owns them; the build job fills them.
+insert into public.lists (slug, name, owner_id, visibility, kind, country, region) values
+  ('state-au-nsw', 'New South Wales',              null, 'unlisted', 'state', 'AU', 'NSW'),
+  ('state-au-vic', 'Victoria',                     null, 'unlisted', 'state', 'AU', 'VIC'),
+  ('state-au-qld', 'Queensland',                   null, 'unlisted', 'state', 'AU', 'QLD'),
+  ('state-au-wa',  'Western Australia',            null, 'unlisted', 'state', 'AU', 'WA'),
+  ('state-au-sa',  'South Australia',              null, 'unlisted', 'state', 'AU', 'SA'),
+  ('state-au-tas', 'Tasmania',                     null, 'unlisted', 'state', 'AU', 'TAS'),
+  ('state-au-act', 'Australian Capital Territory', null, 'unlisted', 'state', 'AU', 'ACT'),
+  ('state-au-nt',  'Northern Territory',           null, 'unlisted', 'state', 'AU', 'NT')
+on conflict (slug) do nothing;
+
+-- The guest-list cap of 200 must not count state lists (they also have no owner).
+create or replace function public.create_guest_list(p_name text, p_slug text, p_members jsonb, p_token text)
+returns public.lists language plpgsql security definer set search_path = public as $$
+declare v_list lists; v_n int;
+begin
+  if p_token is null or char_length(p_token) < 32 then raise exception 'Invalid edit token'; end if;
+  if p_name is null or char_length(trim(p_name)) not between 1 and 80 then
+    raise exception 'Give the list a name (up to 80 characters)';
+  end if;
+  if p_slug is null or p_slug !~ '^[a-z0-9-]{2,40}$' then raise exception 'Invalid link name'; end if;
+  select count(*) into v_n from guest_clean_members(p_members);
+  if v_n < 1 or v_n > 30 then raise exception 'A guest list needs 1 to 30 members'; end if;
+
+  delete from lists where owner_id is null and id in
+    (select list_id from guest_edit_tokens where edited_at < now() - interval '90 days');
+  if (select count(*) from lists where owner_id is null and kind = 'group') >= 200 then
+    raise exception 'Guest lists are full right now. Log in with WCA to create a list.';
+  end if;
+
+  insert into lists (slug, name, owner_id, visibility)
+  values (p_slug, trim(p_name), null, 'unlisted') returning * into v_list;
+  insert into guest_edit_tokens (list_id, token_hash) values (v_list.id, guest_hash(p_token));
+  insert into list_members (list_id, wca_id, display_name)
+    select v_list.id, c.wca_id, c.display_name from guest_clean_members(p_members) c;
+
+  select * into v_list from lists where id = v_list.id;
+  return v_list;
+end $$;
+
+-- ---------------------------------------------------------------
+-- 2. Admins (keyed by WCA ID; matched against the WCA ID of the logged-in profile)
+-- ---------------------------------------------------------------
+
+create table if not exists public.admins (
+  wca_id    text primary key check (wca_id ~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'),
+  added_at  timestamptz not null default now()
+);
+alter table public.admins enable row level security;  -- no policies: functions + SQL Editor only
+
+create or replace function public.is_admin() returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from admins a join profiles p on p.wca_id = a.wca_id
+    where p.id = auth.uid()
+  )
+$$;
+revoke execute on function public.is_admin() from public, anon;
+grant execute on function public.is_admin() to authenticated;
+
+-- ---------------------------------------------------------------
+-- 3. Region overrides (a person's own choice, or an admin's)
+--    No row = use the state detected from the competitions they attend.
+--    Last write wins: an admin can change it, the person can change it back.
+-- ---------------------------------------------------------------
+
+create table if not exists public.person_regions (
+  wca_id      text primary key check (wca_id ~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'),
+  country     text not null check (country ~ '^[A-Z]{2}$'),
+  region      text check (region is null or region ~ '^[A-Z0-9]{2,6}$'),
+  hidden      boolean not null default false,   -- true = left out of state rankings
+  updated_at  timestamptz not null default now(),
+  updated_by  uuid references public.profiles(id) on delete set null,
+  check (hidden or region is not null)
+);
+alter table public.person_regions enable row level security;  -- no policies: functions only
+
+create or replace function public.valid_region(p_country text, p_region text) returns boolean
+language sql immutable as $$
+  select p_country = 'AU' and p_region in ('NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT')
+$$;
+
+-- Any change to a person's region rebuilds that country's state lists.
+create or replace function public.mark_state_lists_dirty(p_country text) returns void
+language sql security definer set search_path = public as $$
+  update lists set dirty_at = now() where kind = 'state' and country = p_country
+$$;
+
+-- Internal helpers (nobody can call them directly)
+create or replace function public.apply_region(p_wca text, p_country text, p_region text, p_hidden boolean)
+returns void language plpgsql security definer set search_path = public as $$
+declare v_old text;
+begin
+  select country into v_old from person_regions where wca_id = p_wca;
+  insert into person_regions (wca_id, country, region, hidden, updated_by)
+  values (p_wca, p_country, p_region, p_hidden, auth.uid())
+  on conflict (wca_id) do update
+    set country = excluded.country, region = excluded.region, hidden = excluded.hidden,
+        updated_at = now(), updated_by = auth.uid();
+  perform mark_state_lists_dirty(p_country);
+  if v_old is not null and v_old <> p_country then perform mark_state_lists_dirty(v_old); end if;
+end $$;
+
+create or replace function public.clear_region(p_wca text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_old text;
+begin
+  delete from person_regions where wca_id = p_wca returning country into v_old;
+  if v_old is not null then perform mark_state_lists_dirty(v_old); end if;
+end $$;
+
+revoke execute on function public.mark_state_lists_dirty(text) from public, anon, authenticated;
+revoke execute on function public.apply_region(text, text, text, boolean) from public, anon, authenticated;
+revoke execute on function public.clear_region(text) from public, anon, authenticated;
+
+-- ----- For the logged-in person (their own WCA ID only) -----
+
+create or replace function public.get_my_region() returns table (country text, region text, hidden boolean)
+language sql stable security definer set search_path = public as $$
+  select r.country, r.region, r.hidden from person_regions r where r.wca_id = current_wca_id()
+$$;
+
+create or replace function public.set_my_region(p_country text, p_region text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := current_wca_id();
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID to set your state'; end if;
+  if not valid_region(p_country, p_region) then raise exception 'Unknown state'; end if;
+  perform apply_region(v_wca, p_country, p_region, false);
+end $$;
+
+-- "Remove me from state rankings"
+create or replace function public.hide_me_from_regions() returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := current_wca_id();
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID first'; end if;
+  perform apply_region(v_wca, coalesce((select country from person_regions where wca_id = v_wca), 'AU'), null, true);
+end $$;
+
+-- Back to the automatically detected state
+create or replace function public.clear_my_region() returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := current_wca_id();
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID first'; end if;
+  perform clear_region(v_wca);
+end $$;
+
+-- ----- Admin versions (any WCA ID; admins only) -----
+
+create or replace function public.admin_get_region(p_wca_id text) returns table (country text, region text, hidden boolean)
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  return query select r.country, r.region, r.hidden from person_regions r where r.wca_id = upper(trim(p_wca_id));
+end $$;
+
+create or replace function public.admin_set_region(p_wca_id text, p_country text, p_region text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := upper(trim(p_wca_id));
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  if v_wca !~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$' then raise exception 'Invalid WCA ID'; end if;
+  if not valid_region(p_country, p_region) then raise exception 'Unknown state'; end if;
+  perform apply_region(v_wca, p_country, p_region, false);
+end $$;
+
+create or replace function public.admin_hide_region(p_wca_id text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := upper(trim(p_wca_id));
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  if v_wca !~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$' then raise exception 'Invalid WCA ID'; end if;
+  perform apply_region(v_wca, coalesce((select country from person_regions where wca_id = v_wca), 'AU'), null, true);
+end $$;
+
+create or replace function public.admin_clear_region(p_wca_id text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  perform clear_region(upper(trim(p_wca_id)));
+end $$;
+
+revoke execute on function public.get_my_region() from public, anon;
+revoke execute on function public.set_my_region(text, text) from public, anon;
+revoke execute on function public.hide_me_from_regions() from public, anon;
+revoke execute on function public.clear_my_region() from public, anon;
+revoke execute on function public.admin_get_region(text) from public, anon;
+revoke execute on function public.admin_set_region(text, text, text) from public, anon;
+revoke execute on function public.admin_hide_region(text) from public, anon;
+revoke execute on function public.admin_clear_region(text) from public, anon;
+grant execute on function public.get_my_region() to authenticated;
+grant execute on function public.set_my_region(text, text) to authenticated;
+grant execute on function public.hide_me_from_regions() to authenticated;
+grant execute on function public.clear_my_region() to authenticated;
+grant execute on function public.admin_get_region(text) to authenticated;
+grant execute on function public.admin_set_region(text, text, text) to authenticated;
+grant execute on function public.admin_hide_region(text) to authenticated;
+grant execute on function public.admin_clear_region(text) to authenticated;
+
+-- ---------------------------------------------------------------
+-- 4. Make yourselves admins (EDIT the two IDs, then run this part by itself).
+--    Not part of schema.sql on purpose. Both people just need to log in with WCA
+--    as normal; no WCA ID has to be logged in already when you run this.
+-- ---------------------------------------------------------------
+-- insert into public.admins (wca_id) values ('2022GART03'), ('2019THEO03')
+-- on conflict do nothing;
