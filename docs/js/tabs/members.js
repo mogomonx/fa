@@ -5,6 +5,7 @@ import { showProfile } from './profile.js';
 
 // WCA profile pictures aren't in our data files, so they're fetched from the
 // public WCA API in the browser and cached in localStorage for a week.
+// Not done for state lists: thousands of people would hit the WCA rate limit.
 const AVATAR_KEY = 'fa-avatars';
 const AVATAR_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const inflight = new Map();
@@ -143,5 +144,5 @@ export function renderMembers() {
     });
   }
 
-  loadAvatars(container);
+  if (store.listKind !== 'state') loadAvatars(container);
 }
