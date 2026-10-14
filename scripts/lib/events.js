@@ -23,9 +23,9 @@ const EVENTS = [
 ];
 
 // Events that have no official "average" (only single results count).
-// Note: 3x3x3 Blindfolded DOES have an official average (Bo3, introduced
-// 2021) -- only the multi-attempt/cumulative ones below don't.
-const SINGLE_ONLY_EVENTS = new Set(['444bf', '555bf', '333mbf']);
+// 3x3x3, 4x4x4 and 5x5x5 Blindfolded all have an official average
+// (mean of 3), so only Multi-Blind is single-only.
+const SINGLE_ONLY_EVENTS = new Set(['333mbf']);
 
 // WCA round_type_id -> human label, for showing "which round" a result
 // came from. Falls back to the raw code for anything not listed here.
