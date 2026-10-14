@@ -839,3 +839,173 @@ grant execute on function public.admin_clear_region(text) to authenticated;
 -- ---------------------------------------------------------------
 -- insert into public.admins (wca_id) values ('2022GART03'), ('2019THEO03')
 -- on conflict do nothing;
+
+
+-- Session 10c: admin view (list moderation, name overrides, region overview).
+-- Run this whole file in the Supabase SQL Editor BEFORE pushing the admin code.
+-- Safe to run more than once ("or replace" / "if exists").
+-- Afterwards paste the same SQL at the bottom of supabase/schema.sql.
+
+-- ---------------------------------------------------------------
+-- 1. Admins can read, edit and delete GROUP lists (even private ones).
+--    Personal profiles stay private to their owner; guest lists are left alone.
+-- ---------------------------------------------------------------
+
+-- can_view_list drives: get_list_by_slug, members_select, lists_select and the
+-- Storage read policy, so one change lets admins open any non-personal list.
+create or replace function public.can_view_list(p_list uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from lists l
+    where l.id = p_list
+      and (
+        l.visibility = 'public'
+        or l.owner_id = auth.uid()
+        or (l.kind <> 'personal' and is_admin())
+        or exists (
+          select 1 from list_members m
+          where m.list_id = l.id and m.wca_id = current_wca_id()
+        )
+      )
+  )
+$$;
+
+-- is_list_owner drives the members insert/update/delete policies.
+create or replace function public.is_list_owner(p_list uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from lists l
+    where l.id = p_list
+      and (
+        l.owner_id = auth.uid()
+        or (l.owner_id is not null and l.kind = 'group' and is_admin())
+      )
+  )
+$$;
+
+drop policy if exists lists_update on public.lists;
+create policy lists_update on public.lists for update
+  using (owner_id = auth.uid() or (owner_id is not null and kind = 'group' and is_admin()))
+  with check (owner_id = auth.uid() or (owner_id is not null and kind = 'group' and is_admin()));
+
+drop policy if exists lists_delete on public.lists;
+create policy lists_delete on public.lists for delete
+  using (owner_id = auth.uid() or (owner_id is not null and kind = 'group' and is_admin()));
+
+-- ---------------------------------------------------------------
+-- 2. Name overrides (only for names a person set to show "everywhere")
+-- ---------------------------------------------------------------
+
+-- Same checks as set_name_settings, for a name an admin types.
+create or replace function public.clean_display_name(p_name text) returns text
+language plpgsql immutable set search_path = public as $$
+declare v text := nullif(regexp_replace(trim(coalesce(p_name, '')), '\s+', ' ', 'g'), '');
+begin
+  if v is null then raise exception 'Type a name first'; end if;
+  if char_length(v) > 40 then raise exception 'Display names can be up to 40 characters'; end if;
+  if v ~ '[[:cntrl:]]' then raise exception 'That name has invalid characters'; end if;
+  if v ~* '(https?:|www\.|@|\.(com|net|org|io|gg)($|\s))' then
+    raise exception 'Names can''t contain links or @';
+  end if;
+  return v;
+end $$;
+
+-- A person's name shows on their lists AND on every state list, so rebuild both.
+create or replace function public.mark_person_dirty(p_wca text) returns void
+language sql security definer set search_path = public as $$
+  update lists set dirty_at = now()
+   where kind = 'state'
+      or id in (select list_id from list_members where wca_id = p_wca)
+$$;
+
+revoke execute on function public.clean_display_name(text) from public, anon, authenticated;
+revoke execute on function public.mark_person_dirty(text) from public, anon, authenticated;
+
+create or replace function public.admin_get_name(p_wca_id text)
+returns table (preferred_name text, name_visibility text)
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  return query
+    select p.preferred_name, p.name_visibility
+    from profiles p where p.wca_id = upper(trim(p_wca_id));
+end $$;
+
+create or replace function public.admin_set_name(p_wca_id text, p_name text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := upper(trim(p_wca_id)); v_name text;
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  if not exists (
+    select 1 from profiles
+    where wca_id = v_wca and name_visibility = 'everywhere' and preferred_name is not null
+  ) then
+    raise exception 'That person has no name set to show everywhere';
+  end if;
+  v_name := clean_display_name(p_name);
+  update profiles set preferred_name = v_name where wca_id = v_wca;
+  perform mark_person_dirty(v_wca);
+end $$;
+
+create or replace function public.admin_clear_name(p_wca_id text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_wca text := upper(trim(p_wca_id));
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  if not exists (
+    select 1 from profiles
+    where wca_id = v_wca and name_visibility = 'everywhere' and preferred_name is not null
+  ) then
+    raise exception 'That person has no name set to show everywhere';
+  end if;
+  update profiles set preferred_name = null where wca_id = v_wca;
+  perform mark_person_dirty(v_wca);
+end $$;
+
+-- ---------------------------------------------------------------
+-- 3. Overviews for the admin page
+-- ---------------------------------------------------------------
+
+-- Every group list that has an owner (guest lists and personal profiles are left out).
+create or replace function public.admin_list_overview()
+returns table (
+  id uuid, slug text, name text, visibility text,
+  owner_name text, owner_wca_id text, member_count bigint,
+  data_level text, built_at timestamptz, dirty_at timestamptz, created_at timestamptz
+)
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  return query
+    select l.id, l.slug, l.name, l.visibility,
+           p.name, p.wca_id,
+           (select count(*) from list_members m where m.list_id = l.id),
+           l.data_level, l.built_at, l.dirty_at, l.created_at
+    from lists l
+    left join profiles p on p.id = l.owner_id
+    where l.kind = 'group' and l.owner_id is not null
+    order by l.name;
+end $$;
+
+-- Everyone with a state override or who has been removed from state rankings.
+create or replace function public.admin_list_regions()
+returns table (wca_id text, country text, region text, hidden boolean, updated_at timestamptz)
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Admins only'; end if;
+  return query
+    select r.wca_id, r.country, r.region, r.hidden, r.updated_at
+    from person_regions r
+    order by r.updated_at desc;
+end $$;
+
+revoke execute on function public.admin_get_name(text) from public, anon;
+revoke execute on function public.admin_set_name(text, text) from public, anon;
+revoke execute on function public.admin_clear_name(text) from public, anon;
+revoke execute on function public.admin_list_overview() from public, anon;
+revoke execute on function public.admin_list_regions() from public, anon;
+grant execute on function public.admin_get_name(text) to authenticated;
+grant execute on function public.admin_set_name(text, text) to authenticated;
+grant execute on function public.admin_clear_name(text) to authenticated;
+grant execute on function public.admin_list_overview() to authenticated;
+grant execute on function public.admin_list_regions() to authenticated;
