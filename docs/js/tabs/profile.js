@@ -235,6 +235,11 @@ function renderProfile(wcaId) {
 
   // Personal profiles end with the display-name settings (and "Remove my profile").
   if (personal) renderNameSettings(container, store.personalListId);
+
+  // Admins looking at a person on a state list get their state and name tools.
+  if (store.listKind === 'state') {
+    import('../admin-person.js').then((m) => m.mountAdminPanel(container, wcaId)).catch(() => {});
+  }
 }
 
 // Finds the result a PR came from: same person, event and date, and the
