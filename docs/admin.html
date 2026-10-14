@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin</title>
+<link rel="stylesheet" href="style.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-btn" href="home.html" title="Home" aria-label="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+    </a>
+    <h1>Admin</h1>
+    <span></span>
+  </header>
+
+  <main class="container">
+    <div class="panel-controls" style="justify-content:flex-start;">
+      <div id="auth-slot"></div>
+    </div>
+
+    <p id="admin-gate" class="empty-note">Loading…</p>
+
+    <div id="admin-body" hidden>
+      <details class="admin-section" open>
+        <summary>Find a person</summary>
+        <p class="board-note">Look someone up by WCA ID to set their state, add them to state rankings (any country) or change a name they set to show everywhere.</p>
+        <div class="admin-row">
+          <input type="text" id="admin-person-input" placeholder="2012PARK03" maxlength="10" autocomplete="off">
+          <button type="button" class="csv-btn" id="admin-person-find">Find</button>
+        </div>
+        <div id="admin-person-out"></div>
+      </details>
+
+      <details class="admin-section" open>
+        <summary id="admin-unassigned-title">People with no state</summary>
+        <div id="admin-unassigned"><p class="empty-note">Loading…</p></div>
+      </details>
+
+      <details class="admin-section">
+        <summary>State overrides</summary>
+        <div id="admin-overrides"><p class="empty-note">Loading…</p></div>
+      </details>
+
+      <details class="admin-section" open>
+        <summary>Lists</summary>
+        <div id="admin-lists"></div>
+      </details>
+    </div>
+  </main>
+
+  <script type="module">
+    import('./js/admin-page.js')
+      .then((m) => m.initAdmin())
+      .catch((err) => {
+        console.warn('Admin unavailable:', err);
+        const g = document.getElementById('admin-gate');
+        g.hidden = false;
+        g.textContent = 'The admin view could not load. Check that every admin file was uploaded, then hard refresh.';
+      });
+  </script>
+</body>
+</html>
