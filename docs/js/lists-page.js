@@ -579,6 +579,8 @@ function renderEditor(list, members, guestMode = false) {
 
 // ---------- ?edit=<slug>: open a list straight in the editor ----------
 
+let isAdmin = false; // admins may edit any group list (the database enforces it)
+
 async function openEditFromUrl() {
   const slug = new URLSearchParams(window.location.search).get("edit");
   if (!slug) return;
@@ -587,7 +589,9 @@ async function openEditFromUrl() {
     const { data } = await supabase.from("lists").select("*").eq("slug", slug).maybeSingle();
     list = data;
   }
-  if (!list || !ownsList(list) || isPersonal(list)) return;
+  if (!list || isPersonal(list)) return;
+  const adminMayEdit = isAdmin && list.owner_id && list.kind === "group";
+  if (!ownsList(list) && !adminMayEdit) return;
   await openList(list);
   if (current) renderEditor(current.list, current.members, current.guest);
 }
@@ -602,6 +606,12 @@ export async function initLists() {
     const { data } = await supabase.from("profiles").select("wca_id, name").eq("id", userId).maybeSingle();
     myWcaId = data?.wca_id ?? null;
     myName = data?.name ?? null;
+    try {
+      const r = await supabase.rpc("is_admin");
+      isAdmin = r.data === true;
+    } catch (e) {
+      isAdmin = false;
+    }
   }
 
   guest = getGuest();
