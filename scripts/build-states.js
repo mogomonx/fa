@@ -231,6 +231,7 @@ async function main() {
   const cutoff = cut.toISOString().slice(0, 10);
   const final = new Map(); // wcaId -> {country, region}
   const auto = new Map();  // wcaId -> {country, region}: detected region, ignoring overrides
+  const unassigned = [];   // people with competitions but no region reaching MIN_COMPS (for the admin view)
   const stats = { override: 0, autoRecent: 0, autoAll: 0, hidden: 0, noRegionWithComps: 0, noRegionNoComps: 0 };
   for (const [wcaId, p] of persons) {
     const o = overrides.get(wcaId);
@@ -239,9 +240,14 @@ async function main() {
     let detected = null;
     let how = '';
     let hadComps = false;
+    let regionCounts = null;
     if (wanted.has(p.iso)) {
       const entries = [...(compsByPerson.get(wcaId)?.values() || [])].filter((c) => c.country === p.iso);
       hadComps = entries.length > 0;
+      if (hadComps) {
+        regionCounts = {};
+        for (const c of entries) regionCounts[c.region] = (regionCounts[c.region] || 0) + 1;
+      }
       detected = pickRegion(entries.filter((c) => c.date >= cutoff));
       if (detected) how = 'recent';
       else {
@@ -265,11 +271,28 @@ async function main() {
     if (detected) {
       final.set(wcaId, { country: p.iso, region: detected });
       if (how === 'recent') stats.autoRecent += 1; else stats.autoAll += 1;
-    } else if (hadComps) stats.noRegionWithComps += 1;
-    else stats.noRegionNoComps += 1;
+    } else if (hadComps) {
+      stats.noRegionWithComps += 1;
+      unassigned.push({ wcaId, name: p.name, country: p.iso, regions: regionCounts });
+    } else stats.noRegionNoComps += 1;
   }
   console.log(`Assigned ${final.size}: ${stats.override} by override, ${stats.autoRecent} auto (last ${RECENT_YEARS} years), ${stats.autoAll} auto (all time). ` +
     `Left out: ${stats.hidden} hidden, ${stats.noRegionWithComps} with competitions but no region reaching ${MIN_COMPS}, ${stats.noRegionNoComps} with no mapped competitions.`);
+
+  // People with no state, for the admin view (one copy in every state list's folder).
+  unassigned.sort((a, b) => a.name.localeCompare(b.name));
+  const unassignedAt = new Date().toISOString();
+  for (const l of input.lists) {
+    if (!wanted.has(l.country)) continue;
+    const ctx = getListContext(l.slug);
+    fs.mkdirSync(ctx.dataDir, { recursive: true });
+    fs.writeFileSync(path.join(ctx.dataDir, 'state-unassigned.json'), JSON.stringify({
+      generatedAt: unassignedAt,
+      country: l.country,
+      people: unassigned.filter((u) => u.country === l.country),
+    }));
+  }
+  console.log(`  ${unassigned.length} people with competitions but no state (listed for admins).`);
 
   // Official PBs + ranks for those people
   const blank = () => Object.fromEntries([...EVENT_IDS].map((id) => [id, { single: null, average: null, singleRanks: null, averageRanks: null }]));
