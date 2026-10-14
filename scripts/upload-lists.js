@@ -14,6 +14,7 @@ const FILES = [
   'full-results.json', 'streaks.json', 'recent-activity.json', 'rolling-averages.json',
   'upcoming.json',
   'state-assignments.json', // state lists only (written by build-states.js)
+  'state-unassigned.json',  // state lists only: people with no state, for the admin view
 ];
 const LIMIT = 45 * 1024 * 1024;
 
