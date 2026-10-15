@@ -26,11 +26,23 @@ results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)
 competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
 
 print("Converting Persons...")
+# Read columns dynamically and check for sub_id / subid
+cols_df = con.execute(f"DESCRIBE SELECT * FROM read_csv('{persons_file}', delim='\t', header=True, auto_detect=True)").fetchall()
+col_names = [col[0].lower() for col in cols_df]
+
+sub_col = None
+if 'sub_id' in col_names:
+    sub_col = 'sub_id'
+elif 'subid' in col_names:
+    sub_col = 'subid'
+
+where_clause = f"WHERE {sub_col} = 1" if sub_col else ""
+
 con.execute(f"""
     COPY (
         SELECT id AS wca_id, name, country_id, gender
         FROM read_csv('{persons_file}', delim='\t', header=True, auto_detect=True)
-        WHERE sub_id = 1
+        {where_clause}
     ) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
