@@ -4,7 +4,7 @@ import re
 import csv
 import duckdb
 
-print("=== RUNNING SCRIPT VERSION 5.0 - NO COMPETITIONS READ_CSV ===")
+print("=== EXECUTING CONVERT-TO-PARQUET V6.0 (PYTHON NATIVE COMPETITIONS INGESTION) ===")
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
 output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
@@ -113,7 +113,7 @@ con.execute(f"""
 """)
 
 # 4. Results & Competitions
-print("Processing Competitions in Python...")
+print("Ingesting Competitions using native Python CSV parser...")
 con.execute("CREATE TABLE competitions_lookup (id VARCHAR PRIMARY KEY, year INTEGER, month INTEGER, day INTEGER);")
 
 with open(competitions_file, 'r', encoding='utf-8', errors='ignore') as f:
