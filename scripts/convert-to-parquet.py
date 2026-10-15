@@ -30,7 +30,7 @@ con.execute(f"""
     COPY (
         SELECT id AS wca_id, name, country_id, gender
         FROM read_csv('{persons_file}', delim='\t', header=True, auto_detect=True)
-        WHERE subid = 1
+        WHERE sub_id = 1
     ) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
