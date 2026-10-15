@@ -36,9 +36,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Work out mode
         id: mode
@@ -117,3 +122,22 @@ jobs:
           curl -sL "${{ steps.export-url.outputs.url }}" -o /tmp/wca-export.zip
           mkdir -p /tmp/wca-export
           unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
+
+      - name: Convert TSVs to Parquet
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        run: |
+          pip install duckdb
+          python scripts/convert-to-parquet.py
+        env:
+          WCA_EXPORT_DIR: /tmp/wca-export
+          PARQUET_OUTPUT_DIR: build/parquet
+
+      - name: Upload Parquet Files to Cloudflare R2
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        run: |
+          aws s3 sync build/parquet/ s3://wca-parquet-data/ \
+            --endpoint-url ${{ secrets.R2_ENDPOINT_URL }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
