@@ -107,7 +107,28 @@ jobs:
         id: export-url
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         run: |
-          TSV_URL=$(node scripts/get-export-url.js)
+          TSV_URL=$(node scripts/get-export-url.js 2>/dev/null | tail -n 1 | tr -d '\r\n')
+          
+          if [ -z "$TSV_URL" ] || [[ "$TSV_URL" != http* ]]; then
+            echo "Node script failed or returned invalid URL. Fetching directly via Python..."
+            TSV_URL=$(python -c "
+import urllib.request, json
+req = urllib.request.Request('https://www.worldcubeassociation.org/api/v0/export/public', headers={'User-Agent': 'Mozilla/5.0'})
+try:
+    with urllib.request.urlopen(req) as resp:
+        data = json.loads(resp.read().decode())
+        print(data.get('tsv_url', ''))
+except Exception as e:
+    print('')
+" | tail -n 1 | tr -d '\r\n')
+          fi
+
+          if [ -z "$TSV_URL" ]; then
+            echo "ERROR: Could not resolve WCA export URL from API."
+            exit 1
+          fi
+
+          echo "Resolved Export URL: $TSV_URL"
           echo "url=$TSV_URL" >> "$GITHUB_OUTPUT"
 
       - name: Download WCA results export
@@ -117,30 +138,11 @@ jobs:
           mkdir -p /tmp/wca-export
           
           URL="${{ steps.export-url.outputs.url }}"
-          echo "Downloading WCA Export from: $URL"
-          
-          # Try curl with location follow and retry settings
+          echo "Downloading WCA Export..."
           curl -fL --retry 3 --retry-delay 5 -A "Mozilla/5.0" "$URL" -o /tmp/wca-export.zip
+          unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
           
-          # Verify download is valid zip file before unzipping
-          if unzip -t /tmp/wca-export.zip >/dev/null 2>&1; then
-            echo "Zip download verified successfully."
-            unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
-          else
-            echo "Curl download failed or returned invalid zip. Falling back to Python downloader..."
-            python -c "
-import urllib.request, zipfile, io
-url = '$URL'
-req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-with urllib.request.urlopen(req) as resp:
-    data = resp.read()
-with zipfile.ZipFile(io.BytesIO(data)) as z:
-    z.extractall('/tmp/wca-export')
-print('Python fallback extraction complete.')
-"
-          fi
-          
-          echo "Files in /tmp/wca-export:"
+          echo "Extracted files:"
           ls -la /tmp/wca-export
 
       - name: Convert TSVs to Parquet
@@ -150,7 +152,7 @@ print('Python fallback extraction complete.')
           cat << 'EOF' > /tmp/convert.py
           import os, glob, re, csv, duckdb
 
-          print("=== INLINE CONVERSION SCRIPT EXECUTING ===")
+          print("=== INLINE PARQUET CONVERSION EXECUTING ===")
           export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
           output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
           os.makedirs(output_dir, exist_ok=True)
