@@ -140,12 +140,14 @@ jobs:
         run: |
           # Assigns people to states and writes results.json for every state list...
           node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
-          # ...then the usual scripts turn that into the rankings page data
-          # (history files stay empty for now)
+          
+          # Generates real full-results.json for state rankings in one pass over the downloaded export
+          node scripts/parse-export.js /tmp/wca-export $STATE_SLUGS
+
+          # Build everything from each state list's full-results.json
           for s in $STATE_SLUGS; do
             echo "=== state: $s ==="
             node scripts/build-rankings.js "$s"
-            node scripts/make-empty-history.js "$s"
             node scripts/build-individual-rankings.js "$s"
             node scripts/build-historical-records.js "$s"
             node scripts/build-streaks.js "$s"
