@@ -27,69 +27,103 @@ competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*comp
 
 TSV_OPTS = "delim='\t', header=True, quote='\"', escape='\"', ignore_errors=True"
 
-# Read header row of Persons.tsv to dynamically find sub_id vs subid
-with open(persons_file, 'r', encoding='utf-8') as f:
-    first_line = f.readline().lower()
+def get_header_columns(file_path):
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        first_line = f.readline().strip()
+    return [col.strip().lower() for col in first_line.split('\t')]
+
+# 1. Persons
+print("Converting Persons...")
+p_headers = get_header_columns(persons_file)
+
+id_col = "id" if "id" in p_headers else p_headers[0]
+name_col = "name" if "name" in p_headers else p_headers[1]
+country_col = "countryid" if "countryid" in p_headers else ("country_id" if "country_id" in p_headers else p_headers[2])
+gender_col = "gender" if "gender" in p_headers else p_headers[3]
 
 sub_col = None
-if 'sub_id' in first_line:
-    sub_col = 'sub_id'
-elif 'subid' in first_line:
-    sub_col = 'subid'
+if "sub_id" in p_headers:
+    sub_col = "sub_id"
+elif "subid" in p_headers:
+    sub_col = "subid"
 
 where_clause = f"WHERE {sub_col} = 1" if sub_col else ""
 
-print(f"Converting Persons (using filter: {where_clause or 'None'})...")
 con.execute(f"""
     COPY (
         SELECT 
-            CAST(id AS VARCHAR) AS wca_id, 
-            CAST(name AS VARCHAR) AS name, 
-            CAST(countryId AS VARCHAR) AS country_id, 
-            CAST(gender AS VARCHAR) AS gender
+            CAST({id_col} AS VARCHAR) AS wca_id, 
+            CAST({name_col} AS VARCHAR) AS name, 
+            CAST({country_col} AS VARCHAR) AS country_id, 
+            CAST({gender_col} AS VARCHAR) AS gender
         FROM read_csv('{persons_file}', {TSV_OPTS})
         {where_clause}
     ) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
+# 2. Ranks Single
 print("Converting Ranks Single...")
+rs_headers = get_header_columns(ranks_single_file)
+pid_col = "personid" if "personid" in rs_headers else ("person_id" if "person_id" in rs_headers else rs_headers[0])
+eid_col = "eventid" if "eventid" in rs_headers else ("event_id" if "event_id" in rs_headers else rs_headers[1])
+best_col = "best" if "best" in rs_headers else rs_headers[2]
+wr_col = "worldrank" if "worldrank" in rs_headers else ("world_rank" if "world_rank" in rs_headers else rs_headers[3])
+cr_col = "continentrank" if "continentrank" in rs_headers else ("continent_rank" if "continent_rank" in rs_headers else rs_headers[4])
+cn_col = "countryrank" if "countryrank" in rs_headers else ("country_rank" if "country_rank" in rs_headers else rs_headers[5])
+
 con.execute(f"""
     COPY (
         SELECT 
-            CAST(personId AS VARCHAR) AS wca_id, 
-            CAST(eventId AS VARCHAR) AS event_id, 
-            CAST(best AS BIGINT) AS best, 
-            CAST(worldRank AS BIGINT) AS world_rank, 
-            CAST(continentRank AS BIGINT) AS continent_rank, 
-            CAST(countryRank AS BIGINT) AS country_rank
+            CAST({pid_col} AS VARCHAR) AS wca_id, 
+            CAST({eid_col} AS VARCHAR) AS event_id, 
+            CAST({best_col} AS BIGINT) AS best, 
+            CAST({wr_col} AS BIGINT) AS world_rank, 
+            CAST({cr_col} AS BIGINT) AS continent_rank, 
+            CAST({cn_col} AS BIGINT) AS country_rank
         FROM read_csv('{ranks_single_file}', {TSV_OPTS})
-        ORDER BY eventId, worldRank ASC
+        ORDER BY {eid_col}, {wr_col} ASC
     ) TO '{output_dir}/ranks_single.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
+# 3. Ranks Average
 print("Converting Ranks Average...")
+ra_headers = get_header_columns(ranks_average_file)
+pid_col = "personid" if "personid" in ra_headers else ("person_id" if "person_id" in ra_headers else ra_headers[0])
+eid_col = "eventid" if "eventid" in ra_headers else ("event_id" if "event_id" in ra_headers else ra_headers[1])
+best_col = "best" if "best" in ra_headers else ra_headers[2]
+wr_col = "worldrank" if "worldrank" in ra_headers else ("world_rank" if "world_rank" in ra_headers else ra_headers[3])
+cr_col = "continentrank" if "continentrank" in ra_headers else ("continent_rank" if "continent_rank" in ra_headers else ra_headers[4])
+cn_col = "countryrank" if "countryrank" in ra_headers else ("country_rank" if "country_rank" in ra_headers else ra_headers[5])
+
 con.execute(f"""
     COPY (
         SELECT 
-            CAST(personId AS VARCHAR) AS wca_id, 
-            CAST(eventId AS VARCHAR) AS event_id, 
-            CAST(best AS BIGINT) AS best, 
-            CAST(worldRank AS BIGINT) AS world_rank, 
-            CAST(continentRank AS BIGINT) AS continent_rank, 
-            CAST(countryRank AS BIGINT) AS country_rank
+            CAST({pid_col} AS VARCHAR) AS wca_id, 
+            CAST({eid_col} AS VARCHAR) AS event_id, 
+            CAST({best_col} AS BIGINT) AS best, 
+            CAST({wr_col} AS BIGINT) AS world_rank, 
+            CAST({cr_col} AS BIGINT) AS continent_rank, 
+            CAST({cn_col} AS BIGINT) AS country_rank
         FROM read_csv('{ranks_average_file}', {TSV_OPTS})
-        ORDER BY eventId, worldRank ASC
+        ORDER BY {eid_col}, {wr_col} ASC
     ) TO '{output_dir}/ranks_average.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
+# 4. Results
 print("Converting Results...")
+res_headers = get_header_columns(results_file)
+r_pid = "personid" if "personid" in res_headers else ("person_id" if "person_id" in res_headers else "personid")
+r_eid = "eventid" if "eventid" in res_headers else ("event_id" if "event_id" in res_headers else "eventid")
+r_cid = "competitionid" if "competitionid" in res_headers else ("competition_id" if "competition_id" in res_headers else "competitionid")
+r_rid = "roundtypeid" if "roundtypeid" in res_headers else ("round_type_id" if "round_type_id" in res_headers else "roundtypeid")
+
 con.execute(f"""
     COPY (
         SELECT 
-            CAST(r.personId AS VARCHAR) AS wca_id,
-            CAST(r.eventId AS VARCHAR) AS event_id,
-            CAST(r.competitionId AS VARCHAR) AS competition_id,
-            CAST(r.roundTypeId AS VARCHAR) AS round_type_id,
+            CAST(r.{r_pid} AS VARCHAR) AS wca_id,
+            CAST(r.{r_eid} AS VARCHAR) AS event_id,
+            CAST(r.{r_cid} AS VARCHAR) AS competition_id,
+            CAST(r.{r_rid} AS VARCHAR) AS round_type_id,
             CAST(r.pos AS BIGINT) AS pos,
             CAST(r.best AS BIGINT) AS best,
             CAST(r.average AS BIGINT) AS average,
@@ -103,8 +137,8 @@ con.execute(f"""
             CAST(c.day AS INTEGER) AS day
         FROM read_csv('{results_file}', {TSV_OPTS}) r
         LEFT JOIN read_csv('{competitions_file}', {TSV_OPTS}) c
-            ON r.competitionId = c.id
-        ORDER BY r.eventId, r.personId, c.year DESC
+            ON r.{r_cid} = c.id
+        ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC
     ) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
