@@ -25,6 +25,7 @@ const RESULTS_PATH = path.join(DATA_DIR, 'results.json');
 const OUTPUT_PATH = path.join(DATA_DIR, 'individual-rankings.json');
 
 const TOP_N = 100;
+const MAX_RANKED = 2500; // Cap ranked results per event to keep file size well under 45MB
 
 // A stable identity for one ranked item, for matching a person's own PR
 // order back up (can't just use the value, since two can tie). attemptIndex
@@ -111,11 +112,17 @@ function rankPool(pool, event, type) {
   const ranked = [];
   let place = 0;
   let lastValue = null;
-  sorted.forEach((e, i) => {
+  
+  for (let i = 0; i < sorted.length; i++) {
+    const e = sorted[i];
     if (e.value !== lastValue) {
       place = i + 1;
       lastValue = e.value;
     }
+    
+    // Stop recording once we exceed MAX_RANKED entries
+    if (ranked.length >= MAX_RANKED) break;
+
     ranked.push({
       wcaId: e.wcaId,
       name: e.name,
@@ -128,7 +135,8 @@ function rankPool(pool, event, type) {
       round: roundLabel(e.round),
       date: e.date,
     });
-  });
+  }
+  
   return ranked;
 }
 
