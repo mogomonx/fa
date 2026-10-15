@@ -1,174 +1,257 @@
-import os
-import glob
-import re
+"""
+Converts the WCA results export (TSV) into Parquet files for DuckDB-WASM / R2.
+
+Usage (from the repo root, after the export is unzipped):
+    WCA_EXPORT_DIR=/tmp/wca-export PARQUET_OUTPUT_DIR=build/parquet python scripts/convert-to-parquet.py
+
+Output (PARQUET_OUTPUT_DIR):
+    persons.parquet          wca_id, name, country_id, gender          (current row only)
+    ranks_single.parquet     wca_id, event_id, best, world_rank, continent_rank, country_rank
+    ranks_average.parquet    same columns
+    results.parquet          one row per person/event/competition/round, with the
+                             competition date; value1..5 are included only if the
+                             export's results.tsv still has them
+    attempts.parquet         only if result_attempts.tsv exists (result_id, attempt_number, value)
+
+Design rules:
+  * No DuckDB dialect sniffing anywhere (auto_detect=False, quote='' escape='').
+  * Columns are looked up BY NAME, never by position. If a required column is
+    missing, the script prints the real header line and exits 1 (so nothing is
+    uploaded from a half-converted set).
+  * competitions.tsv is read with Python's csv module with QUOTE_NONE, because
+    competition names/descriptions contain unescaped quote characters.
+"""
 import csv
+import os
+import re
+import sys
+
 import duckdb
 
-print("=== EXECUTING CONVERT-TO-PARQUET V6.0 (PYTHON NATIVE COMPETITIONS INGESTION) ===")
+SCRIPT_VERSION = "7.0"
+print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
 output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
-
 os.makedirs(output_dir, exist_ok=True)
+
+# The export may unzip into a sub-folder; search the tree for the files.
+def find_tsv(name, required=True):
+    pattern = re.compile(rf"^(WCA_export_)?{re.escape(name)}\.tsv$", re.IGNORECASE)
+    for root, _dirs, files in os.walk(export_dir):
+        for f in files:
+            if pattern.match(f):
+                return os.path.join(root, f)
+    if required:
+        print(f"ERROR: could not find {name}.tsv under {export_dir}", file=sys.stderr)
+        sys.exit(1)
+    return None
+
+
+def read_header(path):
+    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+        return [c.strip().lower() for c in f.readline().rstrip("\r\n").split("\t")]
+
+
+def pick(headers, path, label, *candidates, required=True):
+    """Return the first candidate column name present in headers."""
+    for c in candidates:
+        if c in headers:
+            return c
+    if required:
+        print(
+            f"ERROR: {os.path.basename(path)} has no column for '{label}' "
+            f"(tried {', '.join(candidates)}).\nReal header: {headers}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    return None
+
+
+# Everything read as text; no sniffing, no quote handling.
+TSV_OPTS = (
+    "delim='\t', header=True, auto_detect=False, quote='', escape='', "
+    "ignore_errors=True, all_varchar=True, "
+    "null_padding=True"
+)
 
 con = duckdb.connect()
 con.execute("PRAGMA threads=4;")
+con.execute("PRAGMA memory_limit='5GB';")
+con.execute("PRAGMA temp_directory='/tmp/duckdb-spill';")
 
-def find_tsv(dir_path, pattern):
-    files = os.listdir(dir_path)
-    for f in files:
-        if re.search(pattern, f, re.IGNORECASE):
-            return os.path.join(dir_path, f)
-    raise FileNotFoundError(f"Could not find TSV file matching pattern: {pattern} in {dir_path}")
 
-print("Locating export files...")
-persons_file = find_tsv(export_dir, r"(^persons\.tsv$|wca_export.*persons\.tsv$)")
-ranks_single_file = find_tsv(export_dir, r"(^ranks_single\.tsv$|wca_export.*ranks_single\.tsv$)")
-ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ranks_average\.tsv$)")
-results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
-competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
+def copy_to_parquet(select_sql, out_name):
+    out = os.path.join(output_dir, out_name)
+    con.execute(
+        f"COPY ({select_sql}) TO '{out}' "
+        f"(FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);"
+    )
+    size_mb = os.path.getsize(out) / 1_000_000
+    print(f"  wrote {out_name} ({size_mb:.1f} MB)", flush=True)
 
-TSV_OPTS = "delim='\t', header=True, auto_detect=False, quote='', escape='', ignore_errors=True, all_varchar=True"
 
-def get_header_columns(file_path):
-    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-        first_line = f.readline().strip()
-    return [col.strip().lower() for col in first_line.split('\t')]
+# ---------------------------------------------------------------- persons
+print("Converting persons...", flush=True)
+persons_file = find_tsv("persons")
+ph = read_header(persons_file)
+print(f"  header: {ph}")
+p_id = pick(ph, persons_file, "wca id", "wca_id", "id")
+p_name = pick(ph, persons_file, "name", "name")
+p_country = pick(ph, persons_file, "country", "country_id", "countryid")
+p_gender = pick(ph, persons_file, "gender", "gender", required=False)
+p_sub = pick(ph, persons_file, "sub id", "sub_id", "subid", required=False)
 
-# 1. Persons
-print("Converting Persons...")
-p_headers = get_header_columns(persons_file)
+where = f"WHERE {p_sub} = '1'" if p_sub else ""
+gender_sql = f"CAST({p_gender} AS VARCHAR)" if p_gender else "NULL"
+copy_to_parquet(
+    f"""
+    SELECT CAST({p_id} AS VARCHAR) AS wca_id,
+           CAST({p_name} AS VARCHAR) AS name,
+           CAST({p_country} AS VARCHAR) AS country_id,
+           {gender_sql} AS gender
+    FROM read_csv('{persons_file}', {TSV_OPTS})
+    {where}
+    """,
+    "persons.parquet",
+)
 
-id_col = "id" if "id" in p_headers else p_headers[0]
-name_col = "name" if "name" in p_headers else p_headers[1]
-country_col = "countryid" if "countryid" in p_headers else ("country_id" if "country_id" in p_headers else p_headers[2])
-gender_col = "gender" if "gender" in p_headers else p_headers[3]
+# ------------------------------------------------------------------ ranks
+def convert_ranks(file_stem, out_name):
+    print(f"Converting {file_stem}...", flush=True)
+    path = find_tsv(file_stem)
+    h = read_header(path)
+    print(f"  header: {h}")
+    pid = pick(h, path, "person id", "person_id", "personid", "wca_id")
+    eid = pick(h, path, "event id", "event_id", "eventid")
+    best = pick(h, path, "best", "best")
+    wr = pick(h, path, "world rank", "world_rank", "worldrank")
+    cr = pick(h, path, "continent rank", "continent_rank", "continentrank")
+    nr = pick(h, path, "country rank", "country_rank", "countryrank")
+    copy_to_parquet(
+        f"""
+        SELECT CAST({pid} AS VARCHAR) AS wca_id,
+               CAST({eid} AS VARCHAR) AS event_id,
+               TRY_CAST({best} AS BIGINT) AS best,
+               TRY_CAST({wr} AS BIGINT) AS world_rank,
+               TRY_CAST({cr} AS BIGINT) AS continent_rank,
+               TRY_CAST({nr} AS BIGINT) AS country_rank
+        FROM read_csv('{path}', {TSV_OPTS})
+        ORDER BY {eid}, TRY_CAST({wr} AS BIGINT) ASC
+        """,
+        out_name,
+    )
 
-sub_col = None
-if "sub_id" in p_headers:
-    sub_col = "sub_id"
-elif "subid" in p_headers:
-    sub_col = "subid"
 
-where_clause = f"WHERE {sub_col} = '1'" if sub_col else ""
+convert_ranks("ranks_single", "ranks_single.parquet")
+convert_ranks("ranks_average", "ranks_average.parquet")
 
-con.execute(f"""
-    COPY (
-        SELECT 
-            CAST({id_col} AS VARCHAR) AS wca_id, 
-            CAST({name_col} AS VARCHAR) AS name, 
-            CAST({country_col} AS VARCHAR) AS country_id, 
-            CAST({gender_col} AS VARCHAR) AS gender
-        FROM read_csv('{persons_file}', {TSV_OPTS})
-        {where_clause}
-    ) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
-""")
-
-# 2. Ranks Single
-print("Converting Ranks Single...")
-rs_headers = get_header_columns(ranks_single_file)
-pid_col = "personid" if "personid" in rs_headers else ("person_id" if "person_id" in rs_headers else rs_headers[0])
-eid_col = "eventid" if "eventid" in rs_headers else ("event_id" if "event_id" in rs_headers else rs_headers[1])
-best_col = "best" if "best" in rs_headers else rs_headers[2]
-wr_col = "worldrank" if "worldrank" in rs_headers else ("world_rank" if "world_rank" in rs_headers else rs_headers[3])
-cr_col = "continentrank" if "continentrank" in rs_headers else ("continent_rank" if "continent_rank" in rs_headers else rs_headers[4])
-cn_col = "countryrank" if "countryrank" in rs_headers else ("country_rank" if "country_rank" in rs_headers else rs_headers[5])
-
-con.execute(f"""
-    COPY (
-        SELECT 
-            CAST({pid_col} AS VARCHAR) AS wca_id, 
-            CAST({eid_col} AS VARCHAR) AS event_id, 
-            TRY_CAST({best_col} AS BIGINT) AS best, 
-            TRY_CAST({wr_col} AS BIGINT) AS world_rank, 
-            TRY_CAST({cr_col} AS BIGINT) AS continent_rank, 
-            TRY_CAST({cn_col} AS BIGINT) AS country_rank
-        FROM read_csv('{ranks_single_file}', {TSV_OPTS})
-        ORDER BY {eid_col}, TRY_CAST({wr_col} AS BIGINT) ASC
-    ) TO '{output_dir}/ranks_single.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
-""")
-
-# 3. Ranks Average
-print("Converting Ranks Average...")
-ra_headers = get_header_columns(ranks_average_file)
-pid_col = "personid" if "personid" in ra_headers else ("person_id" if "person_id" in ra_headers else ra_headers[0])
-eid_col = "eventid" if "eventid" in ra_headers else ("event_id" if "event_id" in ra_headers else ra_headers[1])
-best_col = "best" if "best" in ra_headers else ra_headers[2]
-wr_col = "worldrank" if "worldrank" in ra_headers else ("world_rank" if "world_rank" in ra_headers else ra_headers[3])
-cr_col = "continentrank" if "continentrank" in ra_headers else ("continent_rank" if "continent_rank" in ra_headers else ra_headers[4])
-cn_col = "countryrank" if "countryrank" in ra_headers else ("country_rank" if "country_rank" in ra_headers else ra_headers[5])
-
-con.execute(f"""
-    COPY (
-        SELECT 
-            CAST({pid_col} AS VARCHAR) AS wca_id, 
-            CAST({eid_col} AS VARCHAR) AS event_id, 
-            TRY_CAST({best_col} AS BIGINT) AS best, 
-            TRY_CAST({wr_col} AS BIGINT) AS world_rank, 
-            TRY_CAST({cr_col} AS BIGINT) AS continent_rank, 
-            TRY_CAST({cn_col} AS BIGINT) AS country_rank
-        FROM read_csv('{ranks_average_file}', {TSV_OPTS})
-        ORDER BY {eid_col}, TRY_CAST({wr_col} AS BIGINT) ASC
-    ) TO '{output_dir}/ranks_average.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
-""")
-
-# 4. Results & Competitions
-print("Ingesting Competitions using native Python CSV parser...")
-con.execute("CREATE TABLE competitions_lookup (id VARCHAR PRIMARY KEY, year INTEGER, month INTEGER, day INTEGER);")
-
-with open(competitions_file, 'r', encoding='utf-8', errors='ignore') as f:
-    reader = csv.reader(f, delimiter='\t')
-    headers = [h.strip().lower() for h in next(reader)]
-    
-    id_idx = headers.index('id') if 'id' in headers else 0
-    year_idx = headers.index('year') if 'year' in headers else 1
-    month_idx = headers.index('month') if 'month' in headers else 2
-    day_idx = headers.index('day') if 'day' in headers else 3
-    
-    rows = []
+# ----------------------------------------------------------- competitions
+# Python csv with QUOTE_NONE: a stray " inside a competition name can never
+# swallow following lines, which is what broke DuckDB's sniffer.
+print("Reading competitions (Python csv, no quoting)...", flush=True)
+competitions_file = find_tsv("competitions")
+csv.field_size_limit(10_000_000)
+comp_rows = []
+skipped = 0
+with open(competitions_file, "r", encoding="utf-8", errors="ignore", newline="") as f:
+    reader = csv.reader(f, delimiter="\t", quoting=csv.QUOTE_NONE)
+    ch = [h.strip().lower() for h in next(reader)]
+    print(f"  header: {ch}")
+    for need in ("id", "year", "month", "day"):
+        if need not in ch:
+            print(f"ERROR: competitions.tsv has no '{need}' column.\nReal header: {ch}", file=sys.stderr)
+            sys.exit(1)
+    i_id, i_y, i_m, i_d = (ch.index(c) for c in ("id", "year", "month", "day"))
+    need_len = max(i_id, i_y, i_m, i_d) + 1
     for row in reader:
-        if len(row) > max(id_idx, year_idx, month_idx, day_idx):
-            try:
-                c_id = row[id_idx]
-                c_yr = int(row[year_idx])
-                c_mo = int(row[month_idx])
-                c_dy = int(row[day_idx])
-                rows.append((c_id, c_yr, c_mo, c_dy))
-            except ValueError:
-                continue
+        if len(row) < need_len:
+            skipped += 1
+            continue
+        try:
+            comp_rows.append((row[i_id], int(row[i_y]), int(row[i_m]), int(row[i_d])))
+        except ValueError:
+            skipped += 1
+print(f"  {len(comp_rows)} competitions loaded, {skipped} rows skipped")
+if len(comp_rows) < 1000:
+    print("ERROR: far fewer competitions than expected; refusing to continue.", file=sys.stderr)
+    sys.exit(1)
 
-con.executemany("INSERT INTO competitions_lookup VALUES (?, ?, ?, ?)", rows)
+con.execute("CREATE TABLE competitions_lookup (id VARCHAR, year INTEGER, month INTEGER, day INTEGER);")
+con.executemany("INSERT INTO competitions_lookup VALUES (?, ?, ?, ?)", comp_rows)
 
-print("Converting Results...")
-res_headers = get_header_columns(results_file)
-r_pid = "personid" if "personid" in res_headers else ("person_id" if "person_id" in res_headers else "personid")
-r_eid = "eventid" if "eventid" in res_headers else ("event_id" if "event_id" in res_headers else "eventid")
-r_cid = "competitionid" if "competitionid" in res_headers else ("competition_id" if "competition_id" in res_headers else "competitionid")
-r_rid = "roundtypeid" if "roundtypeid" in res_headers else ("round_type_id" if "round_type_id" in res_headers else "roundtypeid")
+# ---------------------------------------------------------------- results
+print("Converting results...", flush=True)
+results_file = find_tsv("results")
+rh = read_header(results_file)
+print(f"  header: {rh}")
+r_pid = pick(rh, results_file, "person id", "person_id", "personid")
+r_eid = pick(rh, results_file, "event id", "event_id", "eventid")
+r_cid = pick(rh, results_file, "competition id", "competition_id", "competitionid")
+r_rid = pick(rh, results_file, "round type id", "round_type_id", "roundtypeid")
+r_pos = pick(rh, results_file, "pos", "pos")
+r_best = pick(rh, results_file, "best", "best")
+r_avg = pick(rh, results_file, "average", "average")
+r_rowid = pick(rh, results_file, "result id", "id", required=False)
 
-con.execute(f"""
-    COPY (
-        SELECT 
-            CAST(r.{r_pid} AS VARCHAR) AS wca_id,
-            CAST(r.{r_eid} AS VARCHAR) AS event_id,
-            CAST(r.{r_cid} AS VARCHAR) AS competition_id,
-            CAST(r.{r_rid} AS VARCHAR) AS round_type_id,
-            TRY_CAST(r.pos AS BIGINT) AS pos,
-            TRY_CAST(r.best AS BIGINT) AS best,
-            TRY_CAST(r.average AS BIGINT) AS average,
-            TRY_CAST(r.value1 AS BIGINT) AS value1, 
-            TRY_CAST(r.value2 AS BIGINT) AS value2, 
-            TRY_CAST(r.value3 AS BIGINT) AS value3, 
-            TRY_CAST(r.value4 AS BIGINT) AS value4, 
-            TRY_CAST(r.value5 AS BIGINT) AS value5,
-            c.year AS year,
-            c.month AS month,
-            c.day AS day
-        FROM read_csv('{results_file}', {TSV_OPTS}) r
-        LEFT JOIN competitions_lookup c
-            ON r.{r_cid} = c.id
-        ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC
-    ) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
-""")
+extra = []
+if r_rowid:
+    extra.append(f"TRY_CAST(r.{r_rowid} AS BIGINT) AS result_id")
+# Old exports had value1..value5 inside results.tsv; v2 moved them to result_attempts.tsv.
+has_values = all(f"value{i}" in rh for i in range(1, 6))
+if has_values:
+    extra += [f"TRY_CAST(r.value{i} AS BIGINT) AS value{i}" for i in range(1, 6)]
+else:
+    print("  (no value1..5 columns in results.tsv; attempts come from result_attempts.tsv)")
+extra_sql = (",\n               ".join(extra) + ",") if extra else ""
+
+copy_to_parquet(
+    f"""
+    SELECT CAST(r.{r_pid} AS VARCHAR) AS wca_id,
+           CAST(r.{r_eid} AS VARCHAR) AS event_id,
+           CAST(r.{r_cid} AS VARCHAR) AS competition_id,
+           CAST(r.{r_rid} AS VARCHAR) AS round_type_id,
+           TRY_CAST(r.{r_pos} AS BIGINT) AS pos,
+           TRY_CAST(r.{r_best} AS BIGINT) AS best,
+           TRY_CAST(r.{r_avg} AS BIGINT) AS average,
+           {extra_sql}
+           c.year AS year,
+           c.month AS month,
+           c.day AS day
+    FROM read_csv('{results_file}', {TSV_OPTS}) r
+    LEFT JOIN competitions_lookup c ON r.{r_cid} = c.id
+    ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC
+    """,
+    "results.parquet",
+)
+
+# --------------------------------------------------------------- attempts
+attempts_file = find_tsv("result_attempts", required=False)
+if attempts_file and not has_values:
+    print("Converting result_attempts...", flush=True)
+    ah = read_header(attempts_file)
+    print(f"  header: {ah}")
+    a_rid = pick(ah, attempts_file, "result id", "result_id", "resultid")
+    a_num = pick(ah, attempts_file, "attempt number", "attempt_number", "attemptnumber")
+    a_val = pick(ah, attempts_file, "value", "value")
+    copy_to_parquet(
+        f"""
+        SELECT TRY_CAST({a_rid} AS BIGINT) AS result_id,
+               TRY_CAST({a_num} AS INTEGER) AS attempt_number,
+               TRY_CAST({a_val} AS BIGINT) AS value
+        FROM read_csv('{attempts_file}', {TSV_OPTS})
+        ORDER BY TRY_CAST({a_rid} AS BIGINT), TRY_CAST({a_num} AS INTEGER)
+        """,
+        "attempts.parquet",
+    )
+
+# Sanity check: every output must have rows.
+for name in sorted(os.listdir(output_dir)):
+    if name.endswith(".parquet"):
+        n = con.execute(f"SELECT count(*) FROM read_parquet('{os.path.join(output_dir, name)}')").fetchone()[0]
+        print(f"  {name}: {n:,} rows")
+        if n == 0:
+            print(f"ERROR: {name} is empty.", file=sys.stderr)
+            sys.exit(1)
 
 print("Parquet conversion completed successfully.")
