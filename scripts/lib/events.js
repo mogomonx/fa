@@ -1,8 +1,8 @@
-// The 17 events currently recognised by the WCA.
+// The events recognised by the WCA that the site tracks.
 // format: "time"  -> stored as centiseconds, lower is better
 //         "fmc"   -> single = move count, average = moves x 100, lower is better
 //         "mbld"  -> encoded multi-blind value, lower is better (see lib/format.js)
-const EVENTS = [
+const BASE_EVENTS = [
   { id: '333', name: '3x3x3 Cube', format: 'time' },
   { id: '222', name: '2x2x2 Cube', format: 'time' },
   { id: '444', name: '4x4x4 Cube', format: 'time' },
@@ -21,6 +21,18 @@ const EVENTS = [
   { id: '555bf', name: '5x5x5 Blindfolded', format: 'time' },
   { id: '333mbf', name: '3x3x3 Multi-Blind', format: 'mbld' },
 ];
+
+// Face-Turning Octahedron becomes an official WCA event on 2 January 2027.
+// It counts in Kinch and Sum of Ranks like any other event, but until results
+// exist, listing it would lower everyone's Kinch score (the total is divided by
+// the number of events) and add a tied rank to every Sum of Ranks. So it is only
+// included from the official date. To preview it earlier, change FTO_FROM.
+// (A rebuild on or after that date is needed; the weekly full run does it.)
+const FTO_FROM = '2027-01-02';
+const FTO_EVENT = { id: 'fto', name: 'Face-Turning Octahedron', format: 'time' };
+const ftoActive = new Date().toISOString().slice(0, 10) >= FTO_FROM;
+
+const EVENTS = ftoActive ? [...BASE_EVENTS, FTO_EVENT] : BASE_EVENTS;
 
 // Events that have no official "average" (only single results count).
 // 3x3x3, 4x4x4 and 5x5x5 Blindfolded all have an official average
