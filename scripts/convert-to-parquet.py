@@ -25,10 +25,21 @@ ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ra
 results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
 competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
 
-# Standard explicit TSV reader parameters to prevent column shifting
 TSV_OPTS = "delim='\t', header=True, quote='\"', escape='\"', ignore_errors=True"
 
-print("Converting Persons...")
+# Read header row of Persons.tsv to dynamically find sub_id vs subid vs subId
+with open(persons_file, 'r', encoding='utf-8') as f:
+    first_line = f.readline().lower()
+
+sub_col = None
+if 'sub_id' in first_line:
+    sub_col = 'sub_id'
+elif 'subid' in first_line:
+    sub_col = 'subid'
+
+where_clause = f"WHERE {sub_col} = 1" if sub_col else ""
+
+print(f"Converting Persons (using filter: {where_clause or 'None'})...")
 con.execute(f"""
     COPY (
         SELECT 
@@ -37,7 +48,7 @@ con.execute(f"""
             CAST(countryId AS VARCHAR) AS country_id, 
             CAST(gender AS VARCHAR) AS gender
         FROM read_csv('{persons_file}', {TSV_OPTS})
-        WHERE subid = 1 OR sub_id = 1
+        {where_clause}
     ) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
