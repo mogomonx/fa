@@ -2,7 +2,11 @@
 // Used by the GitHub Actions workflow: TSV_URL=$(node scripts/get-export-url.js)
 
 async function main() {
-  const res = await fetch('https://www.worldcubeassociation.org/api/v0/export/public');
+  const res = await fetch('https://www.worldcubeassociation.org/api/v0/export/public', {
+    headers: {
+      'User-Agent': 'WCA-Parquet-Builder/1.0'
+    }
+  });
   if (!res.ok) {
     throw new Error(`export/public returned ${res.status}`);
   }
