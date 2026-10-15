@@ -4,7 +4,8 @@ name: Update Custom Lists
 #   every 15 min : new/edited lists (basic rankings first, then full history);
 #                  state lists too when someone changed their state
 #   daily        : personal bests for finished lists
-#   weekly       : full history for every list, plus every state list
+#   weekly       : full history for every list, plus every state list,
+#                  plus the Parquet conversion and upload to Cloudflare R2
 # Also pings Supabase regularly, which keeps the free project awake.
 on:
   schedule:
@@ -107,127 +108,114 @@ jobs:
         id: export-url
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         run: |
-          TSV_URL=$(node scripts/get-export-url.js 2>/dev/null | tail -n 1 | tr -d '\r\n')
-          
-          if [ -z "$TSV_URL" ] || [[ "$TSV_URL" != http* ]]; then
-            echo "Node script failed or returned invalid URL. Fetching directly via Python..."
-            TSV_URL=$(python -c "
-import urllib.request, json
-req = urllib.request.Request('https://www.worldcubeassociation.org/api/v0/export/public', headers={'User-Agent': 'Mozilla/5.0'})
-try:
-    with urllib.request.urlopen(req) as resp:
-        data = json.loads(resp.read().decode())
-        print(data.get('tsv_url', ''))
-except Exception as e:
-    print('')
-" | tail -n 1 | tr -d '\r\n')
+          TSV_URL=$(node scripts/get-export-url.js 2>/tmp/export-url.err | tail -n 1 | tr -d '\r\n' || true)
+
+          if [[ "$TSV_URL" != http* ]]; then
+            echo "Node script gave no URL ($(cat /tmp/export-url.err 2>/dev/null)). Trying curl..."
+            TSV_URL=$(curl -fsSL -A "WCA-Parquet-Builder/1.0" \
+              https://www.worldcubeassociation.org/api/v0/export/public \
+              | jq -r '.tsv_url // empty' | tr -d '\r\n' || true)
           fi
 
-          if [ -z "$TSV_URL" ]; then
-            echo "ERROR: Could not resolve WCA export URL from API."
+          if [[ "$TSV_URL" != http* ]]; then
+            echo "ERROR: could not resolve the WCA export URL."
             exit 1
           fi
 
-          echo "Resolved Export URL: $TSV_URL"
+          echo "Resolved export URL: $TSV_URL"
           echo "url=$TSV_URL" >> "$GITHUB_OUTPUT"
 
       - name: Download WCA results export
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        env:
+          EXPORT_URL: ${{ steps.export-url.outputs.url }}
         run: |
+          if [ -z "$EXPORT_URL" ]; then
+            echo "ERROR: EXPORT_URL is empty; refusing to run curl."
+            exit 1
+          fi
           rm -rf /tmp/wca-export /tmp/wca-export.zip
           mkdir -p /tmp/wca-export
-          
-          URL="${{ steps.export-url.outputs.url }}"
-          echo "Downloading WCA Export..."
-          curl -fL --retry 3 --retry-delay 5 -A "Mozilla/5.0" "$URL" -o /tmp/wca-export.zip
+          curl -fL --retry 3 --retry-delay 5 -A "WCA-Parquet-Builder/1.0" "$EXPORT_URL" -o /tmp/wca-export.zip
           unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
-          
           echo "Extracted files:"
           ls -la /tmp/wca-export
 
-      - name: Convert TSVs to Parquet
-        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+      - name: Full build
+        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
         run: |
-          pip install duckdb
-          cat << 'EOF' > /tmp/convert.py
-          import os, glob, re, csv, duckdb
+          node scripts/fetch.js $SLUGS
+          for s in $SLUGS; do
+            node scripts/build-rankings.js "$s"
+          done
+          node scripts/parse-export.js /tmp/wca-export $SLUGS
+          for s in $SLUGS; do
+            echo "=== full: $s ==="
+            node scripts/build-individual-rankings.js "$s"
+            node scripts/build-historical-records.js "$s"
+            node scripts/build-streaks.js "$s"
+            node scripts/build-recent-activity.js "$s"
+            node scripts/build-rolling-averages.js "$s"
+          done
+          node scripts/upload-lists.js --level=full $SLUGS
+          node scripts/mark-lists.js --level=full $SLUGS
 
-          print("=== INLINE PARQUET CONVERSION EXECUTING ===")
-          export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
-          output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
-          os.makedirs(output_dir, exist_ok=True)
+      # NOTE: written from the architecture doc. If your previous workflow had
+      # the parallel (xargs -P 4) state step or the state full-history pass,
+      # copy that block over this one from the file's History on GitHub.
+      - name: State rankings
+        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.state_slugs != ''
+        env:
+          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
+          STATE_COUNTRIES: ${{ steps.sync.outputs.state_countries }}
+        run: |
+          node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
+          for s in $STATE_SLUGS; do
+            echo "=== state: $s ==="
+            node scripts/build-rankings.js "$s"
+            node scripts/make-empty-history.js "$s"
+            node scripts/build-individual-rankings.js "$s"
+            node scripts/build-historical-records.js "$s"
+            node scripts/build-streaks.js "$s"
+            node scripts/build-recent-activity.js "$s"
+            node scripts/build-rolling-averages.js "$s"
+          done
+          node scripts/upload-lists.js --level=full $STATE_SLUGS
+          node scripts/mark-lists.js --level=full $STATE_SLUGS
 
-          con = duckdb.connect()
-          con.execute("PRAGMA threads=4;")
-
-          def find_tsv(dir_path, pattern):
-              files = os.listdir(dir_path)
-              for f in files:
-                  if re.search(pattern, f, re.IGNORECASE):
-                      return os.path.join(dir_path, f)
-              raise FileNotFoundError(f"Missing pattern: {pattern} in {dir_path}")
-
-          persons_file = find_tsv(export_dir, r"(^persons\.tsv$|wca_export.*persons\.tsv$)")
-          ranks_single_file = find_tsv(export_dir, r"(^ranks_single\.tsv$|wca_export.*ranks_single\.tsv$)")
-          ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ranks_average\.tsv$)")
-          results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
-          competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
-
-          TSV_OPTS = "delim='\t', header=True, auto_detect=False, quote='', escape='', ignore_errors=True, all_varchar=True"
-
-          def get_headers(fpath):
-              with open(fpath, 'r', encoding='utf-8', errors='ignore') as f:
-                  return [col.strip().lower() for col in f.readline().strip().split('\t')]
-
-          print("Converting Persons...")
-          p_h = get_headers(persons_file)
-          sub_c = "sub_id" if "sub_id" in p_h else ("subid" if "subid" in p_h else None)
-          where_c = f"WHERE {sub_c} = '1'" if sub_c else ""
-          con.execute(f"COPY (SELECT CAST({p_h[0]} AS VARCHAR) AS wca_id, CAST({p_h[1]} AS VARCHAR) AS name, CAST({p_h[2]} AS VARCHAR) AS country_id, CAST({p_h[3]} AS VARCHAR) AS gender FROM read_csv('{persons_file}', {TSV_OPTS}) {where_c}) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
-
-          print("Converting Ranks Single...")
-          rs_h = get_headers(ranks_single_file)
-          con.execute(f"COPY (SELECT CAST({rs_h[0]} AS VARCHAR) AS wca_id, CAST({rs_h[1]} AS VARCHAR) AS event_id, TRY_CAST({rs_h[2]} AS BIGINT) AS best, TRY_CAST({rs_h[3]} AS BIGINT) AS world_rank, TRY_CAST({rs_h[4]} AS BIGINT) AS continent_rank, TRY_CAST({rs_h[5]} AS BIGINT) AS country_rank FROM read_csv('{ranks_single_file}', {TSV_OPTS}) ORDER BY {rs_h[1]}, TRY_CAST({rs_h[3]} AS BIGINT) ASC) TO '{output_dir}/ranks_single.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
-
-          print("Converting Ranks Average...")
-          ra_h = get_headers(ranks_average_file)
-          con.execute(f"COPY (SELECT CAST({ra_h[0]} AS VARCHAR) AS wca_id, CAST({ra_h[1]} AS VARCHAR) AS event_id, TRY_CAST({ra_h[2]} AS BIGINT) AS best, TRY_CAST({ra_h[3]} AS BIGINT) AS world_rank, TRY_CAST({ra_h[4]} AS BIGINT) AS continent_rank, TRY_CAST({ra_h[5]} AS BIGINT) AS country_rank FROM read_csv('{ranks_average_file}', {TSV_OPTS}) ORDER BY {ra_h[1]}, TRY_CAST({ra_h[3]} AS BIGINT) ASC) TO '{output_dir}/ranks_average.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
-
-          print("Ingesting Competitions cleanly via Python...")
-          con.execute("CREATE TABLE competitions_lookup (id VARCHAR PRIMARY KEY, year INTEGER, month INTEGER, day INTEGER);")
-          with open(competitions_file, 'r', encoding='utf-8', errors='ignore') as f:
-              reader = csv.reader(f, delimiter='\t')
-              headers = [h.strip().lower() for h in next(reader)]
-              id_i = headers.index('id') if 'id' in headers else 0
-              yr_i = headers.index('year') if 'year' in headers else 1
-              mo_i = headers.index('month') if 'month' in headers else 2
-              dy_i = headers.index('day') if 'day' in headers else 3
-              rows = []
-              for row in reader:
-                  if len(row) > max(id_i, yr_i, mo_i, dy_i):
-                      try:
-                          rows.append((row[id_i], int(row[yr_i]), int(row[mo_i]), int(row[dy_i])))
-                      except ValueError: continue
-          con.executemany("INSERT INTO competitions_lookup VALUES (?, ?, ?, ?)", rows)
-
-          print("Converting Results...")
-          res_h = get_headers(results_file)
-          r_pid, r_eid, r_cid, r_rid = res_h[0], res_h[1], res_h[2], res_h[3]
-          con.execute(f"COPY (SELECT CAST(r.{r_pid} AS VARCHAR) AS wca_id, CAST(r.{r_eid} AS VARCHAR) AS event_id, CAST(r.{r_cid} AS VARCHAR) AS competition_id, CAST(r.{r_rid} AS VARCHAR) AS round_type_id, TRY_CAST(r.pos AS BIGINT) AS pos, TRY_CAST(r.best AS BIGINT) AS best, TRY_CAST(r.average AS BIGINT) AS average, TRY_CAST(r.value1 AS BIGINT) AS value1, TRY_CAST(r.value2 AS BIGINT) AS value2, TRY_CAST(r.value3 AS BIGINT) AS value3, TRY_CAST(r.value4 AS BIGINT) AS value4, TRY_CAST(r.value5 AS BIGINT) AS value5, c.year AS year, c.month AS month, c.day AS day FROM read_csv('{results_file}', {TSV_OPTS}) r LEFT JOIN competitions_lookup c ON r.{r_cid} = c.id ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
-
-          print("Parquet conversion completed successfully!")
-          EOF
-          python /tmp/convert.py
+      # Weekly (full) only. Both steps are continue-on-error so a Parquet or
+      # R2 problem can never stop the site's lists from updating.
+      - name: Convert TSVs to Parquet
+        id: convert
+        if: steps.mode.outputs.mode == 'full'
+        continue-on-error: true
         env:
           WCA_EXPORT_DIR: /tmp/wca-export
           PARQUET_OUTPUT_DIR: build/parquet
-
-      - name: Upload Parquet Files to Cloudflare R2
-        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         run: |
-          aws s3 sync build/parquet/ s3://wca-parquet-data/ \
-            --endpoint-url ${{ secrets.R2_ENDPOINT_URL }}
+          pip install duckdb
+          echo "Commit: $GITHUB_SHA"
+          sha256sum scripts/convert-to-parquet.py
+          python scripts/convert-to-parquet.py
+
+      - name: Upload Parquet files to Cloudflare R2
+        if: steps.mode.outputs.mode == 'full' && steps.convert.outcome == 'success'
+        continue-on-error: true
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: auto
+        run: |
+          aws s3 sync build/parquet/ s3://wca-parquet-data/ \
+            --endpoint-url "${{ secrets.R2_ENDPOINT_URL }}"
+
+      - name: Upcoming competitions
+        if: (steps.mode.outputs.mode == 'bests' || steps.mode.outputs.mode == 'full') && steps.sync.outputs.slugs != ''
+        continue-on-error: true
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+        run: |
+          node scripts/fetch-upcoming.js $SLUGS
+          node scripts/upload-lists.js --files=upcoming.json $SLUGS
