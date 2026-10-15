@@ -96,11 +96,25 @@ jobs:
           node scripts/upload-lists.js --level=basic $NEW_SLUGS
           node scripts/mark-lists.js --level=basic $NEW_SLUGS
 
-      - name: Download WCA results export
+      - name: Work out export URL
+        id: export-url
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         run: |
           TSV_URL=$(node scripts/get-export-url.js)
-          curl -sL "$TSV_URL" -o /tmp/wca-export.zip
+          echo "url=$TSV_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Cache WCA Export
+        id: cache-export
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        uses: actions/cache@v4
+        with:
+          path: /tmp/wca-export
+          key: wca-export-${{ steps.export-url.outputs.url }}
+
+      - name: Download WCA results export
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '') && steps.cache-export.outputs.cache-hit != 'true'
+        run: |
+          curl -sL "${{ steps.export-url.outputs.url }}" -o /tmp/wca-export.zip
           mkdir -p /tmp/wca-export
           unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
 
