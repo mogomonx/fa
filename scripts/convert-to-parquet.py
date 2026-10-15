@@ -4,6 +4,8 @@ import re
 import csv
 import duckdb
 
+print("=== RUNNING SCRIPT VERSION 5.0 - NO COMPETITIONS READ_CSV ===")
+
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
 output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
 
