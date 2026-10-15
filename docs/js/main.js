@@ -12,6 +12,7 @@ import { populateCompareSelects, renderHeadToHead, renderNemesis } from './tabs/
 import { setupImprovementDates, renderImprovement } from './tabs/improvement.js';
 import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
 import { setupDateBanner, restoreTimeTravel } from './timetravel/index.js';
+import { queryParquet } from './db.js';
 
 function friendly(message) {
   const e = new Error(message);
@@ -77,10 +78,7 @@ function renameEverywhere(root, wcaId, name) {
 }
 
 // People who chose "only me" for their preferred name see it in their own
-// browser only; everyone else keeps seeing the official name. (Other choices
-// are baked into the build by sync-lists.js.) Skipped on lists whose owner
-// chose official names only. A name the owner typed for them on this list
-// wins, so the overlay is skipped in that case too.
+// browser only; everyone else keeps seeing the official name.
 async function applyOwnName(datasets) {
   if (!source) return;
   const list = source.list;
@@ -94,7 +92,6 @@ async function applyOwnName(datasets) {
       .eq('id', session.user.id)
       .maybeSingle();
     if (data?.wca_id && data.preferred_name && data.name_visibility === 'me') {
-      // A name the list owner typed for this person on this list wins.
       const { data: member } = await source.supabase
         .from('list_members')
         .select('display_name')
@@ -124,6 +121,16 @@ async function fetchJson(file, required) {
   return null;
 }
 
+// Helper to execute DuckDB-WASM queries against Cloudflare R2 Parquet files
+export async function queryWcaData(sqlQuery) {
+  try {
+    return await queryParquet(sqlQuery);
+  } catch (err) {
+    console.error('Parquet Query Failed:', err);
+    return [];
+  }
+}
+
 // Event dropdowns -- also re-run by time travel (data swapped underneath).
 function populateSelects() {
   const r = store.rankings;
@@ -141,7 +148,6 @@ function populateSelects() {
 // Everything that depends on the (possibly time-travelled) data.
 function renderAll() {
   renderFaRecords();
-  // State lists can have thousands of people: skip the member chips (hidden there anyway).
   if (store.listKind !== 'state') renderHomeMembers();
   renderSor();
   renderKinch();
@@ -193,8 +199,6 @@ async function loadData() {
   if (!LIST_ID) return; // store.js is redirecting to home.html
   await resolveSource();
 
-  // State lists (built from the WCA export) have no history data: switch the
-  // page into state mode (hides the empty parts, shows "All states").
   const isState = source.list?.kind === 'state';
   store.listKind = source.list?.kind || 'group';
   if (isState) {
@@ -203,7 +207,8 @@ async function loadData() {
     if (statesLink) statesLink.hidden = false;
   }
 
-  setupEditLink(source.list); // not awaited: never holds up loading the data
+  setupEditLink(source.list);
+
   const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
     fetchJson('rankings.json', true),
     fetchJson('individual-rankings.json', true),
@@ -259,9 +264,6 @@ async function loadData() {
   renderConsistency();
   renderRolling();
 
-  // Cache the live (present-day) data so time travel can restore it, then
-  // apply any saved On This Date / Time frame from the site settings.
-  // State lists have no full-results.json, so a saved date view is ignored there.
   store.live = { rankings, individual, historical, streaks };
   if (!isState) restoreTimeTravel(refreshAll);
 
@@ -276,13 +278,12 @@ setupDateBanner(refreshAll);
 setupHomeLinks();
 setupNameLinkDelegation();
 setupSubtabs('overall-subtabs');
-setupStatsList(); // builds the Misc list; must run before setupSubtabs('misc-subtabs')
+setupStatsList();
 setupSubtabs('misc-subtabs');
 setupSubtabs('compare-subtabs');
 setupCsvButtons();
 import('./auth.js').then((m) => m.setupAuth()).catch((err) => console.warn('Login unavailable:', err));
 
-// [toggle element id, data attribute, state key, render function]
 [
   ['sor-type-toggle', 'type', 'sorType', renderSor],
   ['sor-view-toggle', 'view', 'sorView', renderSor],
