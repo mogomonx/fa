@@ -28,7 +28,7 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "7.0"
+SCRIPT_VERSION = "7.1"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -68,12 +68,18 @@ def pick(headers, path, label, *candidates, required=True):
     return None
 
 
-# Everything read as text; no sniffing, no quote handling.
-TSV_OPTS = (
+# Everything read as text; no sniffing, no quote handling. With auto_detect off,
+# DuckDB requires the column list, so we build it from the real header line.
+BASE_OPTS = (
     "delim='\t', header=True, auto_detect=False, quote='', escape='', "
-    "ignore_errors=True, all_varchar=True, "
-    "null_padding=True"
+    "ignore_errors=True, null_padding=True"
 )
+
+
+def opts(headers):
+    cols = ", ".join(f"'{c}': 'VARCHAR'" for c in headers)
+    return f"{BASE_OPTS}, columns={{{cols}}}"
+
 
 con = duckdb.connect()
 con.execute("PRAGMA threads=4;")
@@ -110,7 +116,7 @@ copy_to_parquet(
            CAST({p_name} AS VARCHAR) AS name,
            CAST({p_country} AS VARCHAR) AS country_id,
            {gender_sql} AS gender
-    FROM read_csv('{persons_file}', {TSV_OPTS})
+    FROM read_csv('{persons_file}', {opts(ph)})
     {where}
     """,
     "persons.parquet",
@@ -136,7 +142,7 @@ def convert_ranks(file_stem, out_name):
                TRY_CAST({wr} AS BIGINT) AS world_rank,
                TRY_CAST({cr} AS BIGINT) AS continent_rank,
                TRY_CAST({nr} AS BIGINT) AS country_rank
-        FROM read_csv('{path}', {TSV_OPTS})
+        FROM read_csv('{path}', {opts(h)})
         ORDER BY {eid}, TRY_CAST({wr} AS BIGINT) ASC
         """,
         out_name,
@@ -218,7 +224,7 @@ copy_to_parquet(
            c.year AS year,
            c.month AS month,
            c.day AS day
-    FROM read_csv('{results_file}', {TSV_OPTS}) r
+    FROM read_csv('{results_file}', {opts(rh)}) r
     LEFT JOIN competitions_lookup c ON r.{r_cid} = c.id
     ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC
     """,
@@ -239,7 +245,7 @@ if attempts_file and not has_values:
         SELECT TRY_CAST({a_rid} AS BIGINT) AS result_id,
                TRY_CAST({a_num} AS INTEGER) AS attempt_number,
                TRY_CAST({a_val} AS BIGINT) AS value
-        FROM read_csv('{attempts_file}', {TSV_OPTS})
+        FROM read_csv('{attempts_file}', {opts(ah)})
         ORDER BY TRY_CAST({a_rid} AS BIGINT), TRY_CAST({a_num} AS INTEGER)
         """,
         "attempts.parquet",
