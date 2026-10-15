@@ -115,4 +115,117 @@ jobs:
         run: |
           rm -rf /tmp/wca-export /tmp/wca-export.zip
           mkdir -p /tmp/wca-export
-          curl -s
+          
+          URL="${{ steps.export-url.outputs.url }}"
+          echo "Downloading WCA Export from: $URL"
+          
+          # Try curl with location follow and retry settings
+          curl -fL --retry 3 --retry-delay 5 -A "Mozilla/5.0" "$URL" -o /tmp/wca-export.zip
+          
+          # Verify download is valid zip file before unzipping
+          if unzip -t /tmp/wca-export.zip >/dev/null 2>&1; then
+            echo "Zip download verified successfully."
+            unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
+          else
+            echo "Curl download failed or returned invalid zip. Falling back to Python downloader..."
+            python -c "
+import urllib.request, zipfile, io
+url = '$URL'
+req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+with urllib.request.urlopen(req) as resp:
+    data = resp.read()
+with zipfile.ZipFile(io.BytesIO(data)) as z:
+    z.extractall('/tmp/wca-export')
+print('Python fallback extraction complete.')
+"
+          fi
+          
+          echo "Files in /tmp/wca-export:"
+          ls -la /tmp/wca-export
+
+      - name: Convert TSVs to Parquet
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        run: |
+          pip install duckdb
+          cat << 'EOF' > /tmp/convert.py
+          import os, glob, re, csv, duckdb
+
+          print("=== INLINE CONVERSION SCRIPT EXECUTING ===")
+          export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
+          output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
+          os.makedirs(output_dir, exist_ok=True)
+
+          con = duckdb.connect()
+          con.execute("PRAGMA threads=4;")
+
+          def find_tsv(dir_path, pattern):
+              files = os.listdir(dir_path)
+              for f in files:
+                  if re.search(pattern, f, re.IGNORECASE):
+                      return os.path.join(dir_path, f)
+              raise FileNotFoundError(f"Missing pattern: {pattern} in {dir_path}")
+
+          persons_file = find_tsv(export_dir, r"(^persons\.tsv$|wca_export.*persons\.tsv$)")
+          ranks_single_file = find_tsv(export_dir, r"(^ranks_single\.tsv$|wca_export.*ranks_single\.tsv$)")
+          ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ranks_average\.tsv$)")
+          results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
+          competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
+
+          TSV_OPTS = "delim='\t', header=True, auto_detect=False, quote='', escape='', ignore_errors=True, all_varchar=True"
+
+          def get_headers(fpath):
+              with open(fpath, 'r', encoding='utf-8', errors='ignore') as f:
+                  return [col.strip().lower() for col in f.readline().strip().split('\t')]
+
+          print("Converting Persons...")
+          p_h = get_headers(persons_file)
+          sub_c = "sub_id" if "sub_id" in p_h else ("subid" if "subid" in p_h else None)
+          where_c = f"WHERE {sub_c} = '1'" if sub_c else ""
+          con.execute(f"COPY (SELECT CAST({p_h[0]} AS VARCHAR) AS wca_id, CAST({p_h[1]} AS VARCHAR) AS name, CAST({p_h[2]} AS VARCHAR) AS country_id, CAST({p_h[3]} AS VARCHAR) AS gender FROM read_csv('{persons_file}', {TSV_OPTS}) {where_c}) TO '{output_dir}/persons.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
+
+          print("Converting Ranks Single...")
+          rs_h = get_headers(ranks_single_file)
+          con.execute(f"COPY (SELECT CAST({rs_h[0]} AS VARCHAR) AS wca_id, CAST({rs_h[1]} AS VARCHAR) AS event_id, TRY_CAST({rs_h[2]} AS BIGINT) AS best, TRY_CAST({rs_h[3]} AS BIGINT) AS world_rank, TRY_CAST({rs_h[4]} AS BIGINT) AS continent_rank, TRY_CAST({rs_h[5]} AS BIGINT) AS country_rank FROM read_csv('{ranks_single_file}', {TSV_OPTS}) ORDER BY {rs_h[1]}, TRY_CAST({rs_h[3]} AS BIGINT) ASC) TO '{output_dir}/ranks_single.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
+
+          print("Converting Ranks Average...")
+          ra_h = get_headers(ranks_average_file)
+          con.execute(f"COPY (SELECT CAST({ra_h[0]} AS VARCHAR) AS wca_id, CAST({ra_h[1]} AS VARCHAR) AS event_id, TRY_CAST({ra_h[2]} AS BIGINT) AS best, TRY_CAST({ra_h[3]} AS BIGINT) AS world_rank, TRY_CAST({ra_h[4]} AS BIGINT) AS continent_rank, TRY_CAST({ra_h[5]} AS BIGINT) AS country_rank FROM read_csv('{ranks_average_file}', {TSV_OPTS}) ORDER BY {ra_h[1]}, TRY_CAST({ra_h[3]} AS BIGINT) ASC) TO '{output_dir}/ranks_average.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
+
+          print("Ingesting Competitions cleanly via Python...")
+          con.execute("CREATE TABLE competitions_lookup (id VARCHAR PRIMARY KEY, year INTEGER, month INTEGER, day INTEGER);")
+          with open(competitions_file, 'r', encoding='utf-8', errors='ignore') as f:
+              reader = csv.reader(f, delimiter='\t')
+              headers = [h.strip().lower() for h in next(reader)]
+              id_i = headers.index('id') if 'id' in headers else 0
+              yr_i = headers.index('year') if 'year' in headers else 1
+              mo_i = headers.index('month') if 'month' in headers else 2
+              dy_i = headers.index('day') if 'day' in headers else 3
+              rows = []
+              for row in reader:
+                  if len(row) > max(id_i, yr_i, mo_i, dy_i):
+                      try:
+                          rows.append((row[id_i], int(row[yr_i]), int(row[mo_i]), int(row[dy_i])))
+                      except ValueError: continue
+          con.executemany("INSERT INTO competitions_lookup VALUES (?, ?, ?, ?)", rows)
+
+          print("Converting Results...")
+          res_h = get_headers(results_file)
+          r_pid, r_eid, r_cid, r_rid = res_h[0], res_h[1], res_h[2], res_h[3]
+          con.execute(f"COPY (SELECT CAST(r.{r_pid} AS VARCHAR) AS wca_id, CAST(r.{r_eid} AS VARCHAR) AS event_id, CAST(r.{r_cid} AS VARCHAR) AS competition_id, CAST(r.{r_rid} AS VARCHAR) AS round_type_id, TRY_CAST(r.pos AS BIGINT) AS pos, TRY_CAST(r.best AS BIGINT) AS best, TRY_CAST(r.average AS BIGINT) AS average, TRY_CAST(r.value1 AS BIGINT) AS value1, TRY_CAST(r.value2 AS BIGINT) AS value2, TRY_CAST(r.value3 AS BIGINT) AS value3, TRY_CAST(r.value4 AS BIGINT) AS value4, TRY_CAST(r.value5 AS BIGINT) AS value5, c.year AS year, c.month AS month, c.day AS day FROM read_csv('{results_file}', {TSV_OPTS}) r LEFT JOIN competitions_lookup c ON r.{r_cid} = c.id ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD');")
+
+          print("Parquet conversion completed successfully!")
+          EOF
+          python /tmp/convert.py
+        env:
+          WCA_EXPORT_DIR: /tmp/wca-export
+          PARQUET_OUTPUT_DIR: build/parquet
+
+      - name: Upload Parquet Files to Cloudflare R2
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        run: |
+          aws s3 sync build/parquet/ s3://wca-parquet-data/ \
+            --endpoint-url ${{ secrets.R2_ENDPOINT_URL }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
