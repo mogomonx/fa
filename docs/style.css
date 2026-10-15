@@ -1283,3 +1283,21 @@ body.state-mode [id^="profile-pane-"] { display: none; }
 .admin-status { color: var(--accent); margin: 0.5rem 0; }
 .admin-box { margin-top: 1.5rem; }
 .admin-table a.csv-btn { text-decoration: none; display: inline-block; }
+
+/* State map: real outlines (paths, not polygons) */
+.state-map { max-width: 720px; }
+
+.state-shape path {
+  fill: var(--panel);
+  stroke: var(--panel-border);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transition: fill 0.15s;
+}
+
+.state-shape:hover path,
+.state-shape:focus-visible path { fill: var(--accent-dim); }
+
+.state-shape text { font-size: 26px; }
+
+.state-shape[data-code="ACT"] path { stroke: var(--text-dim); }
