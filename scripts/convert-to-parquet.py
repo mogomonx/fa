@@ -27,7 +27,7 @@ competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*comp
 
 TSV_OPTS = "delim='\t', header=True, quote='\"', escape='\"', ignore_errors=True"
 
-# Read header row of Persons.tsv to dynamically find sub_id vs subid vs subId
+# Read header row of Persons.tsv to dynamically find sub_id vs subid
 with open(persons_file, 'r', encoding='utf-8') as f:
     first_line = f.readline().lower()
 
