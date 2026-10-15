@@ -25,10 +25,11 @@ ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ra
 results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
 competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
 
-# Helper to inspect actual headers from a TSV
+# Helper to inspect column headers from a TSV without pandas/numpy
 def get_columns(file_path):
-    df = con.execute(f"SELECT * FROM read_csv('{file_path}', delim='\t', header=True, all_varchar=True) LIMIT 1").df()
-    return {col.lower(): col for col in df.columns}
+    query = f"DESCRIBE SELECT * FROM read_csv('{file_path}', delim='\t', header=True, all_varchar=True)"
+    rows = con.execute(query).fetchall()
+    return {row[0].lower(): row[0] for row in rows}
 
 print("Converting Persons...")
 p_cols = get_columns(persons_file)
