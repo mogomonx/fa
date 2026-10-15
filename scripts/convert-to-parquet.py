@@ -25,8 +25,7 @@ ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ra
 results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
 competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
 
-TSV_OPTS = "delim='\t', header=True, quote='\"', escape='\"', ignore_errors=True"
-COMP_OPTS = "delim='\t', header=True, auto_detect=True, ignore_errors=True, all_varchar=True"
+TSV_OPTS = "delim='\t', header=True, quote='', escape='', ignore_errors=True, all_varchar=True"
 
 def get_header_columns(file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -48,7 +47,7 @@ if "sub_id" in p_headers:
 elif "subid" in p_headers:
     sub_col = "subid"
 
-where_clause = f"WHERE {sub_col} = 1" if sub_col else ""
+where_clause = f"WHERE {sub_col} = '1'" if sub_col else ""
 
 con.execute(f"""
     COPY (
@@ -77,12 +76,12 @@ con.execute(f"""
         SELECT 
             CAST({pid_col} AS VARCHAR) AS wca_id, 
             CAST({eid_col} AS VARCHAR) AS event_id, 
-            CAST({best_col} AS BIGINT) AS best, 
-            CAST({wr_col} AS BIGINT) AS world_rank, 
-            CAST({cr_col} AS BIGINT) AS continent_rank, 
-            CAST({cn_col} AS BIGINT) AS country_rank
+            TRY_CAST({best_col} AS BIGINT) AS best, 
+            TRY_CAST({wr_col} AS BIGINT) AS world_rank, 
+            TRY_CAST({cr_col} AS BIGINT) AS continent_rank, 
+            TRY_CAST({cn_col} AS BIGINT) AS country_rank
         FROM read_csv('{ranks_single_file}', {TSV_OPTS})
-        ORDER BY {eid_col}, {wr_col} ASC
+        ORDER BY {eid_col}, TRY_CAST({wr_col} AS BIGINT) ASC
     ) TO '{output_dir}/ranks_single.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
@@ -101,22 +100,25 @@ con.execute(f"""
         SELECT 
             CAST({pid_col} AS VARCHAR) AS wca_id, 
             CAST({eid_col} AS VARCHAR) AS event_id, 
-            CAST({best_col} AS BIGINT) AS best, 
-            CAST({wr_col} AS BIGINT) AS world_rank, 
-            CAST({cr_col} AS BIGINT) AS continent_rank, 
-            CAST({cn_col} AS BIGINT) AS country_rank
+            TRY_CAST({best_col} AS BIGINT) AS best, 
+            TRY_CAST({wr_col} AS BIGINT) AS world_rank, 
+            TRY_CAST({cr_col} AS BIGINT) AS continent_rank, 
+            TRY_CAST({cn_col} AS BIGINT) AS country_rank
         FROM read_csv('{ranks_average_file}', {TSV_OPTS})
-        ORDER BY {eid_col}, {wr_col} ASC
+        ORDER BY {eid_col}, TRY_CAST({wr_col} AS BIGINT) ASC
     ) TO '{output_dir}/ranks_average.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
-# 4. Results
+# 4. Results & Competitions
 print("Converting Results...")
 res_headers = get_header_columns(results_file)
 r_pid = "personid" if "personid" in res_headers else ("person_id" if "person_id" in res_headers else "personid")
 r_eid = "eventid" if "eventid" in res_headers else ("event_id" if "event_id" in res_headers else "eventid")
 r_cid = "competitionid" if "competitionid" in res_headers else ("competition_id" if "competition_id" in res_headers else "competitionid")
 r_rid = "roundtypeid" if "roundtypeid" in res_headers else ("round_type_id" if "round_type_id" in res_headers else "roundtypeid")
+
+# Explicit parameters with quote disabling to handle raw TSV content in competitions.tsv
+NO_SNIFF_TSV_OPTS = "delim='\t', header=True, quote='', escape='', ignore_errors=True, all_varchar=True"
 
 con.execute(f"""
     COPY (
@@ -125,19 +127,19 @@ con.execute(f"""
             CAST(r.{r_eid} AS VARCHAR) AS event_id,
             CAST(r.{r_cid} AS VARCHAR) AS competition_id,
             CAST(r.{r_rid} AS VARCHAR) AS round_type_id,
-            CAST(r.pos AS BIGINT) AS pos,
-            CAST(r.best AS BIGINT) AS best,
-            CAST(r.average AS BIGINT) AS average,
-            CAST(r.value1 AS BIGINT) AS value1, 
-            CAST(r.value2 AS BIGINT) AS value2, 
-            CAST(r.value3 AS BIGINT) AS value3, 
-            CAST(r.value4 AS BIGINT) AS value4, 
-            CAST(r.value5 AS BIGINT) AS value5,
+            TRY_CAST(r.pos AS BIGINT) AS pos,
+            TRY_CAST(r.best AS BIGINT) AS best,
+            TRY_CAST(r.average AS BIGINT) AS average,
+            TRY_CAST(r.value1 AS BIGINT) AS value1, 
+            TRY_CAST(r.value2 AS BIGINT) AS value2, 
+            TRY_CAST(r.value3 AS BIGINT) AS value3, 
+            TRY_CAST(r.value4 AS BIGINT) AS value4, 
+            TRY_CAST(r.value5 AS BIGINT) AS value5,
             TRY_CAST(c.year AS INTEGER) AS year,
             TRY_CAST(c.month AS INTEGER) AS month,
             TRY_CAST(c.day AS INTEGER) AS day
-        FROM read_csv('{results_file}', {TSV_OPTS}) r
-        LEFT JOIN read_csv('{competitions_file}', {COMP_OPTS}) c
+        FROM read_csv('{results_file}', {NO_SNIFF_TSV_OPTS}) r
+        LEFT JOIN read_csv('{competitions_file}', {NO_SNIFF_TSV_OPTS}) c
             ON r.{r_cid} = c.id
         ORDER BY r.{r_eid}, r.{r_pid}, TRY_CAST(c.year AS INTEGER) DESC
     ) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
