@@ -102,16 +102,26 @@ async function main() {
     process.exit(1);
   }
 
-  // One target per list. No IDs given = the single default list, as before.
+  // One target per list. Supports custom lists (membersPath) AND state lists (results.json fallback).
   const slugs = process.argv.slice(3);
   const targets = (slugs.length ? slugs : [undefined]).map((slug) => {
     const ctx = getListContext(slug);
-    const { people } = JSON.parse(fs.readFileSync(ctx.membersPath, 'utf8'));
+    let people = [];
+    
+    if (fs.existsSync(ctx.membersPath)) {
+      people = JSON.parse(fs.readFileSync(ctx.membersPath, 'utf8')).people || [];
+    } else {
+      const resultsPath = path.join(ctx.dataDir, 'results.json');
+      if (fs.existsSync(resultsPath)) {
+        people = JSON.parse(fs.readFileSync(resultsPath, 'utf8')).people || [];
+      }
+    }
+
     return {
       slug: slug || '(default)',
       outputPath: path.join(ctx.dataDir, 'full-results.json'),
       wcaIds: new Set(people.map((m) => m.wcaId)),
-      nameOverrides: new Map(people.map((m) => [m.wcaId, m.displayName])),
+      nameOverrides: new Map(people.map((m) => [m.wcaId, m.displayName || m.name])),
       results: [], // shared result objects belonging to this list
     };
   });
