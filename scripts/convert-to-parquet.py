@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+import csv
 import duckdb
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -25,7 +26,7 @@ ranks_average_file = find_tsv(export_dir, r"(^ranks_average\.tsv$|wca_export.*ra
 results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)")
 competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
 
-TSV_OPTS = "delim='\t', header=True, quote='', escape='', ignore_errors=True, all_varchar=True"
+TSV_OPTS = "delim='\t', header=True, auto_detect=False, quote='', escape='', ignore_errors=True, all_varchar=True"
 
 def get_header_columns(file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -110,15 +111,38 @@ con.execute(f"""
 """)
 
 # 4. Results & Competitions
+print("Processing Competitions in Python...")
+con.execute("CREATE TABLE competitions_lookup (id VARCHAR PRIMARY KEY, year INTEGER, month INTEGER, day INTEGER);")
+
+with open(competitions_file, 'r', encoding='utf-8', errors='ignore') as f:
+    reader = csv.reader(f, delimiter='\t')
+    headers = [h.strip().lower() for h in next(reader)]
+    
+    id_idx = headers.index('id') if 'id' in headers else 0
+    year_idx = headers.index('year') if 'year' in headers else 1
+    month_idx = headers.index('month') if 'month' in headers else 2
+    day_idx = headers.index('day') if 'day' in headers else 3
+    
+    rows = []
+    for row in reader:
+        if len(row) > max(id_idx, year_idx, month_idx, day_idx):
+            try:
+                c_id = row[id_idx]
+                c_yr = int(row[year_idx])
+                c_mo = int(row[month_idx])
+                c_dy = int(row[day_idx])
+                rows.append((c_id, c_yr, c_mo, c_dy))
+            except ValueError:
+                continue
+
+con.executemany("INSERT INTO competitions_lookup VALUES (?, ?, ?, ?)", rows)
+
 print("Converting Results...")
 res_headers = get_header_columns(results_file)
 r_pid = "personid" if "personid" in res_headers else ("person_id" if "person_id" in res_headers else "personid")
 r_eid = "eventid" if "eventid" in res_headers else ("event_id" if "event_id" in res_headers else "eventid")
 r_cid = "competitionid" if "competitionid" in res_headers else ("competition_id" if "competition_id" in res_headers else "competitionid")
 r_rid = "roundtypeid" if "roundtypeid" in res_headers else ("round_type_id" if "round_type_id" in res_headers else "roundtypeid")
-
-# Explicit parameters with quote disabling to handle raw TSV content in competitions.tsv
-NO_SNIFF_TSV_OPTS = "delim='\t', header=True, quote='', escape='', ignore_errors=True, all_varchar=True"
 
 con.execute(f"""
     COPY (
@@ -135,13 +159,13 @@ con.execute(f"""
             TRY_CAST(r.value3 AS BIGINT) AS value3, 
             TRY_CAST(r.value4 AS BIGINT) AS value4, 
             TRY_CAST(r.value5 AS BIGINT) AS value5,
-            TRY_CAST(c.year AS INTEGER) AS year,
-            TRY_CAST(c.month AS INTEGER) AS month,
-            TRY_CAST(c.day AS INTEGER) AS day
-        FROM read_csv('{results_file}', {NO_SNIFF_TSV_OPTS}) r
-        LEFT JOIN read_csv('{competitions_file}', {NO_SNIFF_TSV_OPTS}) c
+            c.year AS year,
+            c.month AS month,
+            c.day AS day
+        FROM read_csv('{results_file}', {TSV_OPTS}) r
+        LEFT JOIN competitions_lookup c
             ON r.{r_cid} = c.id
-        ORDER BY r.{r_eid}, r.{r_pid}, TRY_CAST(c.year AS INTEGER) DESC
+        ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC
     ) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
