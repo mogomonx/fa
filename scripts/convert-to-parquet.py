@@ -26,6 +26,7 @@ results_file = find_tsv(export_dir, r"(^results\.tsv$|wca_export.*results\.tsv$)
 competitions_file = find_tsv(export_dir, r"(^competitions\.tsv$|wca_export.*competitions\.tsv$)")
 
 TSV_OPTS = "delim='\t', header=True, quote='\"', escape='\"', ignore_errors=True"
+COMP_OPTS = "delim='\t', header=True, auto_detect=True, ignore_errors=True, all_varchar=True"
 
 def get_header_columns(file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -132,13 +133,13 @@ con.execute(f"""
             CAST(r.value3 AS BIGINT) AS value3, 
             CAST(r.value4 AS BIGINT) AS value4, 
             CAST(r.value5 AS BIGINT) AS value5,
-            CAST(c.year AS INTEGER) AS year,
-            CAST(c.month AS INTEGER) AS month,
-            CAST(c.day AS INTEGER) AS day
+            TRY_CAST(c.year AS INTEGER) AS year,
+            TRY_CAST(c.month AS INTEGER) AS month,
+            TRY_CAST(c.day AS INTEGER) AS day
         FROM read_csv('{results_file}', {TSV_OPTS}) r
-        LEFT JOIN read_csv('{competitions_file}', {TSV_OPTS}) c
+        LEFT JOIN read_csv('{competitions_file}', {COMP_OPTS}) c
             ON r.{r_cid} = c.id
-        ORDER BY r.{r_eid}, r.{r_pid}, c.year DESC
+        ORDER BY r.{r_eid}, r.{r_pid}, TRY_CAST(c.year AS INTEGER) DESC
     ) TO '{output_dir}/results.parquet' (FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);
 """)
 
