@@ -212,6 +212,21 @@ jobs:
           aws s3 sync build/parquet/ s3://wca-parquet-data/ \
             --endpoint-url "${{ secrets.R2_ENDPOINT_URL }}"
 
+      # Shadow test of the DuckDB extractor: rebuilds every list's full-results.json
+      # from the Parquet files into /tmp (the real files are NOT touched) and
+      # compares it with what parse-export.js produced. Read-only, full mode only.
+      - name: Shadow test DuckDB extractor
+        if: steps.mode.outputs.mode == 'full' && steps.convert.outcome == 'success'
+        continue-on-error: true
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
+        run: |
+          START=$(date +%s)
+          python scripts/extract-from-parquet.py --out-dir /tmp/fr-test $SLUGS $STATE_SLUGS
+          echo "Extractor took $(( $(date +%s) - START ))s"
+          python scripts/compare-full-results.py build/data /tmp/fr-test $SLUGS $STATE_SLUGS
+
       - name: Upcoming competitions
         if: (steps.mode.outputs.mode == 'bests' || steps.mode.outputs.mode == 'full') && steps.sync.outputs.slugs != ''
         continue-on-error: true
