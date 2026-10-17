@@ -141,16 +141,33 @@ jobs:
           echo "Extracted files:"
           ls -la /tmp/wca-export
 
-      - name: Full build
-        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.slugs != ''
+      # One export pass for regular lists AND state lists. build-states.js has to
+      # run first: it writes each state list's results.json, which parse-export.js
+      # reads as that state's member list (see its fallback), so the state lists
+      # get real full-results.json and history instead of empty files.
+      - name: Full build (regular lists and state lists)
+        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         env:
           SLUGS: ${{ steps.sync.outputs.slugs }}
+          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
+          STATE_COUNTRIES: ${{ steps.sync.outputs.state_countries }}
         run: |
-          node scripts/fetch.js $SLUGS
-          for s in $SLUGS; do
-            node scripts/build-rankings.js "$s"
-          done
-          node scripts/parse-export.js /tmp/wca-export $SLUGS
+          if [ -n "$SLUGS" ]; then
+            node scripts/fetch.js $SLUGS
+            for s in $SLUGS; do
+              node scripts/build-rankings.js "$s"
+            done
+          fi
+
+          if [ -n "$STATE_SLUGS" ]; then
+            node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
+            for s in $STATE_SLUGS; do
+              node scripts/build-rankings.js "$s"
+            done
+          fi
+
+          node scripts/parse-export.js /tmp/wca-export $SLUGS $STATE_SLUGS
+
           for s in $SLUGS; do
             echo "=== full: $s ==="
             node scripts/build-individual-rankings.js "$s"
@@ -159,31 +176,15 @@ jobs:
             node scripts/build-recent-activity.js "$s"
             node scripts/build-rolling-averages.js "$s"
           done
-          node scripts/upload-lists.js --level=full $SLUGS
-          node scripts/mark-lists.js --level=full $SLUGS
 
-      # NOTE: written from the architecture doc. If your previous workflow had
-      # the parallel (xargs -P 4) state step or the state full-history pass,
-      # copy that block over this one from the file's History on GitHub.
-      - name: State rankings
-        if: steps.mode.outputs.mode != 'bests' && steps.sync.outputs.state_slugs != ''
-        env:
-          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
-          STATE_COUNTRIES: ${{ steps.sync.outputs.state_countries }}
-        run: |
-          node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
-          for s in $STATE_SLUGS; do
-            echo "=== state: $s ==="
-            node scripts/build-rankings.js "$s"
-            node scripts/make-empty-history.js "$s"
-            node scripts/build-individual-rankings.js "$s"
-            node scripts/build-historical-records.js "$s"
-            node scripts/build-streaks.js "$s"
-            node scripts/build-recent-activity.js "$s"
-            node scripts/build-rolling-averages.js "$s"
-          done
-          node scripts/upload-lists.js --level=full $STATE_SLUGS
-          node scripts/mark-lists.js --level=full $STATE_SLUGS
+          # State lists: only the history files the state pages use, 4 at a time.
+          if [ -n "$STATE_SLUGS" ]; then
+            printf '%s\n' $STATE_SLUGS | xargs -P 4 -I{} sh -c \
+              'echo "=== state: {} ===" && node scripts/build-individual-rankings.js {} && node scripts/build-historical-records.js {}'
+          fi
+
+          node scripts/upload-lists.js --level=full $SLUGS $STATE_SLUGS
+          node scripts/mark-lists.js --level=full $SLUGS $STATE_SLUGS
 
       # Weekly (full) only. Both steps are continue-on-error so a Parquet or
       # R2 problem can never stop the site's lists from updating.
