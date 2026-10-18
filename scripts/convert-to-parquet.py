@@ -28,7 +28,7 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "8.0"
+SCRIPT_VERSION = "8.1"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -79,10 +79,28 @@ def opts(headers):
     return f"{BASE_OPTS}, columns={{{cols}}}"
 
 
-con = duckdb.connect()
+def memory_limit_gb():
+    """~70% of the machine's RAM (capped), so the limit fits both 7GB and 16GB runners."""
+    try:
+        with open("/proc/meminfo") as f:
+            kb = int(next(l for l in f if l.startswith("MemTotal")).split()[1])
+        return max(3, min(12, int(kb / 1_048_576 * 0.7)))
+    except Exception:
+        return 5
+
+
+# File-backed database (not in-memory): tables such as the attempts aggregate can
+# then be paged out to disk instead of counting against the memory limit forever.
+DB_PATH = "/tmp/convert.duckdb"
+for leftover in (DB_PATH, DB_PATH + ".wal"):
+    if os.path.exists(leftover):
+        os.remove(leftover)
+con = duckdb.connect(DB_PATH)
 con.execute("PRAGMA threads=4;")
-con.execute("PRAGMA memory_limit='5GB';")
+con.execute(f"PRAGMA memory_limit='{memory_limit_gb()}GB';")
 con.execute("PRAGMA temp_directory='/tmp/duckdb-spill';")
+con.execute("SET preserve_insertion_order=false;")
+print(f"  DuckDB memory limit: {memory_limit_gb()}GB", flush=True)
 
 
 def copy_to_parquet(select_sql, out_name):
@@ -256,11 +274,17 @@ if attempts_file and not has_values:
     a_rid = pick(ah, attempts_file, "result id", "result_id", "resultid")
     a_num = pick(ah, attempts_file, "attempt number", "attempt_number", "attemptnumber")
     a_val = pick(ah, attempts_file, "value", "value")
+    # Pivot to five plain columns (WCA rounds have at most 5 attempts). Much lighter
+    # than building an ordered list per result; the list is assembled in the results query.
+    pivot = ",\n               ".join(
+        f"max(CASE WHEN TRY_CAST({a_num} AS INTEGER) = {i} THEN TRY_CAST({a_val} AS BIGINT) END) AS a{i}"
+        for i in range(1, 6)
+    )
     con.execute(
         f"""
         CREATE TABLE attempts_agg AS
         SELECT TRY_CAST({a_rid} AS BIGINT) AS rid,
-               list(TRY_CAST({a_val} AS BIGINT) ORDER BY TRY_CAST({a_num} AS INTEGER)) AS attempts
+               {pivot}
         FROM read_csv('{attempts_file}', {opts(ah)})
         GROUP BY 1
         """
@@ -288,7 +312,7 @@ if has_values:
     attempts_sql = f"list_filter([{vals}], x -> x IS NOT NULL)"
     attempts_join = ""
 elif attempts_ready and r_rowid:
-    attempts_sql = "a.attempts"
+    attempts_sql = "list_filter([a.a1, a.a2, a.a3, a.a4, a.a5], x -> x IS NOT NULL)"
     attempts_join = f"LEFT JOIN attempts_agg a ON TRY_CAST(r.{r_rowid} AS BIGINT) = a.rid"
 else:
     print("  WARNING: no attempts available; results.parquet will have NULL attempts", file=sys.stderr)
