@@ -11,8 +11,9 @@ Members come from the files sync-lists.js / build-states.js already wrote:
     <LISTS_ROOT>/data/<slug>/results.json   (state lists: people[].wcaId, name)
 Writes <out-dir>/<slug>/full-results.json (default out-dir: <LISTS_ROOT>/data).
 
-Reading straight from R2 (untested): set PARQUET_DIR=s3://wca-parquet-data and
-R2_ENDPOINT_URL, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY.
+Reading straight from R2: set PARQUET_DIR to the bucket's public URL
+(https://pub-....r2.dev, no credentials needed), or to s3://wca-parquet-data together
+with R2_ENDPOINT_URL, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY.
 """
 import argparse
 import json
@@ -70,8 +71,9 @@ def main():
 
     con = duckdb.connect()
     con.execute("PRAGMA threads=4;")
-    if PARQUET_DIR.startswith("s3://"):
+    if PARQUET_DIR.startswith(("http://", "https://", "s3://")):
         con.execute("INSTALL httpfs; LOAD httpfs;")
+    if PARQUET_DIR.startswith("s3://"):
         endpoint = os.environ["R2_ENDPOINT_URL"].replace("https://", "").rstrip("/")
         con.execute(f"SET s3_endpoint='{endpoint}';")
         con.execute(f"SET s3_access_key_id='{os.environ['R2_ACCESS_KEY_ID']}';")
@@ -81,6 +83,12 @@ def main():
     con.execute("CREATE TEMP TABLE people (wca_id VARCHAR);")
     con.executemany("INSERT INTO people VALUES (?)", [(w,) for w in all_people])
     events_sql = ", ".join(f"'{e}'" for e in event_ids())
+    # Results are sorted by person, so an explicit IN list lets DuckDB skip row groups
+    # (matters when the file is read over HTTP). Only used if every id looks like a WCA id.
+    id_re = re.compile(r"^[0-9]{4}[A-Z]{4}[0-9]{2}$")
+    ids_filter = ""
+    if all(id_re.match(w) for w in all_people):
+        ids_filter = "AND r.wca_id IN (" + ", ".join(f"'{w}'" for w in all_people) + ")"
 
     rows = con.execute(
         f"""
@@ -94,6 +102,7 @@ def main():
         LEFT JOIN read_parquet('{PARQUET_DIR}/competitions.parquet') c ON c.id = r.competition_id
         LEFT JOIN read_parquet('{PARQUET_DIR}/round_types.parquet') rt ON rt.id = r.round_type_id
         WHERE r.event_id IN ({events_sql})
+          {ids_filter}
         ORDER BY r.result_id
         """
     ).fetchall()
