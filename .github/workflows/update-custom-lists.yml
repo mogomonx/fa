@@ -104,11 +104,12 @@ jobs:
           node scripts/upload-lists.js --level=basic $NEW_SLUGS
           node scripts/mark-lists.js --level=basic $NEW_SLUGS
 
-      # The WCA export is needed to make the Parquet files (daily and weekly runs) and by
-      # build-states.js (state lists). A plain "pending" run for ordinary lists skips it.
+      # The WCA export is only downloaded here to make the Parquet files (daily and weekly runs).
+      # A pending run (ordinary or state lists) reads the Parquet copy on R2 and only downloads
+      # the export inside the Full build step if that fails (the fallback).
       - name: Work out export URL
         id: export-url
-        if: steps.mode.outputs.mode != 'pending' || steps.sync.outputs.state_slugs != ''
+        if: steps.mode.outputs.mode != 'pending'
         run: |
           TSV_URL=$(node scripts/get-export-url.js 2>/tmp/export-url.err | tail -n 1 | tr -d '\r\n' || true)
 
@@ -128,7 +129,7 @@ jobs:
           echo "url=$TSV_URL" >> "$GITHUB_OUTPUT"
 
       - name: Download WCA results export
-        if: steps.mode.outputs.mode != 'pending' || steps.sync.outputs.state_slugs != ''
+        if: steps.mode.outputs.mode != 'pending'
         env:
           EXPORT_URL: ${{ steps.export-url.outputs.url }}
         run: |
@@ -144,7 +145,7 @@ jobs:
           ls -la /tmp/wca-export
 
       # Daily and weekly: refresh the Parquet files (about a minute). Both steps are
-      # continue-on-error, and the Full build falls back to parse-export.js if they fail.
+      # continue-on-error, and the Full build falls back to the export if they fail.
       - name: Convert TSVs to Parquet
         id: convert
         if: steps.mode.outputs.mode != 'pending'
@@ -169,10 +170,11 @@ jobs:
           aws s3 sync build/parquet/ s3://wca-parquet-data/ \
             --endpoint-url "${{ secrets.R2_ENDPOINT_URL }}"
 
-      # full-results.json comes from the Parquet files when possible:
+      # Everything below reads the Parquet files when possible:
       #   full mode    -> the Parquet files made a moment ago (build/parquet)
       #   pending mode -> the public R2 copy from the last daily/weekly run
-      # and from parse-export.js (streaming the whole export) if that is not possible.
+      # and falls back to streaming the WCA export (parse-export.js, build-states.js with
+      # the TSVs) if the Parquet route is not available or fails.
       - name: Full build (regular lists and state lists)
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         env:
@@ -185,7 +187,7 @@ jobs:
         run: |
           ensure_export() {
             if [ -z "$(ls -A /tmp/wca-export 2>/dev/null)" ]; then
-              echo "Downloading the WCA export (needed for the parse-export.js fallback)..."
+              echo "Downloading the WCA export (needed for the fallback)..."
               URL=$(node scripts/get-export-url.js 2>/dev/null | tail -n 1 | tr -d '\r\n')
               if [[ "$URL" != http* ]]; then echo "ERROR: no export URL"; exit 1; fi
               mkdir -p /tmp/wca-export
@@ -193,6 +195,16 @@ jobs:
               unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
             fi
           }
+
+          PARQUET_SRC=""
+          if [ "$MODE" = "pending" ]; then
+            PARQUET_SRC="$R2_PUBLIC_URL"
+          elif [ "$CONVERT_OUTCOME" = "success" ]; then
+            PARQUET_SRC="build/parquet"
+          fi
+          if [ -n "$PARQUET_SRC" ]; then
+            pip install --quiet duckdb
+          fi
 
           if [ -n "$SLUGS" ]; then
             node scripts/fetch.js $SLUGS
@@ -202,22 +214,27 @@ jobs:
           fi
 
           if [ -n "$STATE_SLUGS" ]; then
-            node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
+            STATES_DONE=0
+            if [ -n "$PARQUET_SRC" ]; then
+              echo "Building state data from Parquet ($PARQUET_SRC)"
+              if PARQUET_DIR="$PARQUET_SRC" python scripts/extract-state-source.py $STATE_COUNTRIES \
+                 && node scripts/build-states.js parquet $STATE_COUNTRIES; then
+                STATES_DONE=1
+              else
+                echo "State build from Parquet failed; falling back to the export"
+              fi
+            fi
+            if [ "$STATES_DONE" = "0" ]; then
+              ensure_export
+              node scripts/build-states.js /tmp/wca-export $STATE_COUNTRIES
+            fi
             for s in $STATE_SLUGS; do
               node scripts/build-rankings.js "$s"
             done
           fi
 
-          PARQUET_SRC=""
-          if [ "$MODE" = "pending" ]; then
-            PARQUET_SRC="$R2_PUBLIC_URL"
-          elif [ "$CONVERT_OUTCOME" = "success" ]; then
-            PARQUET_SRC="build/parquet"
-          fi
-
           BUILT=0
           if [ -n "$PARQUET_SRC" ]; then
-            pip install --quiet duckdb
             echo "Building full-results.json from Parquet ($PARQUET_SRC)"
             if PARQUET_DIR="$PARQUET_SRC" python scripts/extract-from-parquet.py $SLUGS $STATE_SLUGS; then
               BUILT=1
