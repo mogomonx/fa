@@ -12,7 +12,6 @@ import { populateCompareSelects, renderHeadToHead, renderNemesis } from './tabs/
 import { setupImprovementDates, renderImprovement } from './tabs/improvement.js';
 import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
 import { setupDateBanner, restoreTimeTravel } from './timetravel/index.js';
-import { queryParquet } from './db.js';
 
 function friendly(message) {
   const e = new Error(message);
@@ -119,16 +118,6 @@ async function fetchJson(file, required) {
     throw new Error(`Could not load ${file}`);
   }
   return null;
-}
-
-// Helper to execute DuckDB-WASM queries against Cloudflare R2 Parquet files
-export async function queryWcaData(sqlQuery) {
-  try {
-    return await queryParquet(sqlQuery);
-  } catch (err) {
-    console.error('Parquet Query Failed:', err);
-    return [];
-  }
 }
 
 // Event dropdowns -- also re-run by time travel (data swapped underneath).
