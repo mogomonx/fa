@@ -44,6 +44,28 @@ def event_ids():
     return ids
 
 
+MAX_AGE_DAYS = float(os.environ.get("PARQUET_MAX_AGE_DAYS", "3"))
+
+
+def check_freshness():
+    """For a remote copy: stop (so the workflow falls back to the export) if it is too old."""
+    if not PARQUET_DIR.startswith(("http://", "https://")):
+        return
+    import urllib.request
+    try:
+        req = urllib.request.Request(f"{PARQUET_DIR}/parquet-meta.json", headers={"User-Agent": "WCA-Parquet-Builder/1.0"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            meta = json.loads(resp.read().decode())
+        made = datetime.fromisoformat(meta["generatedAt"])
+    except Exception as e:  # no stamp yet (before the first refresh) or unreadable: carry on, but say so
+        print(f"WARNING: could not read parquet-meta.json ({e}); freshness not checked")
+        return
+    age_days = (datetime.now(timezone.utc) - made).total_seconds() / 86400
+    print(f"Parquet copy is {age_days:.1f} days old (limit {MAX_AGE_DAYS:g})")
+    if age_days > MAX_AGE_DAYS:
+        sys.exit(f"Parquet copy is too old ({age_days:.1f} days); falling back to the export.")
+
+
 def read_members(slug):
     members_path = os.path.join(ROOT, "lists", f"{slug}.json")
     if os.path.exists(members_path):
@@ -61,6 +83,7 @@ def main():
     ap.add_argument("slugs", nargs="+")
     args = ap.parse_args()
     t0 = time.time()
+    check_freshness()
 
     targets = [(slug, read_members(slug)) for slug in args.slugs]
     all_people = sorted({wid for _s, m in targets for wid in m})
