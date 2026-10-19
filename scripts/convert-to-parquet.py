@@ -28,7 +28,7 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "8.2"
+SCRIPT_VERSION = "8.3"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -374,6 +374,13 @@ for name in sorted(os.listdir(output_dir)):
         if n == 0:
             print(f"ERROR: {name} is empty.", file=sys.stderr)
             sys.exit(1)
+
+# Freshness stamp: extract-from-parquet.py refuses to use a remote copy older than a few days.
+import json
+from datetime import datetime, timezone
+
+with open(os.path.join(output_dir, "parquet-meta.json"), "w") as f:
+    json.dump({"generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"), "scriptVersion": SCRIPT_VERSION}, f)
 
 # A leftover from v7: attempts are inside results.parquet now.
 stale = os.path.join(output_dir, "attempts.parquet")
