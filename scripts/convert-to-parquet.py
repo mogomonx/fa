@@ -28,7 +28,7 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "8.1"
+SCRIPT_VERSION = "8.2"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -291,6 +291,24 @@ if attempts_file and not has_values:
     )
     n_agg = con.execute("SELECT count(*) FROM attempts_agg").fetchone()[0]
     print(f"  {n_agg:,} results have attempts")
+    # A few rounds have MORE than 5 attempts (e.g. 8, 10 or even 28). Keep those in a
+    # small separate table of ordered lists and append them after the first five.
+    con.execute(
+        f"""
+        CREATE TABLE attempts_extra AS
+        SELECT rid, list(val ORDER BY num) AS extra
+        FROM (
+            SELECT TRY_CAST({a_rid} AS BIGINT) AS rid,
+                   TRY_CAST({a_num} AS INTEGER) AS num,
+                   TRY_CAST({a_val} AS BIGINT) AS val
+            FROM read_csv('{attempts_file}', {opts(ah)})
+        )
+        WHERE num > 5
+        GROUP BY rid
+        """
+    )
+    n_extra = con.execute("SELECT count(*) FROM attempts_extra").fetchone()[0]
+    print(f"  {n_extra:,} results have more than 5 attempts")
     attempts_ready = True
 
 # ---------------------------------------------------------------- results
@@ -312,8 +330,14 @@ if has_values:
     attempts_sql = f"list_filter([{vals}], x -> x IS NOT NULL)"
     attempts_join = ""
 elif attempts_ready and r_rowid:
-    attempts_sql = "list_filter([a.a1, a.a2, a.a3, a.a4, a.a5], x -> x IS NOT NULL)"
-    attempts_join = f"LEFT JOIN attempts_agg a ON TRY_CAST(r.{r_rowid} AS BIGINT) = a.rid"
+    attempts_sql = (
+        "list_concat(list_filter([a.a1, a.a2, a.a3, a.a4, a.a5], v -> v IS NOT NULL), "
+        "coalesce(ex.extra, CAST([] AS BIGINT[])))"
+    )
+    attempts_join = (
+        f"LEFT JOIN attempts_agg a ON TRY_CAST(r.{r_rowid} AS BIGINT) = a.rid "
+        f"LEFT JOIN attempts_extra ex ON TRY_CAST(r.{r_rowid} AS BIGINT) = ex.rid"
+    )
 else:
     print("  WARNING: no attempts available; results.parquet will have NULL attempts", file=sys.stderr)
     attempts_sql = "CAST(NULL AS BIGINT[])"
