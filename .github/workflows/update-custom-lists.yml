@@ -104,9 +104,11 @@ jobs:
           node scripts/upload-lists.js --level=basic $NEW_SLUGS
           node scripts/mark-lists.js --level=basic $NEW_SLUGS
 
+      # The WCA export is needed to make the Parquet files (daily and weekly runs) and by
+      # build-states.js (state lists). A plain "pending" run for ordinary lists skips it.
       - name: Work out export URL
         id: export-url
-        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        if: steps.mode.outputs.mode != 'pending' || steps.sync.outputs.state_slugs != ''
         run: |
           TSV_URL=$(node scripts/get-export-url.js 2>/tmp/export-url.err | tail -n 1 | tr -d '\r\n' || true)
 
@@ -126,7 +128,7 @@ jobs:
           echo "url=$TSV_URL" >> "$GITHUB_OUTPUT"
 
       - name: Download WCA results export
-        if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
+        if: steps.mode.outputs.mode != 'pending' || steps.sync.outputs.state_slugs != ''
         env:
           EXPORT_URL: ${{ steps.export-url.outputs.url }}
         run: |
@@ -141,17 +143,57 @@ jobs:
           echo "Extracted files:"
           ls -la /tmp/wca-export
 
-      # One export pass for regular lists AND state lists. build-states.js has to
-      # run first: it writes each state list's results.json, which parse-export.js
-      # reads as that state's member list (see its fallback), so the state lists
-      # get real full-results.json and history instead of empty files.
+      # Daily and weekly: refresh the Parquet files (about a minute). Both steps are
+      # continue-on-error, and the Full build falls back to parse-export.js if they fail.
+      - name: Convert TSVs to Parquet
+        id: convert
+        if: steps.mode.outputs.mode != 'pending'
+        continue-on-error: true
+        env:
+          WCA_EXPORT_DIR: /tmp/wca-export
+          PARQUET_OUTPUT_DIR: build/parquet
+        run: |
+          pip install duckdb
+          echo "Commit: $GITHUB_SHA"
+          sha256sum scripts/convert-to-parquet.py
+          python scripts/convert-to-parquet.py
+
+      - name: Upload Parquet files to Cloudflare R2
+        if: steps.mode.outputs.mode != 'pending' && steps.convert.outcome == 'success'
+        continue-on-error: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          aws s3 sync build/parquet/ s3://wca-parquet-data/ \
+            --endpoint-url "${{ secrets.R2_ENDPOINT_URL }}"
+
+      # full-results.json comes from the Parquet files when possible:
+      #   full mode    -> the Parquet files made a moment ago (build/parquet)
+      #   pending mode -> the public R2 copy from the last daily/weekly run
+      # and from parse-export.js (streaming the whole export) if that is not possible.
       - name: Full build (regular lists and state lists)
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         env:
+          MODE: ${{ steps.mode.outputs.mode }}
+          CONVERT_OUTCOME: ${{ steps.convert.outcome }}
+          R2_PUBLIC_URL: https://pub-968764766d9f40a8b51a059fe21a1a34.r2.dev
           SLUGS: ${{ steps.sync.outputs.slugs }}
           STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
           STATE_COUNTRIES: ${{ steps.sync.outputs.state_countries }}
         run: |
+          ensure_export() {
+            if [ -z "$(ls -A /tmp/wca-export 2>/dev/null)" ]; then
+              echo "Downloading the WCA export (needed for the parse-export.js fallback)..."
+              URL=$(node scripts/get-export-url.js 2>/dev/null | tail -n 1 | tr -d '\r\n')
+              if [[ "$URL" != http* ]]; then echo "ERROR: no export URL"; exit 1; fi
+              mkdir -p /tmp/wca-export
+              curl -fL --retry 3 --retry-delay 5 -A "WCA-Parquet-Builder/1.0" "$URL" -o /tmp/wca-export.zip
+              unzip -q -o /tmp/wca-export.zip -d /tmp/wca-export
+            fi
+          }
+
           if [ -n "$SLUGS" ]; then
             node scripts/fetch.js $SLUGS
             for s in $SLUGS; do
@@ -166,7 +208,27 @@ jobs:
             done
           fi
 
-          node scripts/parse-export.js /tmp/wca-export $SLUGS $STATE_SLUGS
+          PARQUET_SRC=""
+          if [ "$MODE" = "pending" ]; then
+            PARQUET_SRC="$R2_PUBLIC_URL"
+          elif [ "$CONVERT_OUTCOME" = "success" ]; then
+            PARQUET_SRC="build/parquet"
+          fi
+
+          BUILT=0
+          if [ -n "$PARQUET_SRC" ]; then
+            pip install --quiet duckdb
+            echo "Building full-results.json from Parquet ($PARQUET_SRC)"
+            if PARQUET_DIR="$PARQUET_SRC" python scripts/extract-from-parquet.py $SLUGS $STATE_SLUGS; then
+              BUILT=1
+            else
+              echo "Parquet extraction failed; falling back to parse-export.js"
+            fi
+          fi
+          if [ "$BUILT" = "0" ]; then
+            ensure_export
+            node scripts/parse-export.js /tmp/wca-export $SLUGS $STATE_SLUGS
+          fi
 
           for s in $SLUGS; do
             echo "=== full: $s ==="
@@ -185,47 +247,6 @@ jobs:
 
           node scripts/upload-lists.js --level=full $SLUGS $STATE_SLUGS
           node scripts/mark-lists.js --level=full $SLUGS $STATE_SLUGS
-
-      # Weekly (full) only. Both steps are continue-on-error so a Parquet or
-      # R2 problem can never stop the site's lists from updating.
-      - name: Convert TSVs to Parquet
-        id: convert
-        if: steps.mode.outputs.mode == 'full'
-        continue-on-error: true
-        env:
-          WCA_EXPORT_DIR: /tmp/wca-export
-          PARQUET_OUTPUT_DIR: build/parquet
-        run: |
-          pip install duckdb
-          echo "Commit: $GITHUB_SHA"
-          sha256sum scripts/convert-to-parquet.py
-          python scripts/convert-to-parquet.py
-
-      - name: Upload Parquet files to Cloudflare R2
-        if: steps.mode.outputs.mode == 'full' && steps.convert.outcome == 'success'
-        continue-on-error: true
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: auto
-        run: |
-          aws s3 sync build/parquet/ s3://wca-parquet-data/ \
-            --endpoint-url "${{ secrets.R2_ENDPOINT_URL }}"
-
-      # Shadow test of the DuckDB extractor: rebuilds every list's full-results.json
-      # from the Parquet files into /tmp (the real files are NOT touched) and
-      # compares it with what parse-export.js produced. Read-only, full mode only.
-      - name: Shadow test DuckDB extractor
-        if: steps.mode.outputs.mode == 'full' && steps.convert.outcome == 'success'
-        continue-on-error: true
-        env:
-          SLUGS: ${{ steps.sync.outputs.slugs }}
-          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
-        run: |
-          START=$(date +%s)
-          python scripts/extract-from-parquet.py --out-dir /tmp/fr-test $SLUGS $STATE_SLUGS
-          echo "Extractor took $(( $(date +%s) - START ))s"
-          python scripts/compare-full-results.py build/data /tmp/fr-test $SLUGS $STATE_SLUGS
 
       - name: Upcoming competitions
         if: (steps.mode.outputs.mode == 'bests' || steps.mode.outputs.mode == 'full') && steps.sync.outputs.slugs != ''
