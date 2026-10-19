@@ -1,16 +1,16 @@
-// Builds region ("state") ranking datasets from the WCA results export.
+// Builds region ("state") ranking datasets from the WCA results data.
 //
-//   node scripts/build-states.js <export-dir> <country> [country ...]     e.g.  ... /tmp/wca-export AU
+//   node scripts/build-states.js <export-dir> <country> [country ...]   e.g.  ... /tmp/wca-export AU
+//   node scripts/build-states.js parquet <country> [country ...]        reads build/states-source.json
+//                                                                        (written by extract-state-source.py)
 //
 // Reads build/states-input.json (written by sync-lists.js: the state lists,
 // everyone's region overrides and "everywhere" preferred names) and writes
 // build/data/<slug>/results.json for every state list, in exactly the shape
 // scripts/fetch.js writes for a normal list. The workflow then runs the usual
 // build-rankings.js etc. on each state slug, so state lists reuse the whole
-// rankings page. It also writes state-assignments.json into every state
-// list's folder: { country, auto: { wcaId: region } } with each person's
-// DETECTED region (ignoring overrides; people who chose to be hidden are
-// left out), so the states page can show "detected state".
+// rankings page. It also writes state-assignments.json and state-unassigned.json
+// into every state list's folder (see the architecture file).
 //
 // Who is in a state list, in order:
 //   1. An override row for the person (their own choice or an admin's):
@@ -22,8 +22,8 @@
 //      most recent competition. No region qualifies = left out.
 // People with no official result at all are left out of the lists.
 //
-// Region of a competition = parsed from the export's city text ("Sydney, New
-// South Wales"). Competitions that can't be read are listed in the log.
+// Region of a competition = parsed from the city text ("Sydney, New South
+// Wales"). Competitions that can't be read are listed in the log.
 // Any missing file or column stops the script (nothing is published).
 
 const fs = require('fs');
@@ -37,7 +37,8 @@ const BUILD_ROOT = path.resolve(__dirname, '..', process.env.LISTS_ROOT || 'buil
 const RECENT_YEARS = 3;
 const MIN_COMPS = 2;
 
-// To add a country later: add an entry here (and extend valid_region() in SQL).
+// To add a country later: add an entry here (and extend valid_region() in SQL,
+// and ALIASES in extract-state-source.py).
 const COUNTRIES = {
   AU: {
     regions: [
@@ -78,7 +79,7 @@ function need(dir, re, label) {
 }
 const pad = (n) => String(n).padStart(2, '0');
 function toNum(v) {
-  if (v === undefined || v === '') return null;
+  if (v === undefined || v === null || v === '') return null;
   const n = Number(v);
   return Number.isNaN(n) ? null : n;
 }
@@ -151,79 +152,104 @@ function pickRegion(entries) {
 }
 
 async function main() {
-  const [exportDir, ...countries] = process.argv.slice(2);
-  if (!exportDir || !countries.length) {
-    console.error('Usage: node scripts/build-states.js <export-dir> <country> [country ...]');
+  const [source, ...countries] = process.argv.slice(2);
+  if (!source || !countries.length) {
+    console.error('Usage: node scripts/build-states.js <export-dir | parquet> <country> [country ...]');
     process.exit(1);
   }
   for (const c of countries) if (!COUNTRIES[c]) throw new Error(`No region setup for country ${c}`);
   const wanted = new Set(countries);
+  const fromParquet = source === 'parquet';
+  const exportDir = fromParquet ? null : source;
 
   const input = JSON.parse(fs.readFileSync(path.join(BUILD_ROOT, 'states-input.json'), 'utf8'));
   const overrides = new Map((input.overrides || []).map((o) => [o.wca_id, o]));
   const names = input.names || {};
-  console.log(`Building ${input.lists.length} state list(s) for ${countries.join(', ')}; ${overrides.size} override(s).`);
+  console.log(`Building ${input.lists.length} state list(s) for ${countries.join(', ')}; ${overrides.size} override(s). Source: ${fromParquet ? 'Parquet' : 'export TSVs'}.`);
 
-  // countries.tsv (optional): id/name -> ISO2
-  const countriesFile = findFile(exportDir, /(^|_)countries\.tsv$/i);
-  if (countriesFile) {
-    await scanTsv(countriesFile, { id: ['id'], name: ['name'], iso2: ['iso2'] }, ['id', 'iso2'], (row) => {
-      const iso = String(row.iso2 || '').toUpperCase();
-      if (!iso) return;
-      countryMap.set(String(row.id).toLowerCase(), iso);
-      if (row.name) countryMap.set(String(row.name).toLowerCase(), iso);
-    });
-  } else {
-    console.log('  (no countries.tsv; only "Australia"/"AU" will be recognised)');
+  const src = fromParquet
+    ? JSON.parse(fs.readFileSync(path.join(BUILD_ROOT, 'states-source.json'), 'utf8'))
+    : null;
+
+  // countries.tsv (optional, export route only): id/name -> ISO2
+  if (!fromParquet) {
+    const countriesFile = findFile(exportDir, /(^|_)countries\.tsv$/i);
+    if (countriesFile) {
+      await scanTsv(countriesFile, { id: ['id'], name: ['name'], iso2: ['iso2'] }, ['id', 'iso2'], (row) => {
+        const iso = String(row.iso2 || '').toUpperCase();
+        if (!iso) return;
+        countryMap.set(String(row.id).toLowerCase(), iso);
+        if (row.name) countryMap.set(String(row.name).toLowerCase(), iso);
+      });
+    } else {
+      console.log('  (no countries.tsv; only "Australia"/"AU" will be recognised)');
+    }
   }
 
-  // People: current row only (sub_id 1); keep people of the wanted countries + override people
+  // People: keep people of the wanted countries + override people
   const persons = new Map();
-  await scanTsv(need(exportDir, /(^|_)persons\.tsv$/i, 'persons.tsv'),
-    { id: ['wca_id', 'id', 'wcaId'], sub: ['sub_id', 'subid', 'subId'], name: ['name'], country: ['country_id', 'countryId', 'country'] },
-    ['id', 'name', 'country'], (row) => {
-      if (row.sub !== undefined && row.sub !== '1') return;
-      const iso = toIso(row.country);
-      if (wanted.has(iso) || overrides.has(row.id)) persons.set(row.id, { name: row.name, iso });
-    });
+  const addPerson = (row) => {
+    const iso = toIso(row.country);
+    if (wanted.has(iso) || overrides.has(row.id)) persons.set(row.id, { name: row.name, iso });
+  };
+  if (fromParquet) {
+    for (const p of src.persons) addPerson({ id: p.id, name: p.name, country: p.country });
+  } else {
+    await scanTsv(need(exportDir, /(^|_)persons\.tsv$/i, 'persons.tsv'),
+      { id: ['wca_id', 'id', 'wcaId'], sub: ['sub_id', 'subid', 'subId'], name: ['name'], country: ['country_id', 'countryId', 'country'] },
+      ['id', 'name', 'country'], (row) => {
+        if (row.sub !== undefined && row.sub !== '1') return; // current row only
+        addPerson(row);
+      });
+  }
   const wcaCountryPeople = [...persons.values()].filter((p) => wanted.has(p.iso)).length;
   console.log(`People: ${wcaCountryPeople} with a WCA country we build, ${persons.size} including override people.`);
-  if (!wcaCountryPeople) throw new Error('Found no people for the requested countries; check the persons.tsv country column.');
+  if (!wcaCountryPeople) throw new Error('Found no people for the requested countries; check the persons country column.');
 
   // Competitions in those countries -> region + date
   const comps = new Map();
   const unmapped = [];
   let countryComps = 0;
-  await scanTsv(need(exportDir, /(^|_)competitions\.tsv$/i, 'competitions.tsv'),
-    { id: ['id'], name: ['name'], city: ['city_name', 'cityName'], country: ['country_id', 'countryId'], year: ['year'], month: ['month'], day: ['day'] },
-    ['id', 'city', 'country'], (row) => {
-      const iso = toIso(row.country);
-      if (!wanted.has(iso)) return;
-      countryComps += 1;
-      const region = regionOf(row.city, COUNTRIES[iso]);
-      if (!region) { unmapped.push(`${row.name || row.id} [${row.city}]`); return; }
-      const date = row.year && row.month && row.day ? `${row.year}-${pad(row.month)}-${pad(row.day)}` : '';
-      comps.set(row.id, { country: iso, region, date });
-    });
+  const addComp = (row) => {
+    const iso = toIso(row.country);
+    if (!wanted.has(iso)) return;
+    countryComps += 1;
+    const region = regionOf(row.city, COUNTRIES[iso]);
+    if (!region) { unmapped.push(`${row.name || row.id} [${row.city}]`); return; }
+    const date = row.year && row.month && row.day ? `${row.year}-${pad(row.month)}-${pad(row.day)}` : '';
+    comps.set(row.id, { country: iso, region, date });
+  };
+  if (fromParquet) {
+    for (const c of src.competitions) addComp(c);
+  } else {
+    await scanTsv(need(exportDir, /(^|_)competitions\.tsv$/i, 'competitions.tsv'),
+      { id: ['id'], name: ['name'], city: ['city_name', 'cityName'], country: ['country_id', 'countryId'], year: ['year'], month: ['month'], day: ['day'] },
+      ['id', 'city', 'country'], addComp);
+  }
   console.log(`Competitions: ${countryComps} in the requested countries, ${comps.size} mapped to a region, ${unmapped.length} could not be mapped.`);
   if (unmapped.length) {
     console.log('  Could not map (first 40):');
     for (const u of unmapped.slice(0, 40)) console.log(`    ${u}`);
   }
-  if (!comps.size) throw new Error('No competitions could be mapped to a region; check the competitions.tsv city column.');
+  if (!comps.size) throw new Error('No competitions could be mapped to a region; check the competitions city column.');
 
-  // Which mapped competitions each person attended (one pass over the big file)
+  // Which mapped competitions each person attended
   const compsByPerson = new Map();
-  await scanTsv(need(exportDir, /(^|_)results\.tsv$/i, 'results.tsv'),
-    { person: ['person_id', 'personId', 'wca_id'], comp: ['competition_id', 'competitionId'] },
-    ['person', 'comp'], (row) => {
-      if (!persons.has(row.person)) return;
-      const c = comps.get(row.comp);
-      if (!c) return;
-      let m = compsByPerson.get(row.person);
-      if (!m) { m = new Map(); compsByPerson.set(row.person, m); }
-      m.set(row.comp, c);
-    });
+  const addAttended = (person, comp) => {
+    if (!persons.has(person)) return;
+    const c = comps.get(comp);
+    if (!c) return;
+    let m = compsByPerson.get(person);
+    if (!m) { m = new Map(); compsByPerson.set(person, m); }
+    m.set(comp, c);
+  };
+  if (fromParquet) {
+    for (const [person, comp] of src.attended) addAttended(person, comp);
+  } else {
+    await scanTsv(need(exportDir, /(^|_)results\.tsv$/i, 'results.tsv'),
+      { person: ['person_id', 'personId', 'wca_id'], comp: ['competition_id', 'competitionId'] },
+      ['person', 'comp'], (row) => addAttended(row.person, row.comp));
+  }
 
   // Decide each person's region
   const cut = new Date();
@@ -301,19 +327,24 @@ async function main() {
     const p = persons.get(wcaId);
     members.set(wcaId, { wcaId, name: names[wcaId] || p.name || wcaId, countryIso2: p.iso || null, events: blank() });
   }
-  async function loadRanks(file, type) {
-    await scanTsv(file,
-      { person: ['person_id', 'personId'], event: ['event_id', 'eventId'], best: ['best'], world: ['world_rank', 'worldRank'], continent: ['continent_rank', 'continentRank'], country: ['country_rank', 'countryRank'] },
-      ['person', 'event', 'best'], (row) => {
-        const m = members.get(row.person);
-        if (!m || !EVENT_IDS.has(row.event)) return;
-        const ev = m.events[row.event];
-        ev[type] = toNum(row.best);
-        ev[`${type}Ranks`] = { world: toNum(row.world), continent: toNum(row.continent), country: toNum(row.country) };
-      });
+  const addRank = (type, row) => {
+    const m = members.get(row.person);
+    if (!m || !EVENT_IDS.has(row.event)) return;
+    const ev = m.events[row.event];
+    ev[type] = toNum(row.best);
+    ev[`${type}Ranks`] = { world: toNum(row.world), continent: toNum(row.continent), country: toNum(row.country) };
+  };
+  if (fromParquet) {
+    for (const type of ['single', 'average']) {
+      for (const [person, event, best, world, continent, country] of src.ranks[type]) {
+        addRank(type, { person, event, best, world, continent, country });
+      }
+    }
+  } else {
+    const rankFields = { person: ['person_id', 'personId'], event: ['event_id', 'eventId'], best: ['best'], world: ['world_rank', 'worldRank'], continent: ['continent_rank', 'continentRank'], country: ['country_rank', 'countryRank'] };
+    await scanTsv(need(exportDir, /(^|_)ranks_single\.tsv$/i, 'ranks_single.tsv'), rankFields, ['person', 'event', 'best'], (row) => addRank('single', row));
+    await scanTsv(need(exportDir, /(^|_)ranks_average\.tsv$/i, 'ranks_average.tsv'), rankFields, ['person', 'event', 'best'], (row) => addRank('average', row));
   }
-  await loadRanks(need(exportDir, /(^|_)ranks_single\.tsv$/i, 'ranks_single.tsv'), 'single');
-  await loadRanks(need(exportDir, /(^|_)ranks_average\.tsv$/i, 'ranks_average.tsv'), 'average');
 
   const byList = new Map(input.lists.map((l) => [`${l.country}/${l.region}`, []]));
   let noResults = 0;
