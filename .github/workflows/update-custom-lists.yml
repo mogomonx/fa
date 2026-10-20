@@ -1,11 +1,13 @@
 name: Update Custom Lists
 
 # Builds database-backed lists and uploads them to the private list-data bucket.
-#   every 15 min : new/edited lists (basic rankings first, then full history);
-#                  state lists too when someone changed their state
-#   daily        : personal bests for finished lists
+#   on demand    : a database trigger starts a `pending` run when a list is created
+#                  or changed (see supabase/migrations/007_build_trigger.sql)
+#   every 15 min : the same `pending` run as a fallback (GitHub's cron is slow)
+#   daily        : personal bests for finished lists, plus the Parquet refresh on R2
 #   weekly       : full history for every list, plus every state list,
 #                  plus the Parquet conversion and upload to Cloudflare R2
+# Upcoming competitions are NOT here any more: see update-upcoming.yml.
 # Also pings Supabase regularly, which keeps the free project awake.
 on:
   schedule:
@@ -22,6 +24,7 @@ on:
 
 permissions:
   contents: read
+  actions: write   # only used to start update-upcoming.yml for brand-new lists
 
 concurrency:
   group: custom-lists
@@ -265,11 +268,12 @@ jobs:
           node scripts/upload-lists.js --level=full $SLUGS $STATE_SLUGS
           node scripts/mark-lists.js --level=full $SLUGS $STATE_SLUGS
 
-      - name: Upcoming competitions
-        if: (steps.mode.outputs.mode == 'bests' || steps.mode.outputs.mode == 'full') && steps.sync.outputs.slugs != ''
+      # Brand-new lists get their Upcoming data from a separate workflow, so this
+      # run is not held up by the 9-minute scan. Failing to start it is harmless:
+      # update-upcoming.yml also runs daily.
+      - name: Start the Upcoming scan for brand-new lists
+        if: steps.mode.outputs.mode == 'pending' && steps.sync.outputs.new_slugs != ''
         continue-on-error: true
         env:
-          SLUGS: ${{ steps.sync.outputs.slugs }}
-        run: |
-          node scripts/fetch-upcoming.js $SLUGS
-          node scripts/upload-lists.js --files=upcoming.json $SLUGS
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-upcoming.yml --ref "${{ github.ref_name }}"
