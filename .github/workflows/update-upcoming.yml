@@ -1,0 +1,53 @@
+name: Update Upcoming Competitions
+
+# Scans upcoming WCA competitions once for every list and uploads upcoming.json.
+# This is its own workflow (with its own queue) so the 9-minute scan can never
+# hold up a new list's build in update-custom-lists.yml.
+#   daily  : every list
+#   on demand: started by update-custom-lists.yml when a brand-new list is built,
+#              or by hand from the Actions tab
+on:
+  schedule:
+    - cron: '30 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Its own group: runs here queue behind each other, never behind update-custom-lists.yml.
+# If several are requested while one is running, GitHub keeps only the newest waiting one.
+concurrency:
+  group: upcoming-scan
+  cancel-in-progress: false
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  LISTS_ROOT: build
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # --all lists every regular list that has members (state lists have no
+      # members and never have Upcoming data; their slugs go to a different output).
+      - name: Sync lists from the database
+        id: sync
+        run: node scripts/sync-lists.js --all
+
+      - name: Scan upcoming competitions
+        if: steps.sync.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+        run: |
+          node scripts/fetch-upcoming.js $SLUGS
+          node scripts/upload-lists.js --files=upcoming.json $SLUGS
