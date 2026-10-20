@@ -1009,3 +1009,76 @@ grant execute on function public.admin_set_name(text, text) to authenticated;
 grant execute on function public.admin_clear_name(text) to authenticated;
 grant execute on function public.admin_list_overview() to authenticated;
 grant execute on function public.admin_list_regions() to authenticated;
+
+
+   -- Session 12: on-demand builds. A statement-level trigger on lists calls the GitHub
+   -- workflow_dispatch API (mode pending) through pg_net when a list is created or its
+   -- dirty_at changes. Needs pg_net enabled and a Vault secret named gh_workflow_token
+   -- (a fine-grained GitHub token with Actions read/write on the repo).
+   -- The token itself is NOT stored in this file. Create it by hand:
+   --   select vault.create_secret('<token>', 'gh_workflow_token');
+create extension if not exists pg_net with schema extensions;
+
+create or replace function public.trigger_build()
+returns void
+language plpgsql
+security definer
+set search_path = public, extensions, vault
+as $$
+declare tok text;
+begin
+  select decrypted_secret into tok
+  from vault.decrypted_secrets where name = 'gh_workflow_token';
+  if tok is null then return; end if;
+  perform net.http_post(
+    url := 'https://api.github.com/repos/mogomonx/fa/actions/workflows/update-custom-lists.yml/dispatches',
+    headers := jsonb_build_object(
+      'Authorization', 'Bearer ' || tok,
+      'Accept', 'application/vnd.github+json',
+      'X-GitHub-Api-Version', '2022-11-28',
+      'User-Agent', 'fa-site',
+      'Content-Type', 'application/json'
+    ),
+    body := jsonb_build_object('ref', 'main', 'inputs', jsonb_build_object('mode', 'pending'))
+  );
+exception when others then
+  null; -- never block someone's edit because the trigger failed
+end;
+$$;
+
+revoke all on function public.trigger_build() from public, anon, authenticated;
+
+-- fires after a new list is added
+create or replace function public.trg_build_on_insert()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  perform public.trigger_build();
+  return null;
+end;
+$$;
+
+-- fires after an update, but only if some list's dirty_at actually changed
+create or replace function public.trg_build_on_update()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if exists (
+    select 1 from new_rows n join old_rows o on o.id = n.id
+    where n.dirty_at is distinct from o.dirty_at
+  ) then
+    perform public.trigger_build();
+  end if;
+  return null;
+end;
+$$;
+
+drop trigger if exists build_on_list_insert on public.lists;
+create trigger build_on_list_insert
+  after insert on public.lists
+  referencing new table as new_rows
+  for each statement execute function public.trg_build_on_insert();
+
+drop trigger if exists build_on_list_update on public.lists;
+create trigger build_on_list_update
+  after update on public.lists
+  referencing new table as new_rows old table as old_rows
+  for each statement execute function public.trg_build_on_update();
