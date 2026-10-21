@@ -13,6 +13,11 @@
 // competition/round) and "best" (longest ever), with the competition
 // range it spanned (or "Current" if still ongoing).
 //
+// State lists (slug starts with "state-", thousands of people) are handled the
+// same way, with two differences to keep the file small: people with no results
+// at all are left out of "overall", and "byEvent" only lists people who have a
+// result in that event and type. Ordinary lists are written exactly as before.
+//
 // Run with: node scripts/build-streaks.js [listId] (after scripts/parse-export.js)
 
 const fs = require('fs');
@@ -21,7 +26,8 @@ const { EVENTS } = require('./lib/events');
 const { hasResult } = require('./lib/format');
 const { getListContext } = require('./lib/list-context');
 
-const { dataDir: DATA_DIR } = getListContext();
+const { dataDir: DATA_DIR, listId: LIST_ID } = getListContext();
+const IS_STATE = /^state-/.test(LIST_ID);
 const FULL_RESULTS_PATH = path.join(DATA_DIR, 'full-results.json');
 const RESULTS_PATH = path.join(DATA_DIR, 'results.json');
 const OUTPUT_PATH = path.join(DATA_DIR, 'streaks.json');
@@ -72,9 +78,8 @@ function walkStreak(points) {
 // The primary metric: walks this person's competitions in date order
 // (across every event), tracking a running best per event+type, and marks
 // a competition as "PR'd" if ANY event+type improved there.
-function computeOverallCompetitionStreak(entries, wcaId) {
-  const own = entries.filter((e) => e.wcaId === wcaId);
-
+// `own` is this person's entries (in file order).
+function computeOverallCompetitionStreak(own) {
   const compInfo = new Map();
   for (const e of own) {
     if (!compInfo.has(e.competitionId)) {
@@ -118,10 +123,10 @@ function computeOverallCompetitionStreak(entries, wcaId) {
 }
 
 // Secondary "fun stat": per event, per type, consecutive ROUNDS (not
-// deduplicated per competition).
-function computeRoundStreak(entries, wcaId, eventId, type) {
-  const points = entries
-    .filter((e) => e.wcaId === wcaId && e.eventId === eventId && hasResult(e[type]))
+// deduplicated per competition). `own` is this person's entries.
+function computeRoundStreak(own, eventId, type) {
+  const points = own
+    .filter((e) => e.eventId === eventId && hasResult(e[type]))
     .slice()
     .sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
 
@@ -138,21 +143,38 @@ function main() {
   const { entries } = JSON.parse(fs.readFileSync(FULL_RESULTS_PATH, 'utf8'));
   const { people } = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
 
-  const overall = people.map((p) => ({
-    wcaId: p.wcaId,
-    name: p.name,
-    streak: computeOverallCompetitionStreak(entries, p.wcaId),
-  }));
+  // Group entries by person once (state lists have ~100k entries and thousands of
+  // people, so filtering the whole array per person would take far too long).
+  const byPerson = new Map();
+  for (const e of entries) {
+    let list = byPerson.get(e.wcaId);
+    if (!list) {
+      list = [];
+      byPerson.set(e.wcaId, list);
+    }
+    list.push(e);
+  }
+  const entriesOf = (wcaId) => byPerson.get(wcaId) || [];
+
+  const overall = people
+    .filter((p) => !IS_STATE || byPerson.has(p.wcaId))
+    .map((p) => ({
+      wcaId: p.wcaId,
+      name: p.name,
+      streak: computeOverallCompetitionStreak(entriesOf(p.wcaId)),
+    }));
 
   const byEvent = {};
   for (const event of EVENTS) {
     byEvent[event.id] = { single: [], average: [] };
     for (const type of ['single', 'average']) {
       for (const p of people) {
+        const own = entriesOf(p.wcaId);
+        if (IS_STATE && !own.some((e) => e.eventId === event.id && hasResult(e[type]))) continue;
         byEvent[event.id][type].push({
           wcaId: p.wcaId,
           name: p.name,
-          streak: computeRoundStreak(entries, p.wcaId, event.id, type),
+          streak: computeRoundStreak(own, event.id, type),
         });
       }
     }
