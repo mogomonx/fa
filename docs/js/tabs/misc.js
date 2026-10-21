@@ -271,9 +271,42 @@ export { renderUpcoming } from './upcoming.js';
 
 // ---------- Consistency ----------
 
+// Fewer than 3 results makes a standard deviation meaningless, so 3 is both the
+// default and the lowest allowed value. The box in index.html sets
+// state.consistencyMin (wired here, the first time the tab renders).
+const CONSISTENCY_MIN_DEFAULT = 3;
+let consistencyMinWired = false;
+
+function consistencyMin() {
+  const n = Math.floor(Number(state.consistencyMin));
+  return Number.isFinite(n) && n >= CONSISTENCY_MIN_DEFAULT ? n : CONSISTENCY_MIN_DEFAULT;
+}
+
+function wireConsistencyMin() {
+  const input = document.getElementById('consistency-min');
+  if (!input || consistencyMinWired) return;
+  consistencyMinWired = true;
+  // While typing: apply any valid number straight away (an empty box waits).
+  input.addEventListener('input', () => {
+    if (input.value === '' || !Number.isFinite(Number(input.value))) return;
+    state.consistencyMin = Math.max(CONSISTENCY_MIN_DEFAULT, Math.floor(Number(input.value)));
+    renderConsistency();
+  });
+  // On leaving the box: snap an empty or too-low value back to something valid.
+  input.addEventListener('change', () => {
+    input.value = String(consistencyMin());
+    renderConsistency();
+  });
+}
+
 export function renderConsistency() {
   const container = document.getElementById('consistency-table');
   if (!container || !state.consistencyEventId) return;
+  wireConsistencyMin();
+  const minResults = consistencyMin();
+  const minInput = document.getElementById('consistency-min');
+  if (minInput && document.activeElement !== minInput) minInput.value = String(minResults);
+
   const eventDef = store.rankings.events.find((e) => e.id === state.consistencyEventId);
   const type = state.consistencyType;
 
@@ -287,7 +320,7 @@ export function renderConsistency() {
   }
 
   const rows = Array.from(byPerson.entries())
-    .filter(([, d]) => d.values.length >= 3) // need a few data points for std dev to mean anything
+    .filter(([, d]) => d.values.length >= minResults)
     .map(([wcaId, d]) => ({ wcaId, name: d.name, count: d.values.length, stdDev: standardDeviation(d.values) }))
     .sort((a, b) => a.stdDev - b.stdDev);
 
