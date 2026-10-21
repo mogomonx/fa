@@ -1082,3 +1082,17 @@ create trigger build_on_list_update
   after update on public.lists
   referencing new table as new_rows old table as old_rows
   for each statement execute function public.trg_build_on_update();
+
+-- Session 14: reserve link names for the site's own lists.
+create or replace function public.reject_reserved_slugs() returns trigger
+language plpgsql as $$
+begin
+  if new.kind = 'group' and (new.slug like 'state-%' or new.slug like 'me-%') then
+    raise exception 'Link names starting with "state-" or "me-" are reserved. Pick another link name.';
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists trg_b_reserved_slugs on public.lists;
+create trigger trg_b_reserved_slugs before insert on public.lists
+  for each row execute function public.reject_reserved_slugs();
