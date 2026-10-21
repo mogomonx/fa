@@ -14,6 +14,9 @@ const nameOf = (a) => store.people.get(a.wcaId)?.name || a.name || a.wcaId;
 const num = (v) => (v == null ? '—' : v);
 const wcaUrl = (id) => `https://www.worldcubeassociation.org/competitions/${encodeURIComponent(id)}`;
 
+const NOT_BUILT_NOTE =
+  "Upcoming competitions haven't been built for this list yet. They're added a few minutes after a list is created, and refreshed daily.";
+
 const dateText = (c) =>
   c.endDate && c.endDate !== c.date ? `${formatDate(c.date)} \u2013 ${formatDate(c.endDate)}` : formatDate(c.date);
 
@@ -51,13 +54,17 @@ export function renderUpcoming() {
   const up = store.upcoming;
 
   if (!up) {
-    note.textContent = "Upcoming competitions haven't been built for this list yet. They're added by the daily update.";
+    note.textContent = NOT_BUILT_NOTE;
     container.innerHTML = '';
     return;
   }
   if (up.skipped) {
     note.textContent = `Upcoming competitions aren't tracked for lists with more than ${up.maxMembers || 50} members.`;
     container.innerHTML = '';
+    return;
+  }
+  if (up.kind === 'state') {
+    renderStateUpcoming(note, container, up);
     return;
   }
 
@@ -104,6 +111,42 @@ export function renderUpcoming() {
       renderUpcoming();
     })
   );
+}
+
+// ---------- State lists: competitions held in the state ----------
+
+// State lists have no members, so there are no registrations or psych sheets:
+// just the competitions taking place in the state, linked to the WCA site.
+function renderStateUpcoming(note, container, up) {
+  const comps = up.competitions || [];
+  openId = null;
+  if (comps.length === 0) {
+    note.textContent = 'No upcoming competitions in the next ~6 months were found in this state.';
+    container.innerHTML = '';
+    return;
+  }
+  note.textContent =
+    'Upcoming competitions (next ~6 months) held in this state. Registrations aren\'t shown for state lists; open a competition on the WCA site to see who is going.';
+
+  container.innerHTML = `
+    <div style="${WRAP_STYLE}">
+      <table>
+        <thead><tr><th>Date</th><th>Competition</th><th>Where</th><th>Events</th></tr></thead>
+        <tbody>
+          ${comps
+            .map(
+              (c) => `
+            <tr>
+              <td style="white-space:nowrap;">${dateText(c)}</td>
+              <td><a href="${wcaUrl(c.id)}" target="_blank" rel="noopener">${esc(c.name)}</a></td>
+              <td>${esc(placeText(c))}</td>
+              <td style="min-width:9rem;">${iconsHtml(c.eventIds || [])}</td>
+            </tr>`
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>`;
 }
 
 // ---------- Psych sheet for one competition ----------
@@ -187,8 +230,9 @@ function psychTable(ev, attendees) {
 
 export function upcomingProfileHtml(wcaId, personal) {
   const up = store.upcoming;
-  if (!up) return '<p class="empty-note">Upcoming competitions haven\'t been built for this list yet.</p>';
+  if (!up) return `<p class="empty-note">${NOT_BUILT_NOTE}</p>`;
   if (up.skipped) return `<p class="empty-note">Upcoming competitions aren't tracked for lists with more than ${up.maxMembers || 50} members.</p>`;
+  if (up.kind === 'state') return '<p class="empty-note">Registrations aren\'t tracked for state lists.</p>';
 
   const mine = (up.competitions || []).filter((c) => (c.attendees || []).some((a) => a.wcaId === wcaId));
   if (mine.length === 0) return '<p class="empty-note">Not registered for any upcoming competitions.</p>';
