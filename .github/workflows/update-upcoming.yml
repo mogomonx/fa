@@ -1,11 +1,13 @@
 name: Update Upcoming Competitions
 
-# Scans upcoming WCA competitions once for every list and uploads upcoming.json.
+# Scans upcoming WCA competitions and uploads upcoming.json.
+#   regular lists : ONE shared scan, matching registrants against every list's members
+#   state lists   : competitions held inside each state (no registrants), a few seconds
 # This is its own workflow (with its own queue) so the 9-minute scan can never
 # hold up a new list's build in update-custom-lists.yml.
-#   daily  : every list
-#   on demand: started by update-custom-lists.yml when a brand-new list is built,
-#              or by hand from the Actions tab
+#   daily      : every list
+#   on demand  : started by update-custom-lists.yml when a brand-new list is built,
+#                or by hand from the Actions tab
 on:
   schedule:
     - cron: '30 7 * * *'
@@ -38,14 +40,23 @@ jobs:
         with:
           node-version: '20'
 
-      # --all lists every regular list that has members (state lists have no
-      # members and never have Upcoming data; their slugs go to a different output).
+      # --all gives `slugs` (regular lists with members) and `state_slugs` (state
+      # lists) as separate outputs, and writes build/states-input.json.
       - name: Sync lists from the database
         id: sync
         run: node scripts/sync-lists.js --all
 
+      # State lists first: quick, and a failure in the long scan below can't block it.
+      - name: Upcoming competitions for state lists
+        if: steps.sync.outputs.state_slugs != ''
+        env:
+          STATE_SLUGS: ${{ steps.sync.outputs.state_slugs }}
+        run: |
+          node scripts/fetch-state-upcoming.js $STATE_SLUGS
+          node scripts/upload-lists.js --files=upcoming.json $STATE_SLUGS
+
       - name: Scan upcoming competitions
-        if: steps.sync.outputs.slugs != ''
+        if: ${{ !cancelled() && steps.sync.outputs.slugs != '' }}
         env:
           SLUGS: ${{ steps.sync.outputs.slugs }}
         run: |
