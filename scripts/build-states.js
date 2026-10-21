@@ -377,7 +377,12 @@ async function main() {
   if (!total) throw new Error('No people ended up in any state list; stopping so nothing empty is published.');
 }
 
-main().catch((err) => {
-  console.error(err.message || err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err.message || err);
+    process.exit(1);
+  });
+}
+
+// Shared with scripts/fetch-state-upcoming.js
+module.exports = { COUNTRIES, regionOf };
