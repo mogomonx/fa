@@ -20,6 +20,9 @@
 //   3. their own preferred name, if they chose "everywhere", or "lists" and
 //      picked this list (personal profile lists always use it)
 //   4. null -> the build scripts fall back to the official WCA name
+//
+// Every table read is paged (Supabase returns at most 1000 rows per request),
+// so this keeps working past 1000 lists / people.
 
 const fs = require('fs');
 const path = require('path');
@@ -29,14 +32,16 @@ const OUT = path.join(__dirname, '..', 'build');
 
 const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
 
-// Reads every row of a REST query, 1000 at a time (give the query an order=).
-async function restAll(base) {
+// Reads every row of a REST query, one page at a time. The query MUST have an
+// order= on a unique key, or pages can overlap or skip rows. pageSize must be
+// 1000 or less (the server's cap).
+async function restAll(base, pageSize = 1000) {
   const all = [];
-  for (let offset = 0; ; offset += 1000) {
+  for (let offset = 0; ; offset += pageSize) {
     const sep = base.includes('?') ? '&' : '?';
-    const page = await rest('GET', `${base}${sep}limit=1000&offset=${offset}`);
+    const page = await rest('GET', `${base}${sep}limit=${pageSize}&offset=${offset}`);
     all.push(...(page || []));
-    if (!page || page.length < 1000) break;
+    if (!page || page.length < pageSize) break;
   }
   return all;
 }
@@ -46,13 +51,14 @@ async function restAll(base) {
 async function loadNamePrefs() {
   const prefs = new Map();
   try {
-    const profiles = await rest('GET',
-      '/rest/v1/profiles?select=wca_id,preferred_name,name_visibility&preferred_name=not.is.null&wca_id=not.is.null&limit=1000');
-    for (const p of profiles || []) {
+    const profiles = await restAll(
+      '/rest/v1/profiles?select=wca_id,preferred_name,name_visibility&preferred_name=not.is.null&wca_id=not.is.null&order=wca_id');
+    for (const p of profiles) {
       prefs.set(p.wca_id, { name: p.preferred_name, visibility: p.name_visibility, lists: new Set() });
     }
-    const chosen = await rest('GET', '/rest/v1/preferred_name_lists?select=list_id,wca_id&limit=10000');
-    for (const c of chosen || []) prefs.get(c.wca_id)?.lists.add(c.list_id);
+    const chosen = await restAll(
+      '/rest/v1/preferred_name_lists?select=list_id,wca_id&order=list_id,wca_id');
+    for (const c of chosen) prefs.get(c.wca_id)?.lists.add(c.list_id);
   } catch (err) {
     console.warn(`Could not load preferred names (continuing without them): ${err.message}`);
   }
@@ -74,9 +80,12 @@ async function main() {
   const mode = process.argv.includes('--pending') ? 'pending'
     : process.argv.includes('--built') ? 'built' : 'all';
 
-  const rows = await rest('GET',
-    '/rest/v1/lists?select=id,slug,name,kind,country,region,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&limit=1000');
+  // Smaller pages here because every list carries its members along (up to 100 each).
+  const rows = await restAll(
+    '/rest/v1/lists?select=id,slug,name,kind,country,region,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&order=id',
+    500);
   const prefs = await loadNamePrefs();
+  console.log(`Read ${rows.length} list row(s) and ${prefs.size} preferred name(s).`);
 
   const groupRows = rows.filter((l) => l.kind !== 'state');
   const stateRows = rows.filter((l) => l.kind === 'state');
