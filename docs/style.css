@@ -1243,9 +1243,7 @@ a.state-btn { text-decoration: none; }
 body.state-mode .menu-item[data-tab="rolling"],
 body.state-mode .home-link[data-tab="rolling"],
 body.state-mode #home-members,
-body.state-mode .board:has(#recent-activity-table),
-body.state-mode .stat-row[data-subtab="upcoming"],
-body.state-mode .stat-row[data-subtab="streaks-event"] { display: none; }
+body.state-mode .board:has(#recent-activity-table) { display: none; }
 
 
 /* =====================================================================
