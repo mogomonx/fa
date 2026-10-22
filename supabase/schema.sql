@@ -1096,3 +1096,96 @@ end $$;
 drop trigger if exists trg_b_reserved_slugs on public.lists;
 create trigger trg_b_reserved_slugs before insert on public.lists
   for each row execute function public.reject_reserved_slugs();
+
+-- Session 15: list lifecycle (active / dormant / expired, permanent lists).
+-- Run this whole block in the Supabase SQL Editor BEFORE pushing the new code,
+-- then append the same SQL to the bottom of supabase/schema.sql.
+-- Safe to run more than once.
+--
+-- Tiers (group lists that have an owner; personal profiles, state lists and
+-- guest lists are never touched):
+--   active   opened by the owner or a member in the last 30 days: built as usual
+--   dormant  not opened for 30+ days and not permanent: skipped by the daily and
+--            weekly runs (old JSON stays); a member opening it wakes it up and
+--            rebuilds it; an edit rebuilds it as always
+--   expired  not opened for 90+ days and not permanent: deleted by the weekly
+--            cleanup (expire_lists() + scripts/cleanup-lists.js)
+-- The day counts also appear in scripts/sync-lists.js (30) and
+-- docs/js/lists-page.js (90): change them together.
+
+alter table public.lists
+  add column if not exists last_opened_at timestamptz not null default now(),
+  add column if not exists permanent      boolean     not null default false;
+-- Every existing list gets last_opened_at = now() from the line above, so nothing
+-- expires or goes dormant straight away.
+
+-- Owners cannot write these two columns directly (column-level grant is only
+-- name, visibility, official_names_only); they go through the functions below.
+
+-- Called by the rankings page (at most once a day per browser). Counts only when
+-- the caller is the list's owner or a member; anyone else is silently ignored.
+-- Opening a dormant list also marks it dirty, so it is rebuilt straight away
+-- (the on-demand build trigger fires on the dirty_at change).
+create or replace function public.record_list_open(p_list uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare
+  v_list lists;
+  v_wca  text := current_wca_id();
+begin
+  if auth.uid() is null then return; end if;
+  select * into v_list from lists where id = p_list and kind = 'group' and owner_id is not null;
+  if not found then return; end if;
+  if v_list.owner_id <> auth.uid()
+     and not exists (select 1 from list_members m where m.list_id = v_list.id and m.wca_id = v_wca) then
+    return;
+  end if;
+  if v_list.last_opened_at > now() - interval '1 day' then return; end if;
+  update lists
+     set last_opened_at = now(),
+         dirty_at = case when not v_list.permanent
+                          and v_list.last_opened_at < now() - interval '30 days'
+                         then now() else dirty_at end
+   where id = v_list.id;
+end $$;
+
+-- Owner (or an admin) marks a list permanent. Owners can have at most 10
+-- (the number below); admins have no limit.
+create or replace function public.set_list_permanent(p_list uuid, p_permanent boolean) returns void
+language plpgsql security definer set search_path = public as $$
+declare
+  v_list lists;
+  v_max  constant int := 10;
+begin
+  if auth.uid() is null then raise exception 'Log in first'; end if;
+  select * into v_list from lists where id = p_list and kind = 'group' and owner_id is not null;
+  if not found then raise exception 'List not found'; end if;
+  if v_list.owner_id <> auth.uid() and not is_admin() then
+    raise exception 'Only the owner can change this';
+  end if;
+  if p_permanent and not v_list.permanent and not is_admin()
+     and (select count(*) from lists
+          where owner_id = v_list.owner_id and kind = 'group' and permanent) >= v_max then
+    raise exception 'You can have at most % permanent lists. Remove one first.', v_max;
+  end if;
+  update lists
+     set permanent = p_permanent, last_opened_at = now()
+   where id = p_list;
+end $$;
+
+-- Weekly cleanup (service role only): deletes expired lists and returns their ids.
+create or replace function public.expire_lists() returns setof uuid
+language sql security definer set search_path = public as $$
+  delete from lists
+  where kind = 'group' and owner_id is not null and not permanent
+    and last_opened_at < now() - interval '90 days'
+  returning id
+$$;
+
+revoke execute on function public.record_list_open(uuid) from public, anon;
+revoke execute on function public.set_list_permanent(uuid, boolean) from public, anon;
+revoke execute on function public.expire_lists() from public, anon, authenticated;
+grant execute on function public.record_list_open(uuid) to authenticated;
+grant execute on function public.set_list_permanent(uuid, boolean) to authenticated;
+
+-- FA is permanent.
+update public.lists set permanent = true where slug = 'fa';
