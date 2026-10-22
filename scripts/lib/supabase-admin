@@ -63,6 +63,31 @@ async function rest(method, pathAndQuery, body) {
   return text ? JSON.parse(text) : null;
 }
 
+// Reads every row of a GET query, one page at a time (Supabase returns at most
+// 1000 rows per request). The query MUST have an order= on a unique key, or
+// pages can overlap or skip rows. pageSize must be 1000 or less.
+async function restAll(base, pageSize = 1000) {
+  const all = [];
+  for (let offset = 0; ; offset += pageSize) {
+    const sep = base.includes('?') ? '&' : '?';
+    const page = await rest('GET', `${base}${sep}limit=${pageSize}&offset=${offset}`);
+    all.push(...(page || []));
+    if (!page || page.length < pageSize) break;
+  }
+  return all;
+}
+
+// Storage API call, e.g. storage('POST', '/object/list/list-data', {...}).
+async function storage(method, pathAndQuery, body) {
+  const { base, key } = config();
+  const text = await request(`${method} storage${pathAndQuery.split('?')[0]}`, `${base}/storage/v1${pathAndQuery}`, {
+    method,
+    headers: headers(key, { 'Content-Type': 'application/json' }),
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  return text ? JSON.parse(text) : null;
+}
+
 async function uploadObject(objectPath, jsonString) {
   const { base, key } = config();
   await request(`Upload ${objectPath}`, `${base}/storage/v1/object/list-data/${objectPath}`, {
@@ -72,4 +97,4 @@ async function uploadObject(objectPath, jsonString) {
   });
 }
 
-module.exports = { rest, uploadObject };
+module.exports = { rest, restAll, storage, uploadObject };
