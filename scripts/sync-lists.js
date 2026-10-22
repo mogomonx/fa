@@ -7,6 +7,12 @@
 //
 // Lists with no members are skipped (e.g. caught mid-creation).
 //
+// Dormant lists (session 15, list lifecycle): a group list with an owner that is
+// not permanent and has not been opened by its owner or a member for 30+ days is
+// left alone by --built and --all (its old JSON stays in Storage) as long as it is
+// fully built and has no pending edit. --pending never skips anything, so an edit
+// (or a member opening a dormant list, which marks it dirty) rebuilds it.
+//
 // State lists (kind 'state', session 10) have no members: they are built from
 // the WCA export by build-states.js. They are reported separately as
 // `state_slugs` / `state_countries`: every state list of a country is rebuilt
@@ -26,25 +32,25 @@
 
 const fs = require('fs');
 const path = require('path');
-const { rest } = require('./lib/supabase-admin');
+const { restAll } = require('./lib/supabase-admin');
 
 const OUT = path.join(__dirname, '..', 'build');
 
+// Keep in step with record_list_open() in supabase/schema.sql (30 days).
+const DORMANT_DAYS = 30;
+
 const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
 
-// Reads every row of a REST query, one page at a time. The query MUST have an
-// order= on a unique key, or pages can overlap or skip rows. pageSize must be
-// 1000 or less (the server's cap).
-async function restAll(base, pageSize = 1000) {
-  const all = [];
-  for (let offset = 0; ; offset += pageSize) {
-    const sep = base.includes('?') ? '&' : '?';
-    const page = await rest('GET', `${base}${sep}limit=${pageSize}&offset=${offset}`);
-    all.push(...(page || []));
-    if (!page || page.length < pageSize) break;
-  }
-  return all;
+function isDormant(l) {
+  return l.kind === 'group'
+    && Boolean(l.owner_id)
+    && !l.permanent
+    && Boolean(l.last_opened_at)
+    && Date.now() - Date.parse(l.last_opened_at) > DORMANT_DAYS * 86400000;
 }
+
+// Dormant, fully built and with no edit waiting: nothing to do for it.
+const skipAsDormant = (l) => isDormant(l) && l.data_level === 'full' && !isPending(l);
 
 // wca_id -> { name, visibility, lists:Set(list uuid) }. Never fails the build:
 // if the tables/columns aren't there yet, nobody has a preferred name.
@@ -82,7 +88,7 @@ async function main() {
 
   // Smaller pages here because every list carries its members along (up to 100 each).
   const rows = await restAll(
-    '/rest/v1/lists?select=id,slug,name,kind,country,region,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&order=id',
+    '/rest/v1/lists?select=id,slug,name,kind,country,region,owner_id,permanent,last_opened_at,official_names_only,dirty_at,built_at,data_level,list_members(wca_id,display_name)&order=id',
     500);
   const prefs = await loadNamePrefs();
   console.log(`Read ${rows.length} list row(s) and ${prefs.size} preferred name(s).`);
@@ -90,11 +96,15 @@ async function main() {
   const groupRows = rows.filter((l) => l.kind !== 'state');
   const stateRows = rows.filter((l) => l.kind === 'state');
 
+  let dormantSkipped = 0;
   const chosen = groupRows
     .filter((l) => l.list_members.length > 0)
-    .filter((l) => mode === 'all'
-      || (mode === 'pending' && isPending(l))
-      || (mode === 'built' && l.built_at && !isPending(l)));
+    .filter((l) => {
+      if (mode === 'pending') return isPending(l);
+      if (skipAsDormant(l)) { dormantSkipped++; return false; }
+      if (mode === 'built') return Boolean(l.built_at) && !isPending(l);
+      return true;
+    });
 
   let stateChosen = [];
   if (mode === 'all') {
@@ -141,6 +151,7 @@ async function main() {
   const stateSlugs = stateChosen.map((l) => l.slug).join(' ');
   const stateCountries = [...new Set(stateChosen.map((l) => l.country))].join(' ');
   console.log(`Mode ${mode}: ${chosen.length} list(s): ${slugs || '(none)'}`);
+  if (dormantSkipped) console.log(`Skipped ${dormantSkipped} dormant list(s) (not opened for ${DORMANT_DAYS}+ days).`);
   console.log(`State lists: ${stateChosen.length}${stateSlugs ? `: ${stateSlugs}` : ''}`);
   if (process.env.GITHUB_OUTPUT) {
     fs.appendFileSync(process.env.GITHUB_OUTPUT,
