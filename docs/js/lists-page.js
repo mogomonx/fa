@@ -8,6 +8,11 @@
 // lists.html?edit=<slug> opens that list straight in the editor (used by the
 // "Edit this list" link in the rankings side menu).
 //
+// List lifecycle (session 15): a group list nobody (owner or member) opens for
+// 90 days is deleted by the weekly cleanup unless it is permanent. Owners see an
+// "expires in N days" note once a list is 14 days or fewer from deletion, and
+// can mark lists permanent from the detail view (limit enforced by the database).
+//
 // The small "My profile" button (top right) lives in profile-button.js and is
 // loaded separately, so a problem there can never break this page.
 
@@ -18,6 +23,8 @@ const SLUG_RE = /^[a-z0-9-]{2,40}$/;
 const MAX_MEMBERS = 100;
 const GUEST_MAX_MEMBERS = 30;
 const GUEST_KEY = "fa-guest-list";
+const EXPIRY_DAYS = 90;   // keep in step with expire_lists() in schema.sql
+const NOTICE_DAYS = 14;   // show the "expires in N days" note from here on
 const VISIBILITY = {
   public: { label: "Public", help: "Listed for everyone to find and view." },
   unlisted: { label: "Unlisted", help: "Anyone with the link can view it; it isn't listed anywhere." },
@@ -134,6 +141,35 @@ function statusNote(l) {
   return null;
 }
 
+// ---------- Expiry (list lifecycle) ----------
+
+// Days until the weekly cleanup deletes this list, or null when it can't expire
+// (guest, personal and state lists, permanent lists, or no data yet).
+function expiryDaysLeft(l) {
+  if (l.kind !== "group" || !l.owner_id || l.permanent || !l.last_opened_at) return null;
+  return Math.ceil((Date.parse(l.last_opened_at) + EXPIRY_DAYS * 86400000 - Date.now()) / 86400000);
+}
+
+// Short text for a card subtitle, only when the list is close to expiring.
+function expirySub(l) {
+  const d = expiryDaysLeft(l);
+  if (d === null || d > NOTICE_DAYS) return null;
+  if (d <= 0) return "Expires soon";
+  return `Expires in ${d} day${d === 1 ? "" : "s"}`;
+}
+
+// Longer note for the detail view.
+function expiryNote(l) {
+  const d = expiryDaysLeft(l);
+  if (d === null || d > NOTICE_DAYS) return null;
+  if (d <= 0) {
+    return "Nobody has opened this list for 3 months, so it will be deleted at the next weekly cleanup. " +
+      "Open its rankings to keep it, or make it permanent.";
+  }
+  return `This list will be deleted in ${d} day${d === 1 ? "" : "s"} unless you or a member open it. ` +
+    "Make it permanent to keep it for good.";
+}
+
 // ---------- Data ----------
 
 async function loadLists() {
@@ -246,7 +282,8 @@ function listCard(list, memberIds) {
   const roles = [];
   if (ownsList(list)) roles.push("Yours");
   if (memberIds.has(list.id)) roles.push("You're on it");
-  const sub = [VISIBILITY[list.visibility].label, ...roles, statusText(list)]
+  const lifecycle = ownsList(list) ? (list.permanent ? "Permanent" : expirySub(list)) : null;
+  const sub = [VISIBILITY[list.visibility].label, ...roles, lifecycle, statusText(list)]
     .filter(Boolean).join(" · ");
 
   const ready = list.data_level !== "none";
@@ -393,11 +430,22 @@ async function openList(list) {
   renderDetail();
 }
 
+// Marks the open list permanent (or removes that). The database enforces the
+// limit of 10 per owner (admins have none) and who may change it.
+async function togglePermanent(list) {
+  const next = !list.permanent;
+  const { error } = await supabase.rpc("set_list_permanent", { p_list: list.id, p_permanent: next });
+  if (error) { alert(friendlyError(error)); return; }
+  current.list = { ...current.list, permanent: next, last_opened_at: new Date().toISOString() };
+  renderDetail();
+}
+
 function renderDetail() {
   const { list, members } = current;
   const vis = VISIBILITY[list.visibility];
   const note = statusNote(list);
   const amMember = Boolean(myWcaId) && members.some((m) => m.wca_id === myWcaId);
+  const canPin = list.kind === "group" && Boolean(list.owner_id) && (ownsList(list) || isAdmin);
 
   const node = el("div", { class: "list-detail" },
     el("button", { class: "back-link", onclick: showBrowser, text: "← All lists" }),
@@ -410,6 +458,11 @@ function renderDetail() {
   if (current.guest) {
     node.append(el("p", { class: "board-note", text: "Guest list: saved in this browser only. Log in with WCA to keep it on your account." }));
   }
+  if (canPin && list.permanent) {
+    node.append(el("p", { class: "board-note", text: "Permanent: this list is never deleted for inactivity." }));
+  }
+  const expiry = ownsList(list) ? expiryNote(list) : null;
+  if (expiry) node.append(el("p", { class: "board-note", text: expiry }));
 
   const actions = el("div", { class: "panel-controls" });
   if (list.data_level !== "none") {
@@ -423,6 +476,14 @@ function renderDetail() {
     actions.append(
       el("button", { class: "csv-btn", type: "button", onclick: () => renderEditor(list, members, current.guest), text: "Edit" }),
       el("button", { class: "csv-btn danger", type: "button", onclick: () => removeList(list), text: "Delete" }));
+  }
+  if (canPin) {
+    actions.append(el("button", {
+      class: "csv-btn",
+      type: "button",
+      onclick: () => togglePermanent(list),
+      text: list.permanent ? "Remove permanent" : "Make permanent",
+    }));
   }
   if (amMember) {
     actions.append(el("button", { class: "csv-btn danger", type: "button", onclick: () => leave(list), text: "Opt out of this list" }));
