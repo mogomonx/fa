@@ -257,6 +257,9 @@ async function loadData() {
   if (!isState) restoreTimeTravel(refreshAll);
 
   if (source.list?.kind === 'personal') enterPersonalMode();
+
+  // List lifecycle: tell the database an owner/member opened this list (once a day per browser).
+  import('./list-activity.js').then((m) => m.recordListOpen(source)).catch(() => {});
 }
 
 // ---------- Wiring ----------
