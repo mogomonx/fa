@@ -2,10 +2,11 @@ name: Update Custom Lists
 
 # Builds database-backed lists and uploads them to the private list-data bucket.
 #   on demand    : a database trigger starts a `pending` run when a list is created
-#                  or changed (see supabase/migrations/007_build_trigger.sql)
+#                  or changed (the SQL lives in supabase/schema.sql, trigger_build())
 #   every 15 min : the same `pending` run as a fallback (GitHub's cron is slow)
 #   daily        : personal bests for finished lists, plus the Parquet refresh on R2
-#   weekly       : full history for every list, plus every state list,
+#   weekly       : list cleanup (expired lists, orphaned Storage folders), then full
+#                  history for every list that is not dormant, plus every state list,
 #                  plus the Parquet conversion and upload to Cloudflare R2
 # Upcoming competitions are NOT here any more: see update-upcoming.yml.
 # Also pings Supabase regularly, which keeps the free project awake.
@@ -65,6 +66,15 @@ jobs:
             esac
           fi
           echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+
+      # List lifecycle (session 15): weekly (and manual full runs). Deletes lists nobody
+      # has opened for 90 days (permanent lists are exempt), then removes Storage folders
+      # that no longer belong to any list. Runs before the sync so expired lists are not
+      # built. A failure here shows as an orange step and never stops the build.
+      - name: Clean up expired lists and orphaned data
+        if: steps.mode.outputs.mode == 'full'
+        continue-on-error: true
+        run: node scripts/cleanup-lists.js
 
       - name: Sync lists from the database
         id: sync
