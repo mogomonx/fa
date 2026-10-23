@@ -309,12 +309,23 @@ export function peopleFromRows(personRows, singleRows, averageRows, eventIds, or
 }
 
 // ---------- compare against a built rankings.json ----------
+// Official ranks (world/continent/country) come from the live WCA API in the built file but from
+// the (up to a day old) export in the browser, so they are counted separately: small differences
+// there are expected. Everything else (values, ranks, totals, Kinch) should match exactly.
 
 export function diffRankings(mine, built) {
-  const res = { compared: 0, mismatches: 0, samples: [], notes: [] };
+  const res = {
+    compared: 0,
+    hard: 0, // real mismatches
+    hardSamples: [],
+    official: 0, // official-rank drift (expected)
+    officialSamples: [],
+    maxWorldDrift: 0,
+    notes: [],
+  };
   const bad = (msg) => {
-    res.mismatches += 1;
-    if (res.samples.length < 20) res.samples.push(msg);
+    res.hard += 1;
+    if (res.hardSamples.length < 20) res.hardSamples.push(msg);
   };
 
   const mineIds = new Set(mine.people.map((p) => p.wcaId));
@@ -343,12 +354,20 @@ export function diffRankings(mine, built) {
         res.compared += 1;
         if (!ra || !rc) {
           bad(`${ev.id} ${type} ${id}: only in the ${ra ? 'browser result' : 'built file'}`);
-        } else if (ra.value !== rc.value) {
-          bad(`${ev.id} ${type} ${id}: value ${ra.value} (browser) vs ${rc.value} (built)`);
-        } else if (ra.rank !== rc.rank) {
-          bad(`${ev.id} ${type} ${id}: rank ${ra.rank} (browser) vs ${rc.rank} (built)`);
-        } else if (JSON.stringify(ra.officialRanks) !== JSON.stringify(rc.officialRanks)) {
-          bad(`${ev.id} ${type} ${id}: official ranks ${JSON.stringify(ra.officialRanks)} vs ${JSON.stringify(rc.officialRanks)}`);
+          continue;
+        }
+        if (ra.value !== rc.value) bad(`${ev.id} ${type} ${id}: value ${ra.value} (browser) vs ${rc.value} (built)`);
+        else if (ra.rank !== rc.rank) bad(`${ev.id} ${type} ${id}: rank ${ra.rank} (browser) vs ${rc.rank} (built)`);
+        const oa = ra.officialRanks || {};
+        const oc = rc.officialRanks || {};
+        if (oa.world !== oc.world || oa.continent !== oc.continent || oa.country !== oc.country) {
+          res.official += 1;
+          if (typeof oa.world === 'number' && typeof oc.world === 'number') {
+            res.maxWorldDrift = Math.max(res.maxWorldDrift, Math.abs(oa.world - oc.world));
+          }
+          if (res.officialSamples.length < 5) {
+            res.officialSamples.push(`${ev.id} ${type} ${id}: ${JSON.stringify(oa)} (browser) vs ${JSON.stringify(oc)} (built)`);
+          }
         }
       }
     }
