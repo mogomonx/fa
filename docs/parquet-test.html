@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parquet prototype test</title>
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pt-wrap { max-width: 900px; margin: 0 auto; padding: 1rem; }
+    .pt-row { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: .6rem 0; }
+    .pt-row label { display: flex; gap: .4rem; align-items: center; }
+    #pt-ids { width: 100%; min-height: 5rem; font-family: monospace; }
+    #pt-out { white-space: pre-wrap; font-family: monospace; font-size: .85rem; padding: .75rem;
+      border: 1px solid currentColor; border-radius: 6px; min-height: 8rem; }
+    .pt-hide { display: none; }
+  </style>
+</head>
+<body>
+  <main class="pt-wrap">
+    <h1>Parquet prototype test</h1>
+    <p>Computes Event Rankings, Sum of Ranks and Kinch in your browser from the Parquet files, and prints timings.
+       Nothing here is used by the real site. <a href="home.html">Site home</a></p>
+
+    <div class="pt-row">
+      <label>People from:
+        <select id="pt-mode">
+          <option value="slug">A list (link name)</option>
+          <option value="ids">Pasted WCA IDs</option>
+          <option value="country">Everyone from a country (size test)</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="pt-row" id="pt-slug-row">
+      <label>Link name: <input id="pt-slug" value="fa" size="20"></label>
+      <label><input type="checkbox" id="pt-compare" checked> Compare with the built rankings.json</label>
+    </div>
+    <div class="pt-row pt-hide" id="pt-ids-row">
+      <textarea id="pt-ids" placeholder="One or more WCA IDs, separated by spaces, commas or new lines"></textarea>
+    </div>
+    <div class="pt-row pt-hide" id="pt-country-row">
+      <label>Country name: <input id="pt-country" value="Australia" size="20"></label>
+      <label>Max people (blank = all): <input id="pt-max" type="number" min="1" size="6"></label>
+    </div>
+
+    <div class="pt-row">
+      <button id="pt-run" type="button">Run</button>
+      <button id="pt-copy" type="button">Copy output</button>
+      <span>Click Run twice to see the warm timings (DuckDB and the file footers are cached the second time).</span>
+    </div>
+
+    <pre id="pt-out">Press Run.</pre>
+  </main>
+  <script type="module" src="js/parquet-test.js"></script>
+</body>
+</html>
