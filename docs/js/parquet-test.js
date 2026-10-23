@@ -74,6 +74,15 @@ async function run() {
       if (!order.length) throw new Error('Paste at least one WCA ID.');
     }
 
+    // The selected people go into a temp table; giant IN (...) lists crashed DuckDB-WASM
+    // ("memory access out of bounds") with a few thousand IDs.
+    const loadSelection = async (ids) => {
+      await db.queryParquet('CREATE OR REPLACE TEMP TABLE pt_sel (wca_id VARCHAR)');
+      for (let i = 0; i < ids.length; i += 500) {
+        await db.queryParquet(`INSERT INTO pt_sel VALUES ${ids.slice(i, i + 500).map((id) => `(${sq(id)})`).join(',')}`);
+      }
+    };
+
     // ---- persons ----
     if (mode === 'country') {
       const country = $('pt-country').value.trim();
@@ -86,18 +95,19 @@ async function run() {
       if (max > 0) personRows = personRows.slice(0, max);
       order = personRows.map((r) => r.wca_id);
       if (!order.length) throw new Error(`No people found for country "${country}". The Parquet files hold the country NAME (e.g. Australia).`);
+      await step('Load selection into a temp table', () => loadSelection(order));
     } else {
+      await step('Load selection into a temp table', () => loadSelection(order));
       personRows = await step('Query persons (by id)', () => db.queryParquet(
-        `SELECT wca_id, name, country_id FROM persons.parquet WHERE wca_id IN (${order.map(sq).join(',')})`));
+        'SELECT wca_id, name, country_id FROM persons.parquet WHERE wca_id IN (SELECT wca_id FROM pt_sel)'));
     }
 
     // ---- ranks ----
     const events = activeEvents();
     const eventIds = new Set(events.map((e) => e.id));
-    const idList = order.map(sq).join(',');
     const evList = [...eventIds].map(sq).join(',');
     const ranksSql = (kind) => `SELECT wca_id, event_id, best, world_rank, continent_rank, country_rank
-      FROM ranks_${kind}.parquet WHERE wca_id IN (${idList}) AND event_id IN (${evList})`;
+      FROM ranks_${kind}.parquet WHERE wca_id IN (SELECT wca_id FROM pt_sel) AND event_id IN (${evList})`;
     const singleRows = await step('Query ranks_single', () => db.queryParquet(ranksSql('single')));
     const averageRows = await step('Query ranks_average', () => db.queryParquet(ranksSql('average')));
 
@@ -139,13 +149,21 @@ async function run() {
 
     if (diff) {
       say();
-      say(`Compared with the built rankings.json: ${diff.compared.toLocaleString()} values checked, ${diff.mismatches} mismatch(es).`);
+      say(`Compared with the built rankings.json: ${diff.compared.toLocaleString()} values checked.`);
+      say(`  REAL mismatches (values, ranks, Sum of Ranks, Kinch): ${diff.hard}`);
+      say(`  Official-rank drift (expected: live API vs the export copy): ${diff.official}, largest world-rank difference ${diff.maxWorldDrift}`);
       diff.notes.forEach((n) => say(`  note: ${n}`));
-      diff.samples.forEach((s) => say(`  ${s}`));
-      if (diff.mismatches > diff.samples.length) say(`  ... and ${diff.mismatches - diff.samples.length} more`);
+      diff.hardSamples.forEach((s) => say(`  ${s}`));
+      if (diff.hard > diff.hardSamples.length) say(`  ... and ${diff.hard - diff.hardSamples.length} more`);
+      diff.officialSamples.forEach((s) => say(`  (official) ${s}`));
     }
   } catch (err) {
     say(`ERROR: ${err.message || err}`);
+    if (/out of bounds|unreachable|abort/i.test(String(err && err.message))) {
+      say('DuckDB-WASM has crashed. Reload this page before running again.');
+    }
+    say('Steps finished before the error:');
+    for (const [label, t] of steps) say(`  ${label.padEnd(44)} ${ms(t)}`);
     console.error(err);
   } finally {
     running = false;
