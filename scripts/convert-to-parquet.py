@@ -124,18 +124,60 @@ p_gender = pick(ph, persons_file, "gender", "gender", required=False)
 p_sub = pick(ph, persons_file, "sub id", "sub_id", "subid", required=False)
 where = f"WHERE {p_sub} = '1'" if p_sub else ""
 gender_sql = f"CAST({p_gender} AS VARCHAR)" if p_gender else "NULL"
+
+# Country name/id -> ISO2 ("Australia" -> "AU") so builds and the browser can show flags
+# without the WCA API. countries.tsv is read by header name. If it is missing, only ids that
+# are already two letters get an ISO2 and a warning is printed.
+print("  adding country_iso2 from countries.tsv", flush=True)
+countries_file = find_tsv("countries", required=False)
+if countries_file:
+    cch = read_header(countries_file)
+    print(f"  countries header: {cch}")
+    c_id = pick(cch, countries_file, "country id", "id", required=False)
+    c_name = pick(cch, countries_file, "country name", "name", required=False)
+    c_iso = pick(cch, countries_file, "iso2", "iso2", "iso_2")
+    key_cols = [k for k in (c_id, c_name) if k]
+    if not key_cols:
+        print(f"ERROR: countries.tsv has no id or name column.\nReal header: {cch}", file=sys.stderr)
+        sys.exit(1)
+    selects = " UNION ALL ".join(
+        f"SELECT lower(trim(CAST({k} AS VARCHAR))) AS key, upper(trim(CAST({c_iso} AS VARCHAR))) AS iso2 "
+        f"FROM read_csv('{countries_file}', {opts(cch)}) "
+        f"WHERE {k} IS NOT NULL AND {c_iso} IS NOT NULL AND trim({c_iso}) <> ''"
+        for k in key_cols
+    )
+    con.execute(f"CREATE TABLE country_lookup AS SELECT key, min(iso2) AS iso2 FROM ({selects}) GROUP BY key")
+else:
+    print("  WARNING: no countries.tsv in the export; country_iso2 will be mostly empty", file=sys.stderr)
+    con.execute("CREATE TABLE country_lookup (key VARCHAR, iso2 VARCHAR)")
+n_lookup = con.execute("SELECT count(*) FROM country_lookup").fetchone()[0]
+print(f"  {n_lookup} country keys loaded")
+
 copy_to_parquet(
     f"""
-    SELECT CAST({p_id} AS VARCHAR) AS wca_id,
-           CAST({p_name} AS VARCHAR) AS name,
-           CAST({p_country} AS VARCHAR) AS country_id,
-           {gender_sql} AS gender
-    FROM read_csv('{persons_file}', {opts(ph)})
-    {where}
+    WITH p AS (
+        SELECT CAST({p_id} AS VARCHAR) AS wca_id,
+               CAST({p_name} AS VARCHAR) AS name,
+               CAST({p_country} AS VARCHAR) AS country_id,
+               {gender_sql} AS gender
+        FROM read_csv('{persons_file}', {opts(ph)})
+        {where}
+    )
+    SELECT p.wca_id, p.name, p.country_id, p.gender,
+           coalesce(cl.iso2,
+                    CASE WHEN length(trim(p.country_id)) = 2 THEN upper(trim(p.country_id)) END) AS country_iso2
+    FROM p
+    LEFT JOIN country_lookup cl ON lower(trim(p.country_id)) = cl.key
     """,
     "persons.parquet",
 )
-
+n_p, n_noiso = con.execute(
+    f"SELECT count(*), count(*) FILTER (WHERE country_iso2 IS NULL) "
+    f"FROM read_parquet('{os.path.join(output_dir, 'persons.parquet')}')"
+).fetchone()
+print(f"  {n_p:,} persons, {n_noiso:,} without an ISO2 code")
+if n_p and n_noiso / n_p > 0.05:
+    print("  WARNING: more than 5% of persons have no ISO2 code; check countries.tsv", file=sys.stderr)
 
 # ------------------------------------------------------------------ ranks
 def convert_ranks(file_stem, out_name):
