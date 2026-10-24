@@ -369,11 +369,11 @@ result_id_sql = f"TRY_CAST(r.{r_rowid} AS BIGINT)" if r_rowid else "NULL"
 pname_sql = f"CAST(r.{r_pname} AS VARCHAR)" if r_pname else "NULL"
 if has_values:
     vals = ", ".join(f"TRY_CAST(r.value{i} AS BIGINT)" for i in range(1, 6))
-    attempts_sql = f"list_filter([{vals}], x -> x IS NOT NULL)"
+    attempts_sql = f"list_filter([{vals}], lambda x: x IS NOT NULL)"
     attempts_join = ""
 elif attempts_ready and r_rowid:
     attempts_sql = (
-        "list_concat(list_filter([a.a1, a.a2, a.a3, a.a4, a.a5], v -> v IS NOT NULL), "
+        "list_concat(list_filter([a.a1, a.a2, a.a3, a.a4, a.a5], lambda v: v IS NOT NULL), "
         "coalesce(ex.extra, CAST([] AS BIGINT[])))"
     )
     attempts_join = (
