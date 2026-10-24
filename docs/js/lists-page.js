@@ -13,6 +13,10 @@
 // "expires in N days" note once a list is 14 days or fewer from deletion, and
 // can mark lists permanent from the detail view (limit enforced by the database).
 //
+// Instant rankings (rebuild step 6): a list with no built data yet is not a dead end
+// any more. The rankings page computes its rankings in the browser from the Parquet
+// files, so cards and the save button go straight to the rankings.
+//
 // The small "My profile" button (top right) lives in profile-button.js and is
 // loaded separately, so a problem there can never break this page.
 
@@ -129,13 +133,13 @@ function friendlyError(err) {
 const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
 
 function statusText(l) {
-  if (l.data_level === "none") return "Building rankings…";
+  if (l.data_level === "none") return "History building…";
   if (l.data_level === "basic" || isPending(l)) return "Updating…";
   return null;
 }
 
 function statusNote(l) {
-  if (l.data_level === "none") return "Rankings are being built. This usually takes a few minutes; refresh to check.";
+  if (l.data_level === "none") return "Rankings are calculated in your browser while the full history is built. This usually takes a few minutes.";
   if (l.data_level === "basic") return "Basic rankings are ready. Full history is still being processed.";
   if (isPending(l)) return "Your latest changes are being applied to the rankings.";
   return null;
@@ -276,8 +280,8 @@ async function updateList(list, oldMembers, fields, members) {
 
 // ---------- Browser view ----------
 
-// Clicking the name goes straight to the rankings (or to the status page while
-// the list is still being built). "Manage" opens the detail view.
+// Clicking the name goes straight to the rankings (a list with no built data yet
+// gets its rankings calculated in the browser). "Manage" opens the detail view.
 function listCard(list, memberIds) {
   const roles = [];
   if (ownsList(list)) roles.push("Yours");
@@ -286,12 +290,10 @@ function listCard(list, memberIds) {
   const sub = [VISIBILITY[list.visibility].label, ...roles, lifecycle, statusText(list)]
     .filter(Boolean).join(" · ");
 
-  const ready = list.data_level !== "none";
   const main = el("a", {
     class: "card-main",
-    href: ready ? rankingsUrl(list) : "#",
+    href: rankingsUrl(list),
   }, el("strong", { text: list.name }), el("span", { text: sub }));
-  if (!ready) main.addEventListener("click", (e) => { e.preventDefault(); openList(list); });
 
   return el("div", { class: "home-link list-card" },
     main,
@@ -465,13 +467,11 @@ function renderDetail() {
   if (expiry) node.append(el("p", { class: "board-note", text: expiry }));
 
   const actions = el("div", { class: "panel-controls" });
-  if (list.data_level !== "none") {
-    actions.append(el("a", {
-      class: "csv-btn",
-      href: rankingsUrl(list),
-      text: "View rankings",
-    }));
-  }
+  actions.append(el("a", {
+    class: "csv-btn",
+    href: rankingsUrl(list),
+    text: "View rankings",
+  }));
   if (ownsList(list)) {
     actions.append(
       el("button", { class: "csv-btn", type: "button", onclick: () => renderEditor(list, members, current.guest), text: "Edit" }),
@@ -598,13 +598,10 @@ function renderEditor(list, members, guestMode = false) {
           ? await updateList(list, members, fields, parsed.members)
           : await createList({ ...fields, slug: listSlug }, parsed.members);
       }
-      // Edited lists that already have rankings: go straight to them.
-      // New (or never-built) lists: show the status page while they build.
-      if (editing && saved.data_level !== "none") {
-        window.location.href = rankingsUrl(saved);
-        return;
-      }
-      await openList(saved);
+      // Go straight to the rankings. A list with no built data yet gets its
+      // rankings calculated in the browser (instant rankings), then the built
+      // files take over once the build finishes.
+      window.location.href = rankingsUrl(saved);
     } catch (err) {
       fail(friendlyError(err));
     }
