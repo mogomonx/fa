@@ -4,10 +4,13 @@ name: Update Custom Lists
 #   on demand    : a database trigger starts a `pending` run when a list is created
 #                  or changed (the SQL lives in supabase/schema.sql, trigger_build())
 #   every 15 min : the same `pending` run as a fallback (GitHub's cron is slow)
-#   daily        : personal bests for finished lists, plus the Parquet refresh on R2
+#   daily        : Parquet refresh on R2, then personal bests for finished lists
+#                  (read from the fresh Parquet files; the WCA API only if that fails)
 #   weekly       : list cleanup (expired lists, orphaned Storage folders), then full
 #                  history for every list that is not dormant, plus every state list,
 #                  plus the Parquet conversion and upload to Cloudflare R2
+# Personal bests and official ranks come from the Parquet copy of the WCA export (rebuild
+# step 7); scripts/fetch.js (WCA API) is only a last-resort fallback.
 # Upcoming competitions are NOT here any more: see update-upcoming.yml.
 # Also pings Supabase regularly, which keeps the free project awake.
 on:
@@ -87,36 +90,6 @@ jobs:
             *)       node scripts/sync-lists.js --all ;;
           esac
 
-      - name: Daily personal bests
-        if: steps.mode.outputs.mode == 'bests' && steps.sync.outputs.slugs != ''
-        env:
-          SLUGS: ${{ steps.sync.outputs.slugs }}
-        run: |
-          node scripts/fetch.js $SLUGS
-          for s in $SLUGS; do
-            node scripts/build-rankings.js "$s"
-          done
-          node scripts/upload-lists.js --files=rankings.json $SLUGS
-
-      - name: Fast basic build for brand-new lists
-        if: steps.mode.outputs.mode == 'pending' && steps.sync.outputs.new_slugs != ''
-        env:
-          NEW_SLUGS: ${{ steps.sync.outputs.new_slugs }}
-        run: |
-          node scripts/fetch.js $NEW_SLUGS
-          for s in $NEW_SLUGS; do
-            echo "=== basic: $s ==="
-            node scripts/build-rankings.js "$s"
-            node scripts/make-empty-history.js "$s"
-            node scripts/build-individual-rankings.js "$s"
-            node scripts/build-historical-records.js "$s"
-            node scripts/build-streaks.js "$s"
-            node scripts/build-recent-activity.js "$s"
-            node scripts/build-rolling-averages.js "$s"
-          done
-          node scripts/upload-lists.js --level=basic $NEW_SLUGS
-          node scripts/mark-lists.js --level=basic $NEW_SLUGS
-
       # The WCA export is only downloaded here to make the Parquet files (daily and weekly runs).
       # A pending run (ordinary or state lists) reads the Parquet copy on R2 and only downloads
       # the export inside the Full build step if that fails (the fallback).
@@ -158,7 +131,8 @@ jobs:
           ls -la /tmp/wca-export
 
       # Daily and weekly: refresh the Parquet files (about a minute). Both steps are
-      # continue-on-error, and the Full build falls back to the export if they fail.
+      # continue-on-error, and the later steps fall back (to the WCA API for personal
+      # bests, to the export for history) if they fail.
       - name: Convert TSVs to Parquet
         id: convert
         if: steps.mode.outputs.mode != 'pending'
@@ -183,11 +157,44 @@ jobs:
           aws s3 sync build/parquet/ s3://wca-parquet-data/ \
             --endpoint-url "${{ secrets.R2_ENDPOINT_URL }}"
 
+      # Daily: personal bests + official ranks for finished lists, read from the Parquet files
+      # made a moment ago. If the conversion did not succeed (or the extractor fails), the WCA
+      # API (fetch.js) is used instead. !cancelled() so a failed export download above does not
+      # stop the daily rankings refresh.
+      - name: Daily personal bests
+        if: ${{ !cancelled() && steps.mode.outputs.mode == 'bests' && steps.sync.outputs.slugs != '' }}
+        env:
+          SLUGS: ${{ steps.sync.outputs.slugs }}
+          CONVERT_OUTCOME: ${{ steps.convert.outcome }}
+        run: |
+          DONE=0
+          if [ "$CONVERT_OUTCOME" = "success" ]; then
+            pip install --quiet duckdb
+            echo "Building personal bests from Parquet (build/parquet)"
+            if PARQUET_DIR=build/parquet python scripts/extract-bests-from-parquet.py $SLUGS; then
+              DONE=1
+            else
+              echo "Parquet personal bests failed; falling back to the WCA API"
+            fi
+          else
+            echo "No fresh Parquet files; using the WCA API for personal bests"
+          fi
+          if [ "$DONE" = "0" ]; then
+            node scripts/fetch.js $SLUGS
+          fi
+          for s in $SLUGS; do
+            node scripts/build-rankings.js "$s"
+          done
+          node scripts/upload-lists.js --files=rankings.json $SLUGS
+
       # Everything below reads the Parquet files when possible:
       #   full mode    -> the Parquet files made a moment ago (build/parquet)
       #   pending mode -> the public R2 copy from the last daily/weekly run
-      # and falls back to streaming the WCA export (parse-export.js, build-states.js with
-      # the TSVs) if the Parquet route is not available or fails.
+      # and falls back to the WCA API (personal bests) or streaming the WCA export
+      # (parse-export.js, build-states.js with the TSVs) if the Parquet route is not
+      # available or fails. Since rebuild step 7 a brand-new list gets everything in this
+      # one step (there is no separate "basic" build any more); the browser shows instant
+      # rankings until it finishes.
       - name: Full build (regular lists and state lists)
         if: steps.mode.outputs.mode != 'bests' && (steps.sync.outputs.slugs != '' || steps.sync.outputs.state_slugs != '')
         env:
@@ -219,8 +226,21 @@ jobs:
             pip install --quiet duckdb
           fi
 
+          # Regular lists: personal bests + official ranks (results.json), then rankings.json.
+          # From Parquet; the WCA API (fetch.js) only if that fails.
           if [ -n "$SLUGS" ]; then
-            node scripts/fetch.js $SLUGS
+            BESTS_DONE=0
+            if [ -n "$PARQUET_SRC" ]; then
+              echo "Building personal bests from Parquet ($PARQUET_SRC)"
+              if PARQUET_DIR="$PARQUET_SRC" python scripts/extract-bests-from-parquet.py $SLUGS; then
+                BESTS_DONE=1
+              else
+                echo "Parquet personal bests failed; falling back to the WCA API"
+              fi
+            fi
+            if [ "$BESTS_DONE" = "0" ]; then
+              node scripts/fetch.js $SLUGS
+            fi
             for s in $SLUGS; do
               node scripts/build-rankings.js "$s"
             done
