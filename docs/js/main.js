@@ -120,6 +120,20 @@ async function fetchJson(file, required) {
   return null;
 }
 
+// A list with no built data yet (data_level 'none'): work out the rankings in this
+// browser from the Parquet files instead of waiting for the build. Returns null if
+// that isn't possible, and the page then shows the old "still being built" message.
+async function loadInstant() {
+  if (store.listKind === 'state' || source.list?.data_level !== 'none') return null;
+  try {
+    const m = await import('./instant-rankings.js');
+    return await m.buildInstantData(source);
+  } catch (e) {
+    console.warn('Instant rankings unavailable:', e);
+    return null;
+  }
+}
+
 // Event dropdowns -- also re-run by time travel (data swapped underneath).
 function populateSelects() {
   const r = store.rankings;
@@ -198,17 +212,22 @@ async function loadData() {
 
   setupEditLink(source.list);
 
-  const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = await Promise.all([
-    fetchJson('rankings.json', true),
-    fetchJson('individual-rankings.json', true),
-    fetchJson('historical-records.json', true),
-    fetchJson('upcoming.json'),
-    fetchJson('full-results.json'),
-    fetchJson('streaks.json'),
-    fetchJson('recent-activity.json'),
-    fetchJson('rolling-averages.json'),
-    fetchJson('meta.json'),
-  ]);
+  // Nothing built yet? Try computing the rankings in the browser (rebuild step 6).
+  const instant = await loadInstant();
+
+  const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = instant
+    ? [instant.rankings, instant.individual, instant.historical, null, null, null, null, null, { level: 'basic' }]
+    : await Promise.all([
+      fetchJson('rankings.json', true),
+      fetchJson('individual-rankings.json', true),
+      fetchJson('historical-records.json', true),
+      fetchJson('upcoming.json'),
+      fetchJson('full-results.json'),
+      fetchJson('streaks.json'),
+      fetchJson('recent-activity.json'),
+      fetchJson('rolling-averages.json'),
+      fetchJson('meta.json'),
+    ]);
 
   await applyOwnName({ rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling });
   store.personal = source.list?.kind === 'personal';
@@ -236,6 +255,9 @@ async function loadData() {
   let updated = rankings.dataFetchedAt
     ? `Last updated ${new Date(rankings.generatedAt).toLocaleString()}`
     : 'No data yet — waiting on the first automatic update.';
+  if (instant) {
+    updated = `Calculated in your browser in ${(instant.ms / 1000).toFixed(1)} s from the latest WCA export (official ranks may be a day behind).`;
+  }
   if (meta && meta.level === 'basic') {
     updated += ' · Full history is still being processed, so some tabs are empty for now.';
   }
