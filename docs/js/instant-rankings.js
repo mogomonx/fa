@@ -1,4 +1,4 @@
-// Instant rankings (rebuild step 6, flags + lookup pruning added in step 8).
+// Instant rankings (rebuild step 6; flags + per-person lookups added in step 8).
 //
 // A brand-new list has no built JSON yet (data_level = 'none'). Instead of showing
 // "still being built", main.js calls buildInstantData(): it reads the members, queries
@@ -18,12 +18,14 @@ const sq = (s) => `'${String(s).replace(/'/g, "''")}'`;
 // Names are drawn into tables as HTML in places, so strip the characters that could start markup.
 const clean = (s) => String(s ?? '').replace(/[<>&]/g, '').trim();
 
-// Up to this many ids go straight into the SQL as a literal list. persons.parquet and
-// ranks_*.parquet are sorted by wca_id (step 8), so DuckDB can skip every row group whose
-// id range misses the list, which a join against a temp table cannot do in this DuckDB-WASM
-// version. Only ids that passed ID_RE are ever put into the SQL. Above the limit (the
-// browser crashed at about 12,000 literal ids) a temp table is used instead.
-const LITERAL_LIMIT = 1000;
+// Up to this many ids are looked up one by one with `wca_id = '...'` (UNION ALL of one
+// small SELECT per person). persons.parquet and ranks_*.parquet are sorted by wca_id
+// (step 8) and an equality filter lets DuckDB skip every row group whose min/max range
+// misses that id. A single `IN (...)` list did NOT do this in the first test (26.8 MB read,
+// slightly MORE than before): it only narrows to the lowest-to-highest id, which for a
+// list spread over 2015-2025 is nearly the whole file. Only ids that passed ID_RE are ever
+// put into the SQL. Above the limit a temp table is used instead.
+const LOOKUP_LIMIT = 200;
 
 // Members of the list: normally readable through the table (the viewer's permissions
 // decide); a guest list made in this browser is read with its edit token instead.
@@ -97,34 +99,34 @@ export async function buildInstantData(source) {
   const db = await import('./db.js');
   await db.initDB();
 
-  let idFilter;
-  if (order.length <= LITERAL_LIMIT) {
-    idFilter = `wca_id IN (${order.map(sq).join(',')})`;
-  } else {
+  const useTemp = order.length > LOOKUP_LIMIT;
+  if (useTemp) {
     await db.queryParquet('CREATE OR REPLACE TEMP TABLE sel_ids (wca_id VARCHAR)');
     for (let i = 0; i < order.length; i += 500) {
       await db.queryParquet(`INSERT INTO sel_ids VALUES ${order.slice(i, i + 500).map((id) => `(${sq(id)})`).join(',')}`);
     }
-    idFilter = 'wca_id IN (SELECT wca_id FROM sel_ids)';
   }
+  // SQL that returns `cols` from `table` for exactly the list's people (plus an optional extra condition).
+  const lookup = (cols, table, extra = '') =>
+    useTemp
+      ? `SELECT ${cols} FROM ${table} WHERE wca_id IN (SELECT wca_id FROM sel_ids)${extra}`
+      : order.map((id) => `SELECT ${cols} FROM ${table} WHERE wca_id = ${sq(id)}${extra}`).join(' UNION ALL ');
 
   const events = activeEvents();
   const eventIds = new Set(events.map((e) => e.id));
   const evList = [...eventIds].map(sq).join(',');
-  const ranksSql = (kind) => `SELECT wca_id, event_id, best, world_rank, continent_rank, country_rank
-    FROM ranks_${kind}.parquet WHERE ${idFilter} AND event_id IN (${evList})`;
+  const ranksSql = (kind) =>
+    lookup('wca_id, event_id, best, world_rank, continent_rank, country_rank', `ranks_${kind}.parquet`, ` AND event_id IN (${evList})`);
 
   // country_iso2 exists in persons.parquet since step 7; an older copy on R2 doesn't have
   // it, so fall back to the old query (no flags) instead of failing the whole page.
   let rawPersons;
   try {
-    rawPersons = await db.queryParquet(
-      `SELECT wca_id, name, country_id, country_iso2 FROM persons.parquet WHERE ${idFilter}`
-    );
+    rawPersons = await db.queryParquet(lookup('wca_id, name, country_id, country_iso2', 'persons.parquet'));
   } catch (e) {
     if (!/country_iso2/i.test(String((e && e.message) || e))) throw e;
     console.warn('persons.parquet has no country_iso2 yet; flags will be missing until the build lands.');
-    rawPersons = await db.queryParquet(`SELECT wca_id, name, country_id FROM persons.parquet WHERE ${idFilter}`);
+    rawPersons = await db.queryParquet(lookup('wca_id, name, country_id', 'persons.parquet'));
   }
   const isoById = {};
   for (const r of rawPersons) {
