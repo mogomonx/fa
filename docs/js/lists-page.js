@@ -640,6 +640,7 @@ function renderEditor(list, members, guestMode = false) {
     error,
     el("div", { class: "panel-controls" }, saveBtn));
   showPanel(form);
+}
 
 // ---------- ?edit=<slug>: open a list straight in the editor ----------
 
