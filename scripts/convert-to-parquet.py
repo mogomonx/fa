@@ -5,9 +5,13 @@ Usage (from the repo root, after the export is unzipped):
     WCA_EXPORT_DIR=/tmp/wca-export PARQUET_OUTPUT_DIR=build/parquet python scripts/convert-to-parquet.py
 
 Output (PARQUET_OUTPUT_DIR):
-    persons.parquet       wca_id, name, country_id, gender              (current row only)
+    persons.parquet       wca_id, name, country_id, gender, country_iso2 (current row only)
+                          SORTED BY wca_id, small row groups: a lookup of a few people reads a few groups.
     ranks_single.parquet  wca_id, event_id, best, world_rank, continent_rank, country_rank
     ranks_average.parquet same columns
+                          Both SORTED BY wca_id, event_id, small row groups (lookups by person).
+    ranks_single_by_event.parquet, ranks_average_by_event.parquet
+                          The same rows sorted by event_id, world_rank (for world / country rankings pages).
     competitions.parquet  id, name, city_name, country_id, year, month, day, end_year, end_month, end_day
     round_types.parquet   id, rank, name, cell_name
     results.parquet       one row per person/event/competition/round, SORTED BY PERSON so a
@@ -28,12 +32,18 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "8.3"
+SCRIPT_VERSION = "8.4"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
 output_dir = os.getenv("PARQUET_OUTPUT_DIR", "build/parquet")
 os.makedirs(output_dir, exist_ok=True)
+
+# Row group sizes. Big for files that are read whole or by event; small for files that are
+# looked up by person, so a reader can skip every group whose wca_id range misses the list.
+RG_DEFAULT = 100_000
+RG_BY_PERSON = 10_000   # persons.parquet (about 300,000 rows -> about 30 groups)
+RG_RANKS = 20_000       # ranks_*.parquet (a few million rows -> about 100 groups)
 
 
 def find_tsv(name, required=True):
@@ -103,11 +113,11 @@ con.execute("SET preserve_insertion_order=false;")
 print(f"  DuckDB memory limit: {memory_limit_gb()}GB", flush=True)
 
 
-def copy_to_parquet(select_sql, out_name):
+def copy_to_parquet(select_sql, out_name, row_group_size=RG_DEFAULT):
     out = os.path.join(output_dir, out_name)
     con.execute(
         f"COPY ({select_sql}) TO '{out}' "
-        f"(FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 100000);"
+        f"(FORMAT PARQUET, COMPRESSION 'ZSTD', ROW_GROUP_SIZE {int(row_group_size)});"
     )
     print(f"  wrote {out_name} ({os.path.getsize(out) / 1_000_000:.1f} MB)", flush=True)
 
@@ -168,8 +178,10 @@ copy_to_parquet(
                     CASE WHEN length(trim(p.country_id)) = 2 THEN upper(trim(p.country_id)) END) AS country_iso2
     FROM p
     LEFT JOIN country_lookup cl ON lower(trim(p.country_id)) = cl.key
+    ORDER BY p.wca_id
     """,
     "persons.parquet",
+    RG_BY_PERSON,
 )
 n_p, n_noiso = con.execute(
     f"SELECT count(*), count(*) FILTER (WHERE country_iso2 IS NULL) "
@@ -180,7 +192,10 @@ if n_p and n_noiso / n_p > 0.05:
     print("  WARNING: more than 5% of persons have no ISO2 code; check countries.tsv", file=sys.stderr)
 
 # ------------------------------------------------------------------ ranks
-def convert_ranks(file_stem, out_name):
+# Each ranks file is written twice from one read of the TSV:
+#   <out_name>             sorted by person (wca_id, event_id), small row groups: lookups by person
+#   <out_name>_by_event    sorted by event then world rank: world / country ranking pages later
+def convert_ranks(file_stem, out_name, by_event_name):
     print(f"Converting {file_stem}...", flush=True)
     path = find_tsv(file_stem)
     h = read_header(path)
@@ -191,8 +206,10 @@ def convert_ranks(file_stem, out_name):
     wr = pick(h, path, "world rank", "world_rank", "worldrank")
     cr = pick(h, path, "continent rank", "continent_rank", "continentrank")
     nr = pick(h, path, "country rank", "country_rank", "countryrank")
-    copy_to_parquet(
+    con.execute("DROP TABLE IF EXISTS ranks_tmp")
+    con.execute(
         f"""
+        CREATE TABLE ranks_tmp AS
         SELECT CAST({pid} AS VARCHAR) AS wca_id,
                CAST({eid} AS VARCHAR) AS event_id,
                TRY_CAST({best} AS BIGINT) AS best,
@@ -200,14 +217,15 @@ def convert_ranks(file_stem, out_name):
                TRY_CAST({cr} AS BIGINT) AS continent_rank,
                TRY_CAST({nr} AS BIGINT) AS country_rank
         FROM read_csv('{path}', {opts(h)})
-        ORDER BY {eid}, TRY_CAST({wr} AS BIGINT) ASC
-        """,
-        out_name,
+        """
     )
+    copy_to_parquet("SELECT * FROM ranks_tmp ORDER BY wca_id, event_id", out_name, RG_RANKS)
+    copy_to_parquet("SELECT * FROM ranks_tmp ORDER BY event_id, world_rank ASC", by_event_name, RG_DEFAULT)
+    con.execute("DROP TABLE ranks_tmp")
 
 
-convert_ranks("ranks_single", "ranks_single.parquet")
-convert_ranks("ranks_average", "ranks_average.parquet")
+convert_ranks("ranks_single", "ranks_single.parquet", "ranks_single_by_event.parquet")
+convert_ranks("ranks_average", "ranks_average.parquet", "ranks_average_by_event.parquet")
 
 # ----------------------------------------------------------- competitions
 # Python csv with QUOTE_NONE: a stray " inside a name can never swallow following lines.
@@ -416,6 +434,14 @@ for name in sorted(os.listdir(output_dir)):
         if n == 0:
             print(f"ERROR: {name} is empty.", file=sys.stderr)
             sys.exit(1)
+
+# The two copies of each ranks file must hold the same number of rows.
+for kind in ("single", "average"):
+    a = con.execute(f"SELECT count(*) FROM read_parquet('{os.path.join(output_dir, f'ranks_{kind}.parquet')}')").fetchone()[0]
+    b = con.execute(f"SELECT count(*) FROM read_parquet('{os.path.join(output_dir, f'ranks_{kind}_by_event.parquet')}')").fetchone()[0]
+    if a != b:
+        print(f"ERROR: ranks_{kind} copies differ ({a:,} vs {b:,} rows).", file=sys.stderr)
+        sys.exit(1)
 
 # Freshness stamp: extract-from-parquet.py refuses to use a remote copy older than a few days.
 import json
