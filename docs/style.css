@@ -1297,3 +1297,7 @@ body.state-mode .board:has(#recent-activity-table) { display: none; }
 .state-shape text { font-size: 26px; }
 
 .state-shape[data-code="ACT"] path { stroke: var(--text-dim); }
+
+/* Name search in the list editor */
+.member-search .search-results { max-width: none; margin-bottom: 0.5rem; }
+button.search-result-item { width: 100%; text-align: left; font: inherit; }
