@@ -1,4 +1,4 @@
-// Instant rankings (rebuild step 6).
+// Instant rankings (rebuild step 6, flags + lookup pruning added in step 8).
 //
 // A brand-new list has no built JSON yet (data_level = 'none'). Instead of showing
 // "still being built", main.js calls buildInstantData(): it reads the members, queries
@@ -13,9 +13,17 @@
 import { activeEvents, peopleFromRows, computeRankings } from './rankings-core.js';
 
 const ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
+const ISO_RE = /^[A-Z]{2}$/;
 const sq = (s) => `'${String(s).replace(/'/g, "''")}'`;
 // Names are drawn into tables as HTML in places, so strip the characters that could start markup.
 const clean = (s) => String(s ?? '').replace(/[<>&]/g, '').trim();
+
+// Up to this many ids go straight into the SQL as a literal list. persons.parquet and
+// ranks_*.parquet are sorted by wca_id (step 8), so DuckDB can skip every row group whose
+// id range misses the list, which a join against a temp table cannot do in this DuckDB-WASM
+// version. Only ids that passed ID_RE are ever put into the SQL. Above the limit (the
+// browser crashed at about 12,000 literal ids) a temp table is used instead.
+const LITERAL_LIMIT = 1000;
 
 // Members of the list: normally readable through the table (the viewer's permissions
 // decide); a guest list made in this browser is read with its edit token instead.
@@ -89,25 +97,52 @@ export async function buildInstantData(source) {
   const db = await import('./db.js');
   await db.initDB();
 
-  await db.queryParquet('CREATE OR REPLACE TEMP TABLE sel_ids (wca_id VARCHAR)');
-  for (let i = 0; i < order.length; i += 500) {
-    await db.queryParquet(`INSERT INTO sel_ids VALUES ${order.slice(i, i + 500).map((id) => `(${sq(id)})`).join(',')}`);
+  let idFilter;
+  if (order.length <= LITERAL_LIMIT) {
+    idFilter = `wca_id IN (${order.map(sq).join(',')})`;
+  } else {
+    await db.queryParquet('CREATE OR REPLACE TEMP TABLE sel_ids (wca_id VARCHAR)');
+    for (let i = 0; i < order.length; i += 500) {
+      await db.queryParquet(`INSERT INTO sel_ids VALUES ${order.slice(i, i + 500).map((id) => `(${sq(id)})`).join(',')}`);
+    }
+    idFilter = 'wca_id IN (SELECT wca_id FROM sel_ids)';
   }
 
   const events = activeEvents();
   const eventIds = new Set(events.map((e) => e.id));
   const evList = [...eventIds].map(sq).join(',');
   const ranksSql = (kind) => `SELECT wca_id, event_id, best, world_rank, continent_rank, country_rank
-    FROM ranks_${kind}.parquet WHERE wca_id IN (SELECT wca_id FROM sel_ids) AND event_id IN (${evList})`;
+    FROM ranks_${kind}.parquet WHERE ${idFilter} AND event_id IN (${evList})`;
 
-  const personRows = (await db.queryParquet(
-    'SELECT wca_id, name, country_id FROM persons.parquet WHERE wca_id IN (SELECT wca_id FROM sel_ids)'
-  )).map((r) => ({ ...r, name: clean(r.name) }));
+  // country_iso2 exists in persons.parquet since step 7; an older copy on R2 doesn't have
+  // it, so fall back to the old query (no flags) instead of failing the whole page.
+  let rawPersons;
+  try {
+    rawPersons = await db.queryParquet(
+      `SELECT wca_id, name, country_id, country_iso2 FROM persons.parquet WHERE ${idFilter}`
+    );
+  } catch (e) {
+    if (!/country_iso2/i.test(String((e && e.message) || e))) throw e;
+    console.warn('persons.parquet has no country_iso2 yet; flags will be missing until the build lands.');
+    rawPersons = await db.queryParquet(`SELECT wca_id, name, country_id FROM persons.parquet WHERE ${idFilter}`);
+  }
+  const isoById = {};
+  for (const r of rawPersons) {
+    const iso = String(r.country_iso2 ?? '').trim().toUpperCase();
+    if (ISO_RE.test(iso)) isoById[r.wca_id] = iso;
+  }
+  const personRows = rawPersons.map((r) => ({ ...r, name: clean(r.name) }));
   const singleRows = await db.queryParquet(ranksSql('single'));
   const averageRows = await db.queryParquet(ranksSql('average'));
 
   const people = peopleFromRows(personRows, singleRows, averageRows, eventIds, order, displayNames);
+  // Flags: set on the input people AND on the output rows, so it works whichever of the two
+  // rankings-core.js copies across.
+  for (const p of people) if (p && isoById[p.wcaId]) p.countryIso2 = isoById[p.wcaId];
   const rankings = computeRankings(people, events);
+  for (const row of rankings.people || []) {
+    if (!row.countryIso2 && isoById[row.wcaId]) row.countryIso2 = isoById[row.wcaId];
+  }
   rankings.dataFetchedAt = rankings.generatedAt;
   rankings.listName = source.list.name;
 
