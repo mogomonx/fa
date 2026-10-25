@@ -15,6 +15,11 @@ State lists are NOT handled here (build-states.js writes their results.json).
 Official ranks come from the export, so they can be up to a day behind the live WCA API.
 A remote copy older than PARQUET_MAX_AGE_DAYS (default 3) makes this script exit 1, so the
 workflow falls back to fetch.js. Any other problem also exits 1 and writes nothing.
+
+Since step 8 persons.parquet and ranks_*.parquet are sorted by wca_id with small row groups,
+so the queries below also carry an explicit IN list (when every id looks like a WCA id):
+DuckDB can then skip the row groups that cannot contain a member, which matters when the
+files are read over HTTP from R2.
 """
 import argparse
 import json
@@ -32,6 +37,7 @@ PARQUET_DIR = os.environ.get("PARQUET_DIR", "build/parquet").rstrip("/")
 MAX_AGE_DAYS = float(os.environ.get("PARQUET_MAX_AGE_DAYS", "3"))
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IS_REMOTE = PARQUET_DIR.startswith(("http://", "https://"))
+ID_RE = re.compile(r"^[0-9]{4}[A-Z]{4}[0-9]{2}$")
 
 
 def event_ids():
@@ -94,6 +100,15 @@ def main():
     if not all_ids:
         sys.exit("No members found for any list; stopping.")
 
+    # Explicit IN list so DuckDB can skip row groups (files are sorted by wca_id since step 8).
+    # Only used when every id looks like a WCA id, so nothing odd is ever put into the SQL.
+    use_in_list = all(ID_RE.match(w) for w in all_ids)
+
+    def in_filter(alias):
+        if not use_in_list:
+            return ""
+        return f"AND {alias}.wca_id IN (" + ", ".join(f"'{w}'" for w in all_ids) + ")"
+
     con = duckdb.connect()
     con.execute("PRAGMA threads=4;")
     if IS_REMOTE:
@@ -113,7 +128,8 @@ def main():
         wid: (name, iso)
         for wid, name, iso in con.execute(
             f"SELECT p.wca_id, p.name, {iso_sql} FROM read_parquet('{persons_path}') p "
-            f"JOIN people pe ON pe.wca_id = p.wca_id"
+            f"JOIN people pe ON pe.wca_id = p.wca_id "
+            f"WHERE 1 = 1 {in_filter('p')}"
         ).fetchall()
     }
     print(f"{len(official)} of {len(all_ids)} people found in persons.parquet ({time.time() - t0:.1f}s)")
@@ -131,6 +147,7 @@ def main():
             FROM read_parquet('{PARQUET_DIR}/ranks_{kind}.parquet') k
             JOIN people pe ON pe.wca_id = k.wca_id
             WHERE k.event_id IN ({events_sql})
+              {in_filter('k')}
             """
         ).fetchall()
         n_rank_rows += len(rows)
