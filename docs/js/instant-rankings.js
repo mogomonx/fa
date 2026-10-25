@@ -98,6 +98,14 @@ export async function buildInstantData(source) {
 
   const db = await import('./db.js');
   await db.initDB();
+  // Each person is a separate small read, so ask DuckDB to remember every file's footer
+  // (row group ranges) instead of fetching it again for every lookup. Harmless if the
+  // setting doesn't exist in this DuckDB-WASM version.
+  try {
+    await db.queryParquet('SET enable_object_cache = true');
+  } catch (e) {
+    console.warn('Could not enable the object cache:', e);
+  }
 
   const useTemp = order.length > LOOKUP_LIMIT;
   if (useTemp) {
