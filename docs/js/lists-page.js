@@ -628,12 +628,18 @@ function renderEditor(list, members, guestMode = false) {
       el("label", { class: "check-row" }, officialOnly,
         el("span", { text: "Show official WCA names only (ignore names members choose for themselves)" })));
   }
+  // Name search is optional: loaded on demand so a problem there can't break the editor.
+  const searchSlot = el("div", {});
+  import("./member-search.js")
+    .then((m) => searchSlot.append(m.mountMemberSearch(text)))
+    .catch((err) => console.warn("Name search unavailable:", err));
+
   form.append(
+    searchSlot,
     field("Members (WCA IDs)", text, count),
     error,
     el("div", { class: "panel-controls" }, saveBtn));
   showPanel(form);
-}
 
 // ---------- ?edit=<slug>: open a list straight in the editor ----------
 
