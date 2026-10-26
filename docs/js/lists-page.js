@@ -125,6 +125,7 @@ const membersToText = (members) =>
 
 function friendlyError(err) {
   if (err?.code === "23505") return "That link name is already taken. Pick another.";
+  if (err?.code === "23514") return "One of the names isn't allowed. Names can't contain < > or \" and display names are limited to 60 characters.";
   return err?.message || "Something went wrong. Please try again.";
 }
 
