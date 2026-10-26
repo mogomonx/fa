@@ -1,6 +1,6 @@
 import { store } from '../store.js';
 import { flagEmoji, kinchColor } from '../format.js';
-import { medalRowClass } from '../ui.js';
+import { medalRowClass, esc } from '../ui.js';
 import { showProfile } from './profile.js';
 
 // WCA profile pictures aren't in our data files, so they're fetched from the
@@ -106,17 +106,18 @@ export function renderMembers() {
     return;
   }
 
+  // Everything that comes from data (names, ids, country codes) goes through esc().
   const rows = members
     .map((p) => {
       const k = kinchByWca.get(p.wcaId);
       const cls = ['member-row', k ? medalRowClass(k.pos) : ''].filter(Boolean).join(' ');
       const flag = flagEmoji(p.countryIso2) || '';
       return `
-        <tr class="${cls}" data-wcaid="${p.wcaId}" tabindex="0" role="link">
+        <tr class="${cls}" data-wcaid="${esc(p.wcaId)}" tabindex="0" role="link">
           <td class="rank-cell">${k ? k.pos : '—'}</td>
-          <td class="avatar-cell"><span class="avatar" data-wcaid="${p.wcaId}">${initials(p.name)}</span></td>
-          <td>${p.name}</td>
-          <td>${flag}<span class="country-code">${p.countryIso2 || ''}</span></td>
+          <td class="avatar-cell"><span class="avatar" data-wcaid="${esc(p.wcaId)}">${esc(initials(p.name))}</span></td>
+          <td>${esc(p.name)}</td>
+          <td>${flag}<span class="country-code">${esc(p.countryIso2 || '')}</span></td>
           <td>${k ? `<span style="color:${kinchColor(k.score)}">${k.score.toFixed(2)}</span>` : '—'}</td>
         </tr>`;
     })
