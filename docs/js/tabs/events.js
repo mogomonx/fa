@@ -1,10 +1,14 @@
 import { store, state } from '../store.js';
 import { formatDate } from '../format.js';
-import { nameLink, renderTable, renderDetailedTable, addPositionColumn } from '../ui.js';
+import { nameLink, renderTable, renderDetailedTable, addPositionColumn, esc } from '../ui.js';
 
-const solvesText = (solves) => solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ');
-const compText = (r) => [r.competitionName, r.round].filter(Boolean).join(' \u2013 ');
-const prOrderCell = (n) => (n ? `<span class="pr-order-${n <= 3 ? n : 'x'}">${n === 1 ? 'PR' : `PR${n}`}</span>` : '—');
+// These helpers return finished (escaped) HTML text.
+const solvesText = (solves) => solves.map((s) => esc(s.dropped ? `(${s.display})` : s.display)).join(', ');
+const compText = (r) => esc([r.competitionName, r.round].filter(Boolean).join(' \u2013 '));
+const prOrderCell = (n) => {
+  const k = Number(n);
+  return k ? `<span class="pr-order-${k <= 3 ? k : 'x'}">${k === 1 ? 'PR' : `PR${k}`}</span>` : '—';
+};
 
 function setAverageButton(toggleId, enabled) {
   const btn = document.getElementById(toggleId).querySelector('[data-type="average"]');
@@ -50,7 +54,7 @@ export function renderEventTable() {
       return `<span class="solves-cell">${compText(b) || '—'}</span>`;
     },
   });
-  columns.push({ key: 'result', label: 'Result', value: (r) => r.display });
+  columns.push({ key: 'result', label: 'Result', value: (r) => esc(r.display) });
 
   renderTable(container, rows, columns);
 }
@@ -83,7 +87,7 @@ export function renderIndividual() {
     label: 'Achieved at',
     value: (r) => `<span class="solves-cell">${compText(r) || '—'}</span>`,
   });
-  columns.push({ key: 'result', label: 'Result', value: (r) => r.display });
+  columns.push({ key: 'result', label: 'Result', value: (r) => esc(r.display) });
 
   renderTable(document.getElementById('individual-results-table'), data ? data.ranked : [], columns);
 }
@@ -122,7 +126,7 @@ export function renderHistory() {
     { key: 'date', label: 'Date', value: (r) => formatDate(r.date) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
     { key: 'name', label: 'Holder', value: (r) => nameLink(r.wcaId, r.name) },
-    { key: 'result', label: 'Result', value: (r) => r.display },
+    { key: 'result', label: 'Result', value: (r) => esc(r.display) },
     { key: 'comp', label: 'Competition', value: (r) => compText(r) },
   ]);
 }
