@@ -1,6 +1,6 @@
 import { store } from '../store.js';
 import { formatResultLike } from '../format.js';
-import { nameLink, renderTable, setupToggle } from '../ui.js';
+import { nameLink, renderTable, setupToggle, esc } from '../ui.js';
 import { eventIcon } from '../icons.js';
 
 const H2H_IDS = ['h2h-person-1', 'h2h-person-2', 'h2h-person-3', 'h2h-person-4', 'h2h-person-5'];
@@ -15,8 +15,6 @@ let defaultChecked = false;
 let userChanged = false;
 
 const $ = (id) => document.getElementById(id);
-const esc = (s) =>
-  String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const findRankEntry = (list, wcaId) => (list || []).find((r) => r.wcaId === wcaId) || null;
 const personName = (wcaId) => store.people.get(wcaId)?.name || wcaId;
 
@@ -126,7 +124,7 @@ export function renderHeadToHead() {
       } else {
         const entry = findRankEntry(h2hView === 'average' ? event.average : event.single, id);
         nums[id] = entry ? entry.value : null;
-        cells[id] = entry ? `${entry.display} (#${entry.rank})` : '—';
+        cells[id] = entry ? `${esc(entry.display)} (#${entry.rank})` : '—';
       }
     }
     const present = Object.values(nums).filter((v) => v != null);
@@ -169,8 +167,9 @@ function nemesizes(bId, aId) {
   return compared > 0;
 }
 
+// nameLink escapes names itself, so it gets the plain name.
 const nameList = (people) =>
-  `<ul class="member-list">${people.map((p) => `<li>${nameLink(p.wcaId, esc(p.name))}</li>`).join('')}</ul>`;
+  `<ul class="member-list">${people.map((p) => `<li>${nameLink(p.wcaId, p.name)}</li>`).join('')}</ul>`;
 
 export function renderTrueNemesis() {
   const wcaId = $(NEMESIS_ID).value;
@@ -217,8 +216,8 @@ export function renderChasing() {
   renderTable(container, rows, [
     { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, r.event) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
-    { key: 'ahead', label: 'Ahead of you', value: (r) => (r.ahead ? nameLink(r.ahead.wcaId, esc(r.ahead.name)) : "You're #1!") },
-    { key: 'their', label: 'Their result', value: (r) => (r.ahead ? r.ahead.display : '—') },
+    { key: 'ahead', label: 'Ahead of you', value: (r) => (r.ahead ? nameLink(r.ahead.wcaId, r.ahead.name) : "You're #1!") },
+    { key: 'their', label: 'Their result', value: (r) => (r.ahead ? esc(r.ahead.display) : '—') },
     { key: 'gap', label: 'Gap to catch them', value: (r) => (r.gap != null ? formatResultLike(r.gap, store.rankings.events.find((e) => e.id === r.eventId), r.type === 'average') : '—') },
   ]);
 }
