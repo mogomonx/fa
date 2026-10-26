@@ -1,11 +1,9 @@
 import { store } from '../store.js';
 import { nameLink } from '../ui.js';
 
-const esc = (s) =>
-  String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-
 // Compact member directory for the Home page, in Kinch order (falls back to
 // the list order). Re-run by renderAll, so time travel updates it too.
+// nameLink escapes names itself, so it gets the plain name.
 export function renderHomeMembers() {
   const box = document.getElementById('home-members');
   if (!box || !store.rankings) return;
@@ -22,7 +20,7 @@ export function renderHomeMembers() {
   const chips = ids
     .map((id) => {
       const name = store.people.get(id)?.name || id;
-      return `<span class="member-chip">${nameLink(id, esc(name))}</span>`;
+      return `<span class="member-chip">${nameLink(id, name)}</span>`;
     })
     .join('');
   box.innerHTML = `<h2>Members</h2><div class="member-chips">${chips}</div>`;
