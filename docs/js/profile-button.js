@@ -46,11 +46,11 @@ export function setupProfileCard(card, { wcaId, name, loggedIn }) {
 
   if (loggedIn && wcaId) {
     if (avatar) { avatar.hidden = false; loadAvatar(avatar, wcaId, name); }
-    desc.textContent = 'Your personal stats page: records, results, rolling averages and name settings.';
+    desc.textContent = 'personal profile - your PRs, rankings, + more.';
   } else if (loggedIn) {
-    desc.textContent = "Your WCA account has no WCA ID yet, so there's no profile to build.";
+    desc.textContent = "your WCA account has no WCAID yet. go compete, its worth it!";
   } else {
-    desc.textContent = 'Log in with WCA to open your personal stats page.';
+    desc.textContent = 'Log in with WCA to open this page.';
   }
 
   let busy = false;
