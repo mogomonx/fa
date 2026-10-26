@@ -1189,3 +1189,146 @@ grant execute on function public.set_list_permanent(uuid, boolean) to authentica
 
 -- FA is permanent.
 update public.lists set permanent = true where slug = 'fa';
+
+-- Session 19: names can no longer carry markup.
+-- Run this whole file in the Supabase SQL Editor, then append the same SQL to the
+-- bottom of supabase/schema.sql. Safe to run more than once.
+--
+-- Why constraints and not only functions: list owners write list_members.display_name
+-- and lists.name straight through the table policies, so the checks inside
+-- set_name_settings / clean_display_name never see those values. A CHECK constraint
+-- covers every way a value can get in.
+
+-- ---------------------------------------------------------------
+-- 1. One shared rule for any name a person can type
+--    (no < > " and no control characters; null is fine)
+-- ---------------------------------------------------------------
+
+create or replace function public.is_safe_name(p text) returns boolean
+language sql immutable as $$
+  select p is null or (p !~ '[<>"]' and p !~ '[[:cntrl:]]')
+$$;
+
+-- ---------------------------------------------------------------
+-- 2. Constraints (NOT VALID: new and changed rows are checked at once,
+--    old rows are checked when we validate in step 4)
+-- ---------------------------------------------------------------
+
+alter table public.list_members drop constraint if exists list_members_display_name_safe;
+alter table public.list_members
+  add constraint list_members_display_name_safe
+  check (public.is_safe_name(display_name) and (display_name is null or char_length(display_name) <= 60))
+  not valid;
+
+alter table public.lists drop constraint if exists lists_name_safe;
+alter table public.lists
+  add constraint lists_name_safe check (public.is_safe_name(name)) not valid;
+
+alter table public.profiles drop constraint if exists profiles_preferred_name_safe;
+alter table public.profiles
+  add constraint profiles_preferred_name_safe check (public.is_safe_name(preferred_name)) not valid;
+
+-- ---------------------------------------------------------------
+-- 3. One-off cleanup of anything already stored
+-- ---------------------------------------------------------------
+
+update public.list_members
+   set display_name = nullif(left(btrim(regexp_replace(display_name, '[<>"[:cntrl:]]', '', 'g')), 60), '')
+ where display_name is not null
+   and not (public.is_safe_name(display_name) and char_length(display_name) <= 60);
+
+update public.lists
+   set name = coalesce(nullif(left(btrim(regexp_replace(name, '[<>"[:cntrl:]]', '', 'g')), 80), ''), 'Untitled list'),
+       dirty_at = now()
+ where not public.is_safe_name(name);
+
+update public.profiles
+   set preferred_name = nullif(left(btrim(regexp_replace(preferred_name, '[<>"[:cntrl:]]', '', 'g')), 40), '')
+ where preferred_name is not null
+   and not public.is_safe_name(preferred_name);
+
+-- ---------------------------------------------------------------
+-- 4. Check the old rows too (fails, and tells you, if step 3 missed something)
+-- ---------------------------------------------------------------
+
+alter table public.list_members validate constraint list_members_display_name_safe;
+alter table public.lists        validate constraint lists_name_safe;
+alter table public.profiles     validate constraint profiles_preferred_name_safe;
+
+-- ---------------------------------------------------------------
+-- 5. Friendly messages from the functions (the constraints are the real guard)
+-- ---------------------------------------------------------------
+
+-- Same checks as set_name_settings, for a name an admin types.
+create or replace function public.clean_display_name(p_name text) returns text
+language plpgsql immutable set search_path = public as $$
+declare v text := nullif(regexp_replace(trim(coalesce(p_name, '')), '\s+', ' ', 'g'), '');
+begin
+  if v is null then raise exception 'Type a name first'; end if;
+  if char_length(v) > 40 then raise exception 'Display names can be up to 40 characters'; end if;
+  if v ~ '[[:cntrl:]]' then raise exception 'That name has invalid characters'; end if;
+  if not is_safe_name(v) then raise exception 'Names can''t contain < > or double quotes'; end if;
+  if v ~* '(https?:|www\.|@|\.(com|net|org|io|gg)($|\s))' then
+    raise exception 'Names can''t contain links or @';
+  end if;
+  return v;
+end $$;
+
+create or replace function public.set_name_settings(p_name text, p_visibility text, p_lists uuid[] default '{}')
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  v_wca  text := current_wca_id();
+  v_name text := nullif(regexp_replace(trim(coalesce(p_name, '')), '\s+', ' ', 'g'), '');
+begin
+  if v_wca is null then raise exception 'Log in with a WCA ID to set a display name'; end if;
+  if p_visibility not in ('me', 'lists', 'everywhere') then raise exception 'Invalid visibility'; end if;
+  if v_name is not null then
+    if char_length(v_name) > 40 then raise exception 'Display names can be up to 40 characters'; end if;
+    if v_name ~ '[[:cntrl:]]' then raise exception 'That name has invalid characters'; end if;
+    if not is_safe_name(v_name) then raise exception 'Names can''t contain < > or double quotes'; end if;
+    if v_name ~* '(https?:|www\.|@|\.(com|net|org|io|gg)($|\s))' then
+      raise exception 'Names can''t contain links or @';
+    end if;
+  end if;
+
+  update profiles set preferred_name = v_name, name_visibility = p_visibility where id = auth.uid();
+
+  delete from preferred_name_lists where wca_id = v_wca;
+  if v_name is not null and p_visibility = 'lists' then
+    insert into preferred_name_lists (list_id, wca_id)
+      select m.list_id, v_wca from list_members m
+      where m.wca_id = v_wca and m.list_id = any (coalesce(p_lists, '{}'));
+  end if;
+
+  -- every list they're on needs a rebuild to pick the change up
+  update lists set dirty_at = now()
+    where id in (select list_id from list_members where wca_id = v_wca);
+end $$;
+
+-- Guest lists: display names are checked here too (they were only trimmed to 60 before).
+create or replace function public.guest_clean_members(p_members jsonb)
+returns table (wca_id text, display_name text)
+language plpgsql stable set search_path = public as $$
+begin
+  if p_members is null or jsonb_typeof(p_members) <> 'array' then
+    raise exception 'Members must be a list';
+  end if;
+  if exists (
+    select 1 from jsonb_array_elements(p_members) e
+    where upper(coalesce(e->>'wca_id', '')) !~ '^[0-9]{4}[A-Z]{4}[0-9]{2}$'
+  ) then
+    raise exception 'One or more WCA IDs are not valid';
+  end if;
+  if exists (
+    select 1 from jsonb_array_elements(p_members) e
+    where not is_safe_name(left(trim(coalesce(e->>'display_name', '')), 60))
+  ) then
+    raise exception 'Display names can''t contain < > or double quotes';
+  end if;
+  return query
+    select distinct on (upper(e->>'wca_id'))
+           upper(e->>'wca_id'),
+           nullif(left(trim(coalesce(e->>'display_name', '')), 60), '')
+    from jsonb_array_elements(p_members) e
+    order by upper(e->>'wca_id');
+end $$;
