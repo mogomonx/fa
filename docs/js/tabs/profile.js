@@ -5,7 +5,11 @@ import { eventIcon } from '../icons.js';
 import { renderNameSettings } from '../name-settings.js';
 import { upcomingProfileHtml } from './upcoming.js';
 
+const WCA_ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
+
 export function showProfile(wcaId) {
+  // The id usually comes from a data-wcaid attribute in the page, so check its shape first.
+  if (!WCA_ID_RE.test(String(wcaId))) return;
   const activeTab = document.querySelector('.tab-btn.active');
   if (activeTab && activeTab.dataset.tab !== 'profile') {
     state.previousTab = activeTab.dataset.tab;
