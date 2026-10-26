@@ -1,10 +1,19 @@
 import { store, state } from './store.js';
 import { eventIcon } from './icons.js';
 
+// ---------- Escaping ----------
+
+const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
+// Turns text into something safe to put inside HTML (text or a quoted attribute).
+export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ESC_MAP[c]);
+
 // ---------- Links & table helpers ----------
 
+// Both arguments are plain text and are escaped here. Callers must NOT escape
+// them first (that would show "&amp;" on screen).
 export function nameLink(wcaId, name) {
-  return `<a href="#" class="name-link" data-wcaid="${wcaId}">${name}</a>`;
+  return `<a href="#" class="name-link" data-wcaid="${esc(wcaId)}">${esc(name)}</a>`;
 }
 
 export function medalRowClass(rank) {
@@ -214,13 +223,23 @@ export function setupHomeLinks() {
 
 // ---------- CSV export ----------
 
+// Spreadsheet programs run a cell that starts with = @ (or + / - followed by a
+// letter) as a formula, so a hostile name could do things on the reader's
+// computer. A leading apostrophe makes the cell plain text. Plain numbers
+// such as "+1.23" or "-2:05.11" are left alone.
+function csvCell(text) {
+  let t = String(text).trim();
+  if (/^[=@\t\r]/.test(t) || /^[+-][^\d.]/.test(t)) t = `'${t}`;
+  return `"${t.replace(/"/g, '""')}"`;
+}
+
 function tableContainerToCsv(containerId) {
   const table = document.querySelector(`#${containerId} table`);
   if (!table) return null;
   return Array.from(table.querySelectorAll('tr'))
     .map((tr) =>
       Array.from(tr.children)
-        .map((td) => `"${td.textContent.replace(/"/g, '""').trim()}"`)
+        .map((td) => csvCell(td.textContent))
         .join(',')
     )
     .join('\n');
