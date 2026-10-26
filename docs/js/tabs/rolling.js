@@ -1,5 +1,5 @@
 import { store, state } from '../store.js';
-import { nameLink, renderTable, populateEventSelect } from '../ui.js';
+import { nameLink, renderTable, populateEventSelect, esc } from '../ui.js';
 
 // Events whose official format is mean of 3; everything else defaults to ao5.
 // (Multi-Blind is excluded from rolling averages entirely.)
@@ -52,20 +52,20 @@ export function renderRolling() {
     {
       key: 'solves',
       label: 'Solves',
-      value: (r) => `<span class="solves-cell">${r.solves.map((s) => (s.dropped ? `(${s.display})` : s.display)).join(', ')}</span>`,
+      value: (r) => `<span class="solves-cell">${r.solves.map((s) => esc(s.dropped ? `(${s.display})` : s.display)).join(', ')}</span>`,
     },
     {
       // Only the first and last source, not every solve's label.
       key: 'sources',
       label: 'Sources',
       value: (r) => {
-        if (r.rangeLabel) return `<span class="solves-cell">${r.rangeLabel}</span>`;
+        if (r.rangeLabel) return `<span class="solves-cell">${esc(r.rangeLabel)}</span>`;
         // Fallback for data built before rangeLabel existed.
         const first = r.solves[0]?.label;
         const last = r.solves[r.solves.length - 1]?.label;
-        return `<span class="solves-cell">${first === last ? first : `${first} \u2192 ${last}`}</span>`;
+        return `<span class="solves-cell">${esc(first === last ? first : `${first} \u2192 ${last}`)}</span>`;
       },
     },
-    { key: 'result', label: 'Result', value: (r) => r.display },
+    { key: 'result', label: 'Result', value: (r) => esc(r.display) },
   ]);
 }
