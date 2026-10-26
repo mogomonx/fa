@@ -1,10 +1,7 @@
 import { store } from '../store.js';
 import { formatDate, flagEmoji } from '../format.js';
-import { nameLink } from '../ui.js';
+import { nameLink, esc } from '../ui.js';
 import { eventIcon } from '../icons.js';
-
-const esc = (s) =>
-  String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // Upcoming is always live, so psych sheets use the live rankings even when
 // On This Date / Time frame has swapped store.rankings.
@@ -35,8 +32,9 @@ function iconsHtml(ids) {
     .join(' ');
 }
 
+// nameLink escapes names itself, so it gets the plain name.
 function attendeeLinks(attendees) {
-  return attendees.map((a) => nameLink(a.wcaId, esc(nameOf(a)))).join(', ');
+  return attendees.map((a) => nameLink(a.wcaId, nameOf(a))).join(', ');
 }
 
 // The list tables are plain tables (they wrap long cells instead of
@@ -59,7 +57,7 @@ export function renderUpcoming() {
     return;
   }
   if (up.skipped) {
-    note.textContent = `Upcoming competitions aren't tracked for lists with more than ${up.maxMembers || 50} members.`;
+    note.textContent = `Upcoming competitions aren't tracked for lists with more than ${Number(up.maxMembers) || 50} members.`;
     container.innerHTML = '';
     return;
   }
@@ -215,9 +213,9 @@ function psychTable(ev, attendees) {
               ({ a, s, av }, i) => `
             <tr>
               <td>${i + 1}</td>
-              <td class="event-name-cell">${nameLink(a.wcaId, esc(nameOf(a)))}</td>
-              <td class="result-cell">${s ? s.display : '—'}</td>${ranks(s)}
-              ${ev.hasAverage ? `<td class="result-cell split-l">${av ? av.display : '—'}</td>${ranks(av)}` : ''}
+              <td class="event-name-cell">${nameLink(a.wcaId, nameOf(a))}</td>
+              <td class="result-cell">${s ? esc(s.display) : '—'}</td>${ranks(s)}
+              ${ev.hasAverage ? `<td class="result-cell split-l">${av ? esc(av.display) : '—'}</td>${ranks(av)}` : ''}
             </tr>`
             )
             .join('')}
@@ -231,7 +229,7 @@ function psychTable(ev, attendees) {
 export function upcomingProfileHtml(wcaId, personal) {
   const up = store.upcoming;
   if (!up) return `<p class="empty-note">${NOT_BUILT_NOTE}</p>`;
-  if (up.skipped) return `<p class="empty-note">Upcoming competitions aren't tracked for lists with more than ${up.maxMembers || 50} members.</p>`;
+  if (up.skipped) return `<p class="empty-note">Upcoming competitions aren't tracked for lists with more than ${Number(up.maxMembers) || 50} members.</p>`;
   if (up.kind === 'state') return '<p class="empty-note">Registrations aren\'t tracked for state lists.</p>';
 
   const mine = (up.competitions || []).filter((c) => (c.attendees || []).some((a) => a.wcaId === wcaId));
