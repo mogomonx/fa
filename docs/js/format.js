@@ -15,7 +15,8 @@ export function placementSuffix(n) {
 export function formatDate(dateStr) {
   if (!dateStr) return '—';
   const [y, m, d] = dateStr.split('-').map(Number);
-  if (!y || !m || !d) return dateStr;
+  // Not a date we understand: show it as plain text, with anything that could start markup removed.
+  if (!y || !m || !d) return String(dateStr).replace(/[<>&"']/g, '');
   return `${d}${placementSuffix(d)} ${MONTH_NAMES[m - 1]} ${y}`;
 }
 
