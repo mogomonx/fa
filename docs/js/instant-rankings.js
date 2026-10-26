@@ -15,8 +15,10 @@ import { activeEvents, peopleFromRows, computeRankings } from './rankings-core.j
 const ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
 const ISO_RE = /^[A-Z]{2}$/;
 const sq = (s) => `'${String(s).replace(/'/g, "''")}'`;
-// Names are drawn into tables as HTML in places, so strip the characters that could start markup.
-const clean = (s) => String(s ?? '').replace(/[<>&]/g, '').trim();
+// The tables escape names when they draw them (session 19); this is a second layer that
+// removes the characters that could start markup (< > ") and control characters.
+// Keep in step with is_safe_name() in supabase/schema.sql. An "&" is fine now.
+const clean = (s) => String(s ?? '').replace(/[<>"\u0000-\u001f\u007f]/g, '').trim();
 
 // Up to this many ids are looked up one by one with `wca_id = '...'` (UNION ALL of one
 // small SELECT per person). persons.parquet and ranks_*.parquet are sorted by wca_id
