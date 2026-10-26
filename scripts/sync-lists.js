@@ -27,6 +27,9 @@
 //      picked this list (personal profile lists always use it)
 //   4. null -> the build scripts fall back to the official WCA name
 //
+// Session 19: every name above is cleaned (cleanName) before it is written, as a
+// second layer behind the database constraints and the browser's own escaping.
+//
 // Every table read is paged (Supabase returns at most 1000 rows per request),
 // so this keeps working past 1000 lists / people.
 
@@ -38,6 +41,16 @@ const OUT = path.join(__dirname, '..', 'build');
 
 // Keep in step with record_list_open() in supabase/schema.sql (30 days).
 const DORMANT_DAYS = 30;
+
+// Keep in step with is_safe_name() in supabase/schema.sql: no < > " and no control characters.
+const UNSAFE_NAME_CHARS = /[<>"\u0000-\u001f\u007f]/g;
+
+// Returns the name with those characters removed and spaces tidied, or null if nothing is left
+// (the build then falls back to the official WCA name).
+function cleanName(raw) {
+  const v = String(raw ?? '').replace(UNSAFE_NAME_CHARS, '').replace(/\s+/g, ' ').trim().slice(0, 60);
+  return v || null;
+}
 
 const isPending = (l) => !l.built_at || Date.parse(l.built_at) < Date.parse(l.dirty_at);
 
@@ -72,13 +85,13 @@ async function loadNamePrefs() {
 }
 
 function pickDisplayName(list, member, prefs) {
-  if (member.display_name) return member.display_name;   // the owner's own name wins
+  if (member.display_name) return cleanName(member.display_name);   // the owner's own name wins
   if (list.official_names_only) return null;
   const p = prefs.get(member.wca_id);
   if (!p) return null;
-  if (list.kind === 'personal') return p.name;           // private to them
-  if (p.visibility === 'everywhere') return p.name;
-  if (p.visibility === 'lists' && p.lists.has(list.id)) return p.name;
+  if (list.kind === 'personal') return cleanName(p.name);           // private to them
+  if (p.visibility === 'everywhere') return cleanName(p.name);
+  if (p.visibility === 'lists' && p.lists.has(list.id)) return cleanName(p.name);
   return null;
 }
 
@@ -138,7 +151,11 @@ async function main() {
   if (stateChosen.length) {
     const overrides = await restAll('/rest/v1/person_regions?select=wca_id,country,region,hidden&order=wca_id');
     const names = {};
-    for (const [wcaId, p] of prefs) if (p.visibility === 'everywhere') names[wcaId] = p.name;
+    for (const [wcaId, p] of prefs) {
+      if (p.visibility !== 'everywhere') continue;
+      const n = cleanName(p.name);
+      if (n) names[wcaId] = n;
+    }
     fs.writeFileSync(path.join(OUT, 'states-input.json'), JSON.stringify({
       lists: stateChosen.map((l) => ({ slug: l.slug, country: l.country, region: l.region })),
       overrides,
