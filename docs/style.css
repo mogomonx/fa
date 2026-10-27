@@ -1301,3 +1301,54 @@ body.state-mode .board:has(#recent-activity-table) { display: none; }
 /* Name search in the list editor */
 .member-search .search-results { max-width: none; margin-bottom: 0.5rem; }
 button.search-result-item { width: 100%; text-align: left; font: inherit; }
+
+/* =====================================================================
+   Colour presets + hex inputs (settings page)
+   ===================================================================== */
+
+/* Buttons, inputs and selects follow the page font, so a preset's font reaches them too. */
+button, input, select, textarea { font-family: inherit; }
+
+.preset-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 560px; margin-bottom: 1.25rem; }
+
+.preset-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--panel-border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.preset-row:hover { filter: brightness(1.12); }
+.preset-label { flex: 1 1 auto; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.preset-sample { font-size: 0.82rem; }
+.preset-dots { display: flex; gap: 0.3rem; flex: 0 0 auto; }
+.preset-dots i { width: 0.9rem; height: 0.9rem; border-radius: 50%; border: 1px solid var(--panel-border); }
+.preset-tag { flex: 0 0 auto; font-size: 0.75rem; font-weight: 700; }
+
+.preset-custom { background: var(--panel); color: var(--text); }
+.preset-custom .preset-name,
+.preset-custom .preset-tag { color: var(--accent); }
+.preset-custom .preset-sample { color: var(--text-dim); }
+.preset-custom.selected { border-color: var(--accent); }
+
+.settings-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.colour-pair { display: flex; align-items: center; gap: 0.5rem; }
+
+.hex-input {
+  width: 5.75rem;
+  padding: 0.3rem 0.45rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+.hex-input:focus { border-color: var(--accent-dim); outline: none; }
