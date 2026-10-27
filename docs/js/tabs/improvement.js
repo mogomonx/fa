@@ -18,13 +18,35 @@ export function setupImprovementDates() {
   setupRangePicker(dateA, dateB);
 }
 
-// Best (lowest) value this person had at or before the date, plus the result
-// it came from (earliest one if tied).
-function bestAsOfDate(wcaId, eventId, type, dateStr) {
+// One event's dated results, grouped by person. Built with a single pass over
+// all results and kept until the event or the data changes, so working out
+// each person's best only looks at that person's own results (scanning every
+// result for every person was far too slow on big lists).
+let groupCache = { entries: null, eventId: null, byPerson: null };
+
+function resultsByPerson(eventId) {
+  const entries = store.fullResults.entries || [];
+  if (groupCache.entries === entries && groupCache.eventId === eventId) return groupCache.byPerson;
+  const byPerson = new Map();
+  for (const e of entries) {
+    if (e.eventId !== eventId || !e.date) continue;
+    let list = byPerson.get(e.wcaId);
+    if (!list) {
+      list = [];
+      byPerson.set(e.wcaId, list);
+    }
+    list.push(e);
+  }
+  groupCache = { entries, eventId, byPerson };
+  return byPerson;
+}
+
+// Best (lowest) value among one person's results at or before the date, plus
+// the result it came from (earliest one if tied).
+function bestAsOfDate(results, type, dateStr) {
   let best = null;
-  for (const e of store.fullResults.entries || []) {
-    if (e.wcaId !== wcaId || e.eventId !== eventId) continue;
-    if (!e.date || e.date > dateStr) continue;
+  for (const e of results) {
+    if (e.date > dateStr) continue;
     const v = e[type];
     if (typeof v !== 'number' || v <= 0) continue;
     if (best === null || v < best.value || (v === best.value && e.date < best.entry.date)) best = { value: v, entry: e };
@@ -51,10 +73,12 @@ export function renderImprovement() {
   }
 
   const isAvg = state.improvementType === 'average';
+  const byPerson = resultsByPerson(eventDef.id);
   const rows = (store.rankings.people || [])
     .map((p) => {
-      const a = bestAsOfDate(p.wcaId, eventDef.id, state.improvementType, dateA);
-      const b = bestAsOfDate(p.wcaId, eventDef.id, state.improvementType, dateB);
+      const mine = byPerson.get(p.wcaId) || [];
+      const a = bestAsOfDate(mine, state.improvementType, dateA);
+      const b = bestAsOfDate(mine, state.improvementType, dateB);
       const atA = a ? a.value : null;
       const atB = b ? b.value : null;
       const delta = atA != null && atB != null && eventDef.id !== '333mbf' ? atA - atB : null;
