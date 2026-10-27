@@ -1,10 +1,15 @@
-// Booking-style date range picker: a popup with two months side by side
-// (one on narrow screens). Click a start date, then an end date.
+// Booking-style date picker: a popup calendar for ISO dates (YYYY-MM-DD).
 //
-// Attaches to two existing readonly text inputs holding ISO dates
-// (YYYY-MM-DD). When a range is chosen it writes both values and fires a
-// 'change' event on each, so existing change listeners keep working.
-// Opening from the end input keeps the start date and only asks for a new end.
+// Range mode: setupRangePicker(startInput, endInput). Two months side by side
+// (one on narrow screens). Click a start date, then an end date. When a range
+// is chosen it writes both values and fires a 'change' event on each, so
+// existing change listeners keep working. Opening from the end input keeps the
+// start date and only asks for a new end.
+//
+// Single mode: setupDatePicker(input). One month; click a day to choose it.
+// Writes the value and fires a 'change' event on the input.
+//
+// Both attach to existing readonly text inputs holding ISO dates.
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DOW = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
@@ -17,8 +22,17 @@ function parse(s) {
   return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
 }
 
+// One input: pick a single date.
+export function setupDatePicker(input) {
+  setupRangePicker(input, null);
+}
+
+// Two inputs: pick a start and an end date. (With no end input it works as a
+// single-date picker; setupDatePicker is the clearer way to ask for that.)
 export function setupRangePicker(startInput, endInput) {
-  if (!startInput || !endInput) return;
+  if (!startInput) return;
+  const single = !endInput;
+  const inputs = [startInput, endInput].filter(Boolean);
 
   const pop = document.createElement('div');
   pop.className = 'range-picker';
@@ -58,7 +72,7 @@ export function setupRangePicker(startInput, endInput) {
       </div>
       <div class="rp-months">
         ${monthHtml(view.getFullYear(), view.getMonth())}
-        ${monthHtml(right.getFullYear(), right.getMonth())}
+        ${single ? '' : monthHtml(right.getFullYear(), right.getMonth())}
       </div>`;
     paint();
   }
@@ -67,7 +81,8 @@ export function setupRangePicker(startInput, endInput) {
   function paint() {
     const s = start ? iso(start) : null;
     const e = end ? iso(end) : null;
-    const previewEnd = phase === 'end' && s && hover && hover >= s ? hover : e;
+    // Single mode: the chosen day is both the start and the end of its "range".
+    const previewEnd = single ? s : phase === 'end' && s && hover && hover >= s ? hover : e;
     pop.querySelectorAll('.rp-day').forEach((b) => {
       const k = b.dataset.date;
       b.classList.toggle('rp-start', k === s);
@@ -75,7 +90,9 @@ export function setupRangePicker(startInput, endInput) {
       b.classList.toggle('rp-in', !!(s && previewEnd && k > s && k < previewEnd));
     });
     const status = pop.querySelector('.rp-status');
-    if (status) status.textContent = phase === 'start' ? 'Select a start date' : 'Now select an end date';
+    if (status) {
+      status.textContent = single ? 'Select a date' : phase === 'start' ? 'Select a start date' : 'Now select an end date';
+    }
   }
 
   function position(anchor) {
@@ -90,8 +107,8 @@ export function setupRangePicker(startInput, endInput) {
     today = new Date();
     today.setHours(0, 0, 0, 0);
     start = parse(startInput.value);
-    end = parse(endInput.value);
-    phase = opener === endInput && start ? 'end' : 'start';
+    end = single ? null : parse(endInput.value);
+    phase = !single && opener === endInput && start ? 'end' : 'start';
     hover = null;
     const anchor = start || today;
     view = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
@@ -109,6 +126,13 @@ export function setupRangePicker(startInput, endInput) {
   }
 
   function pick(key) {
+    if (single) {
+      start = parse(key);
+      startInput.value = iso(start);
+      startInput.dispatchEvent(new Event('change', { bubbles: true }));
+      close();
+      return;
+    }
     if (phase === 'start' || (start && key < iso(start))) {
       start = parse(key);
       end = null;
@@ -150,7 +174,7 @@ export function setupRangePicker(startInput, endInput) {
     if (isOpen) paint();
   });
 
-  [startInput, endInput].forEach((input) => {
+  inputs.forEach((input) => {
     input.addEventListener('click', () => open(input));
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -162,7 +186,7 @@ export function setupRangePicker(startInput, endInput) {
 
   document.addEventListener('mousedown', (e) => {
     if (!isOpen) return;
-    if (pop.contains(e.target) || e.target === startInput || e.target === endInput) return;
+    if (pop.contains(e.target) || inputs.includes(e.target)) return;
     close();
   });
 
