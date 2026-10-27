@@ -254,7 +254,7 @@ function presetRow(preset, selected) {
   const label = el('span', 'preset-label');
   const name = el('strong', 'preset-name', preset.name);
   name.style.color = v['--accent'];
-  const sample = el('span', 'preset-sample', 'Sample: 3.47 single \u00b7 4.12 average');
+  const sample = el('span', 'preset-sample', 'Sample: 3.01 single \u00b7 3.47 average');
   sample.style.color = v['--text-dim'];
   label.append(name, sample);
 
@@ -283,7 +283,7 @@ function customRow(selected) {
   row.setAttribute('aria-pressed', String(selected));
 
   const label = el('span', 'preset-label');
-  label.append(el('strong', 'preset-name', 'Custom'), el('span', 'preset-sample', 'Pick every colour yourself, or type a hex code.'));
+  label.append(el('strong', 'preset-name', 'Custom'), el('span', 'preset-sample', 'choose your own adventure i guess.'));
 
   const dots = el('span', 'preset-dots');
   SWATCH_KEYS.forEach((k) => {
