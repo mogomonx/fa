@@ -2,7 +2,7 @@
 // These only save to the browser; a list's rankings page applies them when it loads.
 
 import { setupSettings, applyStoredSettings } from './settings.js';
-import { setupRangePicker } from './datepicker.js';
+import { setupRangePicker, setupDatePicker } from './datepicker.js';
 import { loadTravel, saveTravel, loadFrame, saveFrame, cleanDate, rangeProblem, prettyDate } from './timetravel/storage.js';
 
 const $ = (id) => document.getElementById(id);
@@ -40,6 +40,7 @@ export function initSettings() {
   // ----- On This Date -----
   const travelInput = $('time-travel-date');
   travelInput.value = loadTravel() || '';
+  setupDatePicker(travelInput);
   $('time-travel-apply').addEventListener('click', () => {
     if (!travelInput.value) return;
     const f = loadFrame();
