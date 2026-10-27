@@ -353,7 +353,6 @@ setupNameLinkDelegation();
 setupSubtabs('overall-subtabs');
 setupStatsList();
 setupSubtabs('misc-subtabs');
-setupSubtabs('compare-subtabs');
 setupCsvButtons();
 import('./auth.js').then((m) => m.setupAuth()).catch((err) => console.warn('Login unavailable:', err));
 
