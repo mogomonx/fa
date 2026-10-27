@@ -19,6 +19,19 @@ function friendly(message) {
   return e;
 }
 
+// ---------- Load timings ----------
+// Printed to the browser console once the page has rendered (two tables):
+// the steps of the load, and each file's download / read / parse time.
+// Handy for working out where a slow load spends its time.
+const marks = [];
+let lastMark = performance.now();
+function mark(label) {
+  const now = performance.now();
+  marks.push({ step: label, step_ms: Math.round(now - lastMark), at_ms: Math.round(now) });
+  lastMark = now;
+}
+const fileTimes = [];
+
 // Where this list's JSON comes from: the private Supabase bucket, looked up by slug.
 let source = null;
 
@@ -29,11 +42,13 @@ async function resolveSource() {
   } catch (e) {
     throw friendly('Could not reach the lists service.');
   }
+  mark('login module loaded');
   const { data, error } = await supabase.rpc('get_list_by_slug', { p_slug: LIST_ID });
   if (error || !data || data.length === 0) {
     throw friendly('List not found. If it is private, log in with your WCA account (menu) and reload.');
   }
   source = { supabase, listId: data[0].id, list: data[0] };
+  mark('list found');
 }
 
 // Shows "Edit this list" in the side menu for the list's owner, or for the
@@ -78,13 +93,17 @@ function renameEverywhere(root, wcaId, name) {
 
 // People who chose "only me" for their preferred name see it in their own
 // browser only; everyone else keeps seeing the official name.
-async function applyOwnName(datasets) {
-  if (!source) return;
+//
+// lookupOwnName() only asks the database (it needs no list data), so it is
+// started before the files download and runs alongside them. It resolves to
+// { wcaId, name } when a swap is wanted, otherwise null, and never throws.
+async function lookupOwnName() {
+  if (!source) return null;
   const list = source.list;
-  if (!list || list.official_names_only || list.kind === 'personal') return;
+  if (!list || list.official_names_only || list.kind === 'personal') return null;
   try {
     const { data: { session } } = await source.supabase.auth.getSession();
-    if (!session) return;
+    if (!session) return null;
     const { data } = await source.supabase
       .from('profiles')
       .select('wca_id, preferred_name, name_visibility')
@@ -97,17 +116,44 @@ async function applyOwnName(datasets) {
         .eq('list_id', source.listId)
         .eq('wca_id', data.wca_id)
         .maybeSingle();
-      if (!member?.display_name) renameEverywhere(datasets, data.wca_id, data.preferred_name);
+      // The list owner's typed name beats the member's own choice.
+      if (!member?.display_name) return { wcaId: data.wca_id, name: data.preferred_name };
     }
   } catch (e) {
     // names are cosmetic: never block the page
   }
+  return null;
+}
+
+// Applies the swap once the data is here. Skipped (no walk through the data)
+// when the person isn't on this list at all, e.g. someone from another state
+// opening Victoria.
+async function applyOwnName(ownNamePromise, datasets) {
+  const own = await ownNamePromise;
+  if (!own) return;
+  const onList = (datasets.rankings?.people || []).some((p) => p.wcaId === own.wcaId);
+  if (!onList) return;
+  renameEverywhere(datasets, own.wcaId, own.name);
 }
 
 async function fetchJson(file, required) {
   try {
+    const t0 = performance.now();
     const { data, error } = await source.supabase.storage.from('list-data').download(`${source.listId}/${file}`);
-    if (!error && data) return JSON.parse(await data.text());
+    const t1 = performance.now();
+    if (!error && data) {
+      const text = await data.text();
+      const t2 = performance.now();
+      const json = JSON.parse(text);
+      fileTimes.push({
+        file,
+        mb: Number((text.length / 1048576).toFixed(1)),
+        download_ms: Math.round(t1 - t0),
+        read_ms: Math.round(t2 - t1),
+        parse_ms: Math.round(performance.now() - t2),
+      });
+      return json;
+    }
   } catch (e) {
     // fall through
   }
@@ -200,6 +246,7 @@ async function enterPersonalMode() {
 
 async function loadData() {
   if (!LIST_ID) return; // store.js is redirecting to home.html
+  mark('page script started');
   await resolveSource();
 
   const isState = source.list?.kind === 'state';
@@ -211,6 +258,9 @@ async function loadData() {
   }
 
   setupEditLink(source.list);
+
+  // Ask about the viewer's "only me" name now, so it runs while the files download.
+  const ownNamePromise = lookupOwnName();
 
   // Nothing built yet? Try computing the rankings in the browser (rebuild step 6).
   const instant = await loadInstant();
@@ -228,8 +278,10 @@ async function loadData() {
       fetchJson('rolling-averages.json'),
       fetchJson('meta.json'),
     ]);
+  mark('files downloaded and parsed');
 
-  await applyOwnName({ rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling });
+  await applyOwnName(ownNamePromise, { rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling });
+  mark('own name applied');
   store.personal = source.list?.kind === 'personal';
   store.personalListId = source.listId;
 
@@ -267,13 +319,16 @@ async function loadData() {
   setupImprovementDates();
   setupProfileSearch();
   populateRollingSelects();
+  mark('selects and setup');
 
   renderAll();
+  mark('renderAll (every tab)');
   renderUpcoming();
   renderRecentActivity();
   renderImprovement();
   renderConsistency();
   renderRolling();
+  mark('remaining renders');
 
   store.live = { rankings, individual, historical, streaks };
   if (!isState) restoreTimeTravel(refreshAll);
@@ -282,6 +337,10 @@ async function loadData() {
 
   // List lifecycle: tell the database an owner/member opened this list (once a day per browser).
   import('./list-activity.js').then((m) => m.recordListOpen(source)).catch(() => {});
+
+  console.info(`Load timings for ${LIST_ID} (step_ms = time for that step, at_ms = time since the page started loading)`);
+  console.table(marks);
+  console.table(fileTimes);
 }
 
 // ---------- Wiring ----------
