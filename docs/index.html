@@ -37,7 +37,6 @@
     <button type="button" class="menu-item tab-btn" data-tab="events">Rankings</button>
     <button type="button" class="menu-item tab-btn" data-tab="individual">Results</button>
     <button type="button" class="menu-item tab-btn" data-tab="overall">SoR &amp; Kinch</button>
-    <button type="button" class="menu-item tab-btn" data-tab="compare">Compare</button>
     <button type="button" class="menu-item tab-btn" data-tab="rolling">Rolling</button>
     <button type="button" class="menu-item tab-btn" data-tab="misc">Misc</button>
     <div class="menu-footer">
@@ -64,12 +63,8 @@
         <a href="#" class="home-link" data-tab="events"><strong>Rankings</strong><span>read the records tab.</span></a>
         <a href="#" class="home-link" data-tab="individual"><strong>Results</strong><span>fine i guess this ones slightly harder to figure out sooo This is every individual result achieved within the group, not just their PRs.</span></a>
         <a href="#" class="home-link" data-tab="overall"><strong>All-Rounding (SoR &amp; Kinch)</strong><span>The two main allrounding stats.</span></a>
-        <a href="#" class="home-link" data-tab="compare"><strong>Compare</strong><span>Head-to-head, see your nemeses/who you nemesize, and who's barely ahead of you within the group.</span></a>
         <a href="#" class="home-link" data-tab="rolling"><strong>Rolling</strong><span>Unofficial rolling mo3/ao5/ao12/ao25/ao50/ao100 rankings.</span></a>
         <a href="#" class="home-link" data-tab="misc"><strong>Misc</strong><span>just a bunch of fun random somewhat useless stuff in here. have fun :) (the list of whats in here will grow as time goes on)</span></a>
-        <a href="#" class="home-link" data-tab="misc" data-subtab="prcount"><strong>PR Counting</strong><span>Each person's best counting result, from solves that weren't dropped.</span></a>
-        <a href="#" class="home-link" data-tab="misc" data-subtab="history"><strong>Historical Records</strong><span>Every group record ever set, in order, by event.</span></a>
-        <a href="#" class="home-link" data-tab="misc" data-subtab="improvement"><strong>Improvement</strong><span>See how much someone's improved between two dates.</span></a>
         <a href="settings.html" class="home-link"><strong>Settings</strong><span>Customise the site's colours and view it as of a past date.</span></a>
       </div>
       <div class="board" id="home-members" style="margin-bottom:1.5rem;"></div>
@@ -148,49 +143,6 @@
           <div id="kinch-table"></div>
         </div>
         <div id="kinch-detailed-view" class="scroll-table" style="display:none;"></div>
-      </div>
-    </section>
-
-    <section id="tab-compare" class="tab-panel">
-      <div class="subtabs" id="compare-subtabs">
-        <button class="subtab-btn active" data-subtab="h2h">Head-to-Head</button>
-        <button class="subtab-btn" data-subtab="nemesis">Nemesis</button>
-        <button class="subtab-btn" data-subtab="chasing">Chasing</button>
-      </div>
-
-      <div id="subtab-h2h" class="subtab-panel active">
-        <p class="board-note">pick up to 5 people to compare their results. enjoy either flexing on your friends or realising you got work to do in order to catch up.</p>
-        <div class="panel-controls">
-          <select id="h2h-person-1"></select>
-          <select id="h2h-person-2"></select>
-          <select id="h2h-person-3"></select>
-          <select id="h2h-person-4"></select>
-          <select id="h2h-person-5"></select>
-        </div>
-        <div class="panel-controls">
-          <div class="toggle" id="h2h-view-toggle">
-            <button class="toggle-btn active" data-view="single">Single</button>
-            <button class="toggle-btn" data-view="average">Average</button>
-            <button class="toggle-btn" data-view="kinch">Kinch</button>
-          </div>
-        </div>
-        <div id="h2h-table"></div>
-      </div>
-
-      <div id="subtab-nemesis" class="subtab-panel">
-        <div class="panel-controls">
-          <select id="nemesis-person-select"></select>
-        </div>
-        <p class="board-note">a nemesis is someone who is better than you in every single event and format, meaning that you would not have a single pr better than theirs. having 0 is probably the same difficulty as having 5 million power in rise of kingdoms.</p>
-        <div id="nemesis-table"></div>
-      </div>
-
-      <div id="subtab-chasing" class="subtab-panel">
-        <div class="panel-controls">
-          <select id="chasing-person-select"></select>
-        </div>
-        <p class="board-note">whoever's barely in front of you, and the gap you need to catch them. will only display events you have results in. and the mbld gap is a bug but i thought it was too funny to fix, try see what the silliest gap you can find is. try beat 901/904 in 16728:21 in terms of being just straight rot</p>
-        <div id="chasing-table"></div>
       </div>
     </section>
 
@@ -341,6 +293,41 @@
         </div>
         <p class="board-note">Sorted most-improved first.</p>
         <div id="improvement-table"></div>
+      </div>
+
+      <div id="subtab-h2h" class="subtab-panel" data-title="Head-to-Head" data-desc="pick up to 5 people and compare them event by event.">
+        <p class="board-note">pick up to 5 people to compare their results. enjoy either flexing on your friends or realising you got work to do in order to catch up.</p>
+        <div class="panel-controls">
+          <select id="h2h-person-1"></select>
+          <select id="h2h-person-2"></select>
+          <select id="h2h-person-3"></select>
+          <select id="h2h-person-4"></select>
+          <select id="h2h-person-5"></select>
+        </div>
+        <div class="panel-controls">
+          <div class="toggle" id="h2h-view-toggle">
+            <button class="toggle-btn active" data-view="single">Single</button>
+            <button class="toggle-btn" data-view="average">Average</button>
+            <button class="toggle-btn" data-view="kinch">Kinch</button>
+          </div>
+        </div>
+        <div id="h2h-table"></div>
+      </div>
+
+      <div id="subtab-nemesis" class="subtab-panel" data-title="Nemesis" data-desc="who is better than you in every single event and format, and who you're the nemesis of.">
+        <div class="panel-controls">
+          <select id="nemesis-person-select"></select>
+        </div>
+        <p class="board-note">a nemesis is someone who is better than you in every single event and format, meaning that you would not have a single pr better than theirs. having 0 is probably the same difficulty as having 5 million power in rise of kingdoms.</p>
+        <div id="nemesis-table"></div>
+      </div>
+
+      <div id="subtab-chasing" class="subtab-panel" data-title="Chasing" data-desc="whoever's barely in front of you in each event, and the gap you need to catch them.">
+        <div class="panel-controls">
+          <select id="chasing-person-select"></select>
+        </div>
+        <p class="board-note">whoever's barely in front of you, and the gap you need to catch them. will only display events you have results in. and the mbld gap is a bug but i thought it was too funny to fix, try see what the silliest gap you can find is. try beat 901/904 in 16728:21 in terms of being just straight rot</p>
+        <div id="chasing-table"></div>
       </div>
     </section>
 
