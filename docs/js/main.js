@@ -194,29 +194,103 @@ function populateSelects() {
   populateCompareSelects();
 }
 
-// Everything that depends on the (possibly time-travelled) data.
-function renderAll() {
-  renderFaRecords();
-  if (store.listKind !== 'state') renderHomeMembers();
-  renderSor();
-  renderKinch();
-  renderEventTable();
-  renderIndividual();
-  renderTop100();
-  renderHistory();
-  renderFarCounts();
-  renderAge();
-  renderStreaks();
-  renderPrCounting();
-  renderHeadToHead();
-  renderNemesis();
-  renderMembers();
+// ---------- Lazy drawing ----------
+// Drawing every tab at load was the biggest single cost of opening a big list
+// (about 300 ms on a laptop, over a second on a slow phone). Now only what is on
+// screen is drawn when the page loads; every other tab, and every Misc
+// statistic, is drawn the first time it is opened.
+//
+// Opening is detected by watching the panels' "active" class (setupLazyRendering),
+// so it works however a tab is opened: side menu, Home links, the Members button,
+// Random statistic, and so on.
+//
+// When the data underneath changes (On This Date / Time frame), everything drawn
+// so far is marked stale and only the visible tab is redrawn (refreshAll).
+//
+// Not lazy: Upcoming, Recent activity, Improvement, Consistency and Rolling are
+// drawn once at load, as before. They always show live data, so time travel
+// never redraws them, and they are cheap.
+//
+// To add a statistic that depends on the (time-travelled) data: add a group to
+// RENDER, and map its panel id to the group in LAZY.
+
+// What each group draws.
+const RENDER = {
+  'home-members': () => {
+    if (store.listKind !== 'state') renderHomeMembers();
+  },
+  records: renderFaRecords,
+  'event-table': renderEventTable,
+  individual: renderIndividual,
+  overall: () => {
+    renderSor();
+    renderKinch();
+  },
+  members: renderMembers,
+  top100: renderTop100,
+  farcounts: renderFarCounts,
+  age: renderAge,
+  streaks: renderStreaks, // draws both PR Streaks and Event Streaks
+  prcount: renderPrCounting,
+  history: renderHistory,
+  h2h: renderHeadToHead,
+  nemesis: renderNemesis, // draws both Nemesis and Chasing
+};
+
+// Which groups a panel needs when it is shown (key = the panel's element id).
+const LAZY = {
+  'tab-home': ['home-members'],
+  'tab-records': ['records'],
+  'tab-events': ['event-table'],
+  'tab-individual': ['individual'],
+  'tab-overall': ['overall'],
+  'tab-members': ['members'],
+  'subtab-top100': ['top100'],
+  'subtab-farcounts': ['farcounts'],
+  'subtab-age': ['age'],
+  'subtab-streaks': ['streaks'],
+  'subtab-streaks-event': ['streaks'],
+  'subtab-prcount': ['prcount'],
+  'subtab-history': ['history'],
+  'subtab-h2h': ['h2h'],
+  'subtab-nemesis': ['nemesis'],
+  'subtab-chasing': ['nemesis'],
+};
+
+const rendered = new Set(); // groups drawn since the data last changed
+
+function renderGroup(group) {
+  if (rendered.has(group) || !RENDER[group]) return;
+  const t0 = performance.now();
+  try {
+    RENDER[group]();
+    rendered.add(group);
+  } catch (err) {
+    // One broken tab must not stop the others from working.
+    console.error(`Could not draw "${group}":`, err);
+    return;
+  }
+  console.info(`Drew "${group}" in ${Math.round(performance.now() - t0)} ms`);
+}
+
+// Draws whatever is on screen right now (cheap when it is already drawn).
+function renderVisible() {
+  const panels = document.querySelectorAll('.tab-panel.active, #tab-misc.active > .subtab-panel.active');
+  panels.forEach((panel) => (LAZY[panel.id] || []).forEach(renderGroup));
+}
+
+function setupLazyRendering() {
+  const observer = new MutationObserver(renderVisible);
+  document.querySelectorAll('.tab-panel, #tab-misc > .subtab-panel').forEach((el) => {
+    observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
 }
 
 // Passed to time travel so it can refresh the UI after swapping data.
 function refreshAll() {
   populateSelects();
-  renderAll();
+  rendered.clear();
+  renderVisible();
 }
 
 // A personal profile list (one person, private): hide the group menu and open
@@ -321,14 +395,18 @@ async function loadData() {
   populateRollingSelects();
   mark('selects and setup');
 
-  renderAll();
-  mark('renderAll (every tab)');
+  // Only the tab on screen is drawn now; the others draw when first opened.
+  setupLazyRendering();
+  renderVisible();
+  mark('visible tab drawn');
+
+  // Always-live parts: drawn up front, as before.
   renderUpcoming();
   renderRecentActivity();
   renderImprovement();
   renderConsistency();
   renderRolling();
-  mark('remaining renders');
+  mark('live renders');
 
   store.live = { rankings, individual, historical, streaks };
   if (!isState) restoreTimeTravel(refreshAll);
