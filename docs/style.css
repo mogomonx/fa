@@ -1352,3 +1352,19 @@ button, input, select, textarea { font-family: inherit; }
 }
 
 .hex-input:focus { border-color: var(--accent-dim); outline: none; }
+
+/* Consistency "minimum results" box */
+.number-input {
+  width: 5rem;
+  margin-left: 0.4rem;
+  padding: 0.45rem 0.7rem;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color-scheme: dark;
+}
+
+.number-input:hover,
+.number-input:focus { border-color: var(--accent-dim); outline: none; }
