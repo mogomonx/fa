@@ -12,7 +12,7 @@ const num = (v) => (v == null ? '—' : v);
 const wcaUrl = (id) => `https://www.worldcubeassociation.org/competitions/${encodeURIComponent(id)}`;
 
 const NOT_BUILT_NOTE =
-  "Upcoming competitions haven't been built for this list yet. They're added a few minutes after a list is created, and refreshed daily.";
+  "Upcoming competitions haven't been built for this list yet. A new list gets them about 10 minutes after it's created, and they refresh daily after that.";
 
 const dateText = (c) =>
   c.endDate && c.endDate !== c.date ? `${formatDate(c.date)} \u2013 ${formatDate(c.endDate)}` : formatDate(c.date);
