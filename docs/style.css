@@ -1368,3 +1368,16 @@ button, input, select, textarea { font-family: inherit; }
 
 .number-input:hover,
 .number-input:focus { border-color: var(--accent-dim); outline: none; }
+
+/* ---- Misc statistics added 2026-10-28: Sub-X Clubs and Kinch What-If ---- */
+.club-list { margin-top: 1rem; }
+.club-row { padding: 0.75rem 0; border-top: 1px solid rgba(128, 128, 128, 0.35); }
+.club-row:first-child { border-top: 0; }
+.club-head { display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; }
+.club-title { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+.club-count { opacity: 0.7; }
+.club-members { margin-top: 0.35rem; line-height: 1.7; }
+.club-result { opacity: 0.7; font-size: 0.9em; }
+.whatif-input { width: 12rem; max-width: 100%; }
+.whatif-up { color: #4caf50; }
+.whatif-down { color: #e57373; }
