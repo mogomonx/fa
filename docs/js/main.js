@@ -5,6 +5,7 @@ import { renderHomeMembers } from './tabs/home-members.js';
 import { renderSor, renderKinch } from './tabs/overall.js';
 import { renderEventTable, renderIndividual, renderTop100, renderHistory } from './tabs/events.js';
 import { renderFarCounts, renderAge, renderStreaks, renderUpcoming, renderConsistency, renderPrCounting, prCountEvents } from './tabs/misc.js';
+import { renderPodiums, renderSubX, renderAttendance, renderWhatIf, drawWhatIf } from './tabs/more-stats.js';
 import { setupStatsList } from './tabs/stats-list.js';
 import { renderMembers } from './tabs/members.js';
 import { setupNameLinkDelegation } from './tabs/profile.js';
@@ -191,6 +192,9 @@ function populateSelects() {
   populateEventSelect('improvement-event-select', r.events, 'improvementEventId', renderImprovement);
   populateEventSelect('consistency-event-select', r.events, 'consistencyEventId', renderConsistency);
   populateEventSelect('prcount-event-select', prCountEvents(), 'prCountEventId', renderPrCounting);
+  populateEventSelect('podium-event-select', r.events, 'podiumEventId', renderPodiums);
+  populateEventSelect('subx-event-select', r.events, 'subxEventId', renderSubX);
+  populateEventSelect('whatif-event-select', r.events, 'whatifEventId', drawWhatIf);
   populateCompareSelects();
 }
 
@@ -235,6 +239,10 @@ const RENDER = {
   history: renderHistory,
   h2h: renderHeadToHead,
   nemesis: renderNemesis, // draws both Nemesis and Chasing
+  podiums: renderPodiums,
+  subx: renderSubX,
+  attendance: renderAttendance,
+  whatif: renderWhatIf,
 };
 
 // Which groups a panel needs when it is shown (key = the panel's element id).
@@ -255,6 +263,10 @@ const LAZY = {
   'subtab-h2h': ['h2h'],
   'subtab-nemesis': ['nemesis'],
   'subtab-chasing': ['nemesis'],
+  'subtab-podiums': ['podiums'],
+  'subtab-subx': ['subx'],
+  'subtab-attendance': ['attendance'],
+  'subtab-whatif': ['whatif'],
 };
 
 const rendered = new Set(); // groups drawn since the data last changed
@@ -450,6 +462,10 @@ import('./auth.js').then((m) => m.setupAuth()).catch((err) => console.warn('Logi
   ['streaks-type-toggle', 'type', 'streaksType', renderStreaks],
   ['improvement-type-toggle', 'type', 'improvementType', renderImprovement],
   ['consistency-type-toggle', 'type', 'consistencyType', renderConsistency],
+  ['podium-sort-toggle', 'sort', 'podiumSort', renderPodiums],
+  ['subx-type-toggle', 'type', 'subxType', renderSubX],
+  ['attendance-view-toggle', 'view', 'attendanceView', renderAttendance],
+  ['whatif-type-toggle', 'type', 'whatifType', drawWhatIf],
 ].forEach(([id, attr, key, render]) => {
   setupToggle(id, attr, (value) => {
     state[key] = value;
