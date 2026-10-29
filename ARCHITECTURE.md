@@ -707,35 +707,58 @@ Files for Victoria (cold): `full-results.json` 28.5 MB and `individual-rankings.
 
 **Still true for WCA-wide data:** JSON does not scale. Precompute small top-N files for the common views and query Parquet with DuckDB-WASM; `ranks_*_by_event.parquet` (sorted by event then rank, already on R2 and unused) makes "top 100 for event X in country Y" a read of a few row groups. Rules learned in step 8: look people up by exact id or a temp table (never large `IN (...)` lists), and watch request counts as much as file size. State pages from Parquet (about four sessions, section 9 "Upcoming sessions", B) is still the preparation for that, but it is no longer urgent for Victoria; recheck NSW (about 49 MB) and re-time after any big data growth, using the console tables.
 
-### Upcoming sessions (draft 2026-10-27; the order is flexible)
-**A. Right after release (small)**
-1. Triage: the state-profile rank label (small-fixes item 6), housekeeping and the owner's dashboard checks (section 10), and any bug reports.
-2. Small fixes, batch (a): Recent activity (new ordering, podium bug, "PR1" wording), Home directory de-duplication, Compare into Misc. **Home and Compare done 2026-10-28; Recent activity deferred to the WCA Live work.**
-3. Small fixes, batch (b): styling: On This Date calendar (single-date mode in `datepicker.js`), Consistency box, the Upcoming "not built yet" wording. **Done 2026-10-28**, plus colour presets and hex boxes.
+### Upcoming sessions (revised 2026-10-29; the order is flexible)
+**Done so far:** A (right after release): Home de-duplication, Compare into Misc, styling batch, colour presets (2026-10-28). B4: NSW re-timed and lazy tab drawing (2026-10-28). D: Misc statistics and the Kinch what-if (2026-10-28). Still open from A: the state-profile "<state> rank" label (goes with the profile session, F) and Recent activity (goes with WCA Live, G).
+
+**Owner requests of 2026-10-29, grouped into sessions.** "Files" are the files to ask for (section 11).
+
+**E. Quick-win sessions (client-side only, no build changes unless noted)**
+- **E1. Person pickers and Head-to-Head.** Files: `tabs/compare.js`, `tabs/more-stats.js`, `ui.js`, `index.html`, `style.css`, `main.js`, `store.js`, `auth.js`, plus a new `docs/js/person-picker.js`.
+  - *Logged-in default everywhere.* One shared helper picks the default person (the logged-in user's `profiles.wca_id` if they are on the list, else the current fallback) and every person picker uses it. Today only Head-to-Head, Nemesis and Chasing do (`applyLoggedInDefault()`); the newer statistics (Kinch What-If and others) fall back to highest Kinch or alphabetical.
+  - *Searchable picker.* Replaces the long dropdowns on big lists: type to filter the members of the list (name or WCA ID), pick with a click or Enter, a clear (×) button. The existing `<select>` stays as the hidden source of truth so the render code barely changes. First used by Chasing (the owner's example), then Nemesis, Head-to-Head, What-If and the rest. State lists have thousands of people: the picker must filter the in-memory list and cap what it draws (about 50 suggestions).
+  - *Head-to-Head cancel button.* An × on each selection box that empties it (same as "(nobody)") and redraws, so a person can be removed without a refresh.
+- **E2. Tables without sideways scrolling.** Files: `style.css`, `ui.js` (`renderTable`, `renderDetailedTable`), `index.html`, `tabs/improvement.js` and the Results, Rankings and Kinch tab modules. Today `.scroll-table` scrolls in both directions with a pinned header and frozen first columns; the Upcoming list (`.scroll-table.upcoming-list`) and the profile records table (`.table-wrap`) already show two ways to avoid sideways scrolling. Plan: Improvement, Results and Rankings tables fit the width (fixed layout, tighter cell padding, wrapping cells, icon-only event headers). **Kinch is the hard one** (one column per event plus the totals): try compact cells and icon headers first; if it still does not fit on a laptop screen, leave it scrollable (the owner said that is fine). Mobile layout is not a concern; the owner is also rewriting the HTML visuals by hand, so keep the CSS in separate, clearly named blocks.
+- **E3. Record Age and Historical Records toggles.** Files: `tabs/misc.js` (Record Age), the Historical Records module, `scripts/build-historical-records.js`, `index.html`, `main.js`.
+  - *Format toggle* on both: All / Single / Average (mean). Check first whether `historical-records.json` already keeps single and average apart; if not it needs a small build-script change and a `full` run.
+  - *Record Age, "active" toggle:* only people who competed in the last year or so, or all-time. Easy: each person's latest competition date comes from `fullResults` in one pass (group by person once, never people × results), compared with today, or with the end of the date view when On This Date / Time frame is on. The length of "recently" is a constant (default 12 months).
+- **E4. Settings: fonts and more presets.** Files: `settings.js`, `settings-page.js`, `settings.html`, `style.css`, `theme.js`. The owner will describe the new presets when we get there (hex codes and fonts). *Font choice:* a font picker in Settings that works with any preset (saved as `--font` next to the colours). With the current CSP only system font stacks work. Real web fonts have two routes: (a) self-host `.woff2` files in the repo (the owner uploads them through the GitHub website; the CSP needs no new host, `font-src 'self'` already allows them; recommended), or (b) add the font host to the CSP in every page (a third-party request on every page load).
+- **E5. Sub-X Clubs rework.** Files: `tabs/more-stats.js`, `index.html`. Replace the one long page with a chooser (event, single or average, and the range of thresholds, with the thresholds from `SUBX_THRESHOLDS`) and, for the chosen club, a table ranked from the first to the most recent person to get there, with the date and competition. **Needs new data:** the date someone first got under a threshold is not in `rankings`; it comes from `fullResults` (the earliest solve or official average below the line, per person and event, in one pass). To confirm with the owner when we get there: what exactly "select the ranges" means (one threshold at a time, or a span such as sub-10 to sub-6 shown together) and whether single and average are separate tables.
+
+**F. Nemesis and profile sessions (the owner will elaborate)**
+- **F1. Nemesis update (1 to 2 sessions).** Files: `tabs/compare.js`, `index.html`, `main.js`. New views, each ranked closest to furthest: people who only barely nemesize you (nearly better in every result), people you only barely nemesize, and people who only just don't nemesize you. "Barely" needs a definition (suggested: the number of your results that the other person fails to beat, or the size of the gaps; the owner decides). Also most nemesized and least nemeses lists. This is a people × people × results computation: precompute each person's results once (a map per event and type) and compare maps. Fine for group lists (100 members); cap or skip it on state lists.
+- **F2. Big profile overhaul** together with the other individual-profile changes (owner to elaborate): includes the state-profile "<state> rank" label (small-fixes item 6). Files: `tabs/profile.js`, `profile-button.js`, `name-settings.js`, `style.css`.
+- **F3. Kinch What-If redo.** Parked: the owner wants to think it through first and will describe what they were after. Nothing to build until then.
+
+**G. WCA Live and recent changes** (research notes are in `WCA-LIVE-NOTES.md`, posted next to this file)
+- **G0. Before any code (owner):** open a GitHub issue with the `thewca/wca-live` maintainers describing one job that reads public round results every 30 to 60 minutes. Test during a competition that is actually running (how an `active` round looks, how often `enteredAt` and results change). Nothing can be tested properly without a live competition that has someone from a list in it.
+- **G1. Build side.** A new scheduled workflow `update-live.yml` (every 30 to 60 minutes) and `scripts/fetch-live.js`: list competitions from about 7 days ago, keep those with a tracked person, fetch their rounds, write one `live-activity.json` (PRs, podiums, unofficial). The open design points are in the notes (where the file lives, how a list picks its members out of it, file size).
+- **G2. Site side and Recent activity.** The site shows live results labelled "unofficial", with the hand-over to official results. Done in the same session as the Recent activity fixes: the new ordering (all PRs first, then PR2 / PR3 / podiums, alphabetical by first name), the podium rule (reuse the Podiums & Wins rule from `more-stats.js`, which fixes the DNF-podium bug), plain "PR" wording instead of "PR1", and the daily refresh of `recent-activity.json`. Files: `scripts/build-recent-activity.js`, `tabs/home.js`, `index.html`, `main.js`, the workflow.
+- **G3. "Recent change" indicators** (owner to elaborate): results and records that changed in the last week get a "new" marker, maybe with how much the rank or result moved. Feasible without new data: compute the rankings as of 7 days ago with the Time frame engine (`timetravel/compute.js`) and compare with now. Best done after G2, because it shares the Recent activity code.
+
+**H. Australia-wide rankings page**
+- **H1. Australia page (feasible now, as a first slice).** The state pages read JSON, but the browser-Parquet route already computed 997 to 12,291 Australians in 286 to 509 ms warm (section 1, "Browser measurements"). A first Australia page (Kinch, Sum of Ranks and event rankings for everyone with WCA nationality Australia, no overrides) can be computed in the browser from `persons`, `ranks_single` and `ranks_average` with `rankings-core.js`, without waiting for the full state-pages move. The cost to measure first: the cold download of the ranks files, and whether the page needs the state filter on top. Anything that needs every result (historical records, streaks, rolling, profiles) is not part of the first slice; those come with B5 to B7. Design first: where it sits (a button on `states.html`, "All of Australia"), and the layout. Files: `states.html`, `states-page.js`, `rankings-core.js`, `instant-rankings.js`, `db.js`, `main.js`.
 
 **B. Loading speed (before WCA-wide data; Victoria itself is fixed)**
-4. **Done 2026-10-28:** re-timed NSW (console tables) and draw only the visible tab at load (`main.js` only, via a `MutationObserver`; `ui.js` was not touched). Still open: check the other `fullResults` readers for people × results loops when touched, a cold-network run on NSW, and the ideas under "Loading speed".
-5. State rankings, Kinch and Sum of Ranks from Parquet in the browser.
+4. **Done 2026-10-28** (re-timed NSW, lazy drawing). Still open: check the other `fullResults` readers for people × results loops when touched, a cold-network run on NSW, and the ideas under "Loading speed".
+5. State rankings, Kinch and Sum of Ranks from Parquet in the browser (H1 can be the first step of this).
 6. State individual rankings and profiles from Parquet.
 7. State historical records, streaks and the derived statistics from Parquet; then stop building state JSON and clear it from Storage.
 
 **C. Cleanup**
-8. Remove `fetch.js` (once nothing needs it), `make-empty-history.js`, helper code duplicated between the extractors and the unused bits (`.profile-btn` CSS, `DATA_BASE`, `upcomingConfigPath`); optionally self-host supabase-js; add the daily Recent-activity refresh (re-extract `full-results.json` for non-dormant lists after the Parquet conversion and rebuild `recent-activity.json`, about 15 seconds).
+8. Remove `fetch.js` (once nothing needs it), `make-empty-history.js`, helper code duplicated between the extractors and the unused bits (`.profile-btn` CSS, `DATA_BASE`, `upcomingConfigPath`); optionally self-host supabase-js; the daily Recent-activity refresh (if G2 has not done it).
 
-**D. Features, one per session**
-9. **Done 2026-10-28:** Misc statistics: podiums and wins, sub-X clubs, attendance (milestones included).
-10. **Done 2026-10-28:** Kinch what-if calculator.
+**D. Remaining feature ideas, one per session**
 11. Progression charts.
 12. Weekly Discord roundup text (design first: PRs only or also first results, date window, record and podium markers, the ping line, event naming).
-13. Colour presets and fonts (the owner picks the hex codes and fonts).
-14. Group rank history (inside Compare).
+14. Group rank history (inside Compare, now Misc).
 15. Competition pages.
-16. WCA Live (research first).
 
-**E. After the Parquet state pages: WCA-wide**
-17. Country, continent and world pages (the state page scoped to a region by WCA nationality; the map-first flow idea below).
+**I. After the Parquet state pages: WCA-wide**
+17. Continent and world pages, the rest of the country pages (the state page scoped to a region by WCA nationality; the map-first flow idea below).
 18. NZ state rankings, look-up-anyone profiles, venue records (the converter needs the venue columns), the in-depth personal page.
 19. Unofficial records page (FA-specific; design first).
+
+**Suggested order (not decided):** E1, E2, E3 first (small, no dependencies), then E4 and E5, then F1; G0 can start any time because it is the owner's task and has a waiting time; G1 to G3 once a competition with members is on; H1 once the owner has decided the layout; F2 and F3 when the owner has written up their thoughts.
 
 **Dates:** 2027-01-02 FTO becomes an event (run a `full` build and check PR Counting and any hard-coded event lists); 2027-01-18 the GitHub token in Vault expires (replace it and the Vault secret before then).
 
