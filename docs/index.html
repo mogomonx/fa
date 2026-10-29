@@ -330,6 +330,61 @@
         <p class="board-note">whoever's barely in front of you, and the gap you need to catch them. will only display events you have results in. and the mbld gap is a bug but i thought it was too funny to fix, try see what the silliest gap you can find is. try beat 901/904 in 16728:21 in terms of being just straight rot</p>
         <div id="chasing-table"></div>
       </div>
+      <div id="subtab-podiums" class="subtab-panel" data-title="Podiums &amp; Wins" data-desc="who has the most wins and podium finishes in finals, for one event or all of them.">
+        <div class="panel-controls">
+          <div class="event-picker" id="podium-event-select" data-all="true"></div>
+          <div class="toggle" id="podium-sort-toggle">
+            <button class="toggle-btn active" data-sort="wins">Most wins</button>
+            <button class="toggle-btn" data-sort="podiums">Most podiums</button>
+          </div>
+        </div>
+        <p class="board-note">a podium is a top 3 finish in a final (or combined final) with a valid result, a win is coming first. follows the date view in settings.</p>
+        <div id="podium-table"></div>
+      </div>
+
+      <div id="subtab-subx" class="subtab-panel" data-title="Sub-X Clubs" data-desc="who is under 10 seconds, 20 seconds, and every other round number barrier.">
+        <div class="panel-controls">
+          <div class="event-picker" id="subx-event-select"></div>
+          <div class="toggle" id="subx-type-toggle">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+        </div>
+        <p class="board-note" id="subx-note"></p>
+        <div id="subx-list"></div>
+      </div>
+
+      <div id="subtab-attendance" class="subtab-panel" data-title="Attendance" data-desc="who has been to the most competitions, and which competitions had the most members.">
+        <div class="panel-controls">
+          <div class="toggle" id="attendance-view-toggle">
+            <button class="toggle-btn active" data-view="people">People</button>
+            <button class="toggle-btn" data-view="competitions">Competitions</button>
+          </div>
+        </div>
+        <p class="board-note">competitions, rounds and solves are counted from every recorded result. follows the date view in settings.</p>
+        <div id="attendance-people-view">
+          <div id="attendance-people-table"></div>
+        </div>
+        <div id="attendance-competitions-view" style="display:none;">
+          <div id="attendance-competitions-table"></div>
+        </div>
+      </div>
+
+      <div id="subtab-whatif" class="subtab-panel" data-title="Kinch What-If" data-desc="type a result you might get and see what it would do to your Kinch and Sum of Ranks.">
+        <div class="panel-controls">
+          <select id="whatif-person-select"></select>
+        </div>
+        <div class="panel-controls">
+          <div class="event-picker" id="whatif-event-select"></div>
+          <div class="toggle" id="whatif-type-toggle">
+            <button class="toggle-btn active" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average</button>
+          </div>
+          <input type="text" class="number-input whatif-input" id="whatif-input" placeholder="e.g. 9.50" autocomplete="off">
+        </div>
+        <p class="board-note" id="whatif-note"></p>
+        <div id="whatif-table"></div>
+      </div>
     </section>
 
     <section id="tab-members" class="tab-panel">
