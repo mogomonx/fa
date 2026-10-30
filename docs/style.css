@@ -1499,3 +1499,5 @@ button, input, select, textarea { font-family: inherit; }
 @font-face { font-family: "Space Grotesk"; src: url("fonts/space-grotesk.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "Merriweather"; src: url("fonts/merriweather.woff2") format("woff2"); font-weight: 300 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
+
+#subx-table .scroll-table :is(th, td) { white-space: normal; }
