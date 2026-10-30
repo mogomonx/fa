@@ -1381,3 +1381,71 @@ button, input, select, textarea { font-family: inherit; }
 .whatif-input { width: 12rem; max-width: 100%; }
 .whatif-up { color: #4caf50; }
 .whatif-down { color: #e57373; }
+
+
+/* ---- Searchable person picker (js/person-picker.js) ---- */
+.person-picker { position: relative; display: inline-block; width: 14rem; max-width: 100%; }
+
+.person-picker-input {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.person-picker-input:focus { border-color: var(--accent-dim); outline: none; }
+
+.person-picker-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.person-picker-clear:hover { color: var(--accent); }
+
+.person-picker-list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 2px);
+  left: 0;
+  min-width: 100%;
+  max-height: 16rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+.person-picker-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.person-picker-item:hover,
+.person-picker-item.active { background: var(--accent-dim); }
+.person-picker-id { color: var(--text-dim); font-size: 0.75rem; }
+.person-picker-note { padding: 0.4rem 0.6rem; color: var(--text-dim); font-size: 0.78rem; }
