@@ -7,6 +7,9 @@
 // shapes a "basic" build writes, so every tab behaves exactly as it does for a basic list.
 // Once the real build lands (data_level no longer 'none') the page loads the built files.
 //
+// buildCountryData() (H1) does the same for a whole country (?list=country-au): no member
+// list, everyone of that nationality.
+//
 // Always loaded with a dynamic import inside a try/catch (see main.js): if anything here
 // fails, the page falls back to the old "still being built" message.
 
@@ -167,15 +170,20 @@ export async function buildInstantData(source) {
 }
 
 /**
- * Whole-country rankings (H1, the Australia page). Paste this at the END of instant-rankings.js.
- * It uses the helpers already in that file (sq, clean, ID_RE, ISO_RE, emptyIndividual,
- * emptyHistorical) and the imports at the top (activeEvents, peopleFromRows, computeRankings).
+ * Whole-country rankings (H1, the Australia page).
  *
  * source = { list: { country: 'AU', name: 'Australia' } } (what main.js resolveSource() builds
  * for ?list=country-au). There is no member list: everyone whose WCA country is `country` and
  * who has at least one official single or average is ranked. Returns the same
  * { rankings, individual, historical, ms } as buildInstantData, with empty history shapes
- * (no results are read, only persons and the two ranks files), or null for a bad country code.
+ * (no results are read), or null for a bad country code.
+ *
+ * Two routes to the data:
+ *   1. ranks_single_by_country.parquet / ranks_average_by_country.parquet (converter v8.5):
+ *      sorted by country, so only that country's row groups are read, and they carry the
+ *      name, so persons.parquet is not read at all. About 1 MB per file for Australia.
+ *   2. Until those files exist on R2 (or if reading them fails): persons.parquet filtered by
+ *      country, then the two whole ranks files filtered by those ids. Reads about 27 MB.
  */
 export async function buildCountryData(source) {
   const t0 = performance.now();
@@ -194,36 +202,64 @@ export async function buildCountryData(source) {
   }
   lap('DuckDB ready');
 
-  // Everyone of this nationality, once, in a temp table the two ranks queries filter by.
-  await db.queryParquet(
-    `CREATE OR REPLACE TEMP TABLE scope_persons AS
-     SELECT wca_id, name, country_id, country_iso2 FROM persons.parquet WHERE country_iso2 = ${sq(code)}`
-  );
-  lap('persons read');
-
   const events = activeEvents();
   const eventIds = new Set(events.map((e) => e.id));
   const evList = [...eventIds].map(sq).join(',');
-  const ranksSql = (kind) =>
-    `SELECT r.wca_id, r.event_id, r.best, r.world_rank, r.continent_rank, r.country_rank
-     FROM ranks_${kind}.parquet r
-     WHERE r.event_id IN (${evList}) AND r.wca_id IN (SELECT wca_id FROM scope_persons)`;
 
-  const singleRows = await db.queryParquet(ranksSql('single'));
-  lap(`ranks_single read (${singleRows.length} rows)`);
-  const averageRows = await db.queryParquet(ranksSql('average'));
-  lap(`ranks_average read (${averageRows.length} rows)`);
-  const rawPersons = await db.queryParquet('SELECT wca_id, name, country_id, country_iso2 FROM scope_persons');
+  let singleRows;
+  let averageRows;
+  let personRows;
+  let route;
 
-  // Only people with at least one official result are ranked.
-  const hasRank = new Set();
-  for (const r of singleRows) hasRank.add(r.wca_id);
-  for (const r of averageRows) hasRank.add(r.wca_id);
-  const personRows = rawPersons
-    .filter((r) => ID_RE.test(String(r.wca_id)) && hasRank.has(r.wca_id))
-    .map((r) => ({ ...r, name: clean(r.name) }));
+  try {
+    const byCountry = (kind) =>
+      `SELECT wca_id, name, event_id, best, world_rank, continent_rank, country_rank
+       FROM ranks_${kind}_by_country.parquet
+       WHERE country_iso2 = ${sq(code)} AND event_id IN (${evList})`;
+    singleRows = await db.queryParquet(byCountry('single'));
+    lap(`ranks_single_by_country read (${singleRows.length} rows)`);
+    averageRows = await db.queryParquet(byCountry('average'));
+    lap(`ranks_average_by_country read (${averageRows.length} rows)`);
+
+    // Names come with the rows: one entry per person who has at least one official result.
+    const names = new Map();
+    for (const r of singleRows) if (!names.has(r.wca_id)) names.set(r.wca_id, r.name);
+    for (const r of averageRows) if (!names.has(r.wca_id)) names.set(r.wca_id, r.name);
+    personRows = [];
+    for (const [wca_id, name] of names) {
+      if (ID_RE.test(String(wca_id))) personRows.push({ wca_id, name: clean(name) });
+    }
+    route = 'by_country files';
+  } catch (e) {
+    console.warn('The by-country ranks files are not available yet; using the slower route:', e);
+
+    // Everyone of this nationality, once, in a temp table the two ranks queries filter by.
+    await db.queryParquet(
+      `CREATE OR REPLACE TEMP TABLE scope_persons AS
+       SELECT wca_id, name, country_id, country_iso2 FROM persons.parquet WHERE country_iso2 = ${sq(code)}`
+    );
+    lap('persons read');
+    const ranksSql = (kind) =>
+      `SELECT r.wca_id, r.event_id, r.best, r.world_rank, r.continent_rank, r.country_rank
+       FROM ranks_${kind}.parquet r
+       WHERE r.event_id IN (${evList}) AND r.wca_id IN (SELECT wca_id FROM scope_persons)`;
+    singleRows = await db.queryParquet(ranksSql('single'));
+    lap(`ranks_single read (${singleRows.length} rows)`);
+    averageRows = await db.queryParquet(ranksSql('average'));
+    lap(`ranks_average read (${averageRows.length} rows)`);
+    const rawPersons = await db.queryParquet('SELECT wca_id, name, country_id, country_iso2 FROM scope_persons');
+
+    // Only people with at least one official result are ranked.
+    const hasRank = new Set();
+    for (const r of singleRows) hasRank.add(r.wca_id);
+    for (const r of averageRows) hasRank.add(r.wca_id);
+    personRows = rawPersons
+      .filter((r) => ID_RE.test(String(r.wca_id)) && hasRank.has(r.wca_id))
+      .map((r) => ({ ...r, name: clean(r.name) }));
+    route = 'whole files (fallback)';
+  }
+
   const order = personRows.map((r) => r.wca_id).sort();
-
   const people = peopleFromRows(personRows, singleRows, averageRows, eventIds, order);
   for (const p of people) p.countryIso2 = code;
   lap(`${people.length} people built`);
@@ -234,7 +270,7 @@ export async function buildCountryData(source) {
   rankings.listName = source.list.name;
   lap('rankings computed');
 
-  console.info(`Country rankings for ${code}: ${people.length} people`);
+  console.info(`Country rankings for ${code}: ${people.length} people (route: ${route})`);
   console.table(laps);
 
   return {
