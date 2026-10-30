@@ -134,8 +134,7 @@ export function renderAge() {
 
   if (state.ageMode === 'alltime') {
     note.textContent = "Each person's longest-standing PR per event and type, ever (a PR stands until a faster result replaces it). Top 100.";
-    let rows = longestStandingPrs();
-    if (state.ageEventId) rows = rows.filter((r) => r.eventId === state.ageEventId);
+    let rows = filterAge(longestStandingPrs(), note);
     rows = rows.slice(0, 100);
     const evOf = (id) => store.rankings.events.find((e) => e.id === id);
     renderTable(container, rows, [
@@ -158,7 +157,7 @@ export function renderAge() {
     rows = store.individual.prAges || [];
     note.textContent = "Everyone's current personal bests, oldest first.";
   }
-  if (state.ageEventId) rows = rows.filter((r) => r.eventId === state.ageEventId);
+  rows = filterAge(rows, note);
 
   renderTable(container, rows, [
     { key: 'event', label: 'Event', value: (r) => eventIcon(r.eventId, r.eventName) },
