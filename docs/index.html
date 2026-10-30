@@ -356,16 +356,18 @@
         <div id="podium-table"></div>
       </div>
 
-      <div id="subtab-subx" class="subtab-panel" data-title="Sub-X Clubs" data-desc="who is under 10 seconds, 20 seconds, and every other round number barrier.">
+   <div id="subtab-subx" class="subtab-panel" data-title="Sub-X Clubs" data-desc="who was first under 10 seconds, 20 seconds, and every other round number barrier, in the order they got there.">
         <div class="panel-controls">
           <div class="event-picker" id="subx-event-select"></div>
-          <div class="toggle" id="subx-type-toggle">
+           <div class="toggle" id="subx-type-toggle">
             <button class="toggle-btn active" data-type="single">Single</button>
             <button class="toggle-btn" data-type="average">Average</button>
           </div>
+          <select id="subx-threshold-select" aria-label="Sub-X threshold"></select>
+          <label>or type a time <input type="text" class="number-input whatif-input" id="subx-custom" autocomplete="off"></label>
         </div>
         <p class="board-note" id="subx-note"></p>
-        <div id="subx-list"></div>
+        <div id="subx-table"></div>
       </div>
 
       <div id="subtab-attendance" class="subtab-panel" data-title="Attendance" data-desc="who has been to the most competitions, and which competitions had the most members.">
