@@ -34,9 +34,32 @@ function mark(label) {
 const fileTimes = [];
 
 // Where this list's JSON comes from: the private Supabase bucket, looked up by slug.
+// A country scope (?list=country-au, H1) has no list row and no JSON at all: its
+// rankings are worked out in the browser from the Parquet files.
 let source = null;
 
+const COUNTRY_SLUG = /^country-([a-z]{2})$/i;
+
 async function resolveSource() {
+  const country = COUNTRY_SLUG.exec(LIST_ID);
+  if (country) {
+    const code = country[1].toUpperCase();
+    let name = code;
+    try {
+      name = new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code;
+    } catch (e) {
+      // keep the code as the name
+    }
+    // official_names_only: nobody's "only me" preferred name is applied here.
+    source = {
+      supabase: null,
+      listId: null,
+      list: { kind: 'country', slug: LIST_ID.toLowerCase(), name, country: code, data_level: 'none', official_names_only: true, owner_id: null },
+    };
+    mark('country scope');
+    return;
+  }
+
   let supabase;
   try {
     ({ supabase } = await import('./auth.js'));
@@ -56,7 +79,7 @@ async function resolveSource() {
 // guest who made a guest list in this browser. Never blocks the page.
 async function setupEditLink(list) {
   const link = document.getElementById('edit-list-link');
-  if (!link || !list || list.kind === 'personal' || list.kind === 'state') return;
+  if (!link || !list || list.kind === 'personal' || list.kind === 'state' || list.kind === 'country') return;
   let canEdit = false;
   try {
     if (!list.owner_id) {
@@ -170,11 +193,14 @@ async function fetchJson(file, required) {
 // A list with no built data yet (data_level 'none'): work out the rankings in this
 // browser from the Parquet files instead of waiting for the build. Returns null if
 // that isn't possible, and the page then shows the old "still being built" message.
+// A country scope always takes this route (there is nothing built to wait for) and
+// reads everyone of that nationality instead of a member list.
 async function loadInstant() {
-  if (store.listKind === 'state' || source.list?.data_level !== 'none') return null;
+  const kind = source.list?.kind;
+  if (kind === 'state' || source.list?.data_level !== 'none') return null;
   try {
     const m = await import('./instant-rankings.js');
-    return await m.buildInstantData(source);
+    return kind === 'country' ? await m.buildCountryData(source) : await m.buildInstantData(source);
   } catch (e) {
     console.warn('Instant rankings unavailable:', e);
     return null;
@@ -221,7 +247,8 @@ function populateSelects() {
 // What each group draws.
 const RENDER = {
   'home-members': () => {
-    if (store.listKind !== 'state') renderHomeMembers();
+    // The members chips are for group lists; state and country scopes have thousands of people.
+    if (store.listKind !== 'state' && store.listKind !== 'country') renderHomeMembers();
   },
   records: renderFaRecords,
   'event-table': renderEventTable,
@@ -335,10 +362,13 @@ async function loadData() {
   mark('page script started');
   await resolveSource();
 
-  const isState = source.list?.kind === 'state';
-  store.listKind = source.list?.kind || 'group';
-  if (isState) {
-    document.body.classList.add('state-mode');
+  const kind = source.list?.kind;
+  const isState = kind === 'state';
+  const isCountry = kind === 'country';
+  store.listKind = kind || 'group';
+  if (isState) document.body.classList.add('state-mode');
+  if (isCountry) document.body.classList.add('country-mode');
+  if (isState || isCountry) {
     const statesLink = document.getElementById('states-link');
     if (statesLink) statesLink.hidden = false;
   }
@@ -350,9 +380,12 @@ async function loadData() {
 
   // Nothing built yet? Try computing the rankings in the browser (rebuild step 6).
   const instant = await loadInstant();
+  if (!instant && isCountry) {
+    throw friendly('Could not work out these rankings in your browser. Try reloading; if it keeps happening, the data server may be having trouble.');
+  }
 
   const [rankings, individual, historical, upcoming, fullResults, streaks, recentActivity, rolling, meta] = instant
-    ? [instant.rankings, instant.individual, instant.historical, null, null, null, null, null, { level: 'basic' }]
+    ? [instant.rankings, instant.individual, instant.historical, null, null, null, null, null, { level: isCountry ? 'country' : 'basic' }]
     : await Promise.all([
       fetchJson('rankings.json', true),
       fetchJson('individual-rankings.json', true),
@@ -421,7 +454,7 @@ async function loadData() {
   mark('live renders');
 
   store.live = { rankings, individual, historical, streaks };
-  if (!isState) restoreTimeTravel(refreshAll);
+  if (!isState && !isCountry) restoreTimeTravel(refreshAll);
 
   if (source.list?.kind === 'personal') enterPersonalMode();
 
