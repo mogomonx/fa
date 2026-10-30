@@ -12,6 +12,10 @@ Output (PARQUET_OUTPUT_DIR):
                           Both SORTED BY wca_id, event_id, small row groups (lookups by person).
     ranks_single_by_event.parquet, ranks_average_by_event.parquet
                           The same rows sorted by event_id, world_rank (for world / country rankings pages).
+    ranks_single_by_country.parquet, ranks_average_by_country.parquet
+                          The same rows plus country_iso2 and name, SORTED BY country_iso2, event_id,
+                          country_rank: one country is a few contiguous row groups (the whole-country
+                          pages read only those). People with no ISO2 code are left out.
     competitions.parquet  id, name, city_name, country_id, year, month, day, end_year, end_month, end_day
     round_types.parquet   id, rank, name, cell_name
     results.parquet       one row per person/event/competition/round, SORTED BY PERSON so a
@@ -32,7 +36,7 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "8.4"
+SCRIPT_VERSION = "8.5"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -192,10 +196,15 @@ if n_p and n_noiso / n_p > 0.05:
     print("  WARNING: more than 5% of persons have no ISO2 code; check countries.tsv", file=sys.stderr)
 
 # ------------------------------------------------------------------ ranks
-# Each ranks file is written twice from one read of the TSV:
+# Each ranks file is written three times from one read of the TSV:
 #   <out_name>             sorted by person (wca_id, event_id), small row groups: lookups by person
 #   <out_name>_by_event    sorted by event then world rank: world / country ranking pages later
-def convert_ranks(file_stem, out_name, by_event_name):
+#   <out_name>_by_country  plus country_iso2 and name, sorted by country, event, country rank:
+#                          a whole-country page reads only that country's row groups
+PERSONS_PARQUET = os.path.join(output_dir, "persons.parquet")
+
+
+def convert_ranks(file_stem, out_name, by_event_name, by_country_name):
     print(f"Converting {file_stem}...", flush=True)
     path = find_tsv(file_stem)
     h = read_header(path)
@@ -221,11 +230,23 @@ def convert_ranks(file_stem, out_name, by_event_name):
     )
     copy_to_parquet("SELECT * FROM ranks_tmp ORDER BY wca_id, event_id", out_name, RG_RANKS)
     copy_to_parquet("SELECT * FROM ranks_tmp ORDER BY event_id, world_rank ASC", by_event_name, RG_DEFAULT)
+    copy_to_parquet(
+        f"""
+        SELECT p.country_iso2, r.event_id, r.wca_id, p.name,
+               r.best, r.world_rank, r.continent_rank, r.country_rank
+        FROM ranks_tmp r
+        JOIN read_parquet('{PERSONS_PARQUET}') p ON r.wca_id = p.wca_id
+        WHERE p.country_iso2 IS NOT NULL
+        ORDER BY p.country_iso2, r.event_id, r.country_rank ASC, r.wca_id
+        """,
+        by_country_name,
+        RG_RANKS,
+    )
     con.execute("DROP TABLE ranks_tmp")
 
 
-convert_ranks("ranks_single", "ranks_single.parquet", "ranks_single_by_event.parquet")
-convert_ranks("ranks_average", "ranks_average.parquet", "ranks_average_by_event.parquet")
+convert_ranks("ranks_single", "ranks_single.parquet", "ranks_single_by_event.parquet", "ranks_single_by_country.parquet")
+convert_ranks("ranks_average", "ranks_average.parquet", "ranks_average_by_event.parquet", "ranks_average_by_country.parquet")
 
 # ----------------------------------------------------------- competitions
 # Python csv with QUOTE_NONE: a stray " inside a name can never swallow following lines.
@@ -435,12 +456,18 @@ for name in sorted(os.listdir(output_dir)):
             print(f"ERROR: {name} is empty.", file=sys.stderr)
             sys.exit(1)
 
-# The two copies of each ranks file must hold the same number of rows.
+# The by-person and by-event copies of each ranks file must hold the same number of rows.
+# The by-country copy leaves out people with no ISO2 code, so it may be a little smaller;
+# more than 1% smaller (or larger) means something is wrong.
 for kind in ("single", "average"):
     a = con.execute(f"SELECT count(*) FROM read_parquet('{os.path.join(output_dir, f'ranks_{kind}.parquet')}')").fetchone()[0]
     b = con.execute(f"SELECT count(*) FROM read_parquet('{os.path.join(output_dir, f'ranks_{kind}_by_event.parquet')}')").fetchone()[0]
+    c = con.execute(f"SELECT count(*) FROM read_parquet('{os.path.join(output_dir, f'ranks_{kind}_by_country.parquet')}')").fetchone()[0]
     if a != b:
         print(f"ERROR: ranks_{kind} copies differ ({a:,} vs {b:,} rows).", file=sys.stderr)
+        sys.exit(1)
+    if c > a or c < a * 0.99:
+        print(f"ERROR: ranks_{kind}_by_country has {c:,} rows but ranks_{kind} has {a:,}.", file=sys.stderr)
         sys.exit(1)
 
 # Freshness stamp: extract-from-parquet.py refuses to use a remote copy older than a few days.
