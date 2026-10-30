@@ -198,47 +198,145 @@ export function clubsFor(rows, thresholds, unitOf) {
   return out;
 }
 
+const MAX_SUBX_ROWS = 500;
+
+// Round codes in the order they are held, so "earlier round" can be compared.
+const ROUND_ORDER = { '0': 0, d: 1, '1': 1, e: 2, '2': 2, g: 3, '3': 3, b: 4, c: 5, f: 6 };
+const roundRank = (r) => ROUND_ORDER[r] ?? 9;
+
+// Each person's first result below `limit` (in the stored units) for one event and
+// type, earliest first. Ties on the date: faster result, then earlier round, then name.
+// One pass over the results; a person's own first round wins when two are on one date.
+export function firstUnder(entries, eventId, type, limit, w) {
+  const best = new Map();
+  for (const e of entries || []) {
+    if (e.eventId !== eventId || !inWindow(e.date, w)) continue;
+    const v = e[type];
+    if (typeof v !== 'number' || !(v > 0) || !(v < limit)) continue;
+    const cur = best.get(e.wcaId);
+    if (!cur || e.date < cur.date || (e.date === cur.date && roundRank(e.round) < roundRank(cur.round))) best.set(e.wcaId, e);
+  }
+  return Array.from(best.values()).sort(
+    (a, b) =>
+      a.date.localeCompare(b.date) ||
+      a[type] - b[type] ||
+      roundRank(a.round) - roundRank(b.round) ||
+      a.name.localeCompare(b.name)
+  );
+}
+
+// A threshold in seconds (Fewest Moves: moves) as the number stored in the results.
+function storedLimit(eventId, type, t) {
+  if (eventId === '333fm') return type === 'average' ? Math.round(t * 100) : t;
+  return Math.round(t * 100);
+}
+
+let subxWired = false;
+
+function wireSubX() {
+  if (subxWired) return;
+  subxWired = true;
+  // Picking from the dropdown clears the typed time; typing wins over the dropdown.
+  byId('subx-threshold-select')?.addEventListener('change', (e) => {
+    state.subxThreshold = e.target.value;
+    const box = byId('subx-custom');
+    if (box) box.value = '';
+    renderSubX();
+  });
+  let timer = null;
+  byId('subx-custom')?.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => renderSubX(), 250);
+  });
+}
+
 export function renderSubX() {
-  const list = byId('subx-list');
+  const table = byId('subx-table');
   const note = byId('subx-note');
-  if (!list || !note) return;
+  const select = byId('subx-threshold-select');
+  const custom = byId('subx-custom');
+  if (!table || !note || !select || !custom) return;
+  wireSubX();
+
   const events = store.rankings?.events || [];
-  const eventId = state.subxEventId || events[0]?.id;
-  const ev = events.find((e) => e.id === eventId);
+  const ev = events.find((e) => e.id === (state.subxEventId || events[0]?.id));
   if (!ev) {
-    list.innerHTML = '';
+    table.innerHTML = '';
     note.textContent = '';
     return;
   }
-
   const type = ev.hasAverage === false ? 'single' : state.subxType || 'single';
-  const thresholds = SUBX_THRESHOLDS[ev.id]?.[type];
-  if (!thresholds) {
-    note.textContent = ev.id === '333mbf' ? 'Multi-Blind has no sub-X clubs.' : 'No clubs are set up for this event yet.';
-    list.innerHTML = '';
+  const isAvg = type === 'average';
+
+  // Threshold dropdown: largest first; keeps the choice if it exists for this event and type.
+  const thresholds = [...(SUBX_THRESHOLDS[ev.id]?.[type] || [])].sort((a, b) => b - a);
+  let chosen = String(state.subxThreshold ?? '');
+  if (!thresholds.map(String).includes(chosen)) {
+    chosen = thresholds.length ? String(thresholds[Math.floor(thresholds.length / 2)]) : '';
+  }
+  state.subxThreshold = chosen;
+  select.replaceChildren(...thresholds.map((t) => new Option(`Sub-${formatThreshold(t)}`, String(t))));
+  select.value = chosen;
+  select.disabled = thresholds.length === 0;
+  custom.disabled = ev.id === '333mbf';
+  custom.placeholder = placeholderFor(ev.id, isAvg);
+
+  if (ev.id === '333mbf') {
+    table.innerHTML = '';
+    note.textContent = 'Multi-Blind has no sub-X clubs.';
     return;
   }
 
-  const isFmc = ev.id === '333fm';
-  const unitOf = isFmc ? (type === 'average' ? (v) => v / 100 : (v) => v) : (v) => v / 100;
-  note.textContent = isFmc
-    ? `Everyone with a ${type} under each number of moves. Everyone in a faster club is in the slower ones too.`
-    : `Everyone with a ${type} under each time, in seconds (or minutes:seconds). Everyone in a faster club is in the slower ones too.`;
+  let limit = null;
+  let title = '';
+  const typed = custom.value.trim();
+  if (typed) {
+    const parsed = parseWhatIfResult(typed, ev.id, isAvg);
+    if (parsed.error) {
+      table.innerHTML = '';
+      note.textContent = parsed.error;
+      return;
+    }
+    limit = parsed.value;
+    title = `Sub-${typed}`;
+  } else if (chosen) {
+    limit = storedLimit(ev.id, type, Number(chosen));
+    title = `Sub-${formatThreshold(Number(chosen))}`;
+  } else {
+    table.innerHTML = '';
+    note.textContent = 'No clubs are set up for this event yet. Type a time in the box to see who was first under it.';
+    return;
+  }
 
-  const clubs = clubsFor(ev[type] || [], thresholds, unitOf);
-  list.innerHTML = `<div class="club-list">${clubs
-    .map((c) => {
-      const title = `Sub-${formatThreshold(c.threshold)}`;
-      if (c.count === 0) {
-        return `<div class="club-row"><div class="club-head"><span class="club-title">${esc(title)}</span><span class="club-count">nobody yet</span></div></div>`;
-      }
-      const names = c.members
-        .map((r) => `${nameLink(r.wcaId, r.name)} <span class="club-result">(${esc(r.display)})</span>`)
-        .join(', ');
-      const more = c.count > c.members.length ? ` <span class="club-result">and ${c.count - c.members.length} more</span>` : '';
-      return `<div class="club-row"><div class="club-head"><span class="club-title">${esc(title)}</span><span class="club-count">${c.count} ${c.count === 1 ? 'person' : 'people'}</span></div><div class="club-members">${names}${more}</div></div>`;
-    })
-    .join('')}</div>`;
+  const entries = store.fullResults?.entries || [];
+  if (entries.length === 0) {
+    table.innerHTML = '';
+    note.textContent = 'Full results are still being processed for this list.';
+    return;
+  }
+  const rows = firstUnder(entries, ev.id, type, limit, dateWindow());
+  const what = title.slice(4) + (ev.id === '333fm' ? ' moves' : '');
+  if (rows.length === 0) {
+    table.innerHTML = '';
+    note.textContent = `Nobody has a ${type} under ${what} yet.`;
+    return;
+  }
+  note.textContent =
+    `${title}: ${rows.length} ${rows.length === 1 ? 'person' : 'people'}, in the order they first got a ${type} under it (earliest first). Follows the date view in settings.` +
+    (rows.length > MAX_SUBX_ROWS ? ` Showing the first ${MAX_SUBX_ROWS}.` : '');
+
+  renderTable(table, rows.slice(0, MAX_SUBX_ROWS), [
+    { key: 'rank', label: '#', value: () => '' },
+    { key: 'name', label: 'Name', value: (r) => nameLink(r.wcaId, nameOf(r.wcaId, r.name)) },
+    { key: 'result', label: 'Result', value: (r) => esc(formatResultLike(r[type], ev, isAvg)) },
+    { key: 'date', label: 'Date', value: (r) => formatDate(r.date) },
+    {
+      key: 'comp',
+      label: 'Competition',
+      value: (r) => esc([r.competitionName || r.competitionId, r.roundName || roundLabelFallback(r.round)].filter(Boolean).join(' \u2013 ')),
+    },
+  ]);
+  addPositionColumn('subx-table');
 }
 
 // ---------- Attendance ----------
