@@ -528,12 +528,7 @@ function wireWhatIf() {
 function populateWhatIfPeople() {
   const sel = byId('whatif-person-select');
   if (!sel) return;
-  const rows = store.rankings?.kinch?.overall || [];
-  const prev = sel.value;
-  const frag = document.createDocumentFragment();
-  for (const r of rows) frag.appendChild(new Option(r.name, r.wcaId));
-  sel.replaceChildren(frag);
-  if (prev && rows.some((r) => r.wcaId === prev)) sel.value = prev;
+  mountPersonPicker(sel, { getPeople: () => store.rankings?.kinch?.overall || [], defaultToMe: true });
 }
 
 // The group's entry: fills the person list, then draws.
