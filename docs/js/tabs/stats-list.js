@@ -4,6 +4,11 @@
 // "Random statistic" opens a different one at random.
 // The rows keep the .subtab-btn class so setupSubtabs and showPanel(tab, subtab)
 // (used by the Home page links) work unchanged.
+//
+// A row can be hidden with CSS (e.g. body.country-mode hides the statistics that need
+// full results). "Random statistic" skips rows that are hidden that way. It checks the
+// row's own display, not whether it is on screen, because the whole list is hidden while a
+// statistic is open.
 
 export function setupStatsList() {
   const tab = document.getElementById('tab-misc');
@@ -44,7 +49,7 @@ export function setupStatsList() {
   back.addEventListener('click', showList);
 
   random.addEventListener('click', () => {
-    const rows = Array.from(list.querySelectorAll('.stat-row'));
+    const rows = Array.from(list.querySelectorAll('.stat-row')).filter((r) => getComputedStyle(r).display !== 'none');
     const current = list.querySelector('.stat-row.active');
     const pool = rows.filter((r) => r !== current);
     if (pool.length) pool[Math.floor(Math.random() * pool.length)].click();
