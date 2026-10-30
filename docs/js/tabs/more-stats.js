@@ -9,7 +9,7 @@
 // parseWhatIfResult, computeWhatIf) are exported so they can be tested on their own.
 
 import { store, state } from '../store.js';
-import { formatDate } from '../format.js';
+import { formatDate, formatResultLike, roundLabelFallback } from '../format.js';
 import { nameLink, renderTable, addPositionColumn } from '../ui.js';
 import { mountPersonPicker } from '../person-picker.js';
 
