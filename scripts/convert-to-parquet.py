@@ -23,6 +23,11 @@ Output (PARQUET_OUTPUT_DIR):
                           Columns: result_id, wca_id, person_name, event_id, competition_id,
                           round_type_id, pos, best, average, attempts (BIGINT[] in attempt order),
                           year, month, day (competition date)
+    results_by_country.parquet
+                          The same rows as results.parquet plus country_iso2 (the person's country),
+                          SORTED BY country_iso2, wca_id, event_id, date: one country's results (or one
+                          state's people, once their ids are known) are a few contiguous row groups.
+                          Optional: if writing it fails, a warning is printed and everything else is kept.
 
 Design rules:
   * No DuckDB dialect sniffing (auto_detect=False); the column list is built from the real header.
@@ -36,7 +41,7 @@ import sys
 
 import duckdb
 
-SCRIPT_VERSION = "8.5"
+SCRIPT_VERSION = "8.6"
 print(f"=== convert-to-parquet.py v{SCRIPT_VERSION} ===", flush=True)
 
 export_dir = os.getenv("WCA_EXPORT_DIR", "/tmp/wca-export")
@@ -446,6 +451,33 @@ copy_to_parquet(
     """,
     "results.parquet",
 )
+
+# ------------------------------------------------------- results by country
+# The same rows plus the person's country, sorted by country then person, so one country's
+# results are a few contiguous row groups instead of being spread over the whole by-person file.
+# This copy is an extra: if anything goes wrong the file is removed and the build carries on
+# (a failure here must never stop results.parquet and the other files from being uploaded).
+print("Writing results_by_country...", flush=True)
+RESULTS_PARQUET = os.path.join(output_dir, "results.parquet")
+RESULTS_BY_COUNTRY = os.path.join(output_dir, "results_by_country.parquet")
+try:
+    copy_to_parquet(
+        f"""
+        SELECT p.country_iso2 AS country_iso2, r.*
+        FROM read_parquet('{RESULTS_PARQUET}') r
+        LEFT JOIN read_parquet('{PERSONS_PARQUET}') p ON r.wca_id = p.wca_id
+        ORDER BY p.country_iso2 NULLS LAST, r.wca_id, r.event_id, r.year, r.month, r.day
+        """,
+        "results_by_country.parquet",
+    )
+    n_a = con.execute(f"SELECT count(*) FROM read_parquet('{RESULTS_PARQUET}')").fetchone()[0]
+    n_b = con.execute(f"SELECT count(*) FROM read_parquet('{RESULTS_BY_COUNTRY}')").fetchone()[0]
+    if n_a != n_b:
+        raise RuntimeError(f"row counts differ ({n_a:,} vs {n_b:,})")
+except Exception as e:
+    print(f"  WARNING: results_by_country.parquet was not kept: {e}", file=sys.stderr)
+    if os.path.exists(RESULTS_BY_COUNTRY):
+        os.remove(RESULTS_BY_COUNTRY)
 
 # Sanity check: every output must have rows.
 for name in sorted(os.listdir(output_dir)):
