@@ -165,3 +165,82 @@ export async function buildInstantData(source) {
     ms: performance.now() - t0,
   };
 }
+
+/**
+ * Whole-country rankings (H1, the Australia page). Paste this at the END of instant-rankings.js.
+ * It uses the helpers already in that file (sq, clean, ID_RE, ISO_RE, emptyIndividual,
+ * emptyHistorical) and the imports at the top (activeEvents, peopleFromRows, computeRankings).
+ *
+ * source = { list: { country: 'AU', name: 'Australia' } } (what main.js resolveSource() builds
+ * for ?list=country-au). There is no member list: everyone whose WCA country is `country` and
+ * who has at least one official single or average is ranked. Returns the same
+ * { rankings, individual, historical, ms } as buildInstantData, with empty history shapes
+ * (no results are read, only persons and the two ranks files), or null for a bad country code.
+ */
+export async function buildCountryData(source) {
+  const t0 = performance.now();
+  const code = String((source.list && source.list.country) || '').toUpperCase();
+  if (!ISO_RE.test(code)) return null;
+
+  const laps = [];
+  const lap = (step) => laps.push({ step, at_ms: Math.round(performance.now() - t0) });
+
+  const db = await import('./db.js');
+  await db.initDB();
+  try {
+    await db.queryParquet('SET enable_object_cache = true');
+  } catch (e) {
+    console.warn('Could not enable the object cache:', e);
+  }
+  lap('DuckDB ready');
+
+  // Everyone of this nationality, once, in a temp table the two ranks queries filter by.
+  await db.queryParquet(
+    `CREATE OR REPLACE TEMP TABLE scope_persons AS
+     SELECT wca_id, name, country_id, country_iso2 FROM persons.parquet WHERE country_iso2 = ${sq(code)}`
+  );
+  lap('persons read');
+
+  const events = activeEvents();
+  const eventIds = new Set(events.map((e) => e.id));
+  const evList = [...eventIds].map(sq).join(',');
+  const ranksSql = (kind) =>
+    `SELECT r.wca_id, r.event_id, r.best, r.world_rank, r.continent_rank, r.country_rank
+     FROM ranks_${kind}.parquet r
+     WHERE r.event_id IN (${evList}) AND r.wca_id IN (SELECT wca_id FROM scope_persons)`;
+
+  const singleRows = await db.queryParquet(ranksSql('single'));
+  lap(`ranks_single read (${singleRows.length} rows)`);
+  const averageRows = await db.queryParquet(ranksSql('average'));
+  lap(`ranks_average read (${averageRows.length} rows)`);
+  const rawPersons = await db.queryParquet('SELECT wca_id, name, country_id, country_iso2 FROM scope_persons');
+
+  // Only people with at least one official result are ranked.
+  const hasRank = new Set();
+  for (const r of singleRows) hasRank.add(r.wca_id);
+  for (const r of averageRows) hasRank.add(r.wca_id);
+  const personRows = rawPersons
+    .filter((r) => ID_RE.test(String(r.wca_id)) && hasRank.has(r.wca_id))
+    .map((r) => ({ ...r, name: clean(r.name) }));
+  const order = personRows.map((r) => r.wca_id).sort();
+
+  const people = peopleFromRows(personRows, singleRows, averageRows, eventIds, order);
+  for (const p of people) p.countryIso2 = code;
+  lap(`${people.length} people built`);
+
+  const rankings = computeRankings(people, events);
+  for (const row of rankings.people || []) row.countryIso2 = code;
+  rankings.dataFetchedAt = rankings.generatedAt;
+  rankings.listName = source.list.name;
+  lap('rankings computed');
+
+  console.info(`Country rankings for ${code}: ${people.length} people`);
+  console.table(laps);
+
+  return {
+    rankings,
+    individual: emptyIndividual([], events),
+    historical: emptyHistorical([], events),
+    ms: performance.now() - t0,
+  };
+}
