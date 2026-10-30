@@ -207,6 +207,15 @@
             <button class="toggle-btn" data-mode="allpr">All PRs</button>
             <button class="toggle-btn" data-mode="alltime">Longest ever</button>
           </div>
+ <div class="toggle" id="age-format-toggle">
+            <button class="toggle-btn active" data-type="all">All formats</button>
+            <button class="toggle-btn" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average / mean</button>
+          </div>
+          <div class="toggle" id="age-active-toggle">
+            <button class="toggle-btn active" data-active="all">All time</button>
+            <button class="toggle-btn" data-active="recent">Competed in the last year</button>
+          </div>
           <div class="event-picker" id="age-event-select" data-all="true"></div>
         </div>
         <p class="board-note" id="age-note"></p>
@@ -272,6 +281,11 @@
 
       <div id="subtab-history" class="subtab-panel" data-title="Historical Records" data-desc="every record ever set, in order, by event.">
         <div class="panel-controls">
+          <div class="toggle" id="history-type-toggle">
+            <button class="toggle-btn active" data-type="all">All formats</button>
+            <button class="toggle-btn" data-type="single">Single</button>
+            <button class="toggle-btn" data-type="average">Average / mean</button>
+          </div>
           <div class="event-picker" id="history-event-select"></div>
         </div>
         <p class="board-note">every record for this group that has ever been set in the history of time.</p>
