@@ -1477,3 +1477,25 @@ button, input, select, textarea { font-family: inherit; }
   min-width: 8rem;
   padding-left: 0.5rem;
 }
+
+/* ---- Preset grid + self-hosted fonts (2026-10-30) ---- */
+
+/* Change --preset-cols to change the number of columns. */
+.preset-list {
+  --preset-cols: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--preset-cols), minmax(0, 1fr));
+  max-width: 56rem;
+}
+
+.preset-custom { grid-column: 1 / -1; }
+
+@media (max-width: 700px) {
+  .preset-list { --preset-cols: 1; }
+}
+
+@font-face { font-family: "Inter"; src: url("fonts/inter.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Nunito"; src: url("fonts/nunito.woff2") format("woff2"); font-weight: 200 1000; font-style: normal; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("fonts/space-grotesk.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Merriweather"; src: url("fonts/merriweather.woff2") format("woff2"); font-weight: 300 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
