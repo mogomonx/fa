@@ -10,6 +10,11 @@ const WCA_ID_RE = /^[0-9]{4}[A-Z]{4}[0-9]{2}$/;
 export function showProfile(wcaId) {
   // The id usually comes from a data-wcaid attribute in the page, so check its shape first.
   if (!WCA_ID_RE.test(String(wcaId))) return;
+  // Country pages have no full results yet, so there is no profile to show: open the WCA profile instead.
+  if (store.listKind === 'country') {
+    window.open(`https://www.worldcubeassociation.org/persons/${wcaId}`, '_blank', 'noopener');
+    return;
+  }
   const activeTab = document.querySelector('.tab-btn.active');
   if (activeTab && activeTab.dataset.tab !== 'profile') {
     state.previousTab = activeTab.dataset.tab;
