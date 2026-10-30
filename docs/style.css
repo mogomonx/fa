@@ -1501,3 +1501,44 @@ button, input, select, textarea { font-family: inherit; }
 @font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
 
 #subx-table .scroll-table :is(th, td) { white-space: normal; }
+
+/* ---- Country pages (?list=country-xx, H1, 2026-10-30) ----
+   A country page is worked out in the browser from the ranks files only, so it has
+   rankings, records, Sum of Ranks and Kinch but no results-based tabs. This block is the
+   list of what is hidden: delete a line when that part gets real data.
+   Home-page links, side-menu items, Misc statistics (data-subtab = the panel id without
+   "subtab-"), the members chips/button and Recent activity. */
+body.country-mode .menu-item[data-tab="individual"],
+body.country-mode .menu-item[data-tab="rolling"],
+body.country-mode .home-link[data-tab="individual"],
+body.country-mode .home-link[data-tab="rolling"],
+body.country-mode #home-members,
+body.country-mode .panel-controls .tab-btn[data-tab="members"],
+body.country-mode .board:has(#recent-activity-table),
+body.country-mode .stat-row[data-subtab="top100"],
+body.country-mode .stat-row[data-subtab="farcounts"],
+body.country-mode .stat-row[data-subtab="age"],
+body.country-mode .stat-row[data-subtab="streaks"],
+body.country-mode .stat-row[data-subtab="streaks-event"],
+body.country-mode .stat-row[data-subtab="prcount"],
+body.country-mode .stat-row[data-subtab="upcoming"],
+body.country-mode .stat-row[data-subtab="consistency"],
+body.country-mode .stat-row[data-subtab="history"],
+body.country-mode .stat-row[data-subtab="improvement"],
+body.country-mode .stat-row[data-subtab="nemesis"],
+body.country-mode .stat-row[data-subtab="podiums"],
+body.country-mode .stat-row[data-subtab="subx"],
+body.country-mode .stat-row[data-subtab="attendance"] { display: none; }
+
+/* "Showing 250 of 12,000 / Show more / Show all" bar under a long table (ui.js paginate) */
+.more-bar {
+  position: sticky;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+}
+
+.more-bar .board-note { margin: 0; }
