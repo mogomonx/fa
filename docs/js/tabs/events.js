@@ -120,8 +120,13 @@ export function renderTop100() {
 
 // ---------- Historical Records ----------
 
+// Every record carries its own type ('single' or 'average'), so the format toggle
+// (state.historyType: 'all', 'single' or 'average') only filters what is already loaded.
 export function renderHistory() {
-  const rows = store.historical.records.filter((r) => r.eventId === state.historyEventId);
+  const type = state.historyType || 'all';
+  const rows = store.historical.records.filter(
+    (r) => r.eventId === state.historyEventId && (type === 'all' || r.type === type)
+  );
   renderTable(document.getElementById('historical-records-table'), rows, [
     { key: 'date', label: 'Date', value: (r) => formatDate(r.date) },
     { key: 'type', label: 'Type', value: (r) => (r.type === 'single' ? 'Single' : 'Average') },
