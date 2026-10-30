@@ -2,46 +2,31 @@ import { store } from '../store.js';
 import { formatResultLike } from '../format.js';
 import { nameLink, renderTable, setupToggle, esc } from '../ui.js';
 import { eventIcon } from '../icons.js';
+import { mountPersonPicker, getMyWcaId } from '../person-picker.js';
 
 const H2H_IDS = ['h2h-person-1', 'h2h-person-2', 'h2h-person-3', 'h2h-person-4', 'h2h-person-5'];
-const OPTIONAL_IDS = new Set(['h2h-person-3', 'h2h-person-4', 'h2h-person-5']);
 const NEMESIS_ID = 'nemesis-person-select';
 const CHASING_ID = 'chasing-person-select';
-const ALL_IDS = [...H2H_IDS, NEMESIS_ID, CHASING_ID];
 
 let h2hView = 'single';
 let wired = false;
-let defaultChecked = false;
-let userChanged = false;
+let h2hDefaulted = false;
 
 const $ = (id) => document.getElementById(id);
 const findRankEntry = (list, wcaId) => (list || []).find((r) => r.wcaId === wcaId) || null;
 const personName = (wcaId) => store.people.get(wcaId)?.name || wcaId;
+const listPeople = () => store.rankings.people || [];
 
-// Fills the person dropdowns. Safe to call repeatedly (time travel): uses
-// onchange (no stacked listeners) and keeps the current selection.
+// Sets up the five Head-to-Head boxes, Nemesis and Chasing as searchable person
+// pickers (see person-picker.js). Safe to call repeatedly (time travel): a picker
+// that already exists only refreshes its people and keeps the current choice.
 export function populateCompareSelects() {
-  const people = store.rankings.people || [];
-  const previous = ALL_IDS.map((id) => $(id).value);
-
-  ALL_IDS.forEach((id, i) => {
-    const select = $(id);
-    select.innerHTML = '';
-    if (OPTIONAL_IDS.has(id)) {
-      const blank = document.createElement('option');
-      blank.value = '';
-      blank.textContent = '(nobody)';
-      select.appendChild(blank);
-    }
-    people.forEach((p) => {
-      const opt = document.createElement('option');
-      opt.value = p.wcaId;
-      opt.textContent = p.name;
-      select.appendChild(opt);
-    });
-    if (previous[i] && people.some((p) => p.wcaId === previous[i])) select.value = previous[i];
-  });
-  if (!previous[1] && people.length > 1) $('h2h-person-2').value = people[1].wcaId;
+  const pickers = H2H_IDS.map((id) =>
+    mountPersonPicker($(id), { getPeople: listPeople, allowBlank: true, placeholder: 'Add a person\u2026' })
+  );
+  // Nemesis and Chasing start on the logged-in user when they are on the list.
+  mountPersonPicker($(NEMESIS_ID), { getPeople: listPeople, defaultToMe: true });
+  mountPersonPicker($(CHASING_ID), { getPeople: listPeople, defaultToMe: true });
 
   if (!wired) {
     wired = true;
@@ -51,48 +36,26 @@ export function populateCompareSelects() {
     });
   }
   H2H_IDS.forEach((id) => {
-    $(id).onchange = () => {
-      userChanged = true;
-      renderHeadToHead();
-    };
+    $(id).onchange = renderHeadToHead;
   });
-  $(NEMESIS_ID).onchange = () => {
-    userChanged = true;
-    renderTrueNemesis();
-  };
-  $(CHASING_ID).onchange = () => {
-    userChanged = true;
-    renderChasing();
-  };
+  $(NEMESIS_ID).onchange = renderTrueNemesis;
+  $(CHASING_ID).onchange = renderChasing;
 
-  applyLoggedInDefault();
-}
-
-// Once per page load: if the visitor is logged in and on this list, start
-// the first Head-to-Head box, Nemesis and Chasing on them.
-async function applyLoggedInDefault() {
-  if (defaultChecked) return;
-  defaultChecked = true;
-  try {
-    const { supabase } = await import('../auth.js');
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
-    const { data } = await supabase.from('profiles').select('wca_id').eq('id', session.user.id).maybeSingle();
-    const me = data?.wca_id;
-    const people = store.rankings.people || [];
-    if (!me || userChanged || !people.some((p) => p.wcaId === me)) return;
-
-    $('h2h-person-1').value = me;
-    if ($('h2h-person-2').value === me) {
-      const other = people.find((p) => p.wcaId !== me);
-      if (other) $('h2h-person-2').value = other.wcaId;
-    }
-    $(NEMESIS_ID).value = me;
-    $(CHASING_ID).value = me;
-    renderHeadToHead();
-    renderNemesis();
-  } catch (err) {
-    console.warn('Could not default Compare to the logged-in user:', err);
+  // First time only: the first two people, then the logged-in user in the first box.
+  if (!h2hDefaulted && listPeople().length) {
+    h2hDefaulted = true;
+    const people = listPeople();
+    pickers[0].set(people[0].wcaId);
+    if (people.length > 1) pickers[1].set(people[1].wcaId);
+    getMyWcaId().then((me) => {
+      if (!me || pickers[0].touched || !listPeople().some((p) => p.wcaId === me)) return;
+      pickers[0].set(me);
+      if ($(H2H_IDS[1]).value === me) {
+        const other = listPeople().find((p) => p.wcaId !== me);
+        if (other) pickers[1].set(other.wcaId);
+      }
+      renderHeadToHead();
+    });
   }
 }
 
@@ -176,7 +139,7 @@ export function renderTrueNemesis() {
   const container = $('nemesis-table');
   if (!wcaId) return;
 
-  const others = (store.rankings.people || []).filter((p) => p.wcaId !== wcaId);
+  const others = listPeople().filter((p) => p.wcaId !== wcaId);
   const nemeses = others.filter((p) => nemesizes(p.wcaId, wcaId));
   const victims = others.filter((p) => nemesizes(wcaId, p.wcaId));
   const name = esc(personName(wcaId));
