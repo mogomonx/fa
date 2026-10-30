@@ -1449,3 +1449,31 @@ button, input, select, textarea { font-family: inherit; }
 .person-picker-item.active { background: var(--accent-dim); }
 .person-picker-id { color: var(--text-dim); font-size: 0.75rem; }
 .person-picker-note { padding: 0.4rem 0.6rem; color: var(--text-dim); font-size: 0.78rem; }
+
+/* ---- No sideways scrolling (2026-10-30) ----
+   Rankings, Results and Improvement: let cells wrap instead of forcing one long row.
+   The Sum of Ranks, Kinch, Top 100 and Records Set detailed tables: tighter cells and
+   one narrower frozen column, so a full set of events fits a laptop-width screen.
+   If a table is still too wide for a screen, it falls back to scrolling sideways. */
+
+:is(#event-table, #individual-results-table, #improvement-table) .scroll-table :is(th, td) {
+  white-space: normal;
+}
+
+:is(#sor-detailed-view, #kinch-detailed-view, #top100-detailed-view, #far-detailed-view) {
+  --rank-col-w: 2.25rem;
+}
+
+:is(#sor-detailed-view, #kinch-detailed-view, #top100-detailed-view, #far-detailed-view) :is(th, td) {
+  padding: 0.5rem 0.3rem;
+}
+
+:is(#sor-detailed-view, #kinch-detailed-view, #top100-detailed-view, #far-detailed-view) td {
+  font-size: 0.82rem;
+}
+
+:is(#sor-detailed-view, #kinch-detailed-view, #top100-detailed-view, #far-detailed-view) :is(td.name-cell, th.name-header) {
+  white-space: normal;
+  min-width: 8rem;
+  padding-left: 0.5rem;
+}
