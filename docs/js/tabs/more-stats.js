@@ -11,6 +11,7 @@
 import { store, state } from '../store.js';
 import { formatDate } from '../format.js';
 import { nameLink, renderTable, addPositionColumn } from '../ui.js';
+import { mountPersonPicker } from '../person-picker.js';
 
 const esc = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
