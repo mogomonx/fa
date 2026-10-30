@@ -8,6 +8,60 @@ const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&
 // Turns text into something safe to put inside HTML (text or a quoted attribute).
 export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ESC_MAP[c]);
 
+// ---------- Big tables: draw the first rows, reveal the rest on demand ----------
+// Scopes with thousands of people (country pages) would build tens of thousands of rows
+// at once. renderTable and renderDetailedTable draw PAGE_ROWS rows and add a
+// "Show more / Show all" bar under the table. Every other list keeps drawing everything.
+// To page state lists too, change pageSize() (e.g. return 250 for kind 'state').
+// CSV export calls container.__showAll() first, so an export always has every row.
+const PAGE_ROWS = 250;
+
+function pageSize() {
+  return store.listKind === 'country' ? PAGE_ROWS : Infinity;
+}
+
+// draw(to) must draw the rows not yet drawn, up to index `to` (exclusive).
+// container.__position marks tables whose first column is numbered by addPositionColumn().
+function paginate(container, total, draw) {
+  const limit = pageSize();
+  let shown = Math.min(total, limit);
+  draw(shown);
+  if (total <= limit) return;
+
+  const bar = document.createElement('div');
+  bar.className = 'more-bar';
+  const note = document.createElement('span');
+  note.className = 'board-note';
+  const moreBtn = document.createElement('button');
+  moreBtn.type = 'button';
+  moreBtn.className = 'csv-btn';
+  moreBtn.textContent = `Show ${limit} more`;
+  const allBtn = document.createElement('button');
+  allBtn.type = 'button';
+  allBtn.className = 'csv-btn';
+  allBtn.textContent = 'Show all';
+  bar.append(note, moreBtn, allBtn);
+
+  const sync = () => {
+    if (shown >= total) bar.remove();
+    else note.textContent = `Showing ${shown.toLocaleString()} of ${total.toLocaleString()}`;
+  };
+  const reveal = (to) => {
+    to = Math.min(total, to);
+    if (to <= shown) return;
+    shown = to;
+    draw(shown);
+    if (container.__position) addPositionColumn(container.id);
+    sync();
+  };
+
+  moreBtn.addEventListener('click', () => reveal(shown + limit));
+  allBtn.addEventListener('click', () => reveal(total));
+  container.__showAll = () => reveal(total);
+  container.appendChild(bar);
+  sync();
+}
+
 // ---------- Links & table helpers ----------
 
 // Both arguments are plain text and are escaped here. Callers must NOT escape
@@ -24,6 +78,8 @@ export function medalRowClass(rank) {
 }
 
 export function renderTable(container, rows, columns) {
+  container.__position = false;
+  container.__showAll = null;
   if (!rows || rows.length === 0) {
     container.innerHTML = '<p class="empty-note">No results yet.</p>';
     return;
@@ -34,14 +90,6 @@ export function renderTable(container, rows, columns) {
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
-  rows.forEach((row) => {
-    const tr = document.createElement('tr');
-    if (row.rank) tr.className = medalRowClass(row.rank);
-    tr.innerHTML = columns
-      .map((c) => `<td class="${c.key === 'rank' ? 'rank-cell' : ''}">${c.value(row)}</td>`)
-      .join('');
-    tbody.appendChild(tr);
-  });
   table.appendChild(tbody);
 
   const wrap = document.createElement('div');
@@ -49,9 +97,28 @@ export function renderTable(container, rows, columns) {
   wrap.appendChild(table);
   container.innerHTML = '';
   container.appendChild(wrap);
+
+  let drawn = 0;
+  paginate(container, rows.length, (to) => {
+    const frag = document.createDocumentFragment();
+    for (; drawn < to; drawn++) {
+      const row = rows[drawn];
+      const tr = document.createElement('tr');
+      if (row.rank) tr.className = medalRowClass(row.rank);
+      tr.innerHTML = columns
+        .map((c) => `<td class="${c.key === 'rank' ? 'rank-cell' : ''}">${c.value(row)}</td>`)
+        .join('');
+      frag.appendChild(tr);
+    }
+    tbody.appendChild(frag);
+  });
 }
 
+// Numbers the first column 1, 2, 3 ... (and gives the top three their medal colours).
+// Remembers it on the container, so rows revealed later by "Show more" are numbered too.
 export function addPositionColumn(containerId) {
+  const container = document.getElementById(containerId);
+  if (container) container.__position = true;
   document.querySelectorAll(`#${containerId} tbody tr`).forEach((tr, i) => {
     const firstCell = tr.querySelector('td');
     if (firstCell) firstCell.textContent = i + 1;
@@ -70,6 +137,8 @@ function eventColumnsFor(rows) {
 // Kinch, Top 100, and FAR counts -- anything shaped like
 // {wcaId, name, total (or score), components: {eventId: ...}}.
 export function renderDetailedTable(container, rows, totalKey, totalLabel, formatCell, formatTotal) {
+  container.__position = false;
+  container.__showAll = null;
   if (!rows || rows.length === 0) {
     container.innerHTML = '<p class="empty-note">No results yet.</p>';
     return;
@@ -87,18 +156,25 @@ export function renderDetailedTable(container, rows, totalKey, totalLabel, forma
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
-  rows.forEach((row, i) => {
-    const tr = document.createElement('tr');
-    const cls = medalRowClass(i + 1);
-    if (cls) tr.className = cls;
-    const cells = eventCols.map((e) => `<td>${formatCell(row.components[e.id])}</td>`).join('');
-    tr.innerHTML = `<td class="rank-cell">${i + 1}</td><td class="name-cell">${nameLink(row.wcaId, row.name)}</td>${cells}<td><strong>${formatTotal(row[totalKey])}</strong></td>`;
-    tbody.appendChild(tr);
-  });
   table.appendChild(tbody);
 
   container.innerHTML = '';
   container.appendChild(table);
+
+  let drawn = 0;
+  paginate(container, rows.length, (to) => {
+    const frag = document.createDocumentFragment();
+    for (; drawn < to; drawn++) {
+      const row = rows[drawn];
+      const tr = document.createElement('tr');
+      const cls = medalRowClass(drawn + 1);
+      if (cls) tr.className = cls;
+      const cells = eventCols.map((e) => `<td>${formatCell(row.components[e.id])}</td>`).join('');
+      tr.innerHTML = `<td class="rank-cell">${drawn + 1}</td><td class="name-cell">${nameLink(row.wcaId, row.name)}</td>${cells}<td><strong>${formatTotal(row[totalKey])}</strong></td>`;
+      frag.appendChild(tr);
+    }
+    tbody.appendChild(frag);
+  });
 }
 
 // ---------- Event pickers ----------
@@ -234,6 +310,9 @@ function csvCell(text) {
 }
 
 function tableContainerToCsv(containerId) {
+  // A paged table only has its first rows on screen: draw the rest before reading it.
+  const container = document.getElementById(containerId);
+  if (container && typeof container.__showAll === 'function') container.__showAll();
   const table = document.querySelector(`#${containerId} table`);
   if (!table) return null;
   return Array.from(table.querySelectorAll('tr'))
