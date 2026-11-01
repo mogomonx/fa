@@ -1507,9 +1507,7 @@ button, input, select, textarea { font-family: inherit; }
    Home-page links, side-menu items, Misc statistics (data-subtab = the panel id without
    "subtab-"), the members chips/button and Recent activity. */
 body.country-mode .menu-item[data-tab="individual"],
-body.country-mode .menu-item[data-tab="rolling"],
 body.country-mode .home-link[data-tab="individual"],
-body.country-mode .home-link[data-tab="rolling"],
 body.country-mode #home-members,
 body.country-mode .panel-controls .tab-btn[data-tab="members"],
 body.country-mode .board:has(#recent-activity-table),
