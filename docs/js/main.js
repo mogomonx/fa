@@ -14,6 +14,7 @@ import { setupImprovementDates, renderImprovement } from './tabs/improvement.js'
 import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
 import { makeLazyRolling } from './rolling-core.js';
 import { setupDateBanner, restoreTimeTravel } from './timetravel/index.js';
+import { loadTravel, loadFrame } from './timetravel/storage.js';
 
 function friendly(message) {
   const e = new Error(message);
@@ -225,6 +226,30 @@ function populateSelects() {
   populateCompareSelects();
 }
 
+// ---------- Country pages: every result, loaded when first needed (H2) ----------
+// A country page starts from the ranks files only. The Rolling tab and On This Date / Time frame
+// need every individual result, so they load them (about 260,000 rounds for Australia) the first
+// time they are used, and only once. If loading fails the next attempt starts again.
+let countryEntriesPromise = null;
+
+function ensureCountryEntries() {
+  if (!countryEntriesPromise) {
+    const live = store.live?.rankings || store.rankings;
+    countryEntriesPromise = import('./country-results.js')
+      .then((m) => m.loadCountryEntries({ country: source.list.country, events: live.events || [], people: live.people || [] }))
+      .then((entries) => {
+        store.fullResults = { entries };
+        store.rolling = makeLazyRolling(() => store.fullResults.entries, live.people || [], live.events || []);
+        populateRollingSelects();
+      })
+      .catch((err) => {
+        countryEntriesPromise = null;
+        throw err;
+      });
+  }
+  return countryEntriesPromise;
+}
+
 // ---------- Lazy drawing ----------
 // Drawing every tab at load was the biggest single cost of opening a big list
 // (about 300 ms on a laptop, over a second on a slow phone). Now only what is on
@@ -271,6 +296,21 @@ const RENDER = {
   subx: renderSubX,
   attendance: renderAttendance,
   whatif: renderWhatIf,
+  // Only country pages draw Rolling lazily (see LAZY below); every other list draws it once at load.
+  rolling: () => {
+    if (store.listKind !== 'country' || store.rolling) {
+      renderRolling();
+      return;
+    }
+    const container = document.getElementById('rolling-table');
+    container.innerHTML = '<p class="empty-note">Loading every result for this country (a few seconds the first time)…</p>';
+    ensureCountryEntries()
+      .then(() => renderRolling())
+      .catch((err) => {
+        console.error('Could not load the results for Rolling:', err);
+        container.innerHTML = '<p class="empty-note">Could not load the results. Try reloading.</p>';
+      });
+  },
 };
 
 // Which groups a panel needs when it is shown (key = the panel's element id).
@@ -368,7 +408,10 @@ async function loadData() {
   const isCountry = kind === 'country';
   store.listKind = kind || 'group';
   if (isState) document.body.classList.add('state-mode');
-  if (isCountry) document.body.classList.add('country-mode');
+  if (isCountry) {
+    document.body.classList.add('country-mode');
+    LAZY['tab-rolling'] = ['rolling'];
+  }
   if (isState || isCountry) {
     const statesLink = document.getElementById('states-link');
     if (statesLink) statesLink.hidden = false;
@@ -414,7 +457,8 @@ async function loadData() {
     streaks,
     recentActivity,
     // State lists have no rolling-averages.json (H2): work the tables out here, one event and
-    // format at a time, from the results already loaded.
+    // format at a time, from the results already loaded. A leftover file from the first state
+    // build is ignored on purpose. Country pages load their results later (ensureCountryEntries).
     rolling: isState && fullResults ? makeLazyRolling(() => store.fullResults.entries, rankings.people || [], rankings.events || []) : rolling,
   });
 
@@ -453,12 +497,12 @@ async function loadData() {
   renderRecentActivity();
   renderImprovement();
   renderConsistency();
-  renderRolling();
+  if (!isCountry) renderRolling();
   mark('live renders');
 
   store.live = { rankings, individual, historical, streaks };
-  // State lists use On This Date / Time frame too (H2). Country pages don't yet: they have no
-  // full results loaded.
+  // State lists use On This Date / Time frame too (H2). Country pages do as well, but only after
+  // every result has been loaded (see the end of this function).
   if (!isCountry) restoreTimeTravel(refreshAll);
 
   if (source.list?.kind === 'personal') enterPersonalMode();
@@ -469,6 +513,20 @@ async function loadData() {
   console.info(`Load timings for ${LIST_ID} (step_ms = time for that step, at_ms = time since the page started loading)`);
   console.table(marks);
   console.table(fileTimes);
+
+  // Country pages: a saved date view needs every result, so load them now and then apply it.
+  // The live rankings are already on screen; if loading fails they simply stay.
+  if (isCountry && (loadTravel() || loadFrame())) {
+    const note = document.getElementById('updated-at');
+    note.textContent = 'Loading every result for your saved date view…';
+    try {
+      await ensureCountryEntries();
+      restoreTimeTravel(refreshAll);
+    } catch (err) {
+      console.warn('Could not load the results for the date view; showing live data:', err);
+      note.textContent = updated;
+    }
+  }
 }
 
 // ---------- Wiring ----------
