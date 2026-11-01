@@ -12,6 +12,10 @@
 // On This Date = an end date only. Time frame = optional start and end.
 // If both are set, the earlier end date wins.
 //
+// State lists (H2) use this too. Their member list is thousands of people, so people with no
+// result inside the chosen window are left out (a past date would otherwise list everyone who
+// had not competed yet, with empty rows). Groups keep every member.
+//
 // Not covered (left showing live data): Recent Activity, Upcoming
 // Competitions, Rolling Averages, Consistency, PR Counting, round-level
 // streak panel.
@@ -60,6 +64,7 @@ function updateBanner(start, end) {
 function recompute(refreshAll) {
   const live = store.live;
   if (!live) return;
+  const t0 = performance.now();
   const start = store.timeFrame?.start || null;
   const end = effectiveEnd(store.timeTravelDate || null, store.timeFrame?.end || null);
   const listName = live.rankings.listName || 'Group';
@@ -77,7 +82,8 @@ function recompute(refreshAll) {
     const upToEnd = all.filter((e) => e.date && (!end || e.date <= end));
     // ... and only what happened inside the frame (used for everything else).
     const inFrame = start ? upToEnd.filter((e) => e.date >= start) : upToEnd;
-    const peopleSnapshot = buildPeopleSnapshot(events, live.rankings.people, inFrame);
+    const onlyWithResults = store.listKind === 'state' || store.listKind === 'country';
+    const peopleSnapshot = buildPeopleSnapshot(events, live.rankings.people, inFrame, { onlyWithResults });
 
     store.rankings = computeRankingsSnapshot(events, listName, peopleSnapshot, end || start);
     store.rankings.listName = `${listName} (${label})`;
@@ -88,6 +94,7 @@ function recompute(refreshAll) {
     store.people.clear();
     for (const row of store.rankings.people) store.people.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
   }
+  const computeMs = Math.round(performance.now() - t0);
 
   updateBanner(start, end);
   refreshAll();
@@ -101,6 +108,9 @@ function recompute(refreshAll) {
       : store.rankings.dataFetchedAt
         ? `Last updated ${new Date(store.rankings.generatedAt).toLocaleString()}`
         : 'No data yet — waiting on the first automatic update.';
+  }
+  if (start || end) {
+    console.info(`Date view worked out in ${computeMs} ms (plus ${Math.round(performance.now() - t0) - computeMs} ms to redraw), ${(store.fullResults.entries || []).length} entries`);
   }
 }
 
