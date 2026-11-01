@@ -15,6 +15,7 @@ import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
 import { makeLazyRolling } from './rolling-core.js';
 import { setupDateBanner, restoreTimeTravel } from './timetravel/index.js';
 import { loadTravel, loadFrame } from './timetravel/storage.js';
+import { buildPeopleSnapshot, computeHistoricalSnapshot, computeStreaksSnapshot } from './timetravel/compute.js';
 
 function friendly(message) {
   const e = new Error(message);
@@ -250,6 +251,61 @@ function ensureCountryEntries() {
   return countryEntriesPromise;
 }
 
+// Records Set, Historical Records and PR Streaks on a country page are worked out from every
+// result, the first time one of the three is opened (about 1 to 2 s after the results load).
+// With a date view active, timetravel/index.js has already worked them out for that window.
+// The live versions are kept on store.live, so "Back to live" restores them.
+let countrySnapshotsPromise = null;
+let countrySnapshotsDone = false;
+const dateViewActive = () => Boolean(store.timeTravelDate || store.timeFrame);
+
+function ensureCountrySnapshots() {
+  if (!countrySnapshotsPromise) {
+    countrySnapshotsPromise = (async () => {
+      await ensureCountryEntries();
+      await new Promise((resolve) => setTimeout(resolve, 0)); // let the "Loading..." line show first
+      const live = store.live.rankings;
+      const events = live.events || [];
+      const dated = store.fullResults.entries.filter((e) => e.date);
+      const t0 = performance.now();
+      const people = buildPeopleSnapshot(events, live.people || [], dated, { onlyWithResults: true });
+      const historical = computeHistoricalSnapshot(events, dated, people, null);
+      const streaks = computeStreaksSnapshot(events, dated, people, null);
+      console.info(`Country records and streaks worked out in ${Math.round(performance.now() - t0)} ms`);
+      store.live.historical = historical;
+      store.live.streaks = streaks;
+      if (!dateViewActive()) {
+        store.historical = historical;
+        store.streaks = streaks;
+      }
+      countrySnapshotsDone = true;
+    })().catch((err) => {
+      countrySnapshotsPromise = null; // allow a retry
+      throw err;
+    });
+  }
+  return countrySnapshotsPromise;
+}
+
+// Wraps a tab's draw function: on a country page (live view) it first makes sure the results and
+// the worked-out records and streaks are there. Every other list, and any date view, draws at once.
+function withCountrySnapshots(draw, loadingId) {
+  return () => {
+    if (store.listKind !== 'country' || dateViewActive() || countrySnapshotsDone) {
+      draw();
+      return;
+    }
+    const container = document.getElementById(loadingId);
+    if (container) container.innerHTML = '<p class="empty-note">Loading every result for this country (a few seconds the first time)…</p>';
+    ensureCountrySnapshots()
+      .then(() => draw())
+      .catch((err) => {
+        console.error('Could not load the results for this tab:', err);
+        if (container) container.innerHTML = '<p class="empty-note">Could not load the results. Try reloading.</p>';
+      });
+  };
+}
+
 // ---------- Lazy drawing ----------
 // Drawing every tab at load was the biggest single cost of opening a big list
 // (about 300 ms on a laptop, over a second on a slow phone). Now only what is on
@@ -285,11 +341,11 @@ const RENDER = {
   },
   members: renderMembers,
   top100: renderTop100,
-  farcounts: renderFarCounts,
+  farcounts: withCountrySnapshots(renderFarCounts, 'far-table'),
   age: renderAge,
-  streaks: renderStreaks, // draws both PR Streaks and Event Streaks
+  streaks: withCountrySnapshots(renderStreaks, 'streaks-list'), // draws both PR Streaks and Event Streaks
   prcount: renderPrCounting,
-  history: renderHistory,
+  history: withCountrySnapshots(renderHistory, 'historical-records-table'),
   h2h: renderHeadToHead,
   nemesis: renderNemesis, // draws both Nemesis and Chasing
   podiums: renderPodiums,
