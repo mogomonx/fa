@@ -1240,8 +1240,6 @@ a.state-btn { text-decoration: none; }
 /* State lists have full results, records and PR streaks now. Still hidden: parts that
    need files the state build doesn't make (rolling, upcoming, event streaks, recent
    activity), and the members directory (thousands of chips). */
-body.state-mode .menu-item[data-tab="rolling"],
-body.state-mode .home-link[data-tab="rolling"],
 body.state-mode #home-members,
 body.state-mode .board:has(#recent-activity-table) { display: none; }
 
