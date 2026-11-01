@@ -40,26 +40,42 @@ function mbldKinchRawScore(value) {
 
 // ---------- Snapshot of each person's bests as of the cutoff ----------
 
-function bestFromEntries(entries, wcaId, eventId, type) {
-  let best = null;
+// One pass over the entries (not one scan per person, event and type, which is far too slow for
+// state and country lists): each person's best single and average per event.
+function bestsByPersonEvent(entries) {
+  const best = new Map(); // wcaId -> Map(eventId -> { single, average })
   for (const e of entries) {
-    if (e.wcaId !== wcaId || e.eventId !== eventId) continue;
-    if (hasResult(e[type]) && (best === null || e[type] < best)) best = e[type];
+    const s = e.single;
+    const a = e.average;
+    const hasS = hasResult(s);
+    const hasA = hasResult(a);
+    if (!hasS && !hasA) continue;
+    let perEvent = best.get(e.wcaId);
+    if (!perEvent) best.set(e.wcaId, (perEvent = new Map()));
+    let rec = perEvent.get(e.eventId);
+    if (!rec) perEvent.set(e.eventId, (rec = { single: null, average: null }));
+    if (hasS && (rec.single === null || s < rec.single)) rec.single = s;
+    if (hasA && (rec.average === null || a < rec.average)) rec.average = a;
   }
   return best;
 }
 
-export function buildPeopleSnapshot(events, people, entries) {
-  return people.map((p) => {
+// options.onlyWithResults: leave out people with no result at all in `entries` (state and country
+// lists, where "everyone with no result yet" would be thousands of empty rows). Groups keep all members.
+export function buildPeopleSnapshot(events, people, entries, options = {}) {
+  const best = bestsByPersonEvent(entries);
+  const out = [];
+  for (const p of people) {
+    const perEvent = best.get(p.wcaId);
+    if (options.onlyWithResults && !perEvent) continue;
     const evs = {};
     for (const eventDef of events) {
-      evs[eventDef.id] = {
-        single: bestFromEntries(entries, p.wcaId, eventDef.id, 'single'),
-        average: bestFromEntries(entries, p.wcaId, eventDef.id, 'average'),
-      };
+      const rec = perEvent && perEvent.get(eventDef.id);
+      evs[eventDef.id] = { single: rec ? rec.single : null, average: rec ? rec.average : null };
     }
-    return { wcaId: p.wcaId, name: p.name, countryIso2: p.countryIso2, events: evs };
-  });
+    out.push({ wcaId: p.wcaId, name: p.name, countryIso2: p.countryIso2, events: evs });
+  }
+  return out;
 }
 
 // ---------- Rankings, Sum of Ranks, Kinch ----------
@@ -288,16 +304,29 @@ function buildCountTable(events, peopleSnapshot, countsFor) {
   return rows;
 }
 
-function findBreakdown(entries, wcaId, eventId, value, type, eventDef) {
+// `own` = this person's entries for this event, in the original entry order (see groupByPersonEvent).
+function findBreakdown(own, value, type, eventDef) {
   if (!hasResult(value)) return null;
-  const match = entries.find((e) => e.wcaId === wcaId && e.eventId === eventId && e[type] === value);
+  const match = own.find((e) => e[type] === value);
   if (!match) return null;
   const result = { competitionName: match.competitionName, round: match.roundName || roundLabelFallback(match.round), date: match.date };
   if (type === 'average' && match.attempts) result.solves = attemptDisplays(match.attempts, eventDef);
   return result;
 }
 
+function groupByPersonEvent(entries) {
+  const index = new Map(); // `${wcaId}|${eventId}` -> entries
+  for (const e of entries) {
+    const key = `${e.wcaId}|${e.eventId}`;
+    const list = index.get(key);
+    if (list) list.push(e);
+    else index.set(key, [e]);
+  }
+  return index;
+}
+
 export function computeIndividualSnapshot(events, entries, peopleSnapshot) {
+  const byPersonEvent = groupByPersonEvent(entries);
   const eventsOut = [];
   for (const eventDef of events) {
     const singleRanked = rankPool(buildSinglePool(entries, eventDef.id), eventDef, 'single');
@@ -317,8 +346,9 @@ export function computeIndividualSnapshot(events, entries, peopleSnapshot) {
     for (const eventDef of events) {
       const singleValue = p.events[eventDef.id]?.single;
       const averageValue = p.events[eventDef.id]?.average;
-      const single = findBreakdown(entries, p.wcaId, eventDef.id, singleValue, 'single', eventDef);
-      const average = findBreakdown(entries, p.wcaId, eventDef.id, averageValue, 'average', eventDef);
+      const own = byPersonEvent.get(`${p.wcaId}|${eventDef.id}`) || [];
+      const single = findBreakdown(own, singleValue, 'single', eventDef);
+      const average = findBreakdown(own, averageValue, 'average', eventDef);
       if (single || average) breakdowns[p.wcaId][eventDef.id] = { single, average };
       const base = { wcaId: p.wcaId, name: p.name, eventId: eventDef.id, eventName: eventDef.name };
       if (single) prAges.push({ ...base, type: 'single', value: singleValue, display: formatResultLike(singleValue, eventDef, false), date: single.date });
@@ -451,18 +481,22 @@ function walkStreak(points) {
 // `entries` should hold everything up to the end date. With `startDate`, PRs
 // are still judged against everything before it, but only competitions on or
 // after `startDate` take part in the streak (time frame).
-function overallCompetitionStreak(entries, wcaId, startDate) {
-  const own = entries.filter((e) => e.wcaId === wcaId);
+// `own` = this person's entries (in the original entry order).
+function overallCompetitionStreak(own, startDate) {
   const compInfo = new Map();
+  const byComp = new Map(); // competitionId -> this person's entries there
   for (const e of own) {
     if (!compInfo.has(e.competitionId)) compInfo.set(e.competitionId, { date: e.date, name: e.competitionName || e.competitionId });
+    const list = byComp.get(e.competitionId);
+    if (list) list.push(e);
+    else byComp.set(e.competitionId, [e]);
   }
   const compIds = Array.from(compInfo.keys()).sort((a, b) => (compInfo.get(a).date || '9999').localeCompare(compInfo.get(b).date || '9999'));
   const bestSoFar = new Map();
   const points = [];
   for (const compId of compIds) {
     const byEventType = new Map();
-    for (const e of own.filter((x) => x.competitionId === compId)) {
+    for (const e of byComp.get(compId)) {
       for (const type of ['single', 'average']) {
         if (!hasResult(e[type])) continue;
         const key = `${e.eventId}|${type}`;
@@ -485,9 +519,15 @@ function overallCompetitionStreak(entries, wcaId, startDate) {
 }
 
 export function computeStreaksSnapshot(events, entries, peopleSnapshot, startDate = null) {
+  const byPerson = new Map();
+  for (const e of entries) {
+    const list = byPerson.get(e.wcaId);
+    if (list) list.push(e);
+    else byPerson.set(e.wcaId, [e]);
+  }
   return {
     generatedAt: new Date().toISOString(),
-    overall: peopleSnapshot.map((p) => ({ wcaId: p.wcaId, name: p.name, streak: overallCompetitionStreak(entries, p.wcaId, startDate) })),
+    overall: peopleSnapshot.map((p) => ({ wcaId: p.wcaId, name: p.name, streak: overallCompetitionStreak(byPerson.get(p.wcaId) || [], startDate) })),
     events: events.map((e) => ({ id: e.id, name: e.name })),
     byEvent: {}, // round-level side panel isn't covered by time travel (known gap)
   };
