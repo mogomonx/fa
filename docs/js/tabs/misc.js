@@ -16,7 +16,10 @@ export function renderFarCounts() {
   document.getElementById('far-leaderboard-view').style.display = state.farView === 'leaderboard' ? '' : 'none';
   document.getElementById('far-detailed-view').style.display = state.farView === 'detailed' ? '' : 'none';
 
-  const rows = store.historical.farCounts[state.farType];
+  let rows = store.historical.farCounts[state.farType];
+  // A country page has thousands of people and nearly all of them have set no record:
+  // list only the people who have set at least one.
+  if (store.listKind === 'country') rows = (rows || []).filter((r) => r.total > 0);
   if (state.farView === 'leaderboard') {
     renderTable(document.getElementById('far-table'), rows, [
       { key: 'rank', label: '#', value: () => '' },
@@ -170,6 +173,28 @@ export function renderAge() {
 
 // ---------- PR Streaks (two tabs) ----------
 
+// A country page lists thousands of streaks, so it draws this many at a time.
+const STREAK_PAGE_ROWS = 250;
+
+function streakRowHtml(r) {
+  // "Best ever" can hold several streaks (highest first); current is one.
+  const lines = r.streak.all && r.streak.all.length > 0 ? r.streak.all.slice().reverse() : [r.streak];
+  const linesHtml = lines
+    .map(
+      (s) => `
+          <div>
+            <span class="streak-count">${s.count}</span>
+            ${s.range ? `<span class="streak-range">${esc(s.range.start)} \u2013 ${esc(s.range.end)}</span>` : ''}
+          </div>`
+    )
+    .join('');
+  return `
+      <div class="streak-row">
+        <span>${nameLink(r.wcaId, r.name)}</span>
+        <span style="text-align:right;">${linesHtml}</span>
+      </div>`;
+}
+
 function renderStreakList(containerId, rows, mode) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -181,26 +206,51 @@ function renderStreakList(containerId, rows, mode) {
     .map((r) => ({ ...r, streak: r.streak[mode] }))
     .sort((a, b) => b.streak.count - a.streak.count);
 
-  container.innerHTML = sorted
-    .map((r) => {
-      // "Best ever" can hold several streaks (highest first); current is one.
-      const lines = r.streak.all && r.streak.all.length > 0 ? r.streak.all.slice().reverse() : [r.streak];
-      const linesHtml = lines
-        .map(
-          (s) => `
-          <div>
-            <span class="streak-count">${s.count}</span>
-            ${s.range ? `<span class="streak-range">${esc(s.range.start)} \u2013 ${esc(s.range.end)}</span>` : ''}
-          </div>`
-        )
-        .join('');
-      return `
-      <div class="streak-row">
-        <span>${nameLink(r.wcaId, r.name)}</span>
-        <span style="text-align:right;">${linesHtml}</span>
-      </div>`;
-    })
-    .join('');
+  // A country page has thousands of people and most have no streak: list only the people who
+  // have one, a page at a time. Every other list shows everyone, as before.
+  const country = store.listKind === 'country';
+  const list = country ? sorted.filter((r) => r.streak.count > 0) : sorted;
+  if (list.length === 0) {
+    container.innerHTML = '<p class="empty-note">No results yet.</p>';
+    return;
+  }
+  if (!country || list.length <= STREAK_PAGE_ROWS) {
+    container.innerHTML = list.map(streakRowHtml).join('');
+    return;
+  }
+
+  let shown = STREAK_PAGE_ROWS;
+  const body = document.createElement('div');
+  const bar = document.createElement('div');
+  bar.className = 'more-bar';
+  const note = document.createElement('span');
+  note.className = 'board-note';
+  const moreBtn = document.createElement('button');
+  moreBtn.type = 'button';
+  moreBtn.className = 'csv-btn';
+  moreBtn.textContent = `Show ${STREAK_PAGE_ROWS} more`;
+  const allBtn = document.createElement('button');
+  allBtn.type = 'button';
+  allBtn.className = 'csv-btn';
+  allBtn.textContent = 'Show all';
+  bar.append(note, moreBtn, allBtn);
+
+  const paint = () => {
+    body.innerHTML = list.slice(0, shown).map(streakRowHtml).join('');
+    if (shown >= list.length) bar.remove();
+    else note.textContent = `Showing ${shown.toLocaleString()} of ${list.length.toLocaleString()}`;
+  };
+  moreBtn.addEventListener('click', () => {
+    shown = Math.min(list.length, shown + STREAK_PAGE_ROWS);
+    paint();
+  });
+  allBtn.addEventListener('click', () => {
+    shown = list.length;
+    paint();
+  });
+  container.innerHTML = '';
+  container.append(body, bar);
+  paint();
 }
 
 const toStreakRow = (r) => ({
