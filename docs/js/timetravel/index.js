@@ -12,9 +12,12 @@
 // On This Date = an end date only. Time frame = optional start and end.
 // If both are set, the earlier end date wins.
 //
-// State lists (H2) use this too. Their member list is thousands of people, so people with no
-// result inside the chosen window are left out (a past date would otherwise list everyone who
-// had not competed yet, with empty rows). Groups keep every member.
+// State lists and country pages (H2) use this too. Their member list is thousands of people, so
+// people with no result inside the chosen window are left out (a past date would otherwise list
+// everyone who had not competed yet, with empty rows). Groups keep every member.
+// A country page only has rankings, records, Sum of Ranks and Kinch (its other tabs are hidden),
+// so only those are recomputed there: Individual Results, Historical Records and PR Streaks over
+// 260,000 results would take about ten seconds and nothing shows them.
 //
 // Not covered (left showing live data): Recent Activity, Upcoming
 // Competitions, Rolling Averages, Consistency, PR Counting, round-level
@@ -87,9 +90,11 @@ function recompute(refreshAll) {
 
     store.rankings = computeRankingsSnapshot(events, listName, peopleSnapshot, end || start);
     store.rankings.listName = `${listName} (${label})`;
-    store.individual = computeIndividualSnapshot(events, inFrame, peopleSnapshot);
-    store.historical = computeHistoricalSnapshot(events, upToEnd, peopleSnapshot, start);
-    store.streaks = computeStreaksSnapshot(events, upToEnd, peopleSnapshot, start);
+    if (store.listKind !== 'country') {
+      store.individual = computeIndividualSnapshot(events, inFrame, peopleSnapshot);
+      store.historical = computeHistoricalSnapshot(events, upToEnd, peopleSnapshot, start);
+      store.streaks = computeStreaksSnapshot(events, upToEnd, peopleSnapshot, start);
+    }
 
     store.people.clear();
     for (const row of store.rankings.people) store.people.set(row.wcaId, { name: row.name, countryIso2: row.countryIso2 });
