@@ -415,7 +415,7 @@ async function loadData() {
     recentActivity,
     // State lists have no rolling-averages.json (H2): work the tables out here, one event and
     // format at a time, from the results already loaded.
-    rolling: rolling || (isState && fullResults ? makeLazyRolling(() => store.fullResults.entries, rankings.people || [], rankings.events || []) : null),
+    rolling: isState && fullResults ? makeLazyRolling(() => store.fullResults.entries, rankings.people || [], rankings.events || []) : rolling,
   });
 
   for (const row of rankings.people || []) {
