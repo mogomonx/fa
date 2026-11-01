@@ -12,6 +12,7 @@ import { setupNameLinkDelegation } from './tabs/profile.js';
 import { populateCompareSelects, renderHeadToHead, renderNemesis } from './tabs/compare.js';
 import { setupImprovementDates, renderImprovement } from './tabs/improvement.js';
 import { populateRollingSelects, renderRolling } from './tabs/rolling.js';
+import { makeLazyRolling } from './rolling-core.js';
 import { setupDateBanner, restoreTimeTravel } from './timetravel/index.js';
 
 function friendly(message) {
@@ -412,7 +413,9 @@ async function loadData() {
     fullResults: fullResults || { entries: [] },
     streaks,
     recentActivity,
-    rolling,
+    // State lists have no rolling-averages.json (H2): work the tables out here, one event and
+    // format at a time, from the results already loaded.
+    rolling: rolling || (isState && fullResults ? makeLazyRolling(() => store.fullResults.entries, rankings.people || [], rankings.events || []) : null),
   });
 
   for (const row of rankings.people || []) {
@@ -454,7 +457,9 @@ async function loadData() {
   mark('live renders');
 
   store.live = { rankings, individual, historical, streaks };
-  if (!isState && !isCountry) restoreTimeTravel(refreshAll);
+  // State lists use On This Date / Time frame too (H2). Country pages don't yet: they have no
+  // full results loaded.
+  if (!isCountry) restoreTimeTravel(refreshAll);
 
   if (source.list?.kind === 'personal') enterPersonalMode();
 
