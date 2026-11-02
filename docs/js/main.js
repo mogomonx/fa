@@ -344,7 +344,25 @@ const RENDER = {
   farcounts: withCountrySnapshots(renderFarCounts, 'far-table'),
   age: renderAge,
   streaks: withCountrySnapshots(renderStreaks, 'streaks-list'), // draws both PR Streaks and Event Streaks
-  prcount: renderPrCounting,
+  // PR Counting reads every result. On a country page they load first (the first time only).
+  prcount: () => {
+    if (store.listKind !== 'country' || store.rolling) {
+      renderPrCounting();
+      return;
+    }
+    const container = document.getElementById('prcount-table');
+    container.innerHTML = '<p class="empty-note">Loading every result for this country (a few seconds the first time)…</p>';
+    ensureCountryEntries()
+      .then(() => {
+        const t0 = performance.now();
+        renderPrCounting();
+        console.info(`PR Counting worked out in ${Math.round(performance.now() - t0)} ms`);
+      })
+      .catch((err) => {
+        console.error('Could not load the results for PR Counting:', err);
+        container.innerHTML = '<p class="empty-note">Could not load the results. Try reloading.</p>';
+      });
+  },
   history: withCountrySnapshots(renderHistory, 'historical-records-table'),
   h2h: renderHeadToHead,
   nemesis: renderNemesis, // draws both Nemesis and Chasing
